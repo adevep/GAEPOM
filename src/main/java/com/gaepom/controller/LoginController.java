@@ -29,11 +29,12 @@ public class LoginController {
 		
 		if (finduser != null && finduser.getPassword().equals(user.getPassword())) {
 			model.addAttribute("guser", finduser);
-			System.out.println("아이디 비번 일치");
+			System.out.println("로그인 성공");
 			System.out.println(model.getAttribute("guser"));
 			return "getuser";
 			
 		} else {
+			System.out.println("로그인 실패");
 			return "redirect:index.html";
 		}
 	}

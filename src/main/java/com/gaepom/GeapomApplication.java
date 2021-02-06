@@ -15,9 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-
 @EnableAutoConfiguration
-@ComponentScan("com.gaepom.controller.ApplicationController")
+//@ComponentScan(basePackages="ApplicationService")
 @EnableJpaRepositories(basePackages="com.gaepom.dao")
 @EntityScan("com.gaepom.domain")
 @SpringBootApplication
@@ -27,20 +26,20 @@ public class GeapomApplication {
 		SpringApplication.run(GeapomApplication.class, args);
 	}
 	
-	 // Fix the CORS errors
-    @Bean
-    public FilterRegistrationBean simpleCorsFilter() {  
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  
-        CorsConfiguration config = new CorsConfiguration();  
-        config.setAllowCredentials(true); 
-        // *** URL below needs to match the Vue client URL and port ***
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:80")); 
-        config.setAllowedMethods(Collections.singletonList("*"));  
-        config.setAllowedHeaders(Collections.singletonList("*"));  
-        source.registerCorsConfiguration("/**", config);  
-        FilterRegistrationBean bean = new FilterRegistrationBean<>(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);  
-        return bean;  
-    }   
+//	 // Fix the CORS errors
+//    @Bean
+//    public FilterRegistrationBean simpleCorsFilter() {  
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  
+//        CorsConfiguration config = new CorsConfiguration();  
+//        config.setAllowCredentials(true); 
+//        // *** URL below needs to match the Vue client URL and port ***
+//        config.setAllowedOrigins(Collections.singletonList("http://localhost:80")); 
+//        config.setAllowedMethods(Collections.singletonList("*"));  
+//        config.setAllowedHeaders(Collections.singletonList("*"));  
+//        source.registerCorsConfiguration("/**", config);  
+//        FilterRegistrationBean bean = new FilterRegistrationBean<>(new CorsFilter(source));
+//        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);  
+//        return bean;  
+//    }   
 
 }

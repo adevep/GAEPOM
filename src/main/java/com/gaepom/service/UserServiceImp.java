@@ -11,7 +11,6 @@ import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.User;
 import com.gaepom.exception.UserException;
 
-
 @Service
 public class UserServiceImp implements UserService {
 	
@@ -21,8 +20,8 @@ public class UserServiceImp implements UserService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 
-	public User getUser(User User) {
-		Optional<User> findUser = userRepo.findById(User.getUserId());
+	public User getUser(User user) {
+		Optional<User> findUser = userRepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {

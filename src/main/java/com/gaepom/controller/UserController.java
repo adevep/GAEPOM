@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.gaepom.domain.User;
 import com.gaepom.service.UserServiceImp;
 
-@SessionAttributes("user")
+@SessionAttributes("guser")
 @Controller
 public class UserController {
 
@@ -38,16 +38,16 @@ public class UserController {
 
 
 	//@RequestMapping(value = "/insertguser", method = RequestMethod.POST)
-	@PostMapping("/insertguser")
-	public String insertGUser(@ModelAttribute User user) {
+	@PostMapping("/insertuser")
+	public String insertUser(@ModelAttribute User user) {
 		System.out.println("실행");
 		if (user.getUserId() == null) {
-			return "redirect:login";
+			return "redirect:login.html";
 		}
 		System.out.println(1);
 		Userserviceimp.insertUser(user);
-		System.out.println("-------insertguser----------------------");
-		return "redirect:login";
+		System.out.println("-------insertuser----------------------");
+		return "redirect:login.html";
 	}
 
 //	@GetMapping("/getBoard")
