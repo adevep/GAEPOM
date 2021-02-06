@@ -49,7 +49,7 @@ public class ProjectTracking {
 	private String tackLink;
 	
 	@OneToMany(mappedBy="trackSeq")
-	private List<Comment> comment;
+	private List<TComment> Tcomments;
 	
 	@OneToOne(mappedBy="trackSeq")
 	private Project project;

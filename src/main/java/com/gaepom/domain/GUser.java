@@ -22,8 +22,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 @Entity
-public class User {
+public class GUser {
 	@Id
 	@Column(name="user_id")
 	private String userId;

@@ -22,8 +22,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 @Entity
-public class Comment {
+public class TComment {
 	@Id
 	@GeneratedValue
 	@Column(name="cmt_seq")
@@ -35,10 +36,10 @@ public class Comment {
 	private Date cmtDate;
 	
 	// 생성될 때 무조건 값 0 넣기
-	@Column(name="cmt_like")
+	@Column(name = "cmt_like")
 	private int cmtLike;
 
-	@Column(name="parent_id", nullable=true)
+	@Column(name = "parent_id", nullable = true)
 	private String parentId;
 	
 	@Column(nullable=true)
