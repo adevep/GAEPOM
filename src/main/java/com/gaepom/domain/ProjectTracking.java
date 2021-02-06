@@ -46,7 +46,7 @@ public class ProjectTracking {
 	private int trackDate;
 	
 	@Column(name="track_link")
-	private String tackLink;
+	private String trackLink;
 	
 	@OneToMany(mappedBy="trackSeq")
 	private List<Comment> comment;
