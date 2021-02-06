@@ -1,5 +1,9 @@
 package com.gaepom.dao;
 
-public class ApplicationRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.gaepom.domain.Application;
+
+public interface ApplicationRepository extends CrudRepository<Application, Long>{
 
 }
