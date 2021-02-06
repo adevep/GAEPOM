@@ -29,6 +29,9 @@ public class ProjectRecruit {
 	@Column(name="need_num")
 	private int needNum;
 	
+	@Column(name="need_posi")
+	private String needPosi;
+	
 	private String location;
 	
 	private String preference;
