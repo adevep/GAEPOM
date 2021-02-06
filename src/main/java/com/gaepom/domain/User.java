@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import org.springframework.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +19,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 @Entity
 @Table(name="g_user")
 public class User {
+	
 	@Id
 	@Column(name="user_id")
 	private String userId;

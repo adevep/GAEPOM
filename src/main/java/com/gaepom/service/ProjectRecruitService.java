@@ -17,4 +17,13 @@ public interface ProjectRecruitService {
 	void delecteProjectRecruit(ProjectRecruit projectRecruit);
 	
 
+	List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit);
+
+	void insertProjectRecruit(ProjectRecruit recruit);
+
+	ProjectRecruit getProjectRecruit(ProjectRecruit recruit);
+
+	void updateProjectRecruit(ProjectRecruit recruit);
+
+	void deleteProjectRecruit(ProjectRecruit recruit);
 }

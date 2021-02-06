@@ -1,5 +1,9 @@
 package com.gaepom.dao;
 
-public class UserRepository {
+import org.springframework.data.repository.CrudRepository;
 
+import com.gaepom.domain.User;
+
+public interface UserRepository extends CrudRepository<User, String> {
+	
 }
