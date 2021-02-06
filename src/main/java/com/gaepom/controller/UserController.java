@@ -2,23 +2,19 @@ package com.gaepom.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.gaepom.domain.GUser;
-import com.gaepom.service.UserService;
-import com.gaepom.service.UserService;
+import com.gaepom.domain.User;
+import com.gaepom.service.UserServiceImp;
 
-@SessionAttributes("guser")
+@SessionAttributes("user")
 @Controller
-public class GUserController {
+public class UserController {
 
 	@Autowired
-	private GUserServiceImp GUserserviceimp;
+	private UserServiceImp Userserviceimp;
 
 //	@ModelAttribute("member")
 //	public Member setMember() {
@@ -43,13 +39,13 @@ public class GUserController {
 
 	//@RequestMapping(value = "/insertguser", method = RequestMethod.POST)
 	@PostMapping("/insertguser")
-	public String insertGUser(@ModelAttribute GUser guser) {
+	public String insertGUser(@ModelAttribute User guser) {
 		System.out.println("실행");
 		if (guser.getUserId() == null) {
 			return "redirect:login";
 		}
 		System.out.println(1);
-		GUserserviceimp.insertUser(guser);
+		Userserviceimp.insertUser(guser);
 		System.out.println("-------insertguser----------------------");
 		return "redirect:login";
 	}

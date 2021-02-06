@@ -24,7 +24,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name="t_comment")
-@Table(name="comments")
 public class Comment {
 	
 	@Id

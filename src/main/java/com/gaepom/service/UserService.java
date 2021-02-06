@@ -6,7 +6,9 @@ import com.gaepom.domain.User;
 
 
 public interface UserService extends CrudRepository<User, String> {
-	
+
+	User findUserByUserid(String userid);
+
 	
 		
 }
