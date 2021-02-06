@@ -14,19 +14,19 @@ import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 
-@SessionAttributes("user")
+@SessionAttributes("guser")
 public class ProjectRecruitController {
 
 	@Autowired
 	private ProjectRecruitService projectRecruitService;
 
-	@ModelAttribute("user")
+	@ModelAttribute("guser")
 	public User setUser() {
 		return new User();
 	}
 
 	@RequestMapping("/getProjectRecruitList")
-	public String getProjectRecruitList(@ModelAttribute("user") User user, Model model,
+	public String getProjectRecruitList(@ModelAttribute("guser") User user, Model model,
 			ProjectRecruit recruit) {
 
 		if (user.getUserId() == null) {
@@ -41,7 +41,7 @@ public class ProjectRecruitController {
 	}
 
 	@GetMapping("/insertProjectRecruit")
-	public String insertProjectRecruitView(@ModelAttribute("user") User user) {
+	public String insertProjectRecruitView(@ModelAttribute("guser") User user) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -50,7 +50,7 @@ public class ProjectRecruitController {
 	}
 
 	@PostMapping("/insertProjectRecruit")
-	public String insertProjectRecruit(@ModelAttribute("user") User user, ProjectRecruit recruit) {
+	public String insertProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -61,7 +61,7 @@ public class ProjectRecruitController {
 	}
 
 	@GetMapping("/getProjectRecruit")
-	public String getProjectRecruit(@ModelAttribute("user") User user, ProjectRecruit recruit, Model model) {
+	public String getProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit, Model model) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -71,7 +71,7 @@ public class ProjectRecruitController {
 	}
 
 	@PostMapping("/updateProjectRecruit")
-	public String updateProjectRecruit(@ModelAttribute("user") User user, ProjectRecruit recruit) {
+	public String updateProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -81,7 +81,7 @@ public class ProjectRecruitController {
 	}
 
 	@GetMapping("/deleteProjectRecruit")
-	public String deleteProjectRecruit(@ModelAttribute("user") User user, ProjectRecruit recruit) {
+	public String deleteProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}

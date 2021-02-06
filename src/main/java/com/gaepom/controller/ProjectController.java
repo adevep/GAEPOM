@@ -14,20 +14,20 @@ import com.gaepom.domain.Project;
 import com.gaepom.domain.User;
 import com.gaepom.service.ProjectService;
 
-@SessionAttributes("user")
+@SessionAttributes("guser")
 public class ProjectController {
 	
 	@Autowired
 	private ProjectService projectService;
 	
 
-	@ModelAttribute("user")
+	@ModelAttribute("guser")
 	public User setUser() {
 		return new User();
 	}
 	
 	@RequestMapping("/getProjectList")
-	public String getProjectList(@ModelAttribute("user") User user, Model model, Project project) {
+	public String getProjectList(@ModelAttribute("guser") User user, Model model, Project project) {
 		
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
@@ -41,7 +41,7 @@ public class ProjectController {
 	}
 
 	@GetMapping("/insertProject")
-	public String insertProjectView(@ModelAttribute("user") User user) {
+	public String insertProjectView(@ModelAttribute("guser") User user) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -50,7 +50,7 @@ public class ProjectController {
 	}
 
 	@PostMapping("/insertProject")
-	public String insertProject(@ModelAttribute("user") User user, Project project) {
+	public String insertProject(@ModelAttribute("guser") User user, Project project) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -61,7 +61,7 @@ public class ProjectController {
 	}
 
 	@GetMapping("/getProject")
-	public String getProject(@ModelAttribute("user") User user, Project project, Model model) {
+	public String getProject(@ModelAttribute("guser") User user, Project project, Model model) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -71,7 +71,7 @@ public class ProjectController {
 	}
 
 	@PostMapping("/updateProject")
-	public String updateProject(@ModelAttribute("user") User user, Project project) {
+	public String updateProject(@ModelAttribute("guser") User user, Project project) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
@@ -81,7 +81,7 @@ public class ProjectController {
 	}
 
 	@GetMapping("/deleteProject")
-	public String deleteProject(@ModelAttribute("user") User user, Project project) {
+	public String deleteProject(@ModelAttribute("guser") User user, Project project) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
