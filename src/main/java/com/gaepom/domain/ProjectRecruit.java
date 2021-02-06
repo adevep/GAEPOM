@@ -1,7 +1,5 @@
 package com.gaepom.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +43,7 @@ public class ProjectRecruit {
 	private String recDuration;
 	
 	@Column(name="rec_date", insertable = false, updatable = false, columnDefinition = "date default sysdate")
-	private Date recDate;
+	private String recDate;
 	
 	@OneToOne(mappedBy="recSeq")
 	private Project project;

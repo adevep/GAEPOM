@@ -39,7 +39,7 @@ public class Project {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User userId;
+	private GUser userId;
 	
 	@Column(name = "pj_title")
 	private String pjTitle;

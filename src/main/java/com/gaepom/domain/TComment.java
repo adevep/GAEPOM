@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +23,7 @@ import lombok.ToString;
 @ToString
 
 @Entity
-@Table(name = "t_comment")
-public class Comment {
-	
+public class TComment {
 	@Id
 	@GeneratedValue
 	@Column(name="cmt_seq")
@@ -43,14 +41,14 @@ public class Comment {
 	@Column(name = "parent_id", nullable = true)
 	private String parentId;
 	
-	@Column(nullable = true)
+	@Column(nullable=true)
 	private int depth;
 	
-	@Column(name = "user_id")
+	@Column(name="user_id")
 	private String userId;
 	
 	@ManyToOne
-	@JoinColumn(name = "track_seq")
+	@JoinColumn(name="track_seq")
 	private ProjectTracking trackSeq;
 
 }
