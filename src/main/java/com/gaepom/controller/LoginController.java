@@ -13,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.gaepom.domain.User;
 import com.gaepom.service.UserServiceImp;
 
-@SessionAttributes("user") 
+@SessionAttributes("guser") 
 @Controller
 public class LoginController {
 	
@@ -28,9 +28,9 @@ public class LoginController {
 		System.out.println("해당 계정 조회성공");
 		
 		if (finduser != null && finduser.getPassword().equals(user.getPassword())) {
-			model.addAttribute("user", finduser);
+			model.addAttribute("guser", finduser);
 			System.out.println("아이디 비번 일치");
-			System.out.println(model.getAttribute("user"));
+			System.out.println(model.getAttribute("guser"));
 			return "getuser";
 			
 		} else {

@@ -110,11 +110,8 @@ public class UserServiceImp implements UserService {
 		
 	}
 
-	@Override
-	public User findUserByUserid(String userid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
 
 
 

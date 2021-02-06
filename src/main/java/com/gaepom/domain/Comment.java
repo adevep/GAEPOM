@@ -23,7 +23,7 @@ import lombok.ToString;
 @ToString
 
 @Entity
-@Table(name="t_comment")
+@Table(name = "t_comment")
 public class Comment {
 	
 	@Id
@@ -43,14 +43,14 @@ public class Comment {
 	@Column(name = "parent_id", nullable = true)
 	private String parentId;
 	
-	@Column(nullable=true)
+	@Column(nullable = true)
 	private int depth;
 	
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private String userId;
 	
 	@ManyToOne
-	@JoinColumn(name="track_seq")
+	@JoinColumn(name = "track_seq")
 	private ProjectTracking trackSeq;
 
 }
