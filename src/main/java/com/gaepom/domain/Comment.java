@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,9 @@ import lombok.ToString;
 @ToString
 
 @Entity
-public class TComment {
+@Table(name="t_comment")
+public class Comment {
+	
 	@Id
 	@GeneratedValue
 	@Column(name="cmt_seq")

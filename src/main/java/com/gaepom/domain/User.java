@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.springframework.lang.Nullable;
 
@@ -24,7 +25,9 @@ import lombok.ToString;
 @ToString
 
 @Entity
-public class GUser {
+@Table(name="g_user")
+public class User {
+	
 	@Id
 	@Column(name="user_id")
 	private String userId;

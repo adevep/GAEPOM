@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gaepom.domain.GUser;
-import com.gaepom.service.GUserService;
-import com.gaepom.service.GUserServiceImp;
+import com.gaepom.service.UserService;
+import com.gaepom.service.UserService;
 
 @SessionAttributes("guser")
 @Controller
@@ -49,7 +49,7 @@ public class GUserController {
 			return "redirect:login";
 		}
 		System.out.println(1);
-		GUserserviceimp.insertGUser(guser);
+		GUserserviceimp.insertUser(guser);
 		System.out.println("-------insertguser----------------------");
 		return "redirect:login";
 	}
