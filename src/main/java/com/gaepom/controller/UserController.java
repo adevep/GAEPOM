@@ -3,7 +3,8 @@ package com.gaepom.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gaepom.domain.User;
@@ -44,7 +45,7 @@ public class UserController {
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
 		}
-		System.out.println(1);
+		
 		Userserviceimp.insertUser(user);
 		System.out.println("-------insertuser----------------------");
 		return "redirect:login.html";
