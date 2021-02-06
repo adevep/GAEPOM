@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.User;
-import com.gaepom.dao.ProjectTrackingRepository;
 
 
 

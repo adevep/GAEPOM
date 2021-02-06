@@ -21,7 +21,7 @@ public class UserServiceImp implements UserService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 
-	public User getUser2(User User) {
+	public User getUser(User User) {
 		Optional<User> findUser = userRepo.findById(User.getUserId());
 		if (findUser.isPresent()) {
 			return findUser.get();
@@ -30,7 +30,7 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public void insertUser2(User user) {
+	public void insertUser(User user) {
 		Optional<User> findUser = userRepo.findById(user.getUserId());
 		System.out.println("dd");
 		if (!findUser.isPresent()) {
@@ -109,5 +109,13 @@ public class UserServiceImp implements UserService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public User findUserByUserid(String userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
