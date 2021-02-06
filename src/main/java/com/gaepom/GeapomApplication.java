@@ -17,7 +17,7 @@ import org.springframework.web.filter.CorsFilter;
 
 
 @EnableAutoConfiguration
-@ComponentScan("com.gaepom.controller.ApplicationController")
+//@ComponentScan("com.gaepom.controller.ApplicationController")
 @EnableJpaRepositories(basePackages="com.gaepom.dao")
 @EntityScan("com.gaepom.domain")
 @SpringBootApplication
