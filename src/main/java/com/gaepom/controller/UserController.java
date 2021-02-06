@@ -39,13 +39,13 @@ public class UserController {
 
 	//@RequestMapping(value = "/insertguser", method = RequestMethod.POST)
 	@PostMapping("/insertguser")
-	public String insertGUser(@ModelAttribute User guser) {
+	public String insertGUser(@ModelAttribute User user) {
 		System.out.println("실행");
-		if (guser.getUserId() == null) {
+		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
 		System.out.println(1);
-		Userserviceimp.insertUser(guser);
+		Userserviceimp.insertUser(user);
 		System.out.println("-------insertguser----------------------");
 		return "redirect:login";
 	}
