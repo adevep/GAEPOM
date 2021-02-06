@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +21,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 @Entity
+@Table(name="t_comment")
 @Table(name="comments")
 public class Comment {
+	
 	@Id
 	@GeneratedValue
 	@Column(name="cmt_seq")
@@ -35,10 +38,10 @@ public class Comment {
 	private Date cmtDate;
 	
 	// 생성될 때 무조건 값 0 넣기
-	@Column(name="cmt_like")
+	@Column(name = "cmt_like")
 	private int cmtLike;
 
-	@Column(name="parent_id", nullable=true)
+	@Column(name = "parent_id", nullable = true)
 	private String parentId;
 	
 	@Column(nullable=true)
