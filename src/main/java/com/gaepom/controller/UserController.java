@@ -3,13 +3,15 @@ package com.gaepom.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gaepom.domain.User;
 import com.gaepom.service.UserServiceImp;
 
-@SessionAttributes("user")
+
+@SessionAttributes("guser")
 @Controller
 public class UserController {
 
@@ -37,17 +39,16 @@ public class UserController {
 
 
 
-	//@RequestMapping(value = "/insertguser", method = RequestMethod.POST)
-	@PostMapping("/insertguser")
-	public String insertGUser(@ModelAttribute User user) {
-		System.out.println("실행");
-		if (user.getUserId() == null) {
-			return "redirect:login";
+	//@PostMapping("/insertuser")
+	@RequestMapping(value = "/insertuser", method = {RequestMethod.POST, RequestMethod.GET})
+	public String insertUser(@ModelAttribute User user) {
+		if (user.getUserId() == null) {		
+			return "redirect:index.html";
 		}
-		System.out.println(1);
+		
 		Userserviceimp.insertUser(user);
-		System.out.println("-------insertguser----------------------");
-		return "redirect:login";
+		System.out.println("-------insertuser----------------------");
+		return "redirect:login.html";
 	}
 
 //	@GetMapping("/getBoard")
