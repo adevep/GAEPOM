@@ -10,26 +10,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.gaepom.domain.GUser;
-import com.gaepom.service.GUserService;
+import com.gaepom.domain.User;
+import com.gaepom.service.UserServiceImp;
 
 @SessionAttributes("guser") 
 @Controller
 public class LoginController {
 	
 	@Autowired
-	private GUserService GUserService;
+	private UserServiceImp UserServiceimp;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute GUser guser, Model model) {
-		System.out.println("로그인 접근");
+	public String login(@ModelAttribute User user, Model model) {
 		
-		GUser findguser = GUserService.getGUser(guser);
+		User finduser = UserServiceimp.getUser(user);
 		
 		System.out.println("해당 계정 조회성공");
 		
-		if (findguser != null && findguser.getPassword().equals(guser.getPassword())) {
-			model.addAttribute("guser", findguser);
+		if (finduser != null && finduser.getPassword().equals(user.getPassword())) {
+			model.addAttribute("guser", finduser);
 			System.out.println("아이디 비번 일치");
 			System.out.println(model.getAttribute("guser"));
 			return "getuser";
