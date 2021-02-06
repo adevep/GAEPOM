@@ -9,7 +9,7 @@ import com.gaepom.dao.ApplicationRepository;
 import com.gaepom.domain.Application;
 
 @Service
-public class ApplicationServiceImp {
+public class ApplicationServiceImp implements ApplicationService{
 		@Autowired
 		private ApplicationRepository applicationRepo;
 
