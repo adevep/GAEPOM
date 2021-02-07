@@ -17,19 +17,21 @@ import com.gaepom.service.UserServiceImp;
 @Controller
 public class LoginController {
 	
+	@ModelAttribute("guser")
+	public User setUser() {
+		return new User();
+	}
+	
 	@Autowired
 	private UserServiceImp UserServiceimp;
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute User user, Model model) {
+	
+	@RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
+	public String login(@ModelAttribute("guser") User user, Model model) {
 		
 		User finduser = UserServiceimp.getUser(user);
-		
-		System.out.println("해당 계정 조회성공");
-		
+				
 		if (finduser != null && finduser.getPassword().equals(user.getPassword())) {
 			model.addAttribute("guser", finduser);
-			System.out.println("아이디 비번 일치");
 			System.out.println(model.getAttribute("guser"));
 			return "getuser";
 			

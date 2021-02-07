@@ -1,5 +1,6 @@
 package com.gaepom.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -29,13 +30,21 @@ public class UserServiceImp implements UserService {
 			return null;
 		}
 	}
+	
+
+	public List<User> getUserList(User User) {
+		Optional<User> findUser = userRepo.findById(User.getUserId());
+		if (findUser.isPresent()) {
+			return (List<User>) userRepo.findAll();
+		} else {
+			return null;
+		}
+	}
 
 	public void insertUser(User user) {
 		Optional<User> findUser = userRepo.findById(user.getUserId());
-		System.out.println("dd");
 		if (!findUser.isPresent()) {
 			userRepo.save(user);
-			System.out.println("가입완료");
 			logger.info(user.getUserId() + "회원 가입");
 			
 		} else {
@@ -43,7 +52,17 @@ public class UserServiceImp implements UserService {
 		}
 
 	}
+	
+	public User findUserByUserId(String userid) {
+		Optional<User> findUser = userRepo.findById(userid);
+		if (findUser.isPresent()) {
+			return findUser.get();
+		} else {
+			return null;
+		}
+	}
 
+	////////////////////////////////////////////////////////
 	@Override
 	public <S extends User> S save(S entity) {
 		// TODO Auto-generated method stub
@@ -56,7 +75,7 @@ public class UserServiceImp implements UserService {
 		return null;
 	}
 
-	@Override
+	
 	public Optional<User> findById(String id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -109,6 +128,8 @@ public class UserServiceImp implements UserService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 
 
