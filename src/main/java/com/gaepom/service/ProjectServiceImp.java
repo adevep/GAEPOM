@@ -9,7 +9,7 @@ import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
 
 @Service
-public class ProjectServiceImp {
+public class ProjectServiceImp implements ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepo;

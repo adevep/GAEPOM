@@ -30,7 +30,7 @@ public class Project {
 	private Long pjSeq;
 	
 	@OneToOne
-	@JoinColumn(name="rec_seq")
+	@JoinColumn(name="rec_seq", nullable = false)
 	private ProjectRecruit recSeq;
 	
 	@OneToOne
