@@ -95,9 +95,22 @@ public class ProjectController {
 		projectRecruitService.insertProjectRecruit(recruit);
 		System.out.println("----insert recruit----");
 		
+//		ProjectRecruit recSeq = projectRecruitService.getProjectRecruit(recruit);
+//		System.out.println(recSeq);
+//		
+		Long recSeq = projectRecruitService.getProjectRecruit(recruit).getRecSeq();
+		System.out.println(recSeq);
+		
 		
 		projectService.insertProject(project);
 		System.out.println("-------insertProject----------------------");
+		
+		//Long pjSeq = projectService.getProject(project).getPjSeq();
+		
+		//projectService.updateProjectWithRecSeq(pjSeq, recSeq);
+		System.out.println(recSeq);
+		projectService.updateProjectWithRecSeq2(project, recSeq);
+		System.out.println("update project recseq");
 		
 		return "redirect:getProjectListAll";
 	}

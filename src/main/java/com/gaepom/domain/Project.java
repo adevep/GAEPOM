@@ -30,7 +30,7 @@ public class Project {
 	private Long pjSeq;
 	
 	@OneToOne
-	@JoinColumn(name="rec_seq", nullable = false)
+	@JoinColumn(name="rec_seq", nullable = true)
 	private ProjectRecruit recSeq;
 	
 	@OneToOne
@@ -64,4 +64,8 @@ public class Project {
 	
 	@OneToMany(mappedBy="pjSeq")
 	private List<Application> applications;
+	
+//	public void setRecSeq(Long recSeq2) {
+//		this.recSeq. = recSeq2;
+//	}
 }	
