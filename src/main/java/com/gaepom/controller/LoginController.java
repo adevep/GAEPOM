@@ -17,20 +17,21 @@ import com.gaepom.service.GUserService;
 @Controller
 public class LoginController {
 	
+	@ModelAttribute("guser")
+	public User setUser() {
+		return new User();
+	}
+	
 	@Autowired
-	private GUserService GUserService;
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute GUser guser, Model model) {
-		System.out.println("로그인 접근");
+	private UserServiceImp UserServiceimp;
+	
+	@RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
+	public String login(@ModelAttribute("guser") User user, Model model) {
 		
-		GUser findguser = GUserService.getGUser(guser);
-		
-		System.out.println("해당 계정 조회성공");
-		
-		if (findguser != null && findguser.getPassword().equals(guser.getPassword())) {
-			model.addAttribute("guser", findguser);
-			System.out.println("아이디 비번 일치");
+		User finduser = UserServiceimp.getUser(user);
+				
+		if (finduser != null && finduser.getPassword().equals(user.getPassword())) {
+			model.addAttribute("guser", finduser);
 			System.out.println(model.getAttribute("guser"));
 			return "getuser";
 			
