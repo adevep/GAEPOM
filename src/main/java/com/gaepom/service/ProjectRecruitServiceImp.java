@@ -11,7 +11,7 @@ import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 
 @Service
-public class ProjectRecruitServiceImp {
+public class ProjectRecruitServiceImp implements ProjectRecruitService {
 	
 	@Autowired
 	private ProjectRecruitRepository recruitRecruitRepo;

@@ -1,14 +1,11 @@
 package com.gaepom.domain;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
+
 @ToString
 @Entity
 public class Portfolio {
@@ -58,6 +56,4 @@ public class Portfolio {
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=true)
 	private User userId;
-
-	
 }

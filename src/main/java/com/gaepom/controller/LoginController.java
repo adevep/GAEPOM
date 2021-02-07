@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.gaepom.domain.User;
-import com.gaepom.service.UserServiceImp;
+import com.gaepom.service.UserServiceImpl_bak;
 
 @SessionAttributes("guser") 
 @Controller
 public class LoginController {
 	
 	@Autowired
-	private UserServiceImp UserServiceimp;
+	private UserServiceImpl_bak UserServiceimp;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@ModelAttribute User user, Model model) {

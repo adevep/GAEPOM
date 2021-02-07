@@ -1,5 +1,6 @@
 package com.gaepom.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ import com.gaepom.domain.User;
 import com.gaepom.exception.UserException;
 
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImpl_bak implements UserService_bak {
 	
 	@Autowired
 	private UserRepository userRepo;
@@ -24,6 +25,15 @@ public class UserServiceImp implements UserService {
 		Optional<User> findUser = userRepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
 			return findUser.get();
+		} else {
+			return null;
+		}
+	}
+	
+	public List<User> getUserList(User user) {
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		if (findUser.isPresent()) {
+			return (List<User>) userRepo.findAll();
 		} else {
 			return null;
 		}

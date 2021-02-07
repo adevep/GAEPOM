@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.gaepom.domain.Portfolio;
 import com.gaepom.domain.User;
+import com.gaepom.service.PortfolioServiceImpl;
 import com.gaepom.service.UserServiceImpl_bak;
 
-@SessionAttributes("guser")
+@SessionAttributes("pf")
 @Controller
-public class UserController {
+public class PortfolioController {
 
 	@Autowired
-	private UserServiceImpl_bak Userserviceimp;
+	private PortfolioServiceImpl portfolioServiceImp;
 
 //	@ModelAttribute("member")
 //	public Member setMember() {
@@ -37,19 +39,17 @@ public class UserController {
 //		return "getBoardList";
 //	}
 
-
-
-	//@RequestMapping(value = "/insertguser", method = RequestMethod.POST)
-	@PostMapping("/insertuser")
-	public String insertUser(@ModelAttribute User user) {
-		System.out.println("실행");
-		if (user.getUserId() == null) {
-			return "redirect:login.html";
+//	@RequestMapping(value = "/insertpf", method = RequestMethod.POST)
+	@PostMapping("/insertpf")
+	public String insertPortfolio(@ModelAttribute Portfolio pf) {
+		System.out.println("=== # insertPortfolio() 조회 중 ===");
+		if (pf.getPfSeq() == null) {
+			return "redirect:index.html";
 		}
 		
-		Userserviceimp.insertUser(user);
-		System.out.println("-------insertuser----------------------");
-		return "redirect:login.html";
+		portfolioServiceImp.insertPortfolio(pf);
+		System.out.println(pf.getPfSeq() + "번 님의 새로운 포트폴리오가 등록되었습니다.");
+		return "redirect:index.html";
 	}
 
 //	@GetMapping("/getBoard")
@@ -81,5 +81,4 @@ public class UserController {
 //		GUserserviceimp.deleteBoard(board);
 //		return "forward:getBoardList";
 //	}
-
 }

@@ -36,4 +36,5 @@ public class ApplicationServiceImp implements ApplicationService {
 	public void deleteApplication(Application application) {
 		applicationRepo.deleteById(application.getAplSeq());
 	}
+
 }

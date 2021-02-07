@@ -1,9 +1,18 @@
 package com.gaepom.service;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
 import com.gaepom.domain.User;
 
-public interface UserService extends CrudRepository<User, String> {
+public interface UserService {
+	
+	List<User> getUserList(User user);
 
+	void insertUser(User user);
+
+	User getUser(User user);
+	
+	void updateUser(User user);
+	
+	void deleteUser(User user);
 }
