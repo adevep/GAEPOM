@@ -29,7 +29,7 @@
 	<tr th:each="pj: ${projectList}">
 	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
 		<td th:text="${pj.pjSeq}"></td>
-		<td th:text="${pj.recSeq}"></td>
+		<td th:text="${pj.recSeq.recSeq}"></td>
 		<td th:text="${pj.trackSeq}"></td>
 		<td th:text="${pj.userId}"></td>
 		<td th:text="${pj.pjTitle}"></td>

@@ -21,7 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString (exclude="recSeq")
 @Entity
 public class Project {
 	@Id
@@ -49,7 +49,7 @@ public class Project {
 	
 	@Column(name = "pj_duration")
 	private String pjDuration;
-	
+
 	@Column(name = "pj_tools")
 	private String pjTools;
 	
@@ -64,8 +64,13 @@ public class Project {
 	
 	@OneToMany(mappedBy="pjSeq")
 	private List<Application> applications;
-	
-//	public void setRecSeq(Long recSeq2) {
-//		this.recSeq. = recSeq2;
-//	}
+
+	@Override
+	public String toString() {
+		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId
+				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
+				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
+				+ ", applications=" + applications + "]";
+	}
+
 }	

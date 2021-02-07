@@ -15,7 +15,7 @@ public interface ProjectService {
 	void updateProject(Project project);
 	
 	//void updateProjectWithRecSeq(Long pjSeq, Long recSeq);
-	void updateProjectWithRecSeq2(Project project, Long recSeq);
+	//void updateProjectWithRecSeq2(Project project, Long recSeq);
 	
 	void deleteProject(Project project);
 }

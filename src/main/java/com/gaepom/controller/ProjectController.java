@@ -1,7 +1,5 @@
 package com.gaepom.controller;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 import com.gaepom.service.ProjectService;
-
 @Controller
 @SessionAttributes("guser")
 public class ProjectController {
@@ -26,7 +22,6 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectRecruitService projectRecruitService;
-
 	@ModelAttribute("guser")
 	public User setUser() {
 		return new User();
@@ -38,25 +33,20 @@ public class ProjectController {
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
 		}
-
 		List<Project> projectList = projectService.getProjectList(project);
-
 		System.out.println(projectList);
 		model.addAttribute("projectList", projectList);
 		return "getProjectList";
 	}
-
-	//project랑 project recruit 합치기 위한 거 
+	//project랑 project recruit 합치기 위한 거
 	@RequestMapping("/getProjectListAll")
 	public String getProjectListAll(@ModelAttribute("guser") User user, Model model, Project project, ProjectRecruit recruit) {
 		
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
 		}
-
 		List<Project> projectList = projectService.getProjectList(project);
 		List<ProjectRecruit> projectRecruitList = projectRecruitService.getProjectRecruitList(recruit);
-
 		System.out.println(projectList);
 		System.out.println(projectRecruitList);
 		model.addAttribute("projectList", projectList);
@@ -70,81 +60,54 @@ public class ProjectController {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-
 		return "insertProject";
 	}
-
 	@PostMapping("/insertProject")
 	public String insertProject(@ModelAttribute("guser") User user, Project project) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-
 		projectService.insertProject(project);
 		System.out.println("-------insertProject----------------------");
 		return "redirect:getProjectList";
 	}
 	
-	//project랑 project recruit 합치기 위한 거 
+	//project랑 project recruit 합치기 위한 거
 	@PostMapping("/insertProjectAll")
 	public String insertProjectAll(@ModelAttribute("guser") User user, Project project, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-
-		projectRecruitService.insertProjectRecruit(recruit);
+		project.setRecSeq(projectRecruitService.insertProjectRecruit(recruit));
 		System.out.println("----insert recruit----");
-		
-//		ProjectRecruit recSeq = projectRecruitService.getProjectRecruit(recruit);
-//		System.out.println(recSeq);
-//		
-		Long recSeq = projectRecruitService.getProjectRecruit(recruit).getRecSeq();
-		System.out.println(recSeq);
-		
-		
 		projectService.insertProject(project);
 		System.out.println("-------insertProject----------------------");
-		
-		//Long pjSeq = projectService.getProject(project).getPjSeq();
-		
-		//projectService.updateProjectWithRecSeq(pjSeq, recSeq);
-		System.out.println(recSeq);
-		projectService.updateProjectWithRecSeq2(project, recSeq);
-		System.out.println("update project recseq");
 		
 		return "redirect:getProjectListAll";
 	}
 	
-
 	@GetMapping("/getProject")
 	public String getProject(@ModelAttribute("guser") User user, Project project, Model model) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-
 		model.addAttribute("project", projectService.getProject(project));
 		return "getProject";
 	}
-
 	@PostMapping("/updateProject")
 	public String updateProject(@ModelAttribute("guser") User user, Project project) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-
 		projectService.updateProject(project);
 		return "forward:getProjectList";
 	}
-
 	@GetMapping("/deleteProject")
 	public String deleteProject(@ModelAttribute("guser") User user, Project project) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-
 		projectService.deleteProject(project);
 		return "forward:getProjectList";
 	}
-
-
 }

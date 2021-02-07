@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
-import com.gaepom.domain.ProjectRecruit;
 
 @Service
 public class ProjectServiceImp implements ProjectService {
@@ -55,14 +54,16 @@ public class ProjectServiceImp implements ProjectService {
 //	public void updateProjectWithRecSeq(Long pjSeq, Long recSeq) {
 //		projectRepo.updateRecSeq(pjSeq, recSeq);
 //	}
-	
-	public void updateProjectWithRecSeq2(Project project, ProjectRecruit recruit) {
-		Project findProject = projectRepo.findById(project.getPjSeq()).get();
-		ProjectRecruit findRec = projectRecruitRepo.findById(recruit.getRecSeq()).get();
-		findProject.setRecSeq(findRec.getRecSeq());
-		projectRepo.save(findProject);
-		
-	}
+//	
+//	public void updateProjectWithRecSeq2(Project project, ProjectRecruit recruit) {
+//		Project findProject = projectRepo.findById(project.getPjSeq()).get();
+//		ProjectRecruit findRec = projectRecruitRepo.findById(recruit.getRecSeq()).get();
+//		Long findRecSeq = findRec.getRecSeq();
+//		
+//		findProject.setRecSeq(findRecSeq);
+//		projectRepo.save(findProject);
+//		
+//	}
 	
 	public void deleteProject(Project project) {
 		projectRepo.deleteById(project.getPjSeq());
