@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.gaepom.domain.User;
 import com.gaepom.service.UserServiceImp;
@@ -21,17 +22,20 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImp Userserviceimp;
+	
 
 	@GetMapping("/getuserlist")
 	public String getUserList(@ModelAttribute("guser") User user, Model model) {
-		
+		System.out.println(11);
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
 		}
-
+		System.out.println(22);
 		List<User> UserList = Userserviceimp.getUserList(user);
-
+		System.out.println(33);
 		model.addAttribute("userlist", UserList);
+		System.out.println(44);
+		
 		return "getuserlist";
 	}
 
@@ -58,25 +62,32 @@ public class UserController {
 		model.addAttribute("anouser", Userserviceimp.findUserByUserId(anouserid));
 		return "getuser";
 	}
-//
-//	@PostMapping("/updateUser")
-//	public String updateUser(@ModelAttribute("user") user user, User User) {
-//		if (user.getId() == null) {
-//			return "redirect:login";
-//		}
-//
-//		GUserserviceimp.updateUser(User);
-//		return "forward:getUserList";
-//	}
-//
-//	@GetMapping("/deleteUser")
-//	public String deleteUser(@ModelAttribute("user") user user, User User) {
-//		if (user.getId() == null) {
-//			return "redirect:login";
-//		}
-//
-//		GUserserviceimp.deleteUser(User);
-//		return "forward:getUserList";
-//	}
+	
+	@GetMapping("/updateuserreq")
+	public String updateUserReq(@ModelAttribute("guser") User user, Model model) {
+		if (user.getUserId() == null) {
+			return "redirect:login";
+		}
+		return "updateuser";
+	}
+
+	@PostMapping("/updateuser")
+	public String updateUser(@ModelAttribute("guser") User user, Model model) {
+		if (user.getUserId() == null) {
+			return "redirect:login";
+		}
+		Userserviceimp.updateUser(user);
+		return "getuser";
+	}
+
+	@GetMapping("/deleteuser")
+	public String deleteUser(@ModelAttribute("guser") User user, SessionStatus status) {
+		if (user.getUserId() == null) {
+			return "redirect:login";
+		}
+		Userserviceimp.deleteUser(user);
+		status.setComplete();
+		return "redirect:index.html";
+	}
 
 }

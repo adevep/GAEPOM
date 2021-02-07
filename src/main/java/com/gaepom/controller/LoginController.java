@@ -32,7 +32,6 @@ public class LoginController {
 				
 		if (finduser != null && finduser.getPassword().equals(user.getPassword())) {
 			model.addAttribute("guser", finduser);
-			System.out.println(model.getAttribute("guser"));
 			return "getuser";
 			
 		} else {
