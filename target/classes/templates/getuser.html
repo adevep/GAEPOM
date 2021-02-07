@@ -25,22 +25,40 @@
  
 	<tr>
 	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
-		<td th:text="${guser.userId}"></td>
-		<td th:text="${guser.name}"></td>
-		<td th:text="${guser.age}"></td>
-		<td th:text="${guser.email}"></td>
-		<td th:text="${guser.phoneNum}"></td>
-		<td th:text="${guser.address}"></td>
-		<td th:text="${guser.stack}"></td>
-		<td th:text="${guser.userImage}"></td>
-		<td th:text="${guser.position}"></td>
+		<td th:if="${anouser != null}" th:text="${anouser.userId}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.userId}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.name}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.name}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.age}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.age}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.email}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.email}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.phoneNum}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.phoneNum}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.address}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.address}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.stack}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.stack}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.userImage}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.userImage}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.position}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.position}"></td>
 
 	</tr>
 
 </table> 
 
 <hr><br>
-<input name="name" type="button" value="로그아웃" onclick="location.href='/logout'">
+<input name="name" type="button" value="로그아웃" onclick="location.href='/logout'"> &nbsp;&nbsp;
+<input name="" type="button" value="전체 회원 조회" onclick="location.href='/getuserlist'">
 <a href="pfcreate.html">포트폴리오 작성</a> <br>
 <a href="projectcrud/projectinsert.html">모집글  작성</a> <br>
 
