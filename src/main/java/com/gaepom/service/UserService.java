@@ -6,8 +6,5 @@ import com.gaepom.domain.User;
 
 
 public interface UserService extends CrudRepository<User, String> {
-
-
-	
 		
 }
