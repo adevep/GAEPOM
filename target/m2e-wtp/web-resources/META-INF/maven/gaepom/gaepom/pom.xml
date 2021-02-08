@@ -68,7 +68,7 @@
 			</exclusions>
 		</dependency>
 
-		<!-- -->
+		<!-- jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -81,6 +81,19 @@
 			<version>1.1.2</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- 이미지 파일 관련 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency> <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+
 
 
 
