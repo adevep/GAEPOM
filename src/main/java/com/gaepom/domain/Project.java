@@ -65,12 +65,12 @@ public class Project {
 	@OneToMany(mappedBy="pjSeq")
 	private List<Application> applications;
 
-	@Override
-	public String toString() {
-		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId
-				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
-				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
-				+ ", applications=" + applications + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId
+//				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
+//				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
+//				+ ", applications=" + applications + "]";
+//	}
 
 }	

@@ -78,8 +78,11 @@ public class ProjectController {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-		project.setRecSeq(projectRecruitService.insertProjectRecruit(recruit));
 		System.out.println("----insert recruit----");
+		
+		
+		
+		project.setRecSeq(projectRecruitService.insertProjectRecruit(recruit));
 		projectService.insertProject(project);
 		System.out.println("-------insertProject----------------------");
 		

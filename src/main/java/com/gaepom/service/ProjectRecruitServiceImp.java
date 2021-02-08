@@ -19,6 +19,7 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 	}
 	public ProjectRecruit insertProjectRecruit(ProjectRecruit recruit) {
 		recruitRecruitRepo.save(recruit);
+		
 		return recruit;
 	}
 	public ProjectRecruit getProjectRecruit(ProjectRecruit recruit) {
