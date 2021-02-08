@@ -27,33 +27,33 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService{
 		trackingRepo.save(tracking);
 	}
 
-	public ProjectTracking getProjectTracking(ProjectTracking tracking) {
-		return trackingRepo.findById(tracking.getTrackSeq()).get();
-	}
+//	public ProjectTracking getProjectTracking(ProjectTracking tracking) {
+//		return trackingRepo.findById(tracking.getTrackSeq()).get();
+//	}
 
-	public void updateProjectTracking(ProjectTracking tracking) {
-		ProjectTracking findProjectTracking = trackingRepo.findById(tracking.getTrackSeq()).get();
-		Project findProject = projectRepo.findById(tracking.getProject().getPjSeq()).get();
+//	public void updateProjectTracking(ProjectTracking tracking) {
+//		ProjectTracking findProjectTracking = trackingRepo.findById(tracking.getTrackSeq()).get();
+//		Project findProject = projectRepo.findById(tracking.getProject().getPjSeq()).get();
+//
+//		findProject.setPjTitle(tracking.getProject().getPjTitle());
+//		findProject.setPjDescription(tracking.getProject().getPjDescription());
+//		findProject.setPjDuration(tracking.getProject().getPjDuration());
+//		findProject.setPjTools(tracking.getProject().getPjTools());
+//		findProject.setPjCategory(tracking.getProject().getPjCategory());
+//		findProject.setPjLang(tracking.getProject().getPjLang());
+//		findProject.setPjDbms(tracking.getProject().getPjDbms());		
+//		findProjectTracking.setStage(tracking.getStage());
+//		findProjectTracking.setIssue(tracking.getIssue());
+//		findProjectTracking.setOutput(tracking.getOutput());
+//		findProjectTracking.setTrackImage(tracking.getTrackImage());
+//		findProjectTracking.setTrackLink(tracking.getTrackLink());
+//		
+//		trackingRepo.save(findProjectTracking);
+//		projectRepo.save(findProject);
+//	}
 
-		findProject.setPjTitle(tracking.getProject().getPjTitle());
-		findProject.setPjDescription(tracking.getProject().getPjDescription());
-		findProject.setPjDuration(tracking.getProject().getPjDuration());
-		findProject.setPjTools(tracking.getProject().getPjTools());
-		findProject.setPjCategory(tracking.getProject().getPjCategory());
-		findProject.setPjLang(tracking.getProject().getPjLang());
-		findProject.setPjDbms(tracking.getProject().getPjDbms());		
-		findProjectTracking.setStage(tracking.getStage());
-		findProjectTracking.setIssue(tracking.getIssue());
-		findProjectTracking.setOutput(tracking.getOutput());
-		findProjectTracking.setTrackImage(tracking.getTrackImage());
-		findProjectTracking.setTrackLink(tracking.getTrackLink());
-		
-		trackingRepo.save(findProjectTracking);
-		projectRepo.save(findProject);
-	}
-
-	public void deleteProjectTracking(ProjectTracking tracking) {
-		trackingRepo.deleteById(tracking.getTrackSeq());
-	}
+//	public void deleteProjectTracking(ProjectTracking tracking) {
+//		trackingRepo.deleteById(tracking.getTrackSeq());
+//	}
 
 }
