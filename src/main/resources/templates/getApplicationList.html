@@ -20,6 +20,7 @@
 	<th width="200">아이디 </th>
 	<th width="150">각오 </th>
 	<th width="150">지원 포지션 </th>
+	<th width="150">지원 현황 </th>
 	<th width="150">지원 날짜 </th>
 	<th width="150">프로젝트 번호</th>
 </tr>
@@ -30,7 +31,7 @@
 		<td th:text="${apl.aplPosi}"></td>
 		<td th:text="${apl.selected}"></td>
 		<td th:text="${apl.aplDate}"></td>
-		<td th:text="${apl.pjSeq}"></td>
+		<td th:text="${apl.pjSeq.pjSeq}"></td>
 	</tr>
 
 </table>

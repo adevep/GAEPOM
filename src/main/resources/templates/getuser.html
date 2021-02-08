@@ -71,8 +71,16 @@
 <input type="button" value="전체 지원  조회" onclick="location.href='/getApplicationList'"> &nbsp;&nbsp;
 <form action="../getApplicationByUserId" method="get">
    <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
-	<!-- <input type="hidden" th:value= "0" th:attr="name='selected'"> -->
-	<input type="submit" value="앱 조회"/></td>
+	<input type="submit" value="지원 진행중 앱 조회"/></td>
 </form>
+<form action="../getFailedAppByUserId" method="get">
+   <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+	<input type="submit" value="떨어진 앱 조회"/></td>
+</form>
+<form action="../getProjectAllByUserId" method="get">
+   <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+	<input type="submit" value="내가 주최한 플젝모집글  조회"/></td>
+</form>
+
 </body>
 </html>

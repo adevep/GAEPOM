@@ -15,4 +15,8 @@ public interface ProjectRecruitService {
 	void updateProjectRecruit(ProjectRecruit recruit);
 
 	void deleteProjectRecruit(ProjectRecruit recruit);
+	
+	String getPosition(ProjectRecruit recruit);
+	
+//	List<ProjectRecruit> getProjectRecruitListByUserId(String userId);
 }

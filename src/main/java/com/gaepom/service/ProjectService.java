@@ -18,4 +18,9 @@ public interface ProjectService {
 	//void updateProjectWithRecSeq2(Project project, Long recSeq);
 	
 	void deleteProject(Project project);
+	
+	//List<Project> getProjectListByUserId(String userId);
+	
+//	List<Project> getAllProjectByUserId(String userId);
+
 }

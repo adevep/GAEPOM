@@ -21,6 +21,14 @@ public class ProjectServiceImp implements ProjectService {
 	public List<Project> getProjectList(Project project) {
 		return (List<Project>) projectRepo.findAll();
 	}
+	
+//	public List<Project> getProjectListByUserId(String userId) {
+//		return (List<Project>) projectRepo.findProjectByUserId(userId);
+//	}
+	
+//	public List<Project> getAllProjectByUserId(String userId) {
+//		return (List<Project>) projectRepo.findAllProjectByUserId(userId);
+//	}
 
 	public void insertProject(Project project) {
 		projectRepo.save(project);

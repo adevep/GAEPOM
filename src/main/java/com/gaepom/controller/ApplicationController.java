@@ -75,7 +75,7 @@ public class ApplicationController {
 	
 	// user id로 selected 가 0인경우  해당 지원서 보기
 	@GetMapping("/getApplicationByUserId")
-	public String getUser(@ModelAttribute("guser") User user, @RequestParam("userId") String userId, Model model) {
+	public String getApplication(@ModelAttribute("guser") User user, @RequestParam("userId") String userId, Model model) {
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
 		}
@@ -85,6 +85,23 @@ public class ApplicationController {
 		List<Application> userApl = applicationService.findAppByUserId(userId);
 		System.out.println(userApl);
 		model.addAttribute("userApl", userApl);
+
+		return "getApplicationList";
+	}
+	
+	
+	@GetMapping("/getFailedAppByUserId")
+	public String getFailedApplication(@ModelAttribute("guser") User user, @RequestParam("userId") String userId, Model model) {
+		if (user.getUserId() == null) {
+			return "redirect:login.html";
+		}
+		System.out.println("user id");
+		System.out.println(userId);
+		
+		List<Application> userApl = applicationService.findFailedAppByUserId(userId);
+		System.out.println(userApl);
+		model.addAttribute("userApl", userApl);
+
 		return "getApplicationList";
 	}
 	

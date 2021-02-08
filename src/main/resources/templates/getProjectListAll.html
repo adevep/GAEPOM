@@ -1,75 +1,89 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>프로젝트 모집글 리스트</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>프로젝트 모집글 리스트</title>
 </head>
+
 <body>
 	<hr>
 	<h3>프로젝트 모집글 리스트</h3>
 	<hr><br>
+	<h2> hello</h2>
+	<td th:text="${guser.userId}"></td>
+	<table border="1" width="700">
+		<thead>
+			<tr>
+				<th width="100">프로젝트 번호</th>
+				<th width="100">프로젝트 모집글 번</th>
+				<th width="200">프로젝트 트래커 번호</th>
+				<th width="200">작성자아이디 </th>
+				<th width="200">타이틀 </th>
+				<th width="200">내용</th>
+				<th width="200">프로젝트 기간</th>
+				<th width="200">사용툴</th>
+				<th width="200">분야 </th>
+				<th width="150">언어</th>
+				<th width="200">dbms</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="pj: ${projectList}">
+				<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
+				<td th:text="${pj.pjSeq}"></td>
+				<td th:text="${pj.recSeq.recSeq}"></td>
+				<td th:text="${pj.trackSeq}"></td>
+				<td th:text="${pj.userId}"></td>
+				<!-- <td th:each="user: ${pj.userId}">
+					<td th:text="$user.userId"></td>
+				</td>  -->
+				<td th:text="${pj.pjTitle}"></td>
+				<td th:text="${pj.pjDescription}"></td>
+				<td th:text="${pj.pjDuration}"></td>
+				<td th:text="${pj.pjTools}"></td>
+				<td th:text="${pj.pjCategory}"></td>
+				<td th:text="${pj.pjLang}"></td>
+				<td th:text="${pj.pjDbms}"></td>
+			</tr>
+		</tbody>
+		<thead>
+			<th width="200">모집글 번호</th>
+			<th width="200">필요인원수</th>
+			<th width="200">필요포지션</th>
+			<th width="200">지역</th>
+			<th width="150">우대사항</th>
+			<th width="150">모집상태</th>
+			<th width="150">기간</th>
+			<th width="150">모집글 생성 날짜</th>
+			<th width="150">지원하기</th>
+		</thead>
+		<tbody>
+			<tr th:each="rec: ${projectRecruitList}">
+				<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
+				<td th:text="${rec.recSeq}"></td>
+				<td th:text="${rec.needNum}"></td>
+				<td th:text="${rec.needPosi}"></td>
+				<td th:text="${rec.location}"></td>
+				<td th:text="${rec.preference}"></td>
+				<td th:text="${rec.recStatus}"></td>
+				<td th:text="${rec.recDuration}"></td>
+				<td th:text="${rec.recDate}"></td>
+				<td>
+					<form action="../getPosition" method="get">
+						<input type="hidden" th:text="${guser.userId}" th:value="${guser.userId}"
+							th:attr="name='userId'">
+						<input type="hidden" th:text="${rec.recSeq}" th:value="${rec.recSeq}" th:attr="name='recSeq'">
+						<input type="submit" value="지원하기 " />
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-<table border="1" width="700">
-<thead>
-<tr>
-	<th width="100">프로젝트 번호</th>
-	<th width="100">프로젝트 모집글 번</th>
-	<th width="200">프로젝트 트래커 번호</th>
-	<th width="200">작성자아이디 </th>
-	<th width="200">타이틀 </th>
-	<th width="200">내용</th>
-	<th width="200">프로젝트 기간</th>
-	<th width="200">사용툴</th>
-	<th width="200">분야 </th>
-	<th width="150">언어</th>
-	<th width="200">dbms</th>
-</tr>
-</thead>
-<tbody>
-	<tr th:each="pj: ${projectList}">
-	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
-		<td th:text="${pj.pjSeq}"></td>
-		<td th:text="${pj.recSeq.recSeq}"></td>
-		<td th:text="${pj.trackSeq}"></td>
-		<td th:text="${pj.userId}"></td>
-		<td th:text="${pj.pjTitle}"></td>
-		<td th:text="${pj.pjDescription}"></td>
-		<td th:text="${pj.pjDuration}"></td>
-		<td th:text="${pj.pjTools}"></td>
-		<td th:text="${pj.pjCategory}"></td>
-		<td th:text="${pj.pjLang}"></td>
-		<td th:text="${pj.pjDbms}"></td>
-	</tr>
-</tbody>
-<thead>
-	<th width="200">모집글 번호</th>
-	<th width="200">필요인원수</th>
-	<th width="200">필요포지션</th>
-	<th width="200">지역</th>
-	<th width="150">우대사항</th>
-	<th width="150">모집상태</th>
-	<th width="150">기간</th>
-	<th width="150">모집글 생성 날짜</th>
-</thead>
-<tbody>
-	<tr th:each="rec: ${projectRecruitList}">
-	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
-		<td th:text="${rec.recSeq}"></td>
-		<td th:text="${rec.needNum}"></td>
-		<td th:text="${rec.needPosi}"></td>
-		<td th:text="${rec.location}"></td>
-		<td th:text="${rec.preference}"></td>
-		<td th:text="${rec.recStatus}"></td>
-		<td th:text="${rec.recDuration}"></td>
-		<td th:text="${rec.recDate}"></td>
-	</tr>
-</tbody>
-</table> 
-
-<hr><br>
-<input name="name" type="button" value="로그아웃" onclick="location.href='/logout'">
-<input name="name" type="button" value="내프로젝트 모집 전체 검색" onclick="location.href='/logout'">
-<input name="name" type="button" value="지원하기" onclick="location.href='/'">
-
+	<hr><br>
+	<input name="name" type="button" value="로그아웃" onclick="location.href='/logout'">
+	<input name="name" type="button" value="내프로젝트 모집 전체 검색" onclick="location.href='/logout'">
 </body>
+
 </html>

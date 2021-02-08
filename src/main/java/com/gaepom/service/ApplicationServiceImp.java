@@ -30,12 +30,12 @@ public class ApplicationServiceImp implements ApplicationService {
 		System.out.println("진짜 나오나" + userId);
 		System.out.println(applicationRepo.findApplicationByUserId(userId));
 		return (List<Application>)applicationRepo.findApplicationByUserId(userId);
-//		Application findApp = applicationRepo.findApplicationByUserId(userId);
-//		if (findApp != null) {
-//			return findApp;
-//		} else {
-//			throw new UserNotFoundException("해당 애플리케이션을 찾을수 없습니다.");
-//		}
+	}
+	
+	public List<Application> findFailedAppByUserId(String userId) {
+		System.out.println("진짜 나오나" + userId);
+		System.out.println(applicationRepo.findFailedAppsByUserId(userId));
+		return (List<Application>)applicationRepo.findFailedAppsByUserId(userId);
 	}
 
 	public void updateApplication(Application application) {
