@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 수정</title>
+</head>
+<body>
+<center>
+
+<h3>프로젝트 정보 수정</h3>
+
+<hr><br>
+아이디 : <strong><span th:text = "${guser.userId}"/></strong>
+
+<br><br>
+<form action="updateProjectRecruit" method="post">
+
+	<table border="1">
+<tbody>
+	<tr th:each="pj: ${projectList}">
+	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
+	<tr>
+		<td>프로젝트 번호</td><td align="left"><input type="value" name="pjSeq" th:value="${pj.pjSeq}"></td>
+	</tr>
+	<tr>
+		<td>프로젝트 모집글번</td><td align="left"><input type="value" name="pjSeq" th:value="${pj.recSeq.recSeq}"></td>
+	</tr>
+	<tr>
+		<td>프로젝트 트래커 번호</td><td align="left"><input type="value" name="trackSeq" th:value="${pj.trackSeq}"></td>
+	</tr>
+	<tr>
+		<td>작성자아이디</td><td align="left"><input type="value" name="userId" th:value="${pj.userId}"></td>
+	</tr>
+	<tr>
+		<td>타이틀</td><td align="left"><input type="value" name="pjTitle" th:value="${pj.pjTitle}"></td>
+	</tr>
+	<tr>
+		<td>내용</td><td align="left"><input type="value" name="pjDescription" th:value="${pj.pjDescription}"></td>
+	</tr>
+	<tr>
+		<td>프로젝트 기간</td><td align="left"><input type="value" name="pjDuration" th:value="${pj.pjDuration}"></td>
+	</tr>
+	<tr>	
+		<td>사용툴</td><td align="left"><input type="value" name="pjTools" th:value="${pj.pjTools}"></td>
+	</tr>
+	<tr>	
+		<td>분야 </td><td align="left"><input type="value" name="pjCategory" th:value="${pj.pjCategory}"></td>
+	</tr>
+	<tr>	
+		<td>언어</td><td align="left"><input type="value" name="pjLang" th:value="${pj.pjLang}"></td>
+	</tr>
+	<tr>	
+		<td>dbms</td><td align="left"><input type="value" name="pjDbms" th:value="${pj.pjDbms}"></td>
+	</tr>
+</tbody>
+		<tr>
+			<td colspan="2" align="center">
+			<input type="submit" value="회원 정보 수정"/></td>
+		</tr>
+	</table>
+	
+</form>
+
+</center>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>로그인 회원 정보</title>
@@ -8,7 +9,6 @@
 	<hr>
 	<h3>로그인 회원 정보</h3>
 	<hr><br>
-
 <table border="1" width="700">
 
 <tr>
@@ -19,29 +19,54 @@
 	<th width="150">번호</th>
 	<th width="150">주소</th>
 	<th width="150">기술</th>
-	<th width="150">이미지 경로</th>
+	<th width="150">이미지</th>
 	<th width="150">포지션</th>
 </tr>
  
 	<tr>
 	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
-		<td th:text="${guser.userId}"></td>
-		<td th:text="${guser.name}"></td>
-		<td th:text="${guser.age}"></td>
-		<td th:text="${guser.email}"></td>
-		<td th:text="${guser.phoneNum}"></td>
-		<td th:text="${guser.address}"></td>
-		<td th:text="${guser.stack}"></td>
-		<td th:text="${guser.userImage}"></td>
-		<td th:text="${guser.position}"></td>
+		<td th:if="${anouser != null}" th:text="${anouser.userId}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.userId}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.name}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.name}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.age}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.age}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.email}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.email}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.phoneNum}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.phoneNum}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.address}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.address}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.stack}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.stack}"></td>
+
+		<td th:if="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + anouser.userImage}}"></td>
+		<td th:unless="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + guser.userImage}}"></td>
+
+		<td th:if="${anouser != null}" th:text="${anouser.position}"></td>
+		<td th:unless="${anouser != null}" th:text="${guser.position}"></td>
 
 	</tr>
 
 </table> 
 
 <hr><br>
-<input name="name" type="button" value="로그아웃" onclick="location.href='/logout'">
-<a href="pfcrud/pfinsert.html">포트폴리오 작성</a> <br>
+<input type="button" value="로그아웃" onclick="location.href='/logout'"> &nbsp;&nbsp;
+<input type="button" value="전체 회원 조회" onclick="location.href='/getuserlist'"> &nbsp;&nbsp;
+<input type="button" value="회원 정보 수정" onclick="location.href='/updateuserreq'"> &nbsp;&nbsp;
+<input type="button" value="회원 탈퇴" onclick="location.href='/deleteuser'"> &nbsp;&nbsp; <br>
+
+<input type="button" value="포트폴리오 등록" onclick="location.href='/portfoliocrud/portfolioinsert.html'"> &nbsp;&nbsp;
+<input type="button" value="모든 포트폴리오 조회" onclick="location.href='/getPortfolioList'"> &nbsp;&nbsp;
+<input type="button" value="포트폴리오 조회" onclick="location.href='/getPortfolio'"> &nbsp;&nbsp;
+<input type="button" value="포트폴리오 수정" onclick="location.href='/updatePortfolio'"> &nbsp;&nbsp;
+<input type="button" value="포트폴리오 삭제" onclick="location.href='/deletePortfolio'"> &nbsp;&nbsp;
 
 </body>
 </html>

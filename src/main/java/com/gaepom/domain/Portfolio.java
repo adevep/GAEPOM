@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,6 +54,7 @@ public class Portfolio {
 	@Column(name="pf_category")
 	private String pfCategory;
 	
+//	@OneToMany
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=true)
 	private User userId;
