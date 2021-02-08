@@ -55,6 +55,24 @@ public class ProjectRecruitController {
 		model.addAttribute("projectRecruit", projectRecruitService.getProjectRecruit(recruit));
 		return "getProjectRecruit";
 	}
+<<<<<<< Updated upstream
+=======
+	
+	
+	
+	@GetMapping("/getPosition") // 필요포지션
+	public String getPositionView(@ModelAttribute("need_posi") User user, ProjectRecruit recruit, Model model) {
+		if (user.getUserId() == null) {
+			return "redirect:login";
+		}
+		System.out.println(user.getUserId());
+		String[] need_Posi = recruit.getNeedPosi().split("\\,");
+		model.addAttribute(need_Posi);
+		return "getPosition";
+	}
+
+	
+>>>>>>> Stashed changes
 	@PostMapping("/updateProjectRecruit")
 	public String updateProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
