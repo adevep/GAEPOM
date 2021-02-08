@@ -72,7 +72,7 @@ public class ProjectController {
 		return "redirect:getProjectList";
 	}
 	
-	//project랑 project recruit 합치기 위한 거
+	//project랑 project recruit 생성을 위한 로직
 	@PostMapping("/insertProjectAll")
 	public String insertProjectAll(@ModelAttribute("guser") User user, Project project, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {

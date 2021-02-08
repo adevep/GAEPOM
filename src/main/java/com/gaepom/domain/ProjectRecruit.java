@@ -20,7 +20,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-//@ToString(exclude="project")
 @Table(name="project_recruit")
 public class ProjectRecruit {
 
@@ -50,11 +49,11 @@ public class ProjectRecruit {
 	@OneToOne(mappedBy="recSeq")
 	private Project project;
 
-	@Override
-	public String toString() {
-		return "ProjectRecruit [recSeq=" + recSeq + ", needNum=" + needNum + ", needPosi=" + needPosi + ", location="
-				+ location + ", preference=" + preference + ", recStatus=" + recStatus + ", recDuration=" + recDuration
-				+ ", recDate=" + recDate + ", project=" + project.getPjSeq() + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "ProjectRecruit [recSeq=" + recSeq + ", needNum=" + needNum + ", needPosi=" + needPosi + ", location="
+//				+ location + ", preference=" + preference + ", recStatus=" + recStatus + ", recDuration=" + recDuration
+//				+ ", recDate=" + recDate + ", project=" + project.getPjSeq() + "]";
+//	}
 	
 }
