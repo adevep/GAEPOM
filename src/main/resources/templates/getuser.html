@@ -9,7 +9,6 @@
 	<hr>
 	<h3>로그인 회원 정보</h3>
 	<hr><br>
-
 <table border="1" width="700">
 
 <tr>
@@ -20,7 +19,7 @@
 	<th width="150">번호</th>
 	<th width="150">주소</th>
 	<th width="150">기술</th>
-	<th width="150">이미지 경로</th>
+	<th width="150">이미지</th>
 	<th width="150">포지션</th>
 </tr>
  
@@ -47,8 +46,8 @@
 		<td th:if="${anouser != null}" th:text="${anouser.stack}"></td>
 		<td th:unless="${anouser != null}" th:text="${guser.stack}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.userImage}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.userImage}"></td>
+		<td th:if="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + anouser.userImage}}"></td>
+		<td th:unless="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + guser.userImage}}"></td>
 
 		<td th:if="${anouser != null}" th:text="${anouser.position}"></td>
 		<td th:unless="${anouser != null}" th:text="${guser.position}"></td>

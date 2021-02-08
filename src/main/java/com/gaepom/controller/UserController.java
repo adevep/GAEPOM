@@ -2,6 +2,8 @@ package com.gaepom.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gaepom.domain.User;
+import com.gaepom.service.UserService;
 import com.gaepom.service.UserServiceImp;
 
 
@@ -21,20 +25,16 @@ import com.gaepom.service.UserServiceImp;
 public class UserController {
 
 	@Autowired
-	private UserServiceImp Userserviceimp;
+	private UserService Userservice;
 	
 
 	@GetMapping("/getuserlist")
 	public String getUserList(@ModelAttribute("guser") User user, Model model) {
-		System.out.println(11);
 		if (user.getUserId() == null) {
 			return "redirect:login.html";
 		}
-		System.out.println(22);
-		List<User> UserList = Userserviceimp.getUserList(user);
-		System.out.println(33);
+		List<User> UserList = Userservice.getUserList(user);
 		model.addAttribute("userlist", UserList);
-		System.out.println(44);
 		
 		return "getuserlist";
 	}
@@ -43,13 +43,12 @@ public class UserController {
 
 	
 	@PostMapping("/insertuser")
-	public String insertUser(@ModelAttribute User user) {
+	public String insertUser(@ModelAttribute User user, @RequestParam("filename") MultipartFile mfile) {
 		if (user.getUserId() == null) {		
 			return "redirect:index.html";
 		}
 		
-		Userserviceimp.insertUser(user);
-		System.out.println("-------insertuser----------------------");
+		Userservice.insertUser(user, mfile);
 		return "redirect:login.html";
 	}
 
@@ -59,7 +58,7 @@ public class UserController {
 			return "redirect:login.html";
 		}
 
-		model.addAttribute("anouser", Userserviceimp.findUserByUserId(anouserid));
+		model.addAttribute("anouser", Userservice.findUserByUserId(anouserid));
 		return "getuser";
 	}
 	
@@ -76,7 +75,7 @@ public class UserController {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-		Userserviceimp.updateUser(user);
+		Userservice.updateUser(user);
 		return "getuser";
 	}
 
@@ -85,7 +84,7 @@ public class UserController {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-		Userserviceimp.deleteUser(user);
+		Userservice.deleteUser(user);
 		status.setComplete();
 		return "redirect:index.html";
 	}
