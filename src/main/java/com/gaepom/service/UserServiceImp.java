@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.User;
 import com.gaepom.exception.UserException;
+import com.gaepom.exception.UserNotFoundException;
 
 
 @Service
@@ -27,7 +29,7 @@ public class UserServiceImp implements UserService {
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {
-			return null;
+			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
 		}
 	}
 	
@@ -37,7 +39,7 @@ public class UserServiceImp implements UserService {
 		if (findUser.isPresent()) {
 			return (List<User>) userRepo.findAll();
 		} else {
-			return null;
+			throw new UserNotFoundException("해당 회원 목록을 찾을수 없습니다.");
 		}
 	}
 
@@ -45,7 +47,7 @@ public class UserServiceImp implements UserService {
 		Optional<User> findUser = userRepo.findById(user.getUserId());
 		if (!findUser.isPresent()) {
 			userRepo.save(user);
-			logger.info(user.getUserId() + "회원 가입");
+			logger.info(user.getUserId() + " 회원 가입");
 			
 		} else {
 			throw new UserException("이미 가입되어 있는 회원입니다.");
@@ -58,7 +60,40 @@ public class UserServiceImp implements UserService {
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {
-			return null;
+			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
+		}
+	}
+	
+
+	public void updateUser(User user) {
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		if (findUser.isPresent()) {
+						
+			findUser.get().setPassword(user.getPassword());
+			findUser.get().setName(user.getName());
+			findUser.get().setAge(user.getAge());
+			findUser.get().setEmail(user.getEmail());
+			findUser.get().setPhoneNum(user.getPhoneNum());
+			findUser.get().setAddress(user.getAddress());
+			findUser.get().setStack(user.getStack());
+			findUser.get().setUserImage(user.getUserImage());
+			findUser.get().setPosition(user.getPosition());
+			
+			userRepo.save(findUser.get());
+			logger.info(user.getUserId() + " 회원 정보 수정");
+		} else {
+			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");		
+		}
+	}
+	
+	public void deleteUser(User user) {
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		if (findUser.isPresent()) {
+			userRepo.delete(findUser.get());
+			logger.info(user.getUserId() + " 회원 탈퇴");
+			
+		} else {
+			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
 		}
 	}
 

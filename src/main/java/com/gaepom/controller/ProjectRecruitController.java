@@ -3,6 +3,7 @@ package com.gaepom.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 
+@Controller
 @SessionAttributes("guser")
 public class ProjectRecruitController {
 	
@@ -123,7 +125,7 @@ public class ProjectRecruitController {
 
 		projectRecruitService.insertProjectRecruit(recruit);
 		System.out.println("-------insertProjectRecruit----------------------");
-		return "redirect:getprojectRecruitList";
+		return "redirect:getProjectRecruitList";
 	}
 
 	@GetMapping("/getProjectRecruit")

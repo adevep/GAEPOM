@@ -19,11 +19,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
+//@ToString(exclude="project")
 @Table(name="project_recruit")
 public class ProjectRecruit {
-	
+
 	@Id
 	@GeneratedValue
 	private Long recSeq;
@@ -49,4 +49,12 @@ public class ProjectRecruit {
 	
 	@OneToOne(mappedBy="recSeq")
 	private Project project;
+
+	@Override
+	public String toString() {
+		return "ProjectRecruit [recSeq=" + recSeq + ", needNum=" + needNum + ", needPosi=" + needPosi + ", location="
+				+ location + ", preference=" + preference + ", recStatus=" + recStatus + ", recDuration=" + recDuration
+				+ ", recDate=" + recDate + ", project=" + project.getPjSeq() + "]";
+	}
+	
 }
