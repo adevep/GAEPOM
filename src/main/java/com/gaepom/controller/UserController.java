@@ -47,9 +47,12 @@ public class UserController {
 		if (user.getUserId() == null) {		
 			return "redirect:index.html";
 		}
-		
-		Userservice.insertUser(user, mfile);
-		return "redirect:login.html";
+		if(!mfile.isEmpty()) {
+			Userservice.insertUser(user, mfile);
+		} else {
+			Userservice.insertUserNoimg(user);
+		}
+		return "redirect:login.html";			
 	}
 
 	@GetMapping("/getanouser")
@@ -71,12 +74,17 @@ public class UserController {
 	}
 
 	@PostMapping("/updateuser")
-	public String updateUser(@ModelAttribute("guser") User user, Model model) {
+	public String updateUser(@ModelAttribute("guser") User user, @RequestParam("filename") MultipartFile mfile, Model model) {
 		if (user.getUserId() == null) {
 			return "redirect:login";
 		}
-		Userservice.updateUser(user);
-		return "getuser";
+		if(!mfile.isEmpty()) {
+			Userservice.updateUser(user, mfile);
+		} else {
+			Userservice.updateUserNoimg(user);
+		}
+		//return "getuser";		
+		return "redirect:index.html";
 	}
 
 	@GetMapping("/deleteuser")
