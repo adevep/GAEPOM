@@ -8,7 +8,7 @@ public interface ProjectRecruitService {
 
 	List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit);
 
-	void insertProjectRecruit(ProjectRecruit recruit);
+	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
 
 	ProjectRecruit getProjectRecruit(ProjectRecruit recruit);
 

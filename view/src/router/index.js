@@ -21,7 +21,7 @@ const routes = [
   {
     path: "/project",
     name: "Project",
-    component: () => import("../views/Project.vue")
+    component: () => import("../views/Project.vue"), 
   },
   {
     path: "/mentor",
