@@ -56,7 +56,10 @@ public class ProjectRecruitController {
 		return "getProjectRecruit";
 	}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 	
 	
 	
@@ -72,6 +75,9 @@ public class ProjectRecruitController {
 	}
 
 	
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	@PostMapping("/updateProjectRecruit")
 	public String updateProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit) {

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>지원하기 페이지</title>
+</head>
+<body>
+	<hr>
+	<h3>지원하기</h3>
+	<hr><br>
+
+<table border="1" width="700">
+<thead>
+<tr>
+	<th width="100">지원</th>
+	<th width="100">지원포지션</th>
+	
+
+</tr>
+</thead>
+<tbody>
+	<tr th:each="po: ${need_Posi}">
+	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
+		<td th:text="${rec}">
+		<input type="radio" name="apply" value="${}" /></td>
+		
+
+	</tr>
+</tbody>
+
+</table> 
+
+<hr><br>
+<input name="name" type="button" value="로그아웃" onclick="location.href='/logout'">
+<input type="submit" value="지원완료"/></td>
+</body>
+</html>

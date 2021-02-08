@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gaepom.domain.Application;
+import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
 import com.gaepom.service.ApplicationService;
 
