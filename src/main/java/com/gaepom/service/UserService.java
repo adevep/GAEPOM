@@ -2,9 +2,7 @@ package com.gaepom.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gaepom.domain.User;
@@ -16,8 +14,10 @@ public interface UserService {
 	public User getUser(User User);
 	public List<User> getUserList(User User);
 	public void insertUser(User user, MultipartFile mfile);
+	public void insertUserNoimg(User user);
 	public User findUserByUserId(String userid);
-	public void updateUser(User user);
+	public void updateUser(User user, MultipartFile mfile);
+	public void updateUserNoimg(User user);
 	public void deleteUser(User user);
 	
 		
