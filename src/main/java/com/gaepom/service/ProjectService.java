@@ -13,6 +13,14 @@ public interface ProjectService {
 	Project getProject(Project project);
 
 	void updateProject(Project project);
-
+	
+	//void updateProjectWithRecSeq(Long pjSeq, Long recSeq);
+	//void updateProjectWithRecSeq2(Project project, Long recSeq);
+	
 	void deleteProject(Project project);
+	
+	//List<Project> getProjectListByUserId(String userId);
+	
+//	List<Project> getAllProjectByUserId(String userId);
+
 }

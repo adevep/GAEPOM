@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --desc C:/ITStudy/07_2.SpringBoot/gaepom/view",
+    "build": "vue-cli-service build --desc C:/ITStudy_IntelliJ/GAEPOM/view",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

@@ -1,68 +1,67 @@
-pfTools<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>포트폴리오 수정</title>
+	<meta charset="UTF-8">
+	<title>포트폴리오 수정</title>
 </head>
+
 <body>
-<center>
+	<center>
+		<h3>포트폴리오 수정</h3>
 
-<h3>포트폴리오 수정</h3>
+		<hr>
+		아이디 : <strong><span th:text="${guser.userId}" /></strong>
+		<hr>
 
-<hr><br>
-아이디 : <strong><span th:text = "${guser.userId}"/></strong>
-
-<br><br>
-<form action="updatePortfolio" method="post">
-
-	<table border="1">
-
-		<tr>
-			<td>패스워드</td><td align="left">
-			<input type="text" name="pfSubtitle" th:value = "${portfolio.pfSubtitle}"/></td>
-		</tr>
-		<tr>
-			<td>이름</td><td align="left">
-			<input type="text" name="pfDuration" th:value = "${portfolio.pfDuration}"/></td>
-		</tr>
-		<tr>
-			<td>나이</td><td align="left">
-			<input type="text" name="pfDescription" th:value = "${portfolio.pfDescription}"/></td>
-		</tr>
-		<tr>
-			<td>Email</td><td align="left">
-			<input type="text" name="participation" th:value = "${portfolio.participation}"/></td>
-		</tr>
-		<tr>
-			<td>전화번호</td><td align="left">
-			<input type="text" name="pfLang" th:value = "${portfolio.pfLang}"/></td>
-		</tr>
-		<tr>
-			<td>주소</td><td align="left">
-			<input type="text" name="pfTools" th:value = "${portfolio.pfTools}"/></td>
-		</tr>
-			<tr>
-			<td>기술</td><td align="left">
-			<input type="text" name="pfDbms" th:value = "${portfolio.pfDbms}"/></td>
-		</tr>
-		<tr>
-			<td>이미지</td><td align="left">
-			<input type="text" name="pfLink" th:value = "${portfolio.pfLink}"/></td>
-		</tr>
-			<tr>
-			<td>포지션</td><td align="left">
-			<input type="text" name="pfCategory" th:value = "${portfolio.pfCategory}"/></td>
-		</tr>
-	
-		<tr>
-			<td colspan="2" align="center">
-			<input type="submit" value="포트폴리오 수정"/></td>
-		</tr>
-	</table>
-	
-</form>
-
-
-</center>
+		<form action="updateportfolio" method="post">
+			<table border="1">
+				<tbody>
+					<tr th:each="pf : ${portfoliolist}"></tr>
+					<tr>
+						<td>프로젝트명</td><td align="left">
+							<input type="text" name="pfSubtitle" th:value="${pfSubtitle}" /></td>
+					</tr>
+					<tr>
+						<td>프로젝트기간</td><td align="left">
+							<input type="text" name="pfDuration" th:value="${pfDuration}" /></td>
+					</tr>
+					<tr>
+						<td>설명</td><td align="left">
+							<input type="text" name="pfDescription" th:value="${pfDescription}" /></td>
+					</tr>
+					<tr>
+						<td>참여도</td><td align="left">
+							<input type="text" name="participation" th:value="${participation}" /></td>
+					</tr>
+					<tr>
+						<td>사용언어</td><td align="left">
+							<input type="text" name="pfLang" th:value="${pfLang}" /></td>
+					</tr>
+					<tr>
+						<td>사용툴</td><td align="left">
+							<input type="text" name="pfTools" th:value="${pfTools}" /></td>
+					</tr>
+					<tr>
+						<td>DBMS</td><td align="left">
+							<input type="text" name="pfDbms" th:value="${pfDbms}" /></td>
+					</tr>
+					<tr>
+						<td>참조링크</td><td align="left">
+							<input type="text" name="pfLink" th:value="${pfLink}" /></td>
+					</tr>
+					<tr>
+						<td>분야</td><td align="left">
+							<input type="text" name="pfCategory" th:value="${pfCategory}" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<input type="submit" value="포트폴리오 수정" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</center>
 </body>
+
 </html>

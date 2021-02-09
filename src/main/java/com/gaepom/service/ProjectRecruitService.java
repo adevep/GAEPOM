@@ -8,11 +8,15 @@ public interface ProjectRecruitService {
 
 	List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit);
 
-	void insertProjectRecruit(ProjectRecruit recruit);
+	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
 
 	ProjectRecruit getProjectRecruit(ProjectRecruit recruit);
 
 	void updateProjectRecruit(ProjectRecruit recruit);
 
 	void deleteProjectRecruit(ProjectRecruit recruit);
+	
+	String getPosition(ProjectRecruit recruit);
+	
+//	List<ProjectRecruit> getProjectRecruitListByUserId(String userId);
 }

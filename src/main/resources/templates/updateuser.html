@@ -13,7 +13,7 @@
 아이디 : <strong><span th:text = "${guser.userId}"/></strong>
 
 <br><br>
-<form action="updateuser" method="post">
+<form action="updateuser" method="post" id="form" name="form" enctype="multipart/form-data">
 
 	<table border="1">
 
@@ -48,7 +48,9 @@
 		</tr>
 		<tr>
 			<td>이미지</td><td align="left">
-			<input type="text" name="userImage" th:value = "${guser.userImage}"/></td>
+			<img th:src="@{${'http://localhost' + '/upload/' + guser.userImage}}"><br>
+			<input type="file" name="filename" value="이미지 등록"/>	
+		</td>
 		</tr>
 			<tr>
 			<td>포지션</td><td align="left">

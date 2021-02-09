@@ -26,6 +26,18 @@ public class ApplicationServiceImp implements ApplicationService {
 		return applicationRepo.findById(application.getAplSeq()).get();
 	}
 
+	public List<Application> findAppByUserId(String userId) {
+		System.out.println("진짜 나오나" + userId);
+		System.out.println(applicationRepo.findApplicationByUserId(userId));
+		return (List<Application>)applicationRepo.findApplicationByUserId(userId);
+	}
+	
+	public List<Application> findFailedAppByUserId(String userId) {
+		System.out.println("진짜 나오나" + userId);
+		System.out.println(applicationRepo.findFailedAppsByUserId(userId));
+		return (List<Application>)applicationRepo.findFailedAppsByUserId(userId);
+	}
+
 	public void updateApplication(Application application) {
 		Application findApplication = applicationRepo.findById(application.getAplSeq()).get();
 

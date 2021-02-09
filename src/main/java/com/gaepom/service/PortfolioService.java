@@ -6,15 +6,15 @@ import com.gaepom.domain.Portfolio;
 
 public interface PortfolioService {
 	
-	public Portfolio getPortfolio(Portfolio portfolio);
-	
-	public List<Portfolio> getPortfolioList(Portfolio portfolio);
-	
-	public Portfolio findPortfolioByUserId(String userid);
-	
-	public void insertPortfolio(Portfolio portfolio);
-	
-	public void updatePortfolio(Portfolio portfolio);
+	List<Portfolio> getPortfolioList(Portfolio portfolio);
 
-	public void deletePortfolio(Portfolio portfolio);
+	Portfolio getPortfolio(Portfolio portfolio);
+	
+//	Portfolio findPortfolioByUserId(String userId);
+	
+	void insertPortfolio(Portfolio portfolio);
+	
+	void updatePortfolio(Portfolio portfolio);
+
+	void deletePortfolio(Portfolio portfolio);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
 
@@ -13,10 +14,21 @@ public class ProjectServiceImp implements ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepo;
+	
+	@Autowired
+	private ProjectRecruitRepository projectRecruitRepo;
 
 	public List<Project> getProjectList(Project project) {
 		return (List<Project>) projectRepo.findAll();
 	}
+	
+//	public List<Project> getProjectListByUserId(String userId) {
+//		return (List<Project>) projectRepo.findProjectByUserId(userId);
+//	}
+	
+//	public List<Project> getAllProjectByUserId(String userId) {
+//		return (List<Project>) projectRepo.findAllProjectByUserId(userId);
+//	}
 
 	public void insertProject(Project project) {
 		projectRepo.save(project);
@@ -40,6 +52,27 @@ public class ProjectServiceImp implements ProjectService {
 		projectRepo.save(findProject);
 	}
 
+//	public void updateProjectWithRecSeq(Project project, ProjectRecruit recSeq) {
+//		Project findProject = projectRepo.findById(project.getPjSeq()).get();
+//		findProject.setRecSeq(recSeq);		
+//		projectRepo.save(findProject);
+//	}
+//	
+	
+//	public void updateProjectWithRecSeq(Long pjSeq, Long recSeq) {
+//		projectRepo.updateRecSeq(pjSeq, recSeq);
+//	}
+//	
+//	public void updateProjectWithRecSeq2(Project project, ProjectRecruit recruit) {
+//		Project findProject = projectRepo.findById(project.getPjSeq()).get();
+//		ProjectRecruit findRec = projectRecruitRepo.findById(recruit.getRecSeq()).get();
+//		Long findRecSeq = findRec.getRecSeq();
+//		
+//		findProject.setRecSeq(findRecSeq);
+//		projectRepo.save(findProject);
+//		
+//	}
+	
 	public void deleteProject(Project project) {
 		projectRepo.deleteById(project.getPjSeq());
 	}

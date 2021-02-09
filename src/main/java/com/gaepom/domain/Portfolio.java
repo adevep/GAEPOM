@@ -54,7 +54,6 @@ public class Portfolio {
 	@Column(name="pf_category")
 	private String pfCategory;
 	
-//	@OneToMany
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=true)
 	private User userId;

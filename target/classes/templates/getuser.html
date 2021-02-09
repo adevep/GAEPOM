@@ -2,71 +2,97 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>로그인 회원 정보</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>로그인 회원 정보</title>
 </head>
+
 <body>
 	<hr>
 	<h3>로그인 회원 정보</h3>
 	<hr><br>
-<table border="1" width="700">
+	<table border="1" width="700">
 
-<tr>
-	<th width="100">아이디</th>
-	<th width="200">이름</th>
-	<th width="150">나이</th>
-	<th width="150">이메일</th>
-	<th width="150">번호</th>
-	<th width="150">주소</th>
-	<th width="150">기술</th>
-	<th width="150">이미지</th>
-	<th width="150">포지션</th>
-</tr>
- 
-	<tr>
-	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
-		<td th:if="${anouser != null}" th:text="${anouser.userId}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.userId}"></td>
+		<tr>
+			<th width="100">아이디</th>
+			<th width="200">이름</th>
+			<th width="150">나이</th>
+			<th width="150">이메일</th>
+			<th width="150">번호</th>
+			<th width="150">주소</th>
+			<th width="150">기술</th>
+			<th width="150">이미지</th>
+			<th width="150">포지션</th>
+		</tr>
 
-		<td th:if="${anouser != null}" th:text="${anouser.name}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.name}"></td>
+		<tr>
+			<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
+			<td th:if="${anouser != null}" th:text="${anouser.userId}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.userId}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.age}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.age}"></td>
+			<td th:if="${anouser != null}" th:text="${anouser.name}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.name}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.email}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.email}"></td>
+			<td th:if="${anouser != null}" th:text="${anouser.age}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.age}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.phoneNum}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.phoneNum}"></td>
+			<td th:if="${anouser != null}" th:text="${anouser.email}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.email}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.address}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.address}"></td>
+			<td th:if="${anouser != null}" th:text="${anouser.phoneNum}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.phoneNum}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.stack}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.stack}"></td>
+			<td th:if="${anouser != null}" th:text="${anouser.address}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.address}"></td>
 
-		<td th:if="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + anouser.userImage}}"></td>
-		<td th:unless="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + guser.userImage}}"></td>
+			<td th:if="${anouser != null}" th:text="${anouser.stack}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.stack}"></td>
 
-		<td th:if="${anouser != null}" th:text="${anouser.position}"></td>
-		<td th:unless="${anouser != null}" th:text="${guser.position}"></td>
+			<td th:if="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + anouser.userImage}}"></td>
+			<td th:unless="${anouser != null}"><img th:src="@{${'http://localhost' + '/upload/' + guser.userImage}}">
+			</td>
 
-	</tr>
+			<td th:if="${anouser != null}" th:text="${anouser.position}"></td>
+			<td th:unless="${anouser != null}" th:text="${guser.position}"></td>
 
-</table> 
+		</tr>
 
-<hr><br>
-<input type="button" value="로그아웃" onclick="location.href='/logout'"> &nbsp;&nbsp;
-<input type="button" value="전체 회원 조회" onclick="location.href='/getuserlist'"> &nbsp;&nbsp;
-<input type="button" value="회원 정보 수정" onclick="location.href='/updateuserreq'"> &nbsp;&nbsp;
-<input type="button" value="회원 탈퇴" onclick="location.href='/deleteuser'"> &nbsp;&nbsp; <br>
+	</table>
 
-<input type="button" value="포트폴리오 등록" onclick="location.href='/portfoliocrud/portfolioinsert.html'"> &nbsp;&nbsp;
-<input type="button" value="모든 포트폴리오 조회" onclick="location.href='/getPortfolioList'"> &nbsp;&nbsp;
-<input type="button" value="포트폴리오 조회" onclick="location.href='/getPortfolio'"> &nbsp;&nbsp;
-<input type="button" value="포트폴리오 수정" onclick="location.href='/updatePortfolio'"> &nbsp;&nbsp;
-<input type="button" value="포트폴리오 삭제" onclick="location.href='/deletePortfolio'"> &nbsp;&nbsp;
+	<hr><br>
+	<input type="button" value="로그아웃" onclick="location.href='/logout'"> &nbsp;&nbsp;
+	<input type="button" value="전체 회원 조회" onclick="location.href='/getuserlist'"> &nbsp;&nbsp;
+	<input type="button" value="회원 정보 수정" onclick="location.href='/updateuserreq'"> &nbsp;&nbsp;
+	<input type="button" value="회원 탈퇴" onclick="location.href='/deleteuser'"> &nbsp;&nbsp;
+
+	<hr>
+
+	<!-- 포트폴리오 시작 -->
+	<!-- <form action="../getportfoliobyuserid" method="get">
+		<input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+		<input type="button" value="모든 포트폴리오 조회" onclick="location.href='/getportfoliolist'"> &nbsp;&nbsp;
+	</form> -->
+	<form action="../getportfoliobyuserid" method="get">
+		<input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+		<input type="button" value="포트폴리오 조회" onclick="location.href='/getportfoliolist'"> &nbsp;&nbsp;
+	</form>
+	<!-- 포트폴리오 끝 -->
+
+	<hr>
+
+	<input type="button" value="전체 지원 조회" onclick="location.href='/getApplicationList'"> &nbsp;&nbsp;
+	<form action="../getApplicationByUserId" method="get">
+		<input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+		<input type="submit" value="지원 진행중 앱 조회" /></td>
+	</form>
+	<form action="../getFailedAppByUserId" method="get">
+		<input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+		<input type="submit" value="떨어진 앱 조회" /></td>
+	</form>
+	<form action="../getProjectAllByUserId" method="get">
+		<input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+		<input type="submit" value="내가 주최한 플젝모집글  조회" /></td>
+	</form>
 
 </body>
+
 </html>
