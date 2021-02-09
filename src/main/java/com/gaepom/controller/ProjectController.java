@@ -1,5 +1,6 @@
 package com.gaepom.controller;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
@@ -38,6 +40,7 @@ public class ProjectController {
 		model.addAttribute("projectList", projectList);
 		return "getProjectList";
 	}
+	
 	//project랑 project recruit 합치기 위한 거
 	@RequestMapping("/getProjectListAll")
 	public String getProjectListAll(@ModelAttribute("guser") User user, Model model, Project project, ProjectRecruit recruit) {
@@ -49,11 +52,40 @@ public class ProjectController {
 		List<ProjectRecruit> projectRecruitList = projectRecruitService.getProjectRecruitList(recruit);
 		System.out.println(projectList);
 		System.out.println(projectRecruitList);
+		
+		
 		model.addAttribute("projectList", projectList);
 		model.addAttribute("projectRecruitList", projectRecruitList);
 		return "getProjectListAll";
 	}
 	
+//	//user name으로 검색 
+//		@RequestMapping("/getProjectListAllByUserId")
+//		public String getProjectListAllByUserId(@ModelAttribute("guser") User user, Model model, Project project, ProjectRecruit recruit, String userId) {
+//			if (user.getUserId() == null) {
+//				return "redirect:login.html";
+//			}
+//			List<Project> projectList = projectService.getProjectListByUserId(userId);
+//			projectService.getProjectListByUserId(userId); 
+//			
+//			
+//			List<ProjectRecruit> projectRecruitList = projectRecruitService.getProjectRecruitListByUserId(userId);
+//			System.out.println(projectList);
+//			System.out.println(projectRecruitList);
+//			model.addAttribute("projectList", projectList);
+//			model.addAttribute("projectRecruitList", projectRecruitList);
+//			return "getProjectListAll";
+//		}
+	
+//		@RequestMapping("/getProjectAllByUserId")
+//		public String getProjectAllByUserId(@ModelAttribute("guser") User user, Model model, Project project, ProjectRecruit recruit, String userId) {
+//			if (user.getUserId() == null) {
+//				return "redirect:login.html";
+//			}
+//			List<Project> projectList = projectService.getAllProjectByUserId(userId);
+//			System.out.println(projectList);
+//			return "getProjectListAll";
+//		}
 	
 	@GetMapping("/insertProject")
 	public String insertProjectView(@ModelAttribute("guser") User user) {
@@ -72,7 +104,7 @@ public class ProjectController {
 		return "redirect:getProjectList";
 	}
 	
-	//project랑 project recruit 합치기 위한 거
+	//project랑 project recruit 생성을 위한 로직
 	@PostMapping("/insertProjectAll")
 	public String insertProjectAll(@ModelAttribute("guser") User user, Project project, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {

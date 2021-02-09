@@ -1,4 +1,6 @@
 package com.gaepom.controller;
+
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,6 +57,24 @@ public class ProjectRecruitController {
 		}
 		model.addAttribute("projectRecruit", projectRecruitService.getProjectRecruit(recruit));
 		return "getProjectRecruit";
+	}
+	
+	@GetMapping("/getPosition") // 필요포지션
+	public String getPosition(@ModelAttribute("guser") User user, ProjectRecruit recruit, Model model) {
+		if (user.getUserId() == null) {
+			return "redirect:login";
+		}
+		System.out.println(user.getUserId());
+		String[] needPosi = projectRecruitService.getPosition(recruit).split("\\,");
+		System.out.println(Arrays.asList(needPosi));
+		System.out.println(Arrays.asList(needPosi).get(0));
+		
+		List<ProjectRecruit> rec = projectRecruitService.getProjectRecruitList(recruit);
+		
+		model.addAttribute("rec", rec);
+		model.addAttribute("needPosi", Arrays.asList(needPosi)); //[개발자,  디자이너,  마케터 ]
+
+		return "getPosition";
 	}
 
 	

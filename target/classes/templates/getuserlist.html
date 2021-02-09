@@ -1,5 +1,5 @@
 <html>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 	<title>전체 회원</title>
 </head>
@@ -37,7 +37,7 @@
 		<td th:text="${user.phoneNum}"></td>
 		<td th:text="${user.address}"></td>
 		<td th:text="${user.stack}"></td>
-		<td th:text="${user.userImage}"></td>
+		<td><img th:src="@{${'http://localhost' + '/upload/' + user.userImage}}"></td>
 		<td th:text="${user.position}"></td>
 	</tr>
 
