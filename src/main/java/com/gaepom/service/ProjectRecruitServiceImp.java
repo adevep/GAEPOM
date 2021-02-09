@@ -14,6 +14,7 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 	
 	@Autowired
 	private ProjectRepository projectRepo;
+	
 	public List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit) {
 		return (List<ProjectRecruit>) recruitRecruitRepo.findAll();
 	}
@@ -23,6 +24,9 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 		return recruit;
 	}
 	public ProjectRecruit getProjectRecruit(ProjectRecruit recruit) {
+		return recruitRecruitRepo.findById(recruit.getRecSeq()).get();
+	}
+	public ProjectRecruit getPositionView(ProjectRecruit recruit) {
 		return recruitRecruitRepo.findById(recruit.getRecSeq()).get();
 	}
 	public void updateProjectRecruit(ProjectRecruit recruit) {

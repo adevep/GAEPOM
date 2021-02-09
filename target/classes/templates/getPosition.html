@@ -7,12 +7,13 @@
 <body>
 	<hr>
 	<h3>지원하기</h3>
+	<h5>지원할 포지션을 하나만 선택해주세요.</h5>
 	<hr><br>
 
 <table border="1" width="700">
 <thead>
 <tr>
-	<th width="100">지원</th>
+	<th width="100">지원포지션</th>
 	<th width="100">지원포지션</th>
 	
 
@@ -21,11 +22,17 @@
 <tbody>
 	<tr th:each="po: ${need_Posi}">
 	<!--	<td align="left"><a href="getBoard?seq=${user.name}">${user.name}</a></td> -->
-		<td th:text="${rec}">
-		<input type="radio" name="apply" value="${}" /></td>
+		<td th:text="${po.[i]}">
+	<script language="JavaScript">
+	for(i=0; i<po.length; i++){
+		document.write(po[i]);
+	}
+	</script>
+		<input type="radio" name="apply" value="${po.[i]}" /></td>
 		
 
 	</tr>
+
 </tbody>
 
 </table> 
@@ -33,5 +40,10 @@
 <hr><br>
 <input name="name" type="button" value="로그아웃" onclick="location.href='/logout'">
 <input type="submit" value="지원완료"/></td>
+<form action="../getPosition" method="get">
+   <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+	<td th:text="${guser.userId}"></td>
+	<input type="submit" value="앱 조회"/></td>
+</form>
 </body>
 </html>

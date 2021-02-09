@@ -50,6 +50,7 @@
 	<th width="150">모집상태</th>
 	<th width="150">기간</th>
 	<th width="150">모집글 생성 날짜</th>
+	<th width="150">지원하기</th>
 </thead>
 <tbody>
 	<tr th:each="rec: ${projectRecruitList}">
@@ -62,6 +63,9 @@
 		<td th:text="${rec.recStatus}"></td>
 		<td th:text="${rec.recDuration}"></td>
 		<td th:text="${rec.recDate}"></td>
+		<td><input name="name" type="button" value="지원하기" onclick="location.href='/getPosition'"></td>
+		
+		
 	</tr>
 </tbody>
 </table> 

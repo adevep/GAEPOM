@@ -16,6 +16,7 @@ import com.gaepom.service.ProjectRecruitService;
 public class ProjectRecruitController {
 	@Autowired
 	private ProjectRecruitService projectRecruitService;
+	
 	@ModelAttribute("guser")
 	public User setUser() {
 		return new User();
@@ -55,12 +56,7 @@ public class ProjectRecruitController {
 		model.addAttribute("projectRecruit", projectRecruitService.getProjectRecruit(recruit));
 		return "getProjectRecruit";
 	}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-	
+
 	
 	
 	@GetMapping("/getPosition") // 필요포지션
@@ -71,14 +67,11 @@ public class ProjectRecruitController {
 		System.out.println(user.getUserId());
 		String[] need_Posi = recruit.getNeedPosi().split("\\,");
 		model.addAttribute(need_Posi);
+		System.out.println(need_Posi);
 		return "getPosition";
 	}
 
-	
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 	@PostMapping("/updateProjectRecruit")
 	public String updateProjectRecruit(@ModelAttribute("guser") User user, ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
