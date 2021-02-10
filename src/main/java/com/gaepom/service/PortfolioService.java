@@ -10,7 +10,9 @@ public interface PortfolioService {
 
 	Portfolio getPortfolio(Portfolio portfolio);
 	
-//	Portfolio findPortfolioByUserId(String userId);
+	List<Portfolio> findPortfolioByUserId(String userId);
+
+//	List<Portfolio> findFailedPortfoliosByUserId(String userId);
 	
 	void insertPortfolio(Portfolio portfolio);
 	

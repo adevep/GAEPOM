@@ -11,13 +11,12 @@
 		<h3>포트폴리오 수정</h3>
 
 		<hr>
-		아이디 : <strong><span th:text="${guser.userId}" /></strong>
+		아이디 : <strong><span th:text="${guser.userId}"/></strong>
 		<hr>
 
-		<form action="updateportfolio" method="post">
+		<form action="updateportfolio" method="post" id="form" name="form" enctype="multipart/form-data">
 			<table border="1">
 				<tbody>
-					<tr th:each="pf : ${portfoliolist}"></tr>
 					<tr>
 						<td>프로젝트명</td><td align="left">
 							<input type="text" name="pfSubtitle" th:value="${pfSubtitle}" /></td>

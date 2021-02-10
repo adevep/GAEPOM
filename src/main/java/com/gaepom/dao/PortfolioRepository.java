@@ -11,9 +11,8 @@ import com.gaepom.domain.Portfolio;
 
 public interface PortfolioRepository extends CrudRepository<Portfolio, Long>, JpaRepository<Portfolio, Long> {
 
-//	@Query("SELECT pf FROM Portfolio pf WHERE pf.userId = :userId and pf.selected = 0")
-//	List<Portfolio> findPortfolioByUserId (@Param("userId") String userId);
+	@Query("SELECT pf FROM Portfolio pf WHERE pf.userId = :userId")
+	List<Portfolio> findPortfolioByUserId (@Param("userId") String userId);
 	
-//	@Query("SELECT pf FROM Portfolio pf WHERE pf.userId = :userId and pf.selected = 1")
-//	List<Portfolio> findFailedPortfoliosByUserId (@Param("userId") String userId);
+	List<Portfolio> findByPfSubtitleContaining(String pfSubtitle);
 }

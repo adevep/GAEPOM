@@ -32,12 +32,12 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return (List<Portfolio>) portfolioRepo.findAll();
 	}
 
-//	public Portfolio findPortfolioByUserId(String userId) {
-//		System.out.println("# findPortfolioByUserId | " + userId);
-//		System.out.println(portfolioRepo.findById(userId));
-//		return (Portfolio) portfolioRepo.findById(userId);
-//	}
-
+	public List<Portfolio> findPortfolioByUserId(String userId) {
+		System.out.println("# findPortfolioByUserId | " + userId);
+		System.out.println(portfolioRepo.findPortfolioByUserId(userId));
+		return portfolioRepo.findPortfolioByUserId(userId);
+	}
+	
 //	public List<Portfolio> findFailedPortfoliosByUserId(String userId) {
 //		System.out.println("# findFailedPortfoliosByUserId | " + userId);
 //		System.out.println(portfolioRepo.findFailedPortfoliosByUserId(userId));

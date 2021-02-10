@@ -1,13 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex";
-// import Axios from "axios";
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+import { auth } from './auth.module';
 
 Vue.use(Vuex);
-//Vue.use(Axios);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+  modules: {
+    auth,
+  },
 });

@@ -57,4 +57,18 @@ public class Portfolio {
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=true)
 	private User userId;
+	
+	public Portfolio(
+			String pfSubtitle, String pfDuration, String participation,
+			String pfLang, String pfTools, String pfDbms, String pfLink,
+			String pfCategory) {
+		this.pfSubtitle = pfSubtitle;
+		this.pfDuration = pfDuration;
+		this.participation = participation;
+		this.pfLang = pfLang;
+		this.pfTools = pfTools;
+		this.pfDbms = pfDbms;
+		this.pfLink = pfLink;
+		this.pfCategory= pfCategory;
+	}
 }

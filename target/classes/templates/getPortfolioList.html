@@ -9,6 +9,7 @@
 	<center>
 
 		<h3>등록된 모든 포트폴리오</h3>
+		접속 중인 아이디: <td th:text="${guser.userId}"></td>
 
 		<hr>
 
@@ -31,7 +32,7 @@
 			<tbody>
 				<tr th:each="pf : ${portfoliolist}">
 					<td th:text="${pf.pfSeq}"></td>
-					<td th:text="${guser.userId}"></td>
+					<td th:text="${pf.userId}"></td>
 					<td th:text="${pf.pfSubtitle}"></td>
 					<td th:text="${pf.pfDuration}"></td>
 					<td th:text="${pf.pfDescription}"></td>
@@ -47,7 +48,8 @@
 
 		<hr>
 
-		<input type="button" value="포트폴리오 등록" onclick="location.href='/portfoliocrud/portfolioinsert.html'"> &nbsp;&nbsp;
+		<input type="button" value="포트폴리오 등록" onclick="location.href='/portfoliocrud/portfolioinsert.html'">
+		&nbsp;&nbsp;
 		<input type="button" value="포트폴리오 수정" onclick="location.href='/updateportfolioreq'"> &nbsp;&nbsp;
 		<input type="button" value="포트폴리오 삭제" onclick="location.href='/deleteportfolio'"> &nbsp;&nbsp;
 
