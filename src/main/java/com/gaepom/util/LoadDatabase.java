@@ -9,8 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
+import com.gaepom.dao.ApplicationRepository;
 import com.gaepom.dao.UserRepository;
+import com.gaepom.domain.Application;
 import com.gaepom.domain.User;
 
 
@@ -32,5 +33,5 @@ public class LoadDatabase {
 			log.info("Preloading " + repository.save(new User("ch1020","hello","최유진",28,"youlove@naver.com","010-9078-9090","서울특별시광진구","MicrosoftSuite,AdobeXD","lion.jpg","기획자", null, null)));
 
 	};
-}
+	}
 }
