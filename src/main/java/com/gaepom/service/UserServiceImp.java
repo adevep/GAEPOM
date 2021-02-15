@@ -28,7 +28,7 @@ public class UserServiceImp implements UserService {
 		Optional<User> findUser = userRepo.findById(userid);
 		if (findUser.isPresent()) {
 			if (findUser.get().getPassword().equals(password)) {
-				return findUser.get();				
+				return findUser.get();
 			} else {
 				throw new UserNotFoundException("비밀번호를 확인해주세요.");
 			}

@@ -1,5 +1,5 @@
 <template>
-  <div class="mypage">
+  <div class="test">
     <section>
       <b-collapse :open="false" aria-id="contentIdForA11y1">
         <template #trigger>

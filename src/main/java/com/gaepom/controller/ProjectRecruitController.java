@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.RequestWrapper;
@@ -41,24 +43,25 @@ public class ProjectRecruitController {
 
 	// 프로젝트 총 리스트 출력 (고쳐서 두개다 추력하게)
 	@GetMapping("/getall")
-	public ResponseEntity<List<Project>> findAllrecs(User user, @RequestBody RequestWrapper requestWrapper) {
+	public ResponseEntity<List<Project>> findAllRecs(User user, @RequestBody RequestWrapper requestWrapper) {
 		List<Project> pj = projectService.getProjectList(requestWrapper.getProject());
 		List<ProjectRecruit> recs = projectRecruitService.getProjectRecruitList(requestWrapper.getRecruit());
 		return new ResponseEntity<>(pj, HttpStatus.OK);
 	}
 	
 //	// 프로젝트 + 프로젝트 모집글 내용이 함께 상세페이지로 검색
-//	@GetMapping("/getall")
-//	public ResponseEntity<RequestWrapper> findAllrecs(User user, @RequestBody RequestWrapper requestWrapper) {
+//	@GetMapping("/gettotalpj")
+//	public ResponseEntity<RequestWrapper> findAllRecPj(User user, @RequestBody RequestWrapper requestWrapper) {
 //		List<Project> pj = projectService.getProjectList(requestWrapper.getProject());
 //		List<ProjectRecruit> recs = projectRecruitService.getProjectRecruitList(requestWrapper.getRecruit());
+//		List<RequetWrapper> = JsonFormat
 //		return new ResponseEntity<>(pj, HttpStatus.OK);
 //	}
 
 
 	// 모집글 총 리스트 출력
 	@GetMapping("/getlist")
-	public ResponseEntity<List<ProjectRecruit>> findAllrecs(ProjectRecruit recruit) {
+	public ResponseEntity<List<ProjectRecruit>> findAllRecsList(ProjectRecruit recruit) {
 		List<ProjectRecruit> recs = projectRecruitService.getProjectRecruitList(recruit);
 		return new ResponseEntity<>(recs, HttpStatus.OK);
 	}
