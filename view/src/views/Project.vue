@@ -1,28 +1,8 @@
 <template>
   <div class="project">
     <h1>This is project page</h1>
-    <section>
-
-<div id="project-list">
-              <h2>지원자 리스트</h2>
-              <!-- <i class="fas fa-search" @mouseenter="applicationListView"></i>
-              <div id="search-result" @mouseleave="applicationListHidden"> -->
-                  <div v-for="list in application" v-bind:key="list" @click="insertApplicationList(list.userId)">
-                      
-                      <div>
-                        <h3 v-html="list.aplSeq"></h3>
-                        <p>
-                            {{list.userId}} | 
-                            
-                        </p>
-                    <!-- </div> -->
-                  </div>
-              </div>
-</div>
-    </section>
-
-
-
+    <project-list>Project Recruit</project-list>
+    <project-details></project-details>
   </div>
 </template>
 <script>

@@ -1,92 +1,83 @@
 package com.gaepom.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gaepom.domain.User;
+import com.gaepom.exception.UserNotFoundException;
 import com.gaepom.service.UserService;
-import com.gaepom.service.UserServiceImp;
 
 
-@SessionAttributes({"guser",})
-@Controller
+@CrossOrigin(origins = "http://localhost:8081")
+@RestController
 public class UserController {
 
 	@Autowired
-	private UserService Userservice;
+	private UserService userservice;
 	
 
-	@GetMapping("/getuserlist")
-	public String getUserList(@ModelAttribute("guser") User user, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login.html";
-		}
-		List<User> UserList = Userservice.getUserList(user);
-		model.addAttribute("userlist", UserList);
-		
-		return "getuserlist";
-	}
-
-
-
+//	@GetMapping("/getuserlist")
+//	public String getUserList(@RequestParam String userid, @RequestParam String password, @RequestParam String name, @RequestParam int age,
+//			@RequestParam String email, @RequestParam String phoneNumm, @RequestParam String address, @RequestParam String stack) {
+//			return "redirect:login.html";
+//		}
+//		List<User> UserList = Userservice.getUserList(user);
+//		model.addAttribute("userlist", UserList);
+//		
+//		return "getuserlist";
+//	}
 	
 	@PostMapping("/insertuser")
-	public String insertUser(@ModelAttribute User user, @RequestParam("filename") MultipartFile mfile) {
-		if (user.getUserId() == null) {		
-			return "redirect:index.html";
-		}
+	public User insertUser(User user, @RequestParam("file") MultipartFile mfile) {
 		
-		Userservice.insertUser(user, mfile);
-		return "redirect:login.html";
+		if (user.getUserId() == null || user.getPassword() == null) {		
+			return null;
+		} else {
+			if(!mfile.isEmpty()) {
+				userservice.insertUser(user, mfile);
+			} else {
+				userservice.insertUserNoimg(user);
+			}
+			return user;
+		}			
 	}
 
-	@GetMapping("/getanouser")
-	public String getUser(@ModelAttribute("guser") User user, @RequestParam("anouserid") String anouserid, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login.html";
-		}
-
-		model.addAttribute("anouser", Userservice.findUserByUserId(anouserid));
-		return "getuser";
-	}
-	
-	@GetMapping("/updateuserreq")
-	public String updateUserReq(@ModelAttribute("guser") User user, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		return "updateuser";
-	}
+//	@GetMapping("/getanouser")
+//	public String getUser(@ModelAttribute("guser") User user, @RequestParam("anouserid") String anouserid, Model model) {
+//		if (user.getUserId() == null) {
+//			return "redirect:login.html";
+//		}
+//
+//		model.addAttribute("anouser", userservice.findUserByUserId(anouserid));
+//		return "getuser";
+//	}
 
 	@PostMapping("/updateuser")
-	public String updateUser(@ModelAttribute("guser") User user, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		Userservice.updateUser(user);
-		return "getuser";
+	public User updateUser(User user, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+		if (user.getUserId() == null || user.getPassword() == null) {		
+			return null;
+		} else {
+			User updatedUser = null;
+			if(mfile != null) {
+				updatedUser = userservice.updateUser(user, mfile);
+			} else {
+				updatedUser = userservice.updateUserNoimg(user);
+			}
+			return updatedUser;
+		}			
 	}
 
-	@GetMapping("/deleteuser")
-	public String deleteUser(@ModelAttribute("guser") User user, SessionStatus status) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
+	@PostMapping("/deleteuser")
+	public void deleteUser(User user) {
+		if (user.getUserId() == null || user.getPassword() == null) {	
+			throw new UserNotFoundException("삭제하려는 유저정보가 없습니다.");
 		}
-		Userservice.deleteUser(user);
-		status.setComplete();
-		return "redirect:index.html";
+		userservice.deleteUser(user);
 	}
 
 }
+
