@@ -1,29 +1,43 @@
 <template>
-    <section>
-      <div class="container is-max-desktop">
-  <div class="notification is-accent">
-        <b-field label="ID" type=""
-            message="" align="left">
-            <b-input v-model="userid" placeholder="아이디" maxlength="30" size="is-medium"></b-input>
+  <section>
+    <div class="container is-max-desktop">
+      <div class="notification is-accent">
+        <b-field label="ID" type="" message="" align="left">
+          <b-input
+            v-model="userid"
+            placeholder="아이디"
+            maxlength="30"
+            size="is-medium"
+          ></b-input>
         </b-field>
 
-        <b-field label="Password"
-            type=""
-            message="" align="left">
-            <b-input v-model="password" type="password" placeholder="비밀번호" maxlength="30" size="is-medium">
-            </b-input>
+        <b-field label="Password" type="" message="" align="left">
+          <b-input
+            v-model="password"
+            type="password"
+            placeholder="비밀번호"
+            maxlength="30"
+            size="is-medium"
+          >
+          </b-input>
         </b-field>
-            <b-button type="is-primary" outlined @click="
-                loginActions({
-                  userid: userid,
-                  password: password
-                })
-              " position="is-centered" size="is-large">로그인</b-button> <br><br>
+        <b-button
+          type="is-primary"
+          outlined
+          @click="
+            loginActions({
+              userid: userid,
+              password: password
+            })
+          "
+          position="is-centered"
+          size="is-large"
+          >로그인</b-button
+        >
+        <br /><br />
       </div>
-</div>
-    </section>
-
-
+    </div>
+  </section>
 </template>
 <script>
 /*

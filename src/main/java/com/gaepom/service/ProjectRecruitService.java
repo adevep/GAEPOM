@@ -4,11 +4,13 @@ import com.gaepom.domain.ProjectRecruit;
 public interface ProjectRecruitService {
 	List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit);
 	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
-	ProjectRecruit getProjectRecruit(ProjectRecruit recruit);
-	void updateProjectRecruit(ProjectRecruit recruit);
+
+	ProjectRecruit getProjectRecruit(Long id);
+
+	ProjectRecruit updateProjectRecruit(Long id, ProjectRecruit recruit);
+
+	ProjectRecruit updateRec(Long id, ProjectRecruit recruit);
+
 	void deleteProjectRecruit(ProjectRecruit recruit);
-	
-	String getPosition(ProjectRecruit recruit);
-	
-//	List<ProjectRecruit> getProjectRecruitListByUserId(String userId);
+
 }

@@ -45,7 +45,7 @@ import router from "../../router";
 export default {
   data: () => ({}),
   computed: {
-    ...mapState(["userInfo", "imgURL"]),
+    ...mapState(["userInfo", "imgURL"])
   },
   methods: {
     updateUser() {
@@ -68,8 +68,8 @@ export default {
       axios
         .post("http://localhost:80/deleteuser", formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         })
         .then(() => {
           sessionStorage.removeItem("user");
@@ -81,8 +81,8 @@ export default {
           console.log("FAILURE!!");
         });
       return this.$router.push({ name: "Home" });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
