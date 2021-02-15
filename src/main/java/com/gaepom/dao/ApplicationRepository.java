@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gaepom.domain.Application;
+import com.gaepom.domain.Project;
 
 @Repository
 public interface ApplicationRepository extends CrudRepository<Application, Long>, JpaRepository<Application, Long>{
 
-	//Application findApplicationByUserIdAndSelected (String userId, int selected);
 	
 	@Query("SELECT a FROM Application a WHERE a.userId = :userId and a.selected = 0")
 	List<Application> findApplicationByUserId (@Param("userId") String userId);
@@ -21,6 +21,11 @@ public interface ApplicationRepository extends CrudRepository<Application, Long>
 	@Query("SELECT a FROM Application a WHERE a.userId = :userId and a.selected = 1")
 	List<Application> findFailedAppsByUserId (@Param("userId") String userId);
 
-//	List<Application> findAllByUserId (String userId);
+	@Query("SELECT a FROM Application a WHERE a.userId = :userId and a.selected = 2")
+	List<Application> findAcceptedAppsByUserId (@Param("userId") String userId);
+	
+	@Query("SELECT a FROM Application a WHERE pjSeq = ?1")
+	List<Application> findApplicationByPjSeq (Project pjSeq);
+	
 	
 }

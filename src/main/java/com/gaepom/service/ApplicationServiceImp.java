@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gaepom.dao.ApplicationRepository;
 import com.gaepom.domain.Application;
+import com.gaepom.domain.Project;
 
 @Service
 public class ApplicationServiceImp implements ApplicationService {
@@ -14,12 +15,12 @@ public class ApplicationServiceImp implements ApplicationService {
 	@Autowired
 	private ApplicationRepository applicationRepo;
 
-	public List<Application> getApplicationList(Application application) {
+	public List<Application> getApplicationList() {
 		return (List<Application>) applicationRepo.findAll();
 	}
 
-	public void insertApplication(Application application) {
-		applicationRepo.save(application);
+	public Application insertApplication(Application application) {
+		return applicationRepo.save(application);
 	}
 
 	public Application getApplication(Application application) {
@@ -27,26 +28,33 @@ public class ApplicationServiceImp implements ApplicationService {
 	}
 
 	public List<Application> findAppByUserId(String userId) {
-		System.out.println("진짜 나오나" + userId);
 		System.out.println(applicationRepo.findApplicationByUserId(userId));
-		return (List<Application>)applicationRepo.findApplicationByUserId(userId);
+		return applicationRepo.findApplicationByUserId(userId);
+	}
+
+	public List<Application> findFailedAppByUserId(String userId) {
+		System.out.println(applicationRepo.findFailedAppsByUserId(userId));
+		return (List<Application>) applicationRepo.findFailedAppsByUserId(userId);
+	}
+
+	public List<Application> findAcceptedAppByUserId(String userId) {
+		System.out.println(applicationRepo.findAcceptedAppsByUserId(userId));
+		return (List<Application>) applicationRepo.findAcceptedAppsByUserId(userId);
+	}
+
+	public List<Application> findAppByPjSeq(Project pjSeq) {
+		return (List<Application>) applicationRepo.findApplicationByPjSeq(pjSeq);
 	}
 	
-	public List<Application> findFailedAppByUserId(String userId) {
-		System.out.println("진짜 나오나" + userId);
-		System.out.println(applicationRepo.findFailedAppsByUserId(userId));
-		return (List<Application>)applicationRepo.findFailedAppsByUserId(userId);
+	public Application updateApplication(Long id, Application application) {
+		Application app = applicationRepo.findById(id).get();
+		app.setAplPosi(application.getAplPosi());
+		app.setWords(application.getWords());
+		app.setSelected(application.getSelected());
+		return applicationRepo.save(app);
 	}
 
-	public void updateApplication(Application application) {
-		Application findApplication = applicationRepo.findById(application.getAplSeq()).get();
-
-		findApplication.setSelected(application.getSelected());
-		applicationRepo.save(findApplication);
+	public void deleteApplication(Long id) {
+		applicationRepo.deleteById(id);
 	}
-
-	public void deleteApplication(Application application) {
-		applicationRepo.deleteById(application.getAplSeq());
-	}
-
 }
