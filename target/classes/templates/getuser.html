@@ -62,7 +62,25 @@
 <input type="button" value="회원 정보 수정" onclick="location.href='/updateuserreq'"> &nbsp;&nbsp;
 <input type="button" value="회원 탈퇴" onclick="location.href='/deleteuser'"> &nbsp;&nbsp;
 <a href="pfcreate.html">포트폴리오 작성</a> <br>
+
 <a href="projectcrud/projectinsert.html">모집글  작성</a> <br>
+
+
+
+
+<input type="button" value="전체 지원  조회" onclick="location.href='/getApplicationList'"> &nbsp;&nbsp;
+<form action="../getApplicationByUserId" method="get">
+   <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+	<input type="submit" value="지원 진행중 앱 조회"/></td>
+</form>
+<form action="../getFailedAppByUserId" method="get">
+   <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+	<input type="submit" value="떨어진 앱 조회"/></td>
+</form>
+<form action="../getProjectAllByUserId" method="get">
+   <input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+	<input type="submit" value="내가 주최한 플젝모집글  조회"/></td>
+</form>
 
 </body>
 </html>
