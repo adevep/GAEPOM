@@ -6,8 +6,8 @@
           <p class="title">
             개폼난다
           </p>
-          <p class="subtitle">
-            개폼에 오신 걸 환영합니다.
+          <p class="subtitle" v-if="$store.state.userInfo != null">
+            {{ userInfo.name }}님 개폼에 오신 걸 환영합니다.
           </p>
         </div>
       </div>
@@ -16,10 +16,15 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+  data: () => ({}),
+  computed: {
+    ...mapState(["userInfo"])
   }
 };
 </script>
