@@ -5,22 +5,20 @@ import java.util.List;
 import com.gaepom.domain.Project;
 
 public interface ProjectService {
-
+	
+	//Project Tracking쪽에서 쓰세요 
 	List<Project> getProjectList(Project project);
 
-	void insertProject(Project project);
+	Project insertProject(Project project);
 
-	Project getProject(Project project);
+	Project getProject(Long id);
+	//ㄴProject getProject(Project project);
 
-	void updateProject(Project project);
-	
-	//void updateProjectWithRecSeq(Long pjSeq, Long recSeq);
-	//void updateProjectWithRecSeq2(Project project, Long recSeq);
-	
+	Project updateProject(Project project);
+
+	// void updateProjectWithRecSeq(Long pjSeq, Long recSeq);
+	// void updateProjectWithRecSeq2(Project project, Long recSeq);
+
 	void deleteProject(Project project);
-	
-	//List<Project> getProjectListByUserId(String userId);
-	
-//	List<Project> getAllProjectByUserId(String userId);
 
 }

@@ -10,13 +10,12 @@ public interface ProjectRecruitService {
 
 	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
 
-	ProjectRecruit getProjectRecruit(ProjectRecruit recruit);
+	ProjectRecruit getProjectRecruit(Long id);
 
-	void updateProjectRecruit(ProjectRecruit recruit);
+	ProjectRecruit updateProjectRecruit(Long id, ProjectRecruit recruit);
+
+	ProjectRecruit updateRec(Long id, ProjectRecruit recruit);
 
 	void deleteProjectRecruit(ProjectRecruit recruit);
-	
-	String getPosition(ProjectRecruit recruit);
-	
-//	List<ProjectRecruit> getProjectRecruitListByUserId(String userId);
+
 }

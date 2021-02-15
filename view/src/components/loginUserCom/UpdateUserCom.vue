@@ -96,7 +96,7 @@
       <br />
       <b-field label="Current UserImage" align="left">
         <img
-          :src="'http://localhost/upload/' + userInfo.userImage"
+          :src="'http://localhost:80/upload/' + userInfo.userImage"
           alt=""
           width="500"
         />
