@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,22 +52,26 @@ public class Portfolio {
 	
 	@Column(name="pf_category")
 	private String pfCategory;
+
+	@Column
+//	private boolean published;
+	private int published;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=true)
 	private User userId;
 	
-	public Portfolio(
-			String pfSubtitle, String pfDuration, String participation,
-			String pfLang, String pfTools, String pfDbms, String pfLink,
-			String pfCategory) {
-		this.pfSubtitle = pfSubtitle;
-		this.pfDuration = pfDuration;
-		this.participation = participation;
-		this.pfLang = pfLang;
-		this.pfTools = pfTools;
-		this.pfDbms = pfDbms;
-		this.pfLink = pfLink;
-		this.pfCategory= pfCategory;
-	}
+//	public Portfolio(
+//			String pfSubtitle, String pfDuration, String pfDescription,
+//			String participation, String pfLang, String pfTools,
+//			String pfDbms, String pfLink, String pfCategory) {
+//		this.pfSubtitle = pfSubtitle;
+//		this.pfDuration = pfDuration;
+//		this.participation = participation;
+//		this.pfLang = pfLang;
+//		this.pfTools = pfTools;
+//		this.pfDbms = pfDbms;
+//		this.pfLink = pfLink;
+//		this.pfCategory= pfCategory;
+//	}
 }

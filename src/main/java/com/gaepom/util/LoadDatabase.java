@@ -38,8 +38,10 @@ public class LoadDatabase {
 
 		return args -> {
 //			log.info("Preloading " + portfolioRepo.save(new Portfolio(pfSeq, pfSubtitle, pfDuration, pfDescription, participation, pfLang, pfTools, pfDbms, pfLink, pfCategory, userId)));
-//			log.info("Preloading " + portfolioRepo.save(new Portfolio(1L, "친환경 업사이클링 쇼핑몰", "2021.01.21-2021.02.30", "업사이클링 제품만을 판매하는 오픈마켓", "참여도1", "Tensorflow", "GitHub,Jira,Jandi", "Oracle", "프로젝트주소1", "웹앱", null)));
-//			log.info("Preloading " + portfolioRepo.save(new Portfolio(2L, "캠핑짱짱맨", "2021-03-03-2021-07-21", "캠핑용품을 대여해주고 캠핑 장소를 알려주는 마켓", "참여도2", "Java,Javascript", "GitHub,Jira,Jandi", "MySQL", "프로젝트주소2", "웹앱", null)));
+//			log.info("Preloading " + portfolioRepo.save(new Portfolio(1L, "친환경 업사이클링 쇼핑몰", "2021.01.21-2021.02.30", "업사이클링 제품만을 판매하는 오픈마켓", "참여도1", "Tensorflow", "GitHub,Jira,Jandi", "Oracle", "프로젝트주소1", "웹앱", false, null)));
+//			log.info("Preloading " + portfolioRepo.save(new Portfolio(2L, "캠핑짱짱맨", "2021-03-03-2021-07-21", "캠핑용품을 대여해주고 캠핑 장소를 알려주는 마켓", "참여도2", "Java,Javascript", "GitHub,Jira,Jandi", "MySQL", "프로젝트주소2", "웹앱", false, null)));
+			log.info("Preloading " + portfolioRepo.save(new Portfolio(1L, "친환경 업사이클링 쇼핑몰", "2021.01.21-2021.02.30", "업사이클링 제품만을 판매하는 오픈마켓", "참여도1", "Tensorflow", "GitHub,Jira,Jandi", "Oracle", "프로젝트주소1", "웹앱", 0, null)));
+			log.info("Preloading " + portfolioRepo.save(new Portfolio(2L, "캠핑짱짱맨", "2021-03-03-2021-07-21", "캠핑용품을 대여해주고 캠핑 장소를 알려주는 마켓", "참여도2", "Java,Javascript", "GitHub,Jira,Jandi", "MySQL", "프로젝트주소2", "웹앱", 0, null)));
 		};
 	}
 

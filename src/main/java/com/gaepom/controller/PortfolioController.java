@@ -1,210 +1,127 @@
 package com.gaepom.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
-import com.gaepom.dao.PortfolioRepository;
-import com.gaepom.domain.Application;
 import com.gaepom.domain.Portfolio;
-import com.gaepom.domain.User;
+import com.gaepom.exception.PortfolioNotFoundException;
 import com.gaepom.service.PortfolioService;
-import com.gaepom.service.UserService;
 
-@SessionAttributes("guser")
-//@Controller
+@CrossOrigin(origins="http://localhost:8081")
 @RestController
+@RequestMapping("/")
 public class PortfolioController {
+
+	public static final Logger logger = LoggerFactory.getLogger(PortfolioController.class);
 
 	@Autowired
 	private PortfolioService portfolioService;
 
-	@Autowired
-	private PortfolioRepository portfolioRepo;
+	// ===== 포트폴리오 생성 =====
+	@RequestMapping(value = "/portfolio", method = RequestMethod.POST)
+//	public ResponseEntity<?> createPortfolio(@PathVariable("userId") String userId, @RequestBody Portfolio portfolio) {
+	public ResponseEntity<?> createPortfolio(Portfolio portfolio) {
+		logger.info("생성 완료 | {}: 포트폴리오 생성됨", portfolio);
 
-//	@Autowired
-//	private UserService userService;
-
-//	@ModelAttribute("guser")
-//	public User setUser() {
-//		return new User();
-//	}
-
-	@GetMapping("/getportfolio/{userId}")
-	public ResponseEntity<List<Portfolio>> findPortfolioByUserId(User user, @PathVariable("userId") String userId) {
-		if (user.getUserId() == null) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		try {
-			List<Portfolio> pfs = portfolioService.findPortfolioByUserId(userId);
-			return new ResponseEntity<>(pfs, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@GetMapping("/portfolios")
-	public ResponseEntity<List<Portfolio>> getAllPortfolios(@RequestParam(required = false) String pfSubtitle) {
-		try {
-			List<Portfolio> Portfolios = new ArrayList<Portfolio>();
-
-			if (pfSubtitle == null) {
-				portfolioRepo.findAll().forEach(Portfolios::add);
-			}
-//				else {
-//				portfolioRepo.findByPfSubtitleContaining(pfSubtitle).forEach(Portfolios::add);
-//			}
-
-			if (Portfolios.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return new ResponseEntity<>(Portfolios, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@PostMapping("/portfolios")
-	public ResponseEntity<Portfolio> createPortfolios(@RequestBody Portfolio portfolio) {
-		try {
-			Portfolio _portfolio = portfolioRepo
-					.save(new Portfolio(portfolio.getPfSubtitle(),
-										portfolio.getPfDuration(),
-										portfolio.getPfDescription(),
-										portfolio.getParticipation(),
-										portfolio.getPfLang(),
-										portfolio.getPfTools(),
-										portfolio.getPfDbms(),
-										portfolio.getPfLink(),
-										portfolio.getPfCategory()
-										));
-			return new ResponseEntity<>(_Portfolios, HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-//	@RequestMapping("/getportfoliolist")
-//	public String getPortfolioList(@ModelAttribute("guser") User user, Model model, Portfolio portfolio) {
-//		if (user.getUserId() == null) {
-//			return "redirect:login";
+		if (portfolioService.isPfSubtitleExist(portfolio)) {
+			logger.error("생성 불가 | {}: 같은 제목의 포트폴리오가 이미 존재함", portfolio.getPfSubtitle());
+			return new ResponseEntity<>(new PortfolioNotFoundException("포트폴리오 제목: " + portfolio.getPfSubtitle() + " 생성 불가!"), HttpStatus.CONFLICT);
+		} //else if (portfolioService.isUserIdExist(portfolio)) {
+//			logger.error("생성 불가 | {}: 해당 유저의 포트폴리오가 이미 존재함", portfolio.getUserId());
+//			return new ResponseEntity<>(new PortfolioNotFoundException("유저명: " + portfolio.getUserId() + " 생성 불가!"), HttpStatus.CONFLICT);
 //		}
-//
-//		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portfolio);
-//
-//		System.out.println(portfolioList);
-//		model.addAttribute("portfoliolist", portfolioList);
-//
-//		return "getportfoliolist";
-//	}
+		portfolioService.savePortfolio(portfolio);
 
-//	@RequestMapping("/getportfoliolistall")
-//	public String getPortfolioListAll(@ModelAttribute("guser") User user, Model model, Portfolio portfolio) {
-//		if (user.getUserId() == null) {
-//			return "redirect:login.html";
-//		}
-//
-//		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portfolio);
-//		List<User> userList = userService.getUserList(user);
-//
-//		System.out.println(portfolioList);
-//		System.out.println(userList);
-//		model.addAttribute("portfolioList", portfolioList);
-//		model.addAttribute("userList", userList);
-//
-//		return "getportfoliolistall";
-//	}
-
-	@GetMapping("/getportfolio")
-	public String getPortfolio(@ModelAttribute("guser") User user, Portfolio portfolio, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-
-		model.addAttribute("portfolio", portfolioService.getPortfolio(portfolio));
-
-		return "getportfolio";
+		return new ResponseEntity<>(portfolio, HttpStatus.CREATED);
 	}
 
-//	@GetMapping("/getportfoliobyuserid")
-//	public String getPortfolio(@ModelAttribute("guser") User user, @RequestParam("userId") String userId, Model model) {
-//		if (user.getUserId() == null) {
-//			return "redirect:login";
-//		}
+	// ===== 특정 시퀀스(@param pfSeq)로 포트폴리오 조회 =====
+	@RequestMapping(value = "/portfolio/{pfSeq}", method = RequestMethod.GET)
+	public ResponseEntity<?> findPfSeqGetPortfolio(@PathVariable("pfSeq") Long pfSeq) {
+		logger.info("{}번 포트폴리오 조회됨", pfSeq);
+		Portfolio portfolio = portfolioService.findByPfSeq(pfSeq);
+
+		if (portfolio == null) {
+			logger.error("조회 불가 | {}: 존재하지 않은 포트폴리오", pfSeq);
+			return new ResponseEntity<>(new PortfolioNotFoundException("포트폴리오 번호: " + pfSeq + " 조회 불가!"), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(portfolio, HttpStatus.OK);
+	}
+	// ===== 특정 유저명(@param userId)으로 포트폴리오 조회 =====
+//	@RequestMapping(value = "/portfolio/{userId}", method = RequestMethod.GET)
+//	public ResponseEntity<?> findUserIdGetPortfolio(@PathVariable("userId") String userId) {
+//		logger.info("유저명 {}, 포트폴리오 조회됨", userId);
+//		Portfolio portfolio = portfolioService.findPortfolioByUserId(userId);
 //		
-//		System.out.println("# getPortfolioByUserId | " + userId);
-//		
-//		List<Portfolio> findPortfolio = portfolioService.findPortfolioByUserId(userId);
-//		System.out.println(findPortfolio);
-//		model.addAttribute("findPortfolio", findPortfolio);
-//
-//		return "getPortfolioList";
+//		if (portfolio == null) {
+//			logger.error("조회 불가 | {}: 존재하지 않은 유저명", userId);
+//			return new ResponseEntity<>(new PortfolioNotFoundException("유저명: " + userId + " 조회 불가!"), HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<>(portfolio, HttpStatus.OK);
 //	}
+	
+	// ===== 모든 포트폴리오 조회 =====
+	@RequestMapping(value = "/portfolio", method = RequestMethod.GET)
+	public ResponseEntity<List<Portfolio>> listAllPortfolios() {
+		List<Portfolio> portfolios = portfolioService.findAllPortfolios();
 
-	@GetMapping("/insertportfolio")
-	public String insertPortfolioView(@ModelAttribute("guser") User user) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
+		if (portfolios.isEmpty()) {
+			return new ResponseEntity<>(portfolios, HttpStatus.NOT_FOUND);
 		}
-		return "insertportfolio";
+		return new ResponseEntity<>(portfolios, HttpStatus.OK);
 	}
 
-	@PostMapping("/insertportfolio")
-	public String insertPortfolio(@ModelAttribute("guser") User user, Portfolio portfolio) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
+	// ===== 특정 포트폴리오 수정 =====
+	@RequestMapping(value = "/portfolio/{pfSeq}", method = RequestMethod.PUT)
+//	@RequestMapping(value = "/portfolio/{userId}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updatePortfolio(@PathVariable("pfSeq") Long pfSeq, @RequestBody Portfolio portfolio) {
+//	public ResponseEntity<?> updatePortfolio(@PathVariable("userId") String userId, @RequestBody Portfolio portfolio) {
+		System.out.println("111");
+//		logger.info("유저명 {}, 포트폴리오 수정됨", pfSeq);
+		logger.info("수정 완료 | {}번 포트폴리오 수정됨", pfSeq);
+		Portfolio currentPortfolio = portfolioService.findByPfSeq(pfSeq);
+
+		if (currentPortfolio == null) {
+			System.out.println("222");
+			logger.error("수정 불가 | {}: 존재하지 않은 포트폴리오", pfSeq);
+			return new ResponseEntity<>(new PortfolioNotFoundException("포트폴리오 번호: " + pfSeq + " 수정 불가!"), HttpStatus.NOT_FOUND);
 		}
-
-		portfolioService.insertPortfolio(portfolio);
-		System.out.println("=== # insertPortfolio() ===");
-
-		return "redirect:getportfoliolist";
+		portfolioService.updatePortfolio(currentPortfolio);
+		return new ResponseEntity<>(currentPortfolio, HttpStatus.OK);
 	}
+	
+	// ===== 특정 포트폴리오 삭제 =====
+    @RequestMapping(value = "/portfolio/{pfSeq}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deletePortfolio(@PathVariable("pfSeq") Long pfSeq) {
+        logger.info("{}번 포트폴리오 조회 및 삭제 완료됨", pfSeq);
 
-	@GetMapping("/updateportfolioreq")
-	public String updatePortfolioReq(@ModelAttribute("guser") User user, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		return "updateportfolio";
-	}
+        Portfolio portfolio = portfolioService.findByPfSeq(pfSeq);
+        
+        if (portfolio == null) {
+            logger.error("삭제 불가 | {}: 존재하지 않은 포트폴리오", pfSeq);
+            return new ResponseEntity<>(new PortfolioNotFoundException("포트폴리오 번호: " + pfSeq + " 삭제 불가!"), HttpStatus.NOT_FOUND);
+        }
+        portfolioService.deleteByPfSeq(pfSeq);
+        return new ResponseEntity<Portfolio>(HttpStatus.NO_CONTENT);
+    }
+    
+    // ===== 모든 포트폴리오 삭제 =====
+    @RequestMapping(value = "/portfolio", method = RequestMethod.DELETE)
+    public ResponseEntity<Portfolio> deleteAllPortfolios() {
+        logger.info("모든 포트폴리오 삭제됨");
 
-	@PostMapping("/updateportfolio")
-	public String updatePortfolio(@ModelAttribute("guser") User user, Portfolio portfolio) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-
-		portfolioService.updatePortfolio(portfolio);
-
-		return "redirect:getportfoliolist";
-	}
-
-	@GetMapping("/deleteportfolio")
-	public String deletePortfolio(@ModelAttribute("guser") User user, Portfolio portfolio, SessionStatus status) {
-		if (user.getUserId() == null) {
-			return "redirect:login.html";
-		}
-
-		portfolioService.deletePortfolio(portfolio);
-		status.setComplete();
-
-		return "forward:getportfoliolist";
-	}
+        portfolioService.deleteAllPortfolios();
+        return new ResponseEntity<Portfolio>(HttpStatus.NO_CONTENT);
+    }
 }
