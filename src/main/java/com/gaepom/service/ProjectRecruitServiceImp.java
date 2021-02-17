@@ -22,6 +22,14 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 		return (List<ProjectRecruit>) recruitRecruitRepo.findAll();
 	}
 
+	public List<Object> getTotalRecruitList(ProjectRecruit recruit) {
+		return (List<Object>) recruitRecruitRepo.findTotalRecruit();
+	}
+	
+	public List<Object> getTotalRecruitByPjSeq(Long pjSeq, ProjectRecruit recruit) {
+		return (List<Object>) recruitRecruitRepo.findTotalRecruitByPjSeq(pjSeq);
+	}
+	
 	public ProjectRecruit insertProjectRecruit(ProjectRecruit recruit) {
 		return recruitRecruitRepo.save(recruit);
 	}
