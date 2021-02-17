@@ -62,6 +62,7 @@ export default {
   data() {
     const apps = [];
     return {
+      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       apps,
       isHoverable: true
     };
@@ -70,7 +71,7 @@ export default {
     retrieveApps() {
       http
         //.get(`/app/getapp/${userId}`
-        .get("/app/getapp/user1")
+        .get("/app/getapp/" + this.loginUser)
         .then(response => {
           this.apps = response.data;
           console.log(response.data);

@@ -1,4 +1,3 @@
-// update/ delete 수락 거절 만들기 https://bezkoder.com/vue-js-crud-app/
 <template>
   <div id="app" class="container">
     <section>
@@ -136,9 +135,11 @@ import http from "../http-common";
 
 export default {
   name: "AllApps",
+  props: ["pjSeq"],
   data() {
     const apps = [];
     return {
+      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       apps,
       defaultOpendDetails: [1],
       showDetailcon: true,
@@ -148,10 +149,10 @@ export default {
   methods: {
     retrieveApps() {
       http
-        .get("/app/getpjapp/45?userId=user1")
+        .get("/app/getpjapp/"+ this.pjSeq + "?userId=" + this.loginUser)
         .then(response => {
           this.apps = response.data;
-          //this.apps.filter(app => app.pjSeq.pjSeq == this.pjNum);
+          console.log(response.data);
         })
         .catch(e => {
           console.log(e);
@@ -163,7 +164,7 @@ export default {
         app.selected = 1;
       }
       http
-        .put(`/app/update/${id}?userId=user1`, app)
+        .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then(response => {
           console.log("업데이트 성공?");
           console.log(response.data.selected);
@@ -179,7 +180,7 @@ export default {
         app.selected = 2;
       }
       http
-        .put(`/app/update/${id}?userId=user1`, app)
+        .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then(response => {
           console.log("업데이트 성공?");
           console.log(response.data.selected);
@@ -193,6 +194,7 @@ export default {
   },
   mounted() {
     this.retrieveApps();
+    this.retrievePjs();
   }
 };
 </script>

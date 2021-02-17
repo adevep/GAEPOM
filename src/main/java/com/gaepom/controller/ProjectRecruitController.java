@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.RequestWrapper;
@@ -153,6 +151,24 @@ public class ProjectRecruitController {
 		}
 	}
 
+	
+	@GetMapping("/gethostedpj/{userId}")
+	public ResponseEntity<List<Project>> getPjById(@PathVariable("userId") User userId, Project project) {
+		if (userId.getUserId() == null) {
+			System.out.println("실패1");
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		try {
+			List<Project> pj = projectService.getPjByUserId(project, userId);
+			System.out.println("프로젝트 불러오기 성공");
+			return new ResponseEntity<>(pj, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	
+	
 	// 프로젝트 수정
 	@PutMapping("/updatepj/{id}")
 	public ResponseEntity<ProjectRecruit> updateRecruit(User user, @PathVariable("id") long id,
@@ -202,3 +218,4 @@ public class ProjectRecruitController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
+
