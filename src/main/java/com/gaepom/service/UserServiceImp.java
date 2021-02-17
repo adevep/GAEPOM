@@ -1,5 +1,214 @@
 package com.gaepom.service;
 
-public class UserServiceImp {
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.gaepom.dao.UserRepository;
+import com.gaepom.domain.User;
+import com.gaepom.exception.UserException;
+import com.gaepom.exception.UserNotFoundException;
+
+@Service
+public class UserServiceImp implements UserService {
+
+	@Autowired
+	private UserRepository userRepo;
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	public User login(String userid, String password) {
+		Optional<User> findUser = userRepo.findById(userid);
+		if (findUser.isPresent()) {
+			if (findUser.get().getPassword().equals(password)) {
+				return findUser.get();
+			} else {
+				throw new UserNotFoundException("비밀번호를 확인해주세요.");
+			}
+		} else {
+			throw new UserNotFoundException("해당 ID로 가입된 회원이 존재하지 않습니다");
+		}
+	}
+
+
+	public User getUser(String userid) {
+		Optional<User> findUser = userRepo.findById(userid);
+		if (findUser.isPresent()) {
+			return findUser.get();
+		} else {
+			throw new UserNotFoundException("해당하는 아이디의 회원이 없습니다.");
+		}
+	}
+
+	public List<User> getUserList(User User) {
+		Optional<User> findUser = userRepo.findById(User.getUserId());
+		if (findUser.isPresent()) {
+			return (List<User>) userRepo.findAll();
+		} else {
+			throw new UserNotFoundException("회원이 없습니다.");
+		}
+	}
+	
+	
+	public User insertUser(User user, MultipartFile mfile) {
+
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		// 회원 가입이니까 기존 회원 없어야 됨
+		if (!findUser.isPresent()) {
+
+			String imgname = null;
+
+			try {
+				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
+				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				logger.debug(user.getUserId() + " 회원 이미지 등록 오류 발생");
+			}
+
+			user.setUserImage(imgname);
+			userRepo.save(user);
+			return user;
+			
+		} else {
+			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
+		}
+	}
+	
+	public User insertUserNoimg(User user) {
+
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		if (!findUser.isPresent()) {
+
+			user.setUserImage("lion.jpg");
+			userRepo.save(user);
+			return user;
+
+		} else {
+			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
+		}
+
+	}
+
+	public User findUserByUserId(String userid) {
+		Optional<User> findUser = userRepo.findById(userid);
+		if (findUser.isPresent()) {
+			return findUser.get();
+		} else {
+			throw new UserNotFoundException("해당하는 아이디의 유저가 없습니다");
+		}
+	}
+
+	public User updateUser(User user, MultipartFile mfile) {
+		System.out.println(user.getUserId());
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		if (findUser.isPresent()) {
+			String imgname = null;
+
+			try {
+				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
+				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
+				
+				String filename = findUser.get().getUserImage();
+				File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+				
+				if (file.exists() && !filename.equals("lion.jpg")) {
+					if (file.delete()) {
+						logger.debug("사진 파일 삭제 완료");
+					} else {
+						logger.debug("사진 파일 삭제 실패");
+					}
+				}
+
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				logger.debug("오류 발생");
+			}
+
+			findUser.get().setPassword(user.getPassword());
+			findUser.get().setName(user.getName());
+			findUser.get().setAge(user.getAge());
+			findUser.get().setEmail(user.getEmail());
+			findUser.get().setPhoneNum(user.getPhoneNum());
+			findUser.get().setAddress(user.getAddress());
+			findUser.get().setStack(user.getStack());
+			findUser.get().setUserImage(imgname);
+			findUser.get().setPosition(user.getPosition());
+
+			userRepo.save(findUser.get());
+			logger.info(user.getUserId() + " 정보 업데이트 완료");
+			return findUser.get();
+		} else {
+			throw new UserNotFoundException("유저가 없습니다.");
+		}
+	}
+
+	public User updateUserNoimg(User user) {
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		if (findUser.isPresent()) {
+			
+			String filename = findUser.get().getUserImage();
+			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+			
+			if (file.exists() && !filename.equals("lion.jpg")) {
+				if (file.delete()) {
+					logger.debug("사진 파일 삭제 완료");
+				} else {
+					logger.debug("사진 파일 삭제 실패");
+				}
+			}
+
+			findUser.get().setPassword(user.getPassword());
+			findUser.get().setName(user.getName());
+			findUser.get().setAge(user.getAge());
+			findUser.get().setEmail(user.getEmail());
+			findUser.get().setPhoneNum(user.getPhoneNum());
+			findUser.get().setAddress(user.getAddress());
+			findUser.get().setStack(user.getStack());
+			findUser.get().setUserImage("lion.jpg");
+			findUser.get().setPosition(user.getPosition());
+
+			userRepo.save(findUser.get());
+			logger.info(user.getUserId() + " 정보 업데이트 완료");
+			return findUser.get();
+		} else {
+			throw new UserNotFoundException("유저가 없습니다.");
+		}
+	}
+
+	public void deleteUser(User user) {
+
+		Optional<User> findUser = userRepo.findById(user.getUserId());
+		
+		if (findUser.isPresent()) {
+
+			String filename = findUser.get().getUserImage();
+
+			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+
+			if (file.exists() && !filename.equals("lion.jpg")) {
+				if (file.delete()) {
+					logger.info(user.getUserId() + "유저 사진 파일 삭제");
+				} else {
+					logger.debug("탈퇴 유저 사진 파일 삭제 실패");
+				}
+			}
+
+			userRepo.delete(findUser.get());
+			logger.info(user.getUserId() + " 유저 탈퇴 완료");
+
+		} else {
+			throw new UserNotFoundException("해당하는 아이디의 유저가 없습니다");
+		}
+	}
+
 
 }
+

@@ -1,0 +1,50 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+	<title>전체 회원</title>
+</head>
+
+<body>
+
+<center>
+
+<h3>전체 회원 목록</h3>
+
+<br>
+
+<!--<a th:href="@{/login(user=${guser})}">뒤로</a> <br> -->
+<br><hr><br>
+<table border="1" width="700">
+
+<tr>
+	<th width="100">아이디</th>
+	<th width="200">이름</th>
+	<th width="150">나이</th>
+	<th width="150">이메일</th>
+	<th width="150">번호</th>
+	<th width="150">주소</th>
+	<th width="150">기술</th>
+	<th width="150">이미지 경로</th>
+	<th width="150">포지션</th>
+</tr>
+	<tr th:each="user : ${userlist}">
+		<td>
+		<a th:href="@{/getanouser(anouserid=${user.userId})}" th:text="${user.userId}"/>
+		</td>
+		<td th:text="${user.name}"></td>
+		<td th:text="${user.age}"></td>
+		<td th:text="${user.email}"></td>
+		<td th:text="${user.phoneNum}"></td>
+		<td th:text="${user.address}"></td>
+		<td th:text="${user.stack}"></td>
+		<td><img th:src="@{${'http://localhost' + '/upload/' + user.userImage}}"></td>
+		<td th:text="${user.position}"></td>
+	</tr>
+
+</table>
+
+</center>
+
+</body>
+
+</html>

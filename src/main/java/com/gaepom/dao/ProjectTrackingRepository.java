@@ -1,5 +1,9 @@
 package com.gaepom.dao;
 
-public class ProjectTrackingRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.gaepom.domain.ProjectTracking;
+
+public interface ProjectTrackingRepository extends CrudRepository<ProjectTracking, Long> {
 
 }
