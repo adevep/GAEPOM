@@ -50,13 +50,9 @@ public class Comment {
 	@Column(name = "user_id")
 	private String userId;
 	
-
 	@ManyToOne 
 	@JsonBackReference(value="comment")
 	@JoinColumn(name = "track_seq", nullable=true)
-
-	@ManyToOne
-	@JoinColumn(name = "track_seq")
-
 	private ProjectTracking trackSeq;
+
 }
