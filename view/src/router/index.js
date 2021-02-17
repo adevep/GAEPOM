@@ -72,6 +72,17 @@ const routes = [
     component: () => import("../views/Project.vue")
   },
   {
+    path: "/insertproject",
+    name: "insertproject",
+    component: () => import("../views/InsertProject.vue")
+  },
+  {
+    path: "/project/:pjSeq/details",
+    name: "details",
+    component: () => import("../components/ProjectDetails.vue"),
+    props: true
+  },
+  {
     path: "/mentor",
     name: "Mentor",
     component: () => import("../views/Mentor.vue")
