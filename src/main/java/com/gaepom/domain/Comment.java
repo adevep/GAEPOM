@@ -47,8 +47,15 @@ public class Comment {
 	@Column(name="user_id")
 	private String userId;
 	
+<<<<<<< Updated upstream
 	@ManyToOne
 	@JoinColumn(name="track_seq")
+=======
+
+	@ManyToOne 
+	@JsonBackReference(value="comment")
+	@JoinColumn(name = "track_seq", nullable=true)
+>>>>>>> Stashed changes
 	private ProjectTracking trackSeq;
 
 }
