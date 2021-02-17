@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
+
 import com.gaepom.domain.ProjectTracking;
+
 
 @Service
 public class ProjectServiceImp implements ProjectService {
@@ -52,6 +54,7 @@ public class ProjectServiceImp implements ProjectService {
 
 		return projectRepo.save(findProject);
 	}
+
 	
 	public void updateProjTracking(ProjectTracking projectTracking) {
 		Project findProject = projectRepo.findById(projectTracking.getProject().getPjSeq()).get();
@@ -60,6 +63,7 @@ public class ProjectServiceImp implements ProjectService {
 		
 		projectRepo.save(findProject);
 	}
+
 
 //	public void updateProjectWithRecSeq(Project project, ProjectRecruit recSeq) {
 //		Project findProject = projectRepo.findById(project.getPjSeq()).get();

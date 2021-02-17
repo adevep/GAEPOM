@@ -52,6 +52,7 @@ public class ProjectTracking {
 	@Column(name="track_link")
 	private String trackLink;
 	
+
 	@JsonManagedReference(value="comment")
 	@OneToMany(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	private List<Comment> Tcomments;

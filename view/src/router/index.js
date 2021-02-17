@@ -72,6 +72,7 @@ const routes = [
     component: () => import("../views/Project.vue")
   },
   {
+
     path: "/projectTracking",
     name: "ProjectTracking",
     component: () => import("../views/ProjectTracking.vue")
@@ -96,6 +97,7 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: () => import("../views/SignUp.vue")
+
   },
   {
     path: "/projectTrackingInsert",

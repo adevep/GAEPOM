@@ -20,6 +20,7 @@
           <b-navbar-item tag="router-link" :to="{ path: '/project' }">
             프로젝트 모집
           </b-navbar-item>
+
           <b-navbar-item tag="router-link" :to="{ path: '/projectTracking' }">
             프로젝트 트래커
           </b-navbar-item>

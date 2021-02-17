@@ -1,7 +1,5 @@
 package com.gaepom.util;
 
-
-
 import java.util.Date;
 
 import org.aspectj.lang.annotation.Aspect;
@@ -16,6 +14,11 @@ import com.gaepom.dao.ProjectRepository;
 import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
+
+import com.gaepom.dao.ApplicationRepository;
+import com.gaepom.dao.UserRepository;
+import com.gaepom.domain.Application;
+
 import com.gaepom.domain.User;
 
 
@@ -46,5 +49,6 @@ public class LoadDatabase {
 					"친환경 업사이클링 쇼핑몰", "업사이클링 제품만을 판매하는 오픈마켓", "2021.01.21-2021.02.30", "GitHub, Jira, Jandi", "웹앱", "Tensorflow", "Oracle", null)));
 		
 			};
+
 	}
 }

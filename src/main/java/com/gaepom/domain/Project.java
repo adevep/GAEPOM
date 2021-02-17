@@ -67,6 +67,7 @@ public class Project {
 	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER)
 	private List<Application> applications;
 
+
 //	@Override
 //	public String toString() {
 //		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId.getUserId()

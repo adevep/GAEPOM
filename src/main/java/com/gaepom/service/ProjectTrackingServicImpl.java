@@ -2,6 +2,7 @@ package com.gaepom.service;
 
 import java.util.List;
 
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.dao.ProjectTrackingRepository;
+
 import com.gaepom.domain.Comment;
+
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectTracking;
 
@@ -68,4 +71,5 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService{
 	public void deleteProjectTracking(ProjectTracking tracking) {
 		trackingRepo.deleteById(tracking.getTrackSeq());
 	}
+
 }

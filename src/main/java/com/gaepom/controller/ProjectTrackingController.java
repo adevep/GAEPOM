@@ -1,6 +1,7 @@
 package com.gaepom.controller;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,4 +91,5 @@ public class ProjectTrackingController {
 		Optional<ProjectTracking> tracking = repoTracking.findById(trackSeq);
 		projectTrackingService.deleteProjectTracking(tracking.get());
 	}
+
 }
