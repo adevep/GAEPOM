@@ -21,4 +21,10 @@ public interface ProjectRecruitRepository extends CrudRepository<ProjectRecruit,
 	
 	@Query("SELECT a, b FROM ProjectRecruit a INNER JOIN Project b On a.recSeq = b.recSeq where b.pjSeq =:pjSeq")
 	List<Object> findTotalRecruitByPjSeq(@Param("pjSeq") Long pjSeq);
+	
+	@Query("SELECT a, b FROM ProjectRecruit a INNER JOIN Project b On a.recSeq = b.recSeq where a.location=:location" )
+	List<Object> findTotalRecruitByLocation(@Param("location") String location);
+
+	@Query("SELECT a, b FROM ProjectRecruit a INNER JOIN Project b On a.recSeq = b.recSeq where b.pjCategory=:pjCategory" )
+	List<Object> findTotalRecruitByCategory(@Param("pjCategory") String pjCategory);
 }

@@ -7,6 +7,8 @@ public interface ProjectRecruitService {
 	List<Object> getTotalRecruitList(ProjectRecruit recruit);
 
 	List<Object> getTotalRecruitByPjSeq(Long pjSeq, ProjectRecruit recruit);
+	List<Object> getTotalRecruitByLocation(String location);
+	List<Object> getTotalRecruitByCategory(String pjCategory);
 
 
 	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
