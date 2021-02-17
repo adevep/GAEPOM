@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
+import com.gaepom.domain.User;
 
 @Service
 public class ProjectServiceImp implements ProjectService {
@@ -21,7 +22,11 @@ public class ProjectServiceImp implements ProjectService {
 	public List<Project> getProjectList(Project project) {
 		return (List<Project>) projectRepo.findAll();
 	}
-
+	
+	public List<Project> getPjByUserId(Project project, User userId) {
+		return (List<Project>) projectRepo.findPjByUserId(userId);
+	}
+	
 	public Project insertProject(Project project) {
 		return projectRepo.save(project);
 	}

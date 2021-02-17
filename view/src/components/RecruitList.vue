@@ -68,6 +68,7 @@ export default {
     // const result = [...recs, ...pjs];
     // console.log(result);
     return {
+      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       all,
       allPjs,
       // allPjs: {
@@ -112,7 +113,7 @@ export default {
   methods: {
     retrieveRecAndPj() {
       http
-        .get("/recruit/gettotalpj?userId=user1")
+        .get("/recruit/gettotalpj?userId=" + this.loginUser)
         .then(response => {
           this.all = response.data;
           console.log(response.data);
@@ -138,7 +139,7 @@ export default {
     },
     retrieveRecs() {
       http
-        .get("/recruit/getrecs?userId=user1")
+        .get("/recruit/getrecs?userId="+this.loginUser)
         .then(response => {
           this.recs = response.data;
         })
@@ -149,7 +150,7 @@ export default {
     },
     retrievePjs() {
       http
-        .get("/recruit/getpjs?userId=user1")
+        .get("/recruit/getpjs?userId="+this.loginUser)
         .then(response => {
           this.pjs = response.data;
         })

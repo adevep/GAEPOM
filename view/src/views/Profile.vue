@@ -1,5 +1,16 @@
 <template>
   <div class="profile">
-    <h1>This is profile page</h1>
+    <profile-list-com></profile-list-com>
   </div>
 </template>
+
+<script>
+import ProfileListCom from "../components/profileCom/profileListCom.vue";
+
+export default {
+  name: "Profile",
+  components: {
+    ProfileListCom
+  }
+};
+</script>

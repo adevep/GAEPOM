@@ -76,16 +76,15 @@
             <br />
             <h4 class="title is-4">우대사항:</h4>
             <h5 class="subtitle is-5">{{ pj.preference }}</h5>
-            <!-- <div v-if="loginuser!=pj.userId.userId">
-            <b-button>지원하기 </b-button>
-            </div> -->
-            <section>
-              <b-button
+            
+            <div v-if="loginUser!=pj.userId.userId">
+<b-button
                 label="지원하기"
                 type="is-primary"
                 size="is-medium"
                 @click="isCardModalActive = true"
-              />
+              />            </div>
+            <section>
 
               <b-modal v-model="isCardModalActive" :width="640" scroll="keep">
                 <div class="modal-card" style="width: auto">
