@@ -3,26 +3,28 @@ package com.gaepom.domain;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @Table(name="project_tracking")
 public class ProjectTracking {
@@ -48,12 +50,14 @@ public class ProjectTracking {
 	private Date trackDate;
 	
 	@Column(name="track_link")
-	private String tackLink;
+	private String trackLink;
 	
-	@OneToMany(mappedBy="trackSeq")
-	private List<Comment> comment;
+	@JsonManagedReference(value="comment")
+	@OneToMany(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
+	private List<Comment> Tcomments;
 	
-	@OneToOne(mappedBy="trackSeq")
+	@JsonManagedReference(value="track")
+	@OneToOne(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	private Project project;
 
 }

@@ -10,20 +10,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
+
 @Entity
-@Table(name="comments")
+@Table(name = "t_comment")
 public class Comment {
+	
 	@Id
 	@GeneratedValue
 	@Column(name="cmt_seq")
@@ -35,20 +38,21 @@ public class Comment {
 	private Date cmtDate;
 	
 	// 생성될 때 무조건 값 0 넣기
-	@Column(name="cmt_like")
+	@Column(name = "cmt_like")
 	private int cmtLike;
 
-	@Column(name="parent_id", nullable=true)
+	@Column(name = "parent_id", nullable = true)
 	private String parentId;
 	
-	@Column(nullable=true)
+	@Column(nullable = true)
 	private int depth;
 	
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private String userId;
 	
-	@ManyToOne
-	@JoinColumn(name="track_seq")
+	@ManyToOne 
+	@JsonBackReference(value="comment")
+	@JoinColumn(name = "track_seq", nullable=true)
 	private ProjectTracking trackSeq;
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,17 +12,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 public class Project {
 	@Id
@@ -30,10 +31,11 @@ public class Project {
 	private Long pjSeq;
 	
 	@OneToOne
-	@JoinColumn(name="rec_seq")
+	@JoinColumn(name="rec_seq", nullable = true)
 	private ProjectRecruit recSeq;
 	
 	@OneToOne
+	@JsonBackReference(value="track")
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;
 	
@@ -49,7 +51,7 @@ public class Project {
 	
 	@Column(name = "pj_duration")
 	private String pjDuration;
-	
+
 	@Column(name = "pj_tools")
 	private String pjTools;
 	
@@ -62,6 +64,15 @@ public class Project {
 	@Column(name = "pj_dbms")
 	private String pjDbms;
 	
-	@OneToMany(mappedBy="pjSeq")
+	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER)
 	private List<Application> applications;
+
+//	@Override
+//	public String toString() {
+//		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId.getUserId()
+//				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
+//				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
+//				+ ", applications=" + applications + "]";
+//	}
+
 }	

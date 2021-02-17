@@ -1,0 +1,43 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+	<title>전체 에플리케이션 </title>
+</head>
+
+<body>
+
+<center>
+
+<h3>전체 애플리케이션 목록</h3>
+
+<br>
+
+<br><hr><br>
+<table border="1" width="700">
+
+<tr>
+	<th width="100">글번호</th>
+	<th width="200">아이디 </th>
+	<th width="150">각오 </th>
+	<th width="150">지원 포지션 </th>
+	<th width="150">지원 현황 </th>
+	<th width="150">지원 날짜 </th>
+	<th width="150">프로젝트 번호</th>
+</tr>
+	<tr th:each="apl : ${userApl}">
+		<td th:text="${apl.aplSeq}"></td>
+		<td th:text="${apl.userId}"></td>
+		<td th:text="${apl.words}"></td>
+		<td th:text="${apl.aplPosi}"></td>
+		<td th:text="${apl.selected}"></td>
+		<td th:text="${apl.aplDate}"></td>
+		<td th:text="${apl.pjSeq.pjSeq}"></td>
+	</tr>
+
+</table>
+
+</center>
+
+</body>
+
+</html>
