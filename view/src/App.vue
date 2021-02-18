@@ -20,7 +20,8 @@
           <b-navbar-item tag="router-link" :to="{ path: '/project' }">
             프로젝트 모집
           </b-navbar-item>
-          <b-navbar-item href="#">
+
+          <b-navbar-item tag="router-link" :to="{ path: '/projectTracking' }">
             프로젝트 트래커
           </b-navbar-item>
         </b-navbar-dropdown>
@@ -63,7 +64,12 @@
           <b-dropdown-item has-link aria-role="listitem"
             ><router-link to="/mypage">마이페이지</router-link></b-dropdown-item
           >
-          <b-dropdown-item aria-role="listitem" @click="logout()"
+          <b-dropdown-item has-link aria-role="listitem"
+            ><router-link to="/insertproject"
+              >모집글작성</router-link
+            ></b-dropdown-item
+          >
+          <b-dropdown-item aria-role="listitem" @click="logoutActions(userInfo)"
             >로그아웃</b-dropdown-item
           >
         </b-dropdown>
@@ -97,26 +103,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-.tag {
-  cursor: pointer;
-}
-</style>

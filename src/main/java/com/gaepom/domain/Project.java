@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Project {
 	private ProjectRecruit recSeq;
 	
 	@OneToOne
+	@JsonBackReference(value="track")
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;
 	
@@ -63,7 +65,7 @@ public class Project {
 	@Column(name = "pj_dbms")
 	private String pjDbms;
 	
-	@OneToMany(mappedBy="pjSeq")
+	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER)
 	private List<Application> applications;
 
 //	@Override

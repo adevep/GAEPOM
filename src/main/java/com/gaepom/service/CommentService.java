@@ -6,7 +6,7 @@ import com.gaepom.domain.Comment;
 
 public interface CommentService {
 	
-	List<Comment> getCommentList(Comment comment);
+	List<Comment> getCommentList(Long trackSeq);
 	void insertComment(Comment comment);
 	Comment getComment(Comment comment);
 	void updateComment(Comment comment);
