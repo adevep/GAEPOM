@@ -39,6 +39,7 @@ public class Project {
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User userId;
@@ -66,7 +67,6 @@ public class Project {
 	
 	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER)
 	private List<Application> applications;
-
 
 //	@Override
 //	public String toString() {

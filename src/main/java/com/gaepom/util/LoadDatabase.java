@@ -21,8 +21,6 @@ import com.gaepom.domain.Application;
 
 import com.gaepom.domain.User;
 
-
-
 @Aspect
 @Configuration
 public class LoadDatabase {
