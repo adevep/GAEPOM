@@ -26,8 +26,11 @@ public class PortfolioController {
 
 	// ===== 포트폴리오 생성 =====
 	@PostMapping("/insertportfolio")
-	public ResponseEntity<Portfolio> createPortfolio(@RequestParam(required = true) String userid, Portfolio portfolio) {
-		Portfolio createportfolio = portfolioService.createPortfolio(portfolio, userid);
+	public ResponseEntity<Portfolio> createPortfolio(@RequestParam String[] pftoolslist,
+			@RequestParam String[] pflanglist, @RequestParam String[] pfdbmslist,
+			@RequestParam(required = true) String userid, Portfolio portfolio) {
+		Portfolio createportfolio = portfolioService.createPortfolio(pftoolslist, pflanglist, pfdbmslist, userid,
+				portfolio);
 		return new ResponseEntity<>(createportfolio, HttpStatus.CREATED);
 	}
 
@@ -54,9 +57,9 @@ public class PortfolioController {
 
 	// ===== 특정 포트폴리오 수정 =====
 	@PutMapping("/updateportfolio/{pfSeq}")
-	public ResponseEntity<Portfolio> updatePortfolio(@PathVariable("pfSeq") Long pfSeq, Portfolio portfolio) {
-		portfolioService.updatePortfolio(pfSeq, portfolio);
-		return new ResponseEntity<>(portfolioService.updatePortfolio(pfSeq, portfolio), HttpStatus.OK);
+	public ResponseEntity<Portfolio> updatePortfolio(@PathVariable("pfSeq") Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, Portfolio portfolio) {
+		Portfolio updatedportfolio = portfolioService.updatePortfolio(pfseq, pftoolslist, pflanglist, pfdbmslist, portfolio);
+		return new ResponseEntity<>(updatedportfolio, HttpStatus.OK);
 	}
 
 	// ===== 특정 포트폴리오 삭제 =====
