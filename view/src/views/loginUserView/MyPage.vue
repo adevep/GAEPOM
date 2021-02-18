@@ -16,20 +16,7 @@
       </b-collapse>
     </section>
     <br />
-    <section>
-      <b-collapse :open="false" aria-id="contentIdForA11y1">
-        <template #trigger>
-          <b-button
-            label="지원자 보기"
-            type="is-primary"
-            aria-controls="contentIdForA11y1"
-          />
-        </template>
-        <div class="content">
-          <all-apps></all-apps>
-        </div>
-      </b-collapse>
-    </section>
+   
      <section>
       <b-collapse :open="false" aria-id="contentIdForA11y1">
         <template #trigger>
@@ -49,14 +36,12 @@
 <script>
 import mypagecom from "@/components/loginUserCom/MyPageCom.vue";
 import Application from "@/components/Application.vue";
-import AllApps from "@/components/AllApps.vue";
 import MyProjects from "@/components/MyProjects.vue";
 export default {
   name: "mypage",
   components: {
     mypagecom,
     Application,
-    AllApps,
     MyProjects
   }
 };

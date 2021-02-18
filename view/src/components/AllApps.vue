@@ -143,13 +143,14 @@ export default {
       apps,
       defaultOpendDetails: [1],
       showDetailcon: true,
-      isHoverable: true
+      isHoverable: true,
+      pjSeq2: this.$route.params.pjSeq
     };
   },
   methods: {
     retrieveApps() {
       http
-        .get("/app/getpjapp/"+ this.pjSeq + "?userId=" + this.loginUser)
+        .get("/app/getpjapp/"+ this.pjSeq2 + "?userId=" + this.loginUser)
         .then(response => {
           this.apps = response.data;
           console.log(response.data);

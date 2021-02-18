@@ -47,7 +47,7 @@
           <b-input v-model="preference" maxlength="30"></b-input>
         </b-field>
         <b-field label="모집 기간" align="left">
-          <b-input v-model="recDuratio" maxlength="30"></b-input>
+          <b-input v-model="recDuration" maxlength="30"></b-input>
         </b-field>
       </section>
       <b-button
@@ -67,17 +67,19 @@ import http from "../http-common";
 
 export default {
   name: "UpdateProject",
-  props: ["pjNum"],
   data() {
     const all = [];
     const allPjs = [];
+    const allPjs2 = [];
     return {
       loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       all,
       allPjs,
+      allPjs2,
       userId: "",
       pjTitle: "",
       pjDescription: "",
+      pjCategory:"",
       pjDuration: "",
       pjTools: "",
       pjLang: "",
@@ -88,16 +90,18 @@ export default {
       preference: "",
       recStatus: 0,
       recDuration: "",
-      recSeq: ""
+      recSeq: "",
+      pjNum2: this.$route.params.pjNum
       //recSeq: ""
     };
   },
   methods: {
     getProject() {
       http
-        .get("/recruit/gettotalpj/" + this.pjNum + "?userId=" + this.loginUser)
+        .get("/recruit/gettotalpj/" + this.pjNum2 + "?userId=" + this.loginUser)
         .then(response => {
           this.all = response.data;
+          console.log(response.data);
           var array = [];
           this.all.forEach(function(element) {
             var allPj;
@@ -110,22 +114,41 @@ export default {
             array.push(allPj);
           });
           this.allPjs = array;
+          console.log("데이터 확인");
           console.log(this.allPjs);
+          console.log("데이터뽑기");
+          var allPjs3 = "";
+          this.allPjs.forEach(function(entry) {
+            allPjs3 = entry;
+          });
+          console.log(allPjs3);
+
+
+          // this.allPjs.forEach(function(eachObj) {
+          //   for (var key in eachObj) {
+          //     // eslint-disable-next-line no-prototype-builtins
+          //     if (eachObj.hasOwnProperty(key)) {
+          //       console.log(key, eachObj[key]);
+          //     }
+          //   }
+          // });
+
+          console.log("데이터뽑기2");
 
           this.userId = this.loginUser;
-          this.pjTitle = this.allPjs.pjTitle;
-          this.pjDescription = this.allPjs.pjDescription;
-          this.pjDuration = this.allPjs.pjDuration;
-          this.pjTools = this.allPjs.pjTools;
-          this.pjLang = this.allPjs.pjLang;
-          this.pjDbms = this.allPjs.pjDbms;
-          this.needNum = this.allPjs.needNum;
-          this.needPosi = this.allPjs.needPosi;
-          this.location = this.allPjs.location;
-          this.preference = this.allPjs.preference;
-          this.recStatus = this.allPjs.recSeq.recStatus;
-          this.recDuration = this.allPjs.recDuration;
-          this.recSeq = this.allPjs.recSeq;
+          this.pjTitle = allPjs3.pjTitle;
+          this.pjDescription = allPjs3.pjDescription;
+          this.pjDuration = allPjs3.pjDuration;
+          this.pjTools = allPjs3.pjTools;
+          this.pjLang = allPjs3.pjLang;
+          this.pjDbms = allPjs3.pjDbms;
+          this.needNum = allPjs3.needNum;
+          this.needPosi = allPjs3.needPosi;
+          this.location = allPjs3.location;
+          this.preference = allPjs3.preference;
+          this.recDuration = allPjs3.recDuration;
+          this.pjCategory = allPjs3.pjCategory;
+          this.recSeq = allPjs3.recSeq.recSeq;
         })
         .catch(e => {
           console.log(e);
@@ -158,18 +181,19 @@ export default {
             pjTitle: this.pjTitle,
             pjDescription: this.pjDescription,
             pjDuration: this.pjDuration,
+            pjCategory: this.pjCategory,
             pjTools: this.pjTools,
             pjLang: this.pjLang,
             pjDbms: this.pjDbms,
-            recSeq: { recSeq: this.recSeq }
+            //recSeq: { recSeq: this.recSeq }
           };
           http
             .put(
-              "/recruit/updatepj/" + this.recSeq + "?userId=" + this.loginUser,
+              "/recruit/updatepj/" + this.pjNum2 + "?userId=" + this.loginUser,
               data
             )
             .then(response => {
-              console.log("==========add==========");
+              console.log("==========add pj==========");
               console.warn(response);
               console.warn(response.data);
               console.log("==========add==========");

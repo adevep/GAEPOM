@@ -3,6 +3,7 @@ package com.gaepom.service;
 import java.util.List;
 
 import com.gaepom.domain.Project;
+import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
 
 public interface ProjectService {
@@ -18,7 +19,7 @@ public interface ProjectService {
 	Project getProject(Long id);
 	//ㄴProject getProject(Project project);
 
-	Project updateProject(Project project);
+	Project updateProject(Long id, Project project);
 
 	// void updateProjectWithRecSeq(Long pjSeq, Long recSeq);
 	// void updateProjectWithRecSeq2(Project project, Long recSeq);
