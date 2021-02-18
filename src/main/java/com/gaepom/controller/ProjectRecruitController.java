@@ -99,7 +99,20 @@ public class ProjectRecruitController {
 		List<ProjectRecruit> recs = projectRecruitService.getProjectRecruitList(recruit);
 		return new ResponseEntity<>(recs, HttpStatus.OK);
 	}
+	
+	// 프로젝트 번호로 모집글 검색 (필터링)
+	@GetMapping("/getbypj/{id}")
+	public ResponseEntity<Object> getRecByPj(User user, @PathVariable("id") Long pjSeq, ProjectRecruit recruit ) {
+		if (user.getUserId() == null) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		Object needNum = projectRecruitService.getRecByPj(pjSeq, recruit);
+		
+		return new ResponseEntity<>(needNum, HttpStatus.OK);
+	}
 
+	
 	// 프로젝트와 모집글 함께 생성
 	@PostMapping("create")
 	public ResponseEntity<Project> insertProjectRecruit(User user, @RequestBody RequestWrapper requestWrapper) {
