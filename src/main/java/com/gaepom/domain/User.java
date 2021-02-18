@@ -7,18 +7,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
+@Builder
 
 @Entity
 @Table(name="g_user")
@@ -48,10 +51,14 @@ public class User {
 
 	private String position;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="userId")
 	private List<Portfolio> portfolios;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="userId")
 	private List<Project> projects;
 
 }
+
+

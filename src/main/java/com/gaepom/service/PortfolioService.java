@@ -6,23 +6,15 @@ import com.gaepom.domain.Portfolio;
 
 public interface PortfolioService {
 	
-	void savePortfolio(Portfolio portfolio);
+	Portfolio createPortfolio(Portfolio portfolio, String userid);
 
-	Portfolio findByPfSeq(Long pfSeq);
+	Portfolio findPfSeqGetPortfolio(Long pfSeq);
 
-	Portfolio findByPfSubtitle(String pfSubtitle);
-	
-	Portfolio findPortfolioByUserId(String userId);
+	List<Portfolio> findUserIdGetPortfolio(String userid);
 
 	List<Portfolio> findAllPortfolios();
 
-	void updatePortfolio(Portfolio portfolio);
+	Portfolio updatePortfolio(Long pfSeq, Portfolio portfolio);
 
-	void deleteByPfSeq(Long pfSeq);
-	
-	void deleteAllPortfolios();
-	
-	boolean isPfSubtitleExist(Portfolio portfolio);
-
-	boolean isUserIdExist(Portfolio portfolio);
+	Portfolio deleteByPfSeq(Long pfSeq);
 }

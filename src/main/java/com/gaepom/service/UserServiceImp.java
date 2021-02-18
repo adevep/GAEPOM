@@ -23,13 +23,27 @@ public class UserServiceImp implements UserService {
 	private UserRepository userRepo;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	public User login(String userid, String password) {
+		Optional<User> findUser = userRepo.findById(userid);
+		if (findUser.isPresent()) {
+			if (findUser.get().getPassword().equals(password)) {
+				return findUser.get();
+			} else {
+				throw new UserNotFoundException("비밀번호를 확인해주세요.");
+			}
+		} else {
+			throw new UserNotFoundException("해당 ID로 가입된 회원이 존재하지 않습니다");
+		}
+	}
 
-	public User getUser(User User) {
-		Optional<User> findUser = userRepo.findById(User.getUserId());
+
+	public User getUser(String userid) {
+		Optional<User> findUser = userRepo.findById(userid);
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {
-			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
+			throw new UserNotFoundException("해당하는 아이디의 회원이 없습니다.");
 		}
 	}
 
@@ -38,69 +52,47 @@ public class UserServiceImp implements UserService {
 		if (findUser.isPresent()) {
 			return (List<User>) userRepo.findAll();
 		} else {
-			throw new UserNotFoundException("해당 회원 목록을 찾을수 없습니다.");
+			throw new UserNotFoundException("회원이 없습니다.");
 		}
 	}
 	
-	public List<User> getUserList2() {
-		return (List<User>) userRepo.findAll();
-	}
 	
-	// 회원 가입1 : 이미지 파일 있는 경우
-	public void insertUser(User user, MultipartFile mfile) {
+	public User insertUser(User user, MultipartFile mfile) {
 
 		Optional<User> findUser = userRepo.findById(user.getUserId());
+		// 회원 가입이니까 기존 회원 없어야 됨
 		if (!findUser.isPresent()) {
 
-			// 경로 받아줄 변수 선언
 			String imgname = null;
 
 			try {
-				// GAEPOM까지 각자 다른 경로 = System.getProperty("user.dir")
-				// 파일 이름 지정 -> 원래 이미지 파일 이름 (= mfile.getOriginalFilename()) + 이미지 파일 이름 중복되는 경우
-				// 막기위한 현재시간 (= System.currentTimeMillis())
-				// 위에 두가지 더해서 -> (GAEPOM까지 각자의 경로)/src/main/webapp/upload/파일 이름(원래 파일 이름 + 이미지
-				// 업로드 시간)으로 해당 경로 폴더에 이미지 파일 생성
-				// 출력시엔 url로
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-				logger.debug("파일 등록 실패");
+				logger.debug(user.getUserId() + " 회원 이미지 등록 오류 발생");
 			}
 
-			// user객체 테이블에 넣기전에 이미지 경로를 userimage컬럼에 넣어준 후에 테이블에 저장하기
 			user.setUserImage(imgname);
 			userRepo.save(user);
-
-			logger.info(user.getUserId() + " 회원 가입");
-
+			return user;
+			
 		} else {
-			throw new UserException("이미 가입되어 있는 회원입니다.");
+			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
 		}
-
 	}
 	
-	// 회원 가입2 : 이미지 파일 없는 경우, 디폴트 이미지 사용
-	public void insertUserNoimg(User user) {
+	public User insertUserNoimg(User user) {
 
 		Optional<User> findUser = userRepo.findById(user.getUserId());
 		if (!findUser.isPresent()) {
 
-			try {
-
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-				logger.debug("파일 등록 실패");
-			}
-			// default image = 라이언 캐릭터
 			user.setUserImage("lion.jpg");
 			userRepo.save(user);
-
-			logger.info(user.getUserId() + " 회원 가입");
+			return user;
 
 		} else {
-			throw new UserException("이미 가입되어 있는 회원입니다.");
+			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
 		}
 
 	}
@@ -110,37 +102,34 @@ public class UserServiceImp implements UserService {
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {
-			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
+			throw new UserNotFoundException("해당하는 아이디의 유저가 없습니다");
 		}
 	}
 
-	public void updateUser(User user, MultipartFile mfile) {
+	public User updateUser(User user, MultipartFile mfile) {
+		System.out.println(user.getUserId());
 		Optional<User> findUser = userRepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
-
 			String imgname = null;
 
 			try {
-				// 새로운 이미지 파일 업데이트
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
 				
-				// 기존 이미지 파일 삭제위해 해당 파일 찾기
 				String filename = findUser.get().getUserImage();
 				File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
 				
-				// 이미지 폴더에 해당 파일 존재시에만 & 디폴트 라이언 이미지 아닌 경우에만 삭제 실시
 				if (file.exists() && !filename.equals("lion.jpg")) {
 					if (file.delete()) {
-						logger.debug("탈퇴 유저 이미지 삭제 성공");
+						logger.debug("사진 파일 삭제 완료");
 					} else {
-						logger.debug("탈퇴 유저 이미지 삭제 실패");
+						logger.debug("사진 파일 삭제 실패");
 					}
 				}
 
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-				logger.debug("파일 등록 실패");
+				logger.debug("오류 발생");
 			}
 
 			findUser.get().setPassword(user.getPassword());
@@ -154,15 +143,27 @@ public class UserServiceImp implements UserService {
 			findUser.get().setPosition(user.getPosition());
 
 			userRepo.save(findUser.get());
-			logger.info(user.getUserId() + " 회원 정보 수정");
+			logger.info(user.getUserId() + " 정보 업데이트 완료");
+			return findUser.get();
 		} else {
-			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
+			throw new UserNotFoundException("유저가 없습니다.");
 		}
 	}
 
-	public void updateUserNoimg(User user) {
+	public User updateUserNoimg(User user) {
 		Optional<User> findUser = userRepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
+			
+			String filename = findUser.get().getUserImage();
+			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+			
+			if (file.exists() && !filename.equals("lion.jpg")) {
+				if (file.delete()) {
+					logger.debug("사진 파일 삭제 완료");
+				} else {
+					logger.debug("사진 파일 삭제 실패");
+				}
+			}
 
 			findUser.get().setPassword(user.getPassword());
 			findUser.get().setName(user.getName());
@@ -171,40 +172,43 @@ public class UserServiceImp implements UserService {
 			findUser.get().setPhoneNum(user.getPhoneNum());
 			findUser.get().setAddress(user.getAddress());
 			findUser.get().setStack(user.getStack());
-			// 디폴트 이미지 라이언으로 변경
 			findUser.get().setUserImage("lion.jpg");
 			findUser.get().setPosition(user.getPosition());
 
 			userRepo.save(findUser.get());
-			logger.info(user.getUserId() + " 회원 정보 수정");
+			logger.info(user.getUserId() + " 정보 업데이트 완료");
+			return findUser.get();
 		} else {
-			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
+			throw new UserNotFoundException("유저가 없습니다.");
 		}
 	}
 
 	public void deleteUser(User user) {
+
 		Optional<User> findUser = userRepo.findById(user.getUserId());
+		
 		if (findUser.isPresent()) {
+
 			String filename = findUser.get().getUserImage();
 
 			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
 
 			if (file.exists() && !filename.equals("lion.jpg")) {
 				if (file.delete()) {
-					logger.debug("탈퇴 유저 이미지 삭제 성공");
+					logger.info(user.getUserId() + "유저 사진 파일 삭제");
 				} else {
-					logger.debug("탈퇴 유저 이미지 삭제 실패");
+					logger.debug("탈퇴 유저 사진 파일 삭제 실패");
 				}
 			}
 
 			userRepo.delete(findUser.get());
-			logger.info(user.getUserId() + " 회원 탈퇴");
+			logger.info(user.getUserId() + " 유저 탈퇴 완료");
 
 		} else {
-			throw new UserNotFoundException("해당 회원을 찾을수 없습니다.");
+			throw new UserNotFoundException("해당하는 아이디의 유저가 없습니다");
 		}
 	}
 
-	////////////////////////////////////////////////////////
 
 }
+

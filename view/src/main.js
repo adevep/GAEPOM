@@ -6,17 +6,15 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import vuetify from "./plugins/vuetify";
-
-Vue.config.productionTip = false
 
 Vue.use(Buefy);
 //Vue.prototype.$http = axios;np
+//Vue.config.productionTip = false;
 // Vue.prototype.$axios = axios;
 Vue.use(VueAxios, axios);
 
 new Vue({
   router,
-  vuetify,
+  store,
   render: h => h(App)
 }).$mount("#app");

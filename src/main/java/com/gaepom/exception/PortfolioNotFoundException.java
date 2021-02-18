@@ -1,6 +1,6 @@
 package com.gaepom.exception;
 
-public class PortfolioNotFoundException extends PortfolioException {
+public class PortfolioNotFoundException extends RuntimeException {
 	public PortfolioNotFoundException() {}
 	
 	public PortfolioNotFoundException(String message) {

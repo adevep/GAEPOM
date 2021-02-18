@@ -29,7 +29,10 @@
 		</dependency>
 
 		<!-- 타임 리프 추가 -->
-		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 
 
 		<dependency>
@@ -64,6 +67,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -76,6 +81,7 @@
 			<version>1.1.2</version>
 			<scope>compile</scope>
 		</dependency>
+
 		<!-- 이미지 파일 관련 -->
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -91,13 +97,6 @@
 
 
 
-
-
-
-
-
-
-		
 	</dependencies>
 
 	<build>

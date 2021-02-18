@@ -3,6 +3,8 @@ package com.gaepom.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,95 +12,95 @@ import com.gaepom.dao.PortfolioRepository;
 import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.Portfolio;
 import com.gaepom.domain.User;
+import com.gaepom.exception.PortfolioNotFoundException;
 
-@Service("portfolioService")
+@Service
 public class PortfolioServiceImpl implements PortfolioService {
+
+	public static final Logger logger = LoggerFactory.getLogger(PortfolioServiceImpl.class);
 
 	@Autowired
 	private PortfolioRepository portfolioRepo;
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	// ===== CREATE =====
-	public void savePortfolio(Portfolio portfolio) {
-		portfolioRepo.save(portfolio);
-	}
-	
-	public void savePortfolio(Portfolio portfolio, String userid) {
+	public Portfolio createPortfolio(Portfolio portfolio, String userid) {
 		Optional<User> user = userRepo.findById(userid);
 		if (user.isPresent()) {
 			portfolio.setUserId(user.get());
-			portfolioRepo.save(portfolio);
+			logger.info("생성 완료 | {}: 포트폴리오 생성됨", portfolio);
+			return portfolioRepo.save(portfolio);
+		} else {
+			logger.error("생성 불가 | {}: 포트폴리오 생성 불가", portfolio);
+			throw new PortfolioNotFoundException("포트폴리오 생성 불가: " + portfolio);
 		}
 	}
-	
+
 	// ===== READ =====
-	public Portfolio findByPfSeq(Long pfSeq) {
-		System.out.println("# findByPfSeq | " + pfSeq);
-		return portfolioRepo.findByPfSeq(pfSeq);
+	public Portfolio findPfSeqGetPortfolio(Long pfSeq) {
+		if (portfolioRepo.findByPfSeq(pfSeq) != null) {
+			logger.info("조회 완료 | {}: 포트폴리오 조회됨", pfSeq);
+			return portfolioRepo.findByPfSeq(pfSeq);
+		} else {
+			logger.error("조회 불가 | {}: 포트폴리오 조회 불가", pfSeq);
+			throw new PortfolioNotFoundException(pfSeq + "번 포트폴리오 조회 불가");
+		}
 	}
 
-	public Portfolio findPortfolioByUserId(String userId) {
-		System.out.println("# findPortfolioByUserId | " + userId);
-		return portfolioRepo.findPortfolioByUserId(userId);
+	public List<Portfolio> findUserIdGetPortfolio(String userid) {
+		if (portfolioRepo.findAllPortfolioByUserId(userid) != null) {
+			logger.info("조회 완료 | {}: 포트폴리오 조회됨", userid);
+			return portfolioRepo.findAllPortfolioByUserId(userid);
+		} else {
+			logger.error("조회 불가 | {}: 포트폴리오 조회 불가", userid);
+			throw new PortfolioNotFoundException("유저ID: " + userid + " 포트폴리오 조회 불가");
+		}
 	}
-	
-	private Object findPortfolioByUserId(User userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Portfolio findByPfSubtitle(String pfSubtitle) {
-		System.out.println("# findByPfSubtitle | " + pfSubtitle);
-		return portfolioRepo.findByPfSubtitle(pfSubtitle);
-	}
-	
-	// 필요할까요?(ROLE_ADMIN | 관리자 입장에서는 필요할지도?)
+
 	public List<Portfolio> findAllPortfolios() {
-		return (List<Portfolio>) portfolioRepo.findAll();
-	}
-	
-	// ===== UPDATE =====
-	public void updatePortfolio(Portfolio portfolio) {
-		Portfolio currentPortfolio = portfolioRepo.findByPfSeq(portfolio.getPfSeq());
-		System.out.println("pfSeq 얻음?");
-		
-		currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
-		currentPortfolio.setPfDuration(portfolio.getPfDuration());
-		currentPortfolio.setPfDescription(portfolio.getPfDescription());
-		currentPortfolio.setParticipation(portfolio.getParticipation());
-		currentPortfolio.setPfLang(portfolio.getPfLang());
-		currentPortfolio.setPfTools(portfolio.getPfTools());
-		currentPortfolio.setPfDbms(portfolio.getPfDbms());
-		currentPortfolio.setPfLink(portfolio.getPfLink());
-		currentPortfolio.setPfCategory(portfolio.getPfCategory());
-		currentPortfolio.setPublished(portfolio.getPublished());
-		
-		System.out.println("포트폴리오 갱신됨?");
-		portfolioRepo.save(currentPortfolio);
-	}
-	
-	// ===== DELETE =====
-	public void deleteByPfSeq(Long pfSeq) {
-		portfolioRepo.deleteById(pfSeq);
-	}
-	
-	// 필요할까요?(ROLE_ADMIN | 관리자 입장에서는 필요할지도?)
-	public void deleteAllPortfolios() {
-		portfolioRepo.deleteAll();
-	}
-	
-	// 등록된 포트폴리오 중, 제목이 존재하지 않으면(검색 시 없으면) null 반환
-	// 제목을 입력하지 않으면 alert("제목을 입력해 주세요!")와 같은 메시지 출력?
-	public boolean isPfSubtitleExist(Portfolio portfolio) {
-		return findByPfSubtitle(portfolio.getPfSubtitle()) != null;
-	}
-	
-	// 해당 유저가 이미 작성한 포트폴리오가 존재하면 null 반환
-	// alert("이미 작성된 포트폴리오가 존재합니다.") 메시지 출력?
-	public boolean isUserIdExist(Portfolio portfolio) {
-		return findPortfolioByUserId(portfolio.getUserId()) != null;
+		if (portfolioRepo.findAllPortfolios() != null) {
+			logger.info("조회 완료 | 모든 포트폴리오 조회됨");
+			return (List<Portfolio>) portfolioRepo.findAll();
+		} else {
+			logger.info("조회 완료 | 모든 포트폴리오 조회 불가");
+			throw new PortfolioNotFoundException("모든 포트폴리오 조회 불가");
+		}
 	}
 
+	// ===== UPDATE =====
+	public Portfolio updatePortfolio(Long pfSeq, Portfolio portfolio) {
+		if (portfolioRepo.findById(pfSeq) != null) {
+			Portfolio currentPortfolio = portfolioRepo.findById(pfSeq).get();
+
+			currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
+			currentPortfolio.setPfDuration(portfolio.getPfDuration());
+			currentPortfolio.setPfDescription(portfolio.getPfDescription());
+			currentPortfolio.setParticipation(portfolio.getParticipation());
+			currentPortfolio.setPfLang(portfolio.getPfLang());
+			currentPortfolio.setPfTools(portfolio.getPfTools());
+			currentPortfolio.setPfDbms(portfolio.getPfDbms());
+			currentPortfolio.setPfLink(portfolio.getPfLink());
+			currentPortfolio.setPfCategory(portfolio.getPfCategory());
+			currentPortfolio.setUserId(portfolio.getUserId());
+
+			logger.info("수정 완료 | {}번 포트폴리오 수정됨", pfSeq);
+			return portfolioRepo.save(currentPortfolio);
+		} else {
+			logger.error("수정 불가 | {}번 포트폴리오 수정 불가", pfSeq);
+			throw new PortfolioNotFoundException(pfSeq + "번 포트폴리오 수정 불가");
+		}
+	}
+
+	// ===== DELETE =====
+	public Portfolio deleteByPfSeq(Long pfSeq) {
+		if (portfolioRepo.findByPfSeq(pfSeq) != null) {
+			logger.info("삭제 완료 | {}번 포트폴리오 조회 및 삭제 완료됨", pfSeq);
+			return portfolioRepo.findByPfSeq(pfSeq); 
+		} else {
+			logger.info("삭제 불가 | {}번 포트폴리오 조회 및 삭제 불가", pfSeq);
+			throw new PortfolioNotFoundException(pfSeq + "번 포트폴리오 삭제 불가");
+		}
+	}
 }

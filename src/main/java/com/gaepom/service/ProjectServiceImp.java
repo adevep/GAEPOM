@@ -11,34 +11,34 @@ import com.gaepom.domain.Project;
 
 @Service
 public class ProjectServiceImp implements ProjectService {
-
+	//Project Tracking쪽에서 쓰세요 
 	@Autowired
 	private ProjectRepository projectRepo;
-	
+
 	@Autowired
 	private ProjectRecruitRepository projectRecruitRepo;
 
 	public List<Project> getProjectList(Project project) {
 		return (List<Project>) projectRepo.findAll();
 	}
-	
-//	public List<Project> getProjectListByUserId(String userId) {
-//		return (List<Project>) projectRepo.findProjectByUserId(userId);
-//	}
-	
-//	public List<Project> getAllProjectByUserId(String userId) {
-//		return (List<Project>) projectRepo.findAllProjectByUserId(userId);
-//	}
 
-	public void insertProject(Project project) {
-		projectRepo.save(project);
+	public Project insertProject(Project project) {
+		return projectRepo.save(project);
 	}
 
-	public Project getProject(Project project) {
-		return projectRepo.findById(project.getPjSeq()).get();
-	}
+//	public ProjectRecruit getProjectRecruit(Long id) {
+//		return recruitRecruitRepo.findById(id).get();
+//	}
 
-	public void updateProject(Project project) {
+	public Project getProject(Long id) {
+		return projectRepo.findById(id).get();
+	}
+//	public Project getProject(Project project) {
+//		return projectRepo.findById(project.getPjSeq()).get();
+//	}
+
+	public Project updateProject(Project project) {
+		System.out.println("여기오나?");
 		Project findProject = projectRepo.findById(project.getPjSeq()).get();
 
 		findProject.setPjTitle(project.getPjTitle());
@@ -47,9 +47,9 @@ public class ProjectServiceImp implements ProjectService {
 		findProject.setPjTools(project.getPjTools());
 		findProject.setPjCategory(project.getPjCategory());
 		findProject.setPjLang(project.getPjLang());
-		findProject.setPjDbms(project.getPjDbms());		
-		
-		projectRepo.save(findProject);
+		findProject.setPjDbms(project.getPjDbms());
+
+		return projectRepo.save(findProject);
 	}
 
 //	public void updateProjectWithRecSeq(Project project, ProjectRecruit recSeq) {
@@ -58,7 +58,7 @@ public class ProjectServiceImp implements ProjectService {
 //		projectRepo.save(findProject);
 //	}
 //	
-	
+
 //	public void updateProjectWithRecSeq(Long pjSeq, Long recSeq) {
 //		projectRepo.updateRecSeq(pjSeq, recSeq);
 //	}
@@ -72,7 +72,7 @@ public class ProjectServiceImp implements ProjectService {
 //		projectRepo.save(findProject);
 //		
 //	}
-	
+
 	public void deleteProject(Project project) {
 		projectRepo.deleteById(project.getPjSeq());
 	}

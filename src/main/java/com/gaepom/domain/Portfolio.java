@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +22,7 @@ import lombok.ToString;
 @Setter
 
 @ToString
+@Builder
 @Entity
 public class Portfolio {
 	
@@ -52,26 +56,10 @@ public class Portfolio {
 	
 	@Column(name="pf_category")
 	private String pfCategory;
-
-	@Column
-//	private boolean published;
-	private int published;
 	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=true)
+	@JoinColumn(name="user_id")
 	private User userId;
 	
-//	public Portfolio(
-//			String pfSubtitle, String pfDuration, String pfDescription,
-//			String participation, String pfLang, String pfTools,
-//			String pfDbms, String pfLink, String pfCategory) {
-//		this.pfSubtitle = pfSubtitle;
-//		this.pfDuration = pfDuration;
-//		this.participation = participation;
-//		this.pfLang = pfLang;
-//		this.pfTools = pfTools;
-//		this.pfDbms = pfDbms;
-//		this.pfLink = pfLink;
-//		this.pfCategory= pfCategory;
-//	}
 }
