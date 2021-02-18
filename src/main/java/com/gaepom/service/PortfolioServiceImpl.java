@@ -27,10 +27,17 @@ public class PortfolioServiceImpl implements PortfolioService {
 	private UserRepository userrepo;
 
 	// ===== CREATE =====
-	public Portfolio createPortfolio(Portfolio portfolio, String userid) {
+	public Portfolio createPortfolio(String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid ,Portfolio portfolio) {
 		Optional<User> user = userrepo.findById(userid);
 		if (user.isPresent()) {
+			
+			String.join(",", pftoolslist);
+			
+			portfolio.setPfTools(String.join(",", pftoolslist));
+			portfolio.setPfLang(String.join(",", pflanglist));
+			portfolio.setPfDbms(String.join(",", pfdbmslist));
 			portfolio.setUserId(user.get());
+			
 			logger.info("생성 완료 | {}: 포트폴리오 생성됨", portfolio);
 			return portfoliorepo.save(portfolio);
 		} else {
@@ -71,27 +78,27 @@ public class PortfolioServiceImpl implements PortfolioService {
 	}
 
 	// ===== UPDATE =====
-	public Portfolio updatePortfolio(Long pfSeq, Portfolio portfolio) {
-		if (portfoliorepo.findById(pfSeq) != null) {
+	public Portfolio updatePortfolio(Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, Portfolio portfolio) {
+		if (portfoliorepo.findById(pfseq) != null) {
 			
-			Portfolio currentPortfolio = portfoliorepo.findById(pfSeq).get();
-
+			Portfolio currentPortfolio = portfoliorepo.findById(pfseq).get();
+			
 			currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
 			currentPortfolio.setPfDuration(portfolio.getPfDuration());
 			currentPortfolio.setPfDescription(portfolio.getPfDescription());
 			currentPortfolio.setParticipation(portfolio.getParticipation());
-			currentPortfolio.setPfLang(portfolio.getPfLang());
-			currentPortfolio.setPfTools(portfolio.getPfTools());
-			currentPortfolio.setPfDbms(portfolio.getPfDbms());
 			currentPortfolio.setPfLink(portfolio.getPfLink());
 			currentPortfolio.setPfCategory(portfolio.getPfCategory());
+			currentPortfolio.setPfLang(String.join(",", pflanglist));
+			currentPortfolio.setPfTools(String.join(",", pftoolslist));
+			currentPortfolio.setPfDbms(String.join(",", pfdbmslist));
 
-			logger.info("수정 완료 | {}번 포트폴리오 수정됨", pfSeq);
+			logger.info("수정 완료 | {}번 포트폴리오 수정됨", pfseq);
 			portfoliorepo.save(currentPortfolio);
 			return currentPortfolio;
 		} else {
-			logger.error("수정 불가 | {}번 포트폴리오 수정 불가", pfSeq);
-			throw new PortfolioNotFoundException(pfSeq + "번 포트폴리오 수정 불가");
+			logger.error("수정 불가 | {}번 포트폴리오 수정 불가", pfseq);
+			throw new PortfolioNotFoundException(pfseq + "번 포트폴리오 수정 불가");
 		}
 	}
 

@@ -137,7 +137,7 @@
                     v-slot="props"
                     width="120"
                   >
-                    {{ props.row.participation }}
+                    {{ props.row.participation }}%
                   </b-table-column>
 
                   <b-table-column

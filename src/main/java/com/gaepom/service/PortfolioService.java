@@ -6,7 +6,7 @@ import com.gaepom.domain.Portfolio;
 
 public interface PortfolioService {
 	
-	Portfolio createPortfolio(Portfolio portfolio, String userid);
+	Portfolio createPortfolio(String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid, Portfolio portfolio);
 
 	Portfolio findPfSeqGetPortfolio(Long pfSeq);
 
@@ -14,7 +14,7 @@ public interface PortfolioService {
 
 	List<Portfolio> findAllPortfolios();
 
-	Portfolio updatePortfolio(Long pfSeq, Portfolio portfolio);
+	Portfolio updatePortfolio(Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, Portfolio portfolio);
 
 	void deleteByPfSeq(Long pfSeq);
 }
