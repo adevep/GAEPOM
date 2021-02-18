@@ -70,8 +70,7 @@ export default {
   methods: {
     retrieveApps() {
       http
-        //.get(`/app/getapp/${userId}`
-        .get("/app/getapp/" + this.loginUser)
+        .get("/app/getapp/user1")
         .then(response => {
           this.apps = response.data;
           console.log(response.data);

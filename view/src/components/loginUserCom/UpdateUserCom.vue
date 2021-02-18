@@ -3,7 +3,7 @@
     <div class="notification is-accent">
       <h1>
         <strong
-          >{{ userInfo.userId }}님 <br />
+          >{{ userid }}님 <br />
           회원 정보 수정</strong
         >
       </h1>
@@ -20,6 +20,9 @@
         >
         </b-input>
       </b-field>
+      <span class="icon is-right has-text-primary is-clickable"
+        ><i class="mdi mdi-eye mdi-24px"></i
+      ></span>
       <br />
       <b-field label="Name" type="" message="" align="left">
         <b-input
@@ -95,11 +98,7 @@
       </b-field>
       <br />
       <b-field label="Current UserImage" align="left">
-        <img
-          :src="'http://localhost:80/upload/' + userInfo.userImage"
-          alt=""
-          width="500"
-        />
+        <img :src="imgURL + userimage" alt="" width="500" />
       </b-field>
       <br />
       <b-field align="left">
@@ -107,6 +106,7 @@
           type="file"
           id="file"
           ref="file"
+          placeholder="Add profile picture"
           v-on:change="handleFileUpload()"
         />
       </b-field>
@@ -124,12 +124,14 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
+      userid: "",
       password: "",
       name: "",
       age: "",
@@ -138,13 +140,36 @@ export default {
       address: "",
       stack: "",
       position: "",
-      file: null
+      userimage: "",
+      // 이미지 파일 받아주는 변수
+      file: null,
     };
   },
   methods: {
+    userUpdateInfoCall() {
+      axios
+        .get(
+          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+        )
+        .then((response) => {
+          this.userid = response.data.userId;
+          this.name = response.data.name;
+          this.age = response.data.age;
+          this.email = response.data.email;
+          this.phonenum = response.data.phoneNum;
+          this.address = response.data.address;
+          this.stack = response.data.stack;
+          this.position = response.data.position;
+          this.userimage = response.data.userImage;
+        })
+        .catch((e) => {
+          console.log(e);
+          this.errors.push(e);
+        });
+    },
     submitUser() {
       let formData = new FormData();
-      formData.append("userId", this.userInfo.userId);
+      formData.append("userId", this.userid);
       formData.append("password", this.password);
       formData.append("name", this.name);
       formData.append("age", this.age);
@@ -156,28 +181,29 @@ export default {
       formData.append("file", this.file);
 
       axios
-        .post("http://localhost:80/updateuser", formData, {
+        .put("http://localhost:80/updateuser", formData, {
           headers: {
-            // multipart/mixed
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           sessionStorage.setItem("user", JSON.stringify(response.data));
-          this.userInfo = response.data;
-          console.log("SUCCESS!!");
+          alert("유저정보 수정 성공");
           router.push({ name: "mypage" });
         })
-        .catch(function() {
-          console.log("FAILURE!!");
+        .catch(() => {
+          alert("유저정보 수정 실패");
         });
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
-    }
+    },
   },
   computed: {
-    ...mapState(["userInfo"])
-  }
+    ...mapState(["imgURL"]),
+  },
+  mounted() {
+    this.userUpdateInfoCall();
+  },
 };
 </script>

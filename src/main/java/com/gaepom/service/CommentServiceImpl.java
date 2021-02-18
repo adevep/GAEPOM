@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gaepom.dao.CommentRepository;
+import com.gaepom.dao.ProjectTrackingRepository;
 import com.gaepom.domain.Comment;
 
 @Service
@@ -14,8 +15,11 @@ public class CommentServiceImpl implements CommentService{
 	@Autowired
 	private CommentRepository commentRepo;
 	
-	public List<Comment> getCommentList(Comment comment) {
-		return (List<Comment>) commentRepo.findAll();
+	@Autowired
+	private ProjectTrackingRepository trackingRepo;
+	
+	public List<Comment> getCommentList(Long trackSeq) {
+		return (List<Comment>) trackingRepo.findById(trackSeq).get().getTcomments();
 	}
 	
 	public void insertComment(Comment comment) {
@@ -42,5 +46,4 @@ public class CommentServiceImpl implements CommentService{
 	public void deleteComment(Comment comment) {
 		commentRepo.deleteById(comment.getCmtSeq());
 	}
-
 }
