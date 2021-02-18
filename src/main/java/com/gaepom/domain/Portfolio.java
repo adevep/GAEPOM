@@ -7,18 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-//@ToString
+
+@ToString
+@Builder
 @Entity
 public class Portfolio {
 	
@@ -53,9 +57,9 @@ public class Portfolio {
 	@Column(name="pf_category")
 	private String pfCategory;
 	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=true)
+	@JoinColumn(name="user_id")
 	private User userId;
-
 	
 }

@@ -24,12 +24,7 @@
         <b-button
           type="is-primary"
           outlined
-          @click="
-            loginActions({
-              userid: userid,
-              password: password
-            })
-          "
+          @click="login()"
           position="is-centered"
           size="is-large"
           >로그인</b-button
@@ -40,31 +35,33 @@
   </section>
 </template>
 <script>
-/*
-helper 함수 종류
-
-mapState - state를 연결해주는 함수
-
-mapGetters - getters를 연결해주는 함수
-
-mapMutations - mutations를 연결해주는 함수
-
-mapActions - actions를 연결해주는 함수
-*/
-import { mapState, mapActions } from "vuex";
+import router from "../../router";
+import axios from "axios";
 export default {
   data() {
     return {
-      userid: null,
-      password: null
+      userid: "",
+      password: ""
     };
   },
-  computed: {
-    ...mapState([])
-  },
+  computed: {},
   methods: {
-    // store에 action의 login을 이안에서 사용가능하게 선언
-    ...mapActions(["loginActions"])
+    login() {
+      axios
+        .post(
+          "http://localhost:80/login?userid=" +
+            this.userid +
+            "&password=" +
+            this.password
+        )
+        .then(response => {
+          sessionStorage.setItem("user", JSON.stringify(response.data));
+          router.push({ name: "mypage" });
+        })
+        .catch(() => {
+          alert("ID와 Password를 확인해주세요.");
+        });
+    }
   }
 };
 </script>

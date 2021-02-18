@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +37,7 @@ public class Project {
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User userId;
@@ -63,12 +66,12 @@ public class Project {
 	@OneToMany(mappedBy="pjSeq")
 	private List<Application> applications;
 
-	@Override
-	public String toString() {
-		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId.getUserId()
-				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
-				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
-				+ ", applications=" + applications + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId.getUserId()
+//				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
+//				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
+//				+ ", applications=" + applications + "]";
+//	}
 
 }	

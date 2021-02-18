@@ -158,11 +158,11 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(function() {
-          alert("SUCCESS!!");
+        .then(() => {
+          alert("개폼 회원가입 완료");
         })
-        .catch(function() {
-          alert("FAILURE!!");
+        .catch(() => {
+          alert("개폼 회원가입 실패");
         });
       router.push({ name: "Home" });
     },
