@@ -20,13 +20,23 @@
           <b-navbar-item tag="router-link" :to="{ path: '/project' }">
             프로젝트 모집
           </b-navbar-item>
-          <b-navbar-item href="#">
+
+          <b-navbar-item tag="router-link" :to="{ path: '/projectTracking' }">
             프로젝트 트래커
           </b-navbar-item>
         </b-navbar-dropdown>
+        <!-- <b-navbar-dropdown label="포트폴리오">
+          <b-navbar-item tag="router-link" :to="{ path: '/insertportfolio' }">
+            프로젝트 등록
+          </b-navbar-item>
+          <b-navbar-item tag="router-link" :to="{ path: '/portfolios' }">
+            모든 포트폴리오
+          </b-navbar-item>
+        </b-navbar-dropdown> ?-->
+
       </template>
       <template #end>
-        <b-dropdown aria-role="list" v-if="userInfo == null">
+        <b-dropdown aria-role="list">
           <template #trigger="{ active }">
             <b-button
               label="로그인/회원가입"
@@ -43,7 +53,7 @@
             ></b-dropdown-item
           >
         </b-dropdown>
-        <b-dropdown aria-role="list" v-else>
+        <b-dropdown aria-role="list">
           <template #trigger="{ active }">
             <b-button
               label="My Menu"
@@ -59,7 +69,7 @@
               >모집글작성</router-link
             ></b-dropdown-item
           >
-          <b-dropdown-item aria-role="listitem" @click="logoutActions(userInfo)"
+          <b-dropdown-item aria-role="listitem" @click="logout()"
             >로그아웃</b-dropdown-item
           >
         </b-dropdown>
@@ -70,18 +80,26 @@
 </template>
 
 <script>
-// store의 state를 연결
-import { mapState, mapActions } from "vuex";
+//import { mapState, mapActions } from "vuex";
+import router from "./router";
+
 export default {
   data() {
-    return {};
+    return {
+      loginUser: JSON.parse(sessionStorage.getItem("user")),
+    };
   },
-  computed: {
-    ...mapState(["userInfo"])
-  },
+  computed: {},
   methods: {
-    // store에 action의 login을 이안에서 사용가능하게 선언
-    ...mapActions(["logoutActions"])
-  }
+    logout() {
+      if (sessionStorage.getItem("user") != null) {
+        sessionStorage.removeItem("user");
+        router.push({ name: "Home" });
+      } else {
+        alert("로그인을 먼저 해주세요");
+        router.push({ name: "Home" });
+      }
+    },
+  },
 };
 </script>

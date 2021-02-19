@@ -1,86 +1,65 @@
 package com.gaepom.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gaepom.domain.Comment;
-import com.gaepom.domain.User;
 import com.gaepom.service.CommentService;
-
-@SessionAttributes("guser")
-@Controller
+//@SessionAttributes("guser")
+@CrossOrigin(origins = "http://localhost:8081")
+@RestController
 public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
-	@ModelAttribute("guser")
-	public User setUser() {
-		return new User();
+	// comment list
+	@GetMapping("/getcommentlist")
+	public ResponseEntity<List<Comment>> getCommentList(Long trackSeq) {
+		try {
+			List<Comment> commentList = commentService.getCommentList(trackSeq);
+			System.out.println("list 반환 성공");
+			
+			return new ResponseEntity<>(commentList, HttpStatus.OK);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
-	@RequestMapping("/getCommentList")
-	public String getCommentList(@ModelAttribute("guser") User user, Model model,
-			Comment comment) {
-		if (user.getUserId() == null) {
-			return "redirect:login.html";
+	// 댓글 생성
+	@PostMapping("/insertcomment")
+	public ResponseEntity<Comment> insertComment(@RequestBody Comment comment) {
+		try {
+			commentService.insertComment(comment);
+			return new ResponseEntity<>(comment, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		List<Comment> commentList = commentService.getCommentList(comment);
-		System.out.println(commentList);
-		model.addAttribute("commentList", commentList);
-		return "getCommentList";
 	}
 	
-	@GetMapping("/insertComment")
-	public String insertCommentView(@ModelAttribute("guser") User user) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
+	@DeleteMapping("/deletecomment")
+	public ResponseEntity<HttpStatus> deleteComment(Long cmtSeq) {
+		try {
+			
+			Comment comment = commentService.getComment(cmtSeq);
+			commentService.deleteComment(comment);
+			
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return "insertComment";
-	}
-	
-	@PostMapping("/insertComment")
-	public String insertComment(@ModelAttribute("guser") User user, Comment comment) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		
-		commentService.insertComment(comment);
-		return "redirect:getCommentList";
-	}
-	
-	@GetMapping("/getComment")
-	public String getComment(@ModelAttribute("guser") User user, Comment comment, Model model) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		model.addAttribute("comment", commentService.getComment(comment));
-		return "getComment";
-	}
-	
-	@PostMapping("/updateComment")
-	public String updateComment(@ModelAttribute("guser") User user, Comment comment) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		commentService.updateComment(comment);
-		return "forward:getCommentList";
-	}
-	
-	@GetMapping("/deleteComment")
-	public String deleteComment(@ModelAttribute("guser") User user, Comment comment) {
-		if (user.getUserId() == null) {
-			return "redirect:login";
-		}
-		commentService.deleteComment(comment);
-		return "forward:getCommentList";
 	}
 }

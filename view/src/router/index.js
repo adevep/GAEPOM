@@ -1,35 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Login from "../views/loginUserView/Login.vue";
-import MyPage from "../views/loginUserView/MyPage.vue";
-import InsertUser from "../views/loginUserView/InsertUser.vue";
-import UpdateUser from "../views/loginUserView/UpdateUser.vue";
+
+
 
 Vue.use(VueRouter);
-// 로그인한 유저는 reject
+// 로그인 유저 거절
 const rejectAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") != null) {
-    // 이미 로그인 된 유저니까 막아야 함
-    alert("이미 로그인을 하였습니다.");
-    // 홈으로 redirect
+    alert("먼저 로그아웃을 해주세요!");
     next("/");
   } else {
     next();
   }
 };
 
-// if (store.state.isLogin === false) {
+// 비 로그인 유저 거절
 const onlyAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") == null) {
-    // 아직 로그인 안 된 유저니까 막아야 함
     alert("로그인 해주세요.");
-    // 홈으로 redirect
-    next("/");
+    next("/login");
   } else {
     next();
   }
 };
+
 const routes = [
   {
     path: "/",
@@ -38,38 +33,74 @@ const routes = [
   },
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     // 라우터 들어오기전에 이 함수 실행
     beforeEnter: rejectAuthUser,
-    component: Login
+    component: () => import("../views/loginUserView/Login.vue")
   },
   {
     path: "/mypage",
     name: "mypage",
     beforeEnter: onlyAuthUser,
-    component: MyPage,
-    children: [
-      {
-        path: "update",
-        name: "updateUser",
-        component: UpdateUser
-      }
-    ]
+    component: () => import("../views/loginUserView/MyPage.vue")
+  },
+  {
+    path: "/yourpage",
+    name: "yourpage",
+    beforeEnter: onlyAuthUser,
+    component: () => import("../views/loginUserView/YourPage.vue")
+  },
+  {
+    path: "/portfolios",
+    name: "portfoliolist",
+    beforeEnter: onlyAuthUser,
+    component: () => import("../views/portfolioView/PortfolioList.vue")
+  },
+  {
+    path: "/insertportfolio",
+    name: "insertportfolio",
+    beforeEnter: onlyAuthUser,
+    component: () => import("../views/portfolioView/InsertPortfolio.vue")
+  },
+  {
+    path: "/updateportfolio",
+    name: "updatePortfolio",
+    beforeEnter: onlyAuthUser,
+    component: () => import("../views/portfolioView/UpdatePortfolio.vue")
+  },
+  {
+    path: "/updateuser",
+    name: "updateUser",
+    beforeEnter: onlyAuthUser,
+    component: () => import("../views/loginUserView/UpdateUser.vue")
   },
   {
     path: "/insertuser",
     name: "insertuser",
-    component: InsertUser
+    beforeEnter: rejectAuthUser,
+    component: () => import("../views/loginUserView/InsertUser.vue")
+  },
+  {
+    path: "/insertusercheck",
+    name: "insertusercheck",
+    beforeEnter: rejectAuthUser,
+    component: () => import("../views/loginUserView/InsertUserCheck.vue")
   },
   {
     path: "/profile",
     name: "Profile",
-    component: () => import("../views/Profile.vue")
+    component: () => import("../views/profileView/Profile.vue")
   },
   {
     path: "/project",
     name: "Project",
     component: () => import("../views/Project.vue")
+  },
+  {
+
+    path: "/projectTracking",
+    name: "ProjectTracking",
+    component: () => import("../views/ProjectTracking.vue")
   },
   {
     path: "/insertproject",
@@ -103,6 +134,23 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: () => import("../views/SignUp.vue")
+
+  },
+  {
+    path: "/projectTrackingInsert",
+    name: "ProjectTrackingInsert",
+    component: () => import("@/views/trackingView/ProjectTrackingInsert.vue")
+  },
+  {
+    path: "/projectTrackingDetail",
+    name: "ProjectTrackingDetail",
+    props: true,
+    component: () => import("@/views/trackingView/ProjectTrackingDetail.vue")
+  },
+  {
+    path: "/projectTrackingUpdate",
+    name: "ProjectTrackingUpdate",
+    component: () => import("@/views/trackingView/ProjectTrackingUpdate.vue")
   }
 ];
 

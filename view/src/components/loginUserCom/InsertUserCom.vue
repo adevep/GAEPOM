@@ -11,7 +11,7 @@
           rounded
         ></b-input>
       </b-field>
-      <br />
+
       <b-field label="Password" type="" message="" align="left">
         <b-input
           v-model="password"
@@ -24,7 +24,7 @@
         >
         </b-input>
       </b-field>
-      <br />
+
       <b-field label="Name" type="" message="" align="left">
         <b-input
           v-model="name"
@@ -34,7 +34,7 @@
           rounded
         ></b-input>
       </b-field>
-      <br />
+
       <b-field label="Age" type="" message="" align="left">
         <b-input
           v-model="age"
@@ -44,7 +44,7 @@
           rounded
         ></b-input>
       </b-field>
-      <br />
+
       <b-field label="E-mail" type="" message="" align="left">
         <b-input
           v-model="email"
@@ -54,7 +54,7 @@
           rounded
         ></b-input>
       </b-field>
-      <br />
+
       <b-field
         label="Phone-Number"
         type=""
@@ -69,7 +69,7 @@
           rounded
         ></b-input>
       </b-field>
-      <br />
+
       <b-field label="Address" type="" message="" align="left">
         <b-input
           v-model="address"
@@ -79,17 +79,7 @@
           rounded
         ></b-input>
       </b-field>
-      <br />
-      <b-field label="Stack" type="" message="" align="left">
-        <b-input
-          v-model="stack"
-          placeholder="기술"
-          maxlength="30"
-          size="is-medium"
-          rounded
-        ></b-input>
-      </b-field>
-      <br />
+
       <b-field label="Position" align="left">
         <b-select v-model="position" expanded>
           <option value="개발자">개발자</option>
@@ -97,7 +87,70 @@
           <option value="디자이너">디자이너</option>
         </b-select>
       </b-field>
-      <br />
+
+       <b-field label="Stack" align="left" v-if="position === '개발자'">
+        <b-checkbox v-model="stacklist" native-value="Java">
+          Java
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Python">
+          Python
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Javascript">
+          Javascript
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="C">
+          C
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="R">
+          R
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="SQL">
+          SQL
+        </b-checkbox>
+      </b-field>
+
+      <b-field label="Stack" align="left" v-else-if="position === '기획자'">
+        <b-checkbox v-model="stacklist" native-value="Gloo maps">
+          Gloo maps
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Plectica">
+          Plectica
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Trello">
+          Trello
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Axure">
+          Axure
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="OVEN">
+          OVEN
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Power Mockup">
+          Power Mockup
+        </b-checkbox>
+      </b-field>
+
+      <b-field label="Stack" align="left" v-else-if="position === '디자이너'">
+        <b-checkbox v-model="stacklist" native-value="Sketch">
+          Sketch
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Figma">
+          Figma
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Photoshop">
+          Photoshop
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Adobe XD">
+          Adobe XD
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Framer X">
+          Framer X
+        </b-checkbox>
+        <b-checkbox v-model="stacklist" native-value="Illustrator">
+          Illustrator
+        </b-checkbox>
+      </b-field>
+
       <b-field label="User-Image" align="left">
         <input
           type="file"
@@ -132,8 +185,8 @@ export default {
       email: "",
       phonenum: "",
       address: "",
-      stack: "",
       position: "",
+      stacklist: [],
       file: ""
     };
   },
@@ -148,8 +201,8 @@ export default {
       formData.append("email", this.email);
       formData.append("phoneNum", this.phonenum);
       formData.append("address", this.address);
-      formData.append("stack", this.stack);
       formData.append("position", this.position);
+      formData.append("stacklist", this.stacklist);
       formData.append("file", this.file);
 
       axios
@@ -158,13 +211,13 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(function() {
-          alert("SUCCESS!!");
+        .then(() => {
+          alert("개폼 회원가입 완료");
         })
-        .catch(function() {
-          alert("FAILURE!!");
+        .catch(() => {
+          alert("개폼 회원가입 실패");
         });
-      router.push({ name: "Home" });
+      router.push({ name: "insertusercheck" });
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
