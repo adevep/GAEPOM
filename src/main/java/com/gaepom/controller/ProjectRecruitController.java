@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.RequestWrapper;
@@ -50,7 +48,7 @@ public class ProjectRecruitController {
 		List<Project> pjs = projectService.getProjectList(project);
 		return new ResponseEntity<>(pjs, HttpStatus.OK);
 	}
-	
+
 	// 프로젝트 + 프로젝트 모집글 내용이 함께 상세페이지로 검색
 	@GetMapping("/gettotalpj")
 	public ResponseEntity<List<Object>> findAllRecPj(User user, ProjectRecruit recruit) {
@@ -60,18 +58,37 @@ public class ProjectRecruitController {
 		List<Object> total = projectRecruitService.getTotalRecruitList(recruit);
 		return new ResponseEntity<>(total, HttpStatus.OK);
 	}
-	
+
 	// 프로젝트 + 프로젝트 모집글 내용이 함께 상세페이지로 검색
 	@GetMapping("/gettotalpj/{id}")
-	public ResponseEntity<List<Object>> findAllRecPj(User user, ProjectRecruit recruit, @PathVariable("id") long pjSeq) {
+	public ResponseEntity<List<Object>> findAllRecPj(User user, ProjectRecruit recruit,
+			@PathVariable("id") long pjSeq) {
 		if (user.getUserId() == null) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		List<Object> total = projectRecruitService.getTotalRecruitByPjSeq(pjSeq, recruit);
 		return new ResponseEntity<>(total, HttpStatus.OK);
 	}
-	
 
+	// 지역으로 모집글 검색 (필터링)
+	@GetMapping("/getpjbylo/{loc}")
+	public ResponseEntity<List<Object>> findRecPjByLocation(User user, @PathVariable("loc") String location) {
+		if (user.getUserId() == null) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		List<Object> pjs = projectRecruitService.getTotalRecruitByLocation(location);
+		return new ResponseEntity<>(pjs, HttpStatus.OK);
+	}
+
+	// 카테고리로 모집글 검색 (필터링)
+	@GetMapping("/getpjbycate/{cate}")
+	public ResponseEntity<List<Object>> findRecPjByCategory(User user, @PathVariable("cate") String pjCategory) {
+		if (user.getUserId() == null) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		List<Object> pjs = projectRecruitService.getTotalRecruitByCategory(pjCategory);
+		return new ResponseEntity<>(pjs, HttpStatus.OK);
+	}
 
 	// 모집글 총 리스트 출력
 	@GetMapping("/getrecs")
@@ -82,7 +99,20 @@ public class ProjectRecruitController {
 		List<ProjectRecruit> recs = projectRecruitService.getProjectRecruitList(recruit);
 		return new ResponseEntity<>(recs, HttpStatus.OK);
 	}
+	
+	// 프로젝트 번호로 모집글 검색 (필터링)
+	@GetMapping("/getbypj/{id}")
+	public ResponseEntity<Object> getRecByPj(User user, @PathVariable("id") Long pjSeq, ProjectRecruit recruit ) {
+		if (user.getUserId() == null) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		Object needNum = projectRecruitService.getRecByPj(pjSeq, recruit);
+		
+		return new ResponseEntity<>(needNum, HttpStatus.OK);
+	}
 
+	
 	// 프로젝트와 모집글 함께 생성
 	@PostMapping("create")
 	public ResponseEntity<Project> insertProjectRecruit(User user, @RequestBody RequestWrapper requestWrapper) {
@@ -106,19 +136,18 @@ public class ProjectRecruitController {
 		Project pj = projectService.insertProject(project);
 		return new ResponseEntity<>(pj, HttpStatus.CREATED);
 	}
-	
+
 	@PostMapping("createrec")
 	public ResponseEntity<ProjectRecruit> insertProjectRec(User user, @RequestBody ProjectRecruit recruit) {
 		if (user.getUserId() == null) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		System.out.println("-------insertRecruit--------");
-		
+
 		ProjectRecruit rec = projectRecruitService.insertProjectRecruit(recruit);
 		return new ResponseEntity<>(rec, HttpStatus.CREATED);
 	}
 
-	
 	// recSeq로 모집글 조회
 	@GetMapping("/get/{id}")
 	public ResponseEntity<ProjectRecruit> getRecruitByRecSeq(User user, @PathVariable("id") long id,
@@ -153,16 +182,42 @@ public class ProjectRecruitController {
 		}
 	}
 
+	@GetMapping("/gethostedpj/{userId}")
+	public ResponseEntity<List<Project>> getPjById(@PathVariable("userId") User userId, Project project) {
+		if (userId.getUserId() == null) {
+			System.out.println("실패1");
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		try {
+			List<Project> pj = projectService.getPjByUserId(project, userId);
+			System.out.println("프로젝트 불러오기 성공");
+			return new ResponseEntity<>(pj, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	// 프로젝트 수정
+//	@PutMapping("/updatepj/{id}")
+//	public ResponseEntity<ProjectRecruit> updateRecruit(User user, @PathVariable("id") long id,
+//			@RequestBody ProjectRecruit recruit) {
+//		if (user.getUserId() == null) {
+//			System.out.println("실패");
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		ProjectRecruit rec = projectRecruitService.updateProjectRecruit(id, recruit);
+//		return new ResponseEntity<>(rec, HttpStatus.CREATED);
+//	}
+
 	@PutMapping("/updatepj/{id}")
-	public ResponseEntity<ProjectRecruit> updateRecruit(User user, @PathVariable("id") long id,
-			@RequestBody ProjectRecruit recruit) {
+	public ResponseEntity<Project> updateProject(User user, @PathVariable("id") long id, @RequestBody Project project) {
 		if (user.getUserId() == null) {
 			System.out.println("실패");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		ProjectRecruit rec = projectRecruitService.updateProjectRecruit(id, recruit);
-		return new ResponseEntity<>(rec, HttpStatus.CREATED);
+		System.out.println("성공");
+		Project pj = projectService.updateProject(id, project);
+		return new ResponseEntity<>(pj, HttpStatus.CREATED);
 	}
 
 	// 모집글수정

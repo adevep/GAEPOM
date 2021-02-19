@@ -191,7 +191,13 @@
                     {{ props.row.pfCategory }}
                   </b-table-column>
 
-                  <b-table-column label="변경" sortable centered v-slot="props" width="150">
+                  <b-table-column
+                    label="변경"
+                    sortable
+                    centered
+                    v-slot="props"
+                    width="150"
+                  >
                     <b-button
                       type="is-info"
                       outlined
@@ -220,6 +226,37 @@
             </b-taglist>
           </b-tab-item>
           <b-tab-item label="프로젝트 관리">
+            <section>
+              <b-collapse :open="false" aria-id="contentIdForA11y1">
+                <template #trigger>
+                  <b-button
+                    label="내 지원서 보기"
+                    type="is-primary"
+                    aria-controls="contentIdForA11y1"
+                  />
+                </template>
+                <div class="content">
+                  <application></application>
+                </div>
+              </b-collapse>
+            </section>
+            <br />
+
+            <section>
+              <b-collapse :open="false" aria-id="contentIdForA11y1">
+                <template #trigger>
+                  <b-button
+                    label="내 주최 프로젝트 보기"
+                    type="is-primary"
+                    aria-controls="contentIdForA11y1"
+                  />
+                </template>
+                <div class="content">
+                  <my-projects></my-projects>
+                </div>
+              </b-collapse>
+            </section>
+
             <b-taglist>
               <b-tag type="is-primary">1</b-tag>
               <b-tag type="is-primary is-light">2</b-tag>
@@ -247,7 +284,13 @@
 import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
+import Application from "@/components/Application.vue";
+import MyProjects from "@/components/MyProjects.vue";
 export default {
+  components: {
+    Application,
+    MyProjects
+  },
   data: () => ({
     loginUser: {
       userImage: "default.png",
@@ -256,7 +299,7 @@ export default {
       email: "",
       phoneNum: "",
       position: "",
-      stack: "",
+      stack: ""
     },
     portfolio: [],
     currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
@@ -272,10 +315,10 @@ export default {
     pfTools: "",
     pfDbms: "",
     pfLink: "",
-    pfCategory: "",
+    pfCategory: ""
   }),
   computed: {
-    ...mapState(["imgURL"]),
+    ...mapState(["imgURL"])
   },
   methods: {
     // 포트폴리오 부분
@@ -285,7 +328,7 @@ export default {
           "/portfolios?userid=" +
             JSON.parse(sessionStorage.getItem("user")).userId
         )
-        .then((response) => {
+        .then(response => {
           this.portfolio = response.data;
           // console.log(this.portfolio[0].pfLang)
           // this.portfolio[0].pfLang = this.portfolio[0].pfLang.split(",")
@@ -318,7 +361,7 @@ export default {
     updatePortfolio(pfseq) {
       return this.$router.push({
         name: "updatePortfolio",
-        params: { pfSeq: pfseq },
+        params: { pfSeq: pfseq }
       });
     },
     deletePortfolio(pfseq) {
@@ -337,7 +380,7 @@ export default {
         .get(
           "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
         )
-        .then((response) => {
+        .then(response => {
           this.loginUser = response.data;
         })
         .catch(() => {
@@ -361,13 +404,12 @@ export default {
           alert("회원 탈퇴 실패");
         });
       router.push({ name: "Home" });
-    },
+    }
   },
   mounted() {
     this.loginUserInfoCall();
     this.retrievePortfolios();
-  },
+  }
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

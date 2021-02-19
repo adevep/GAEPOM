@@ -1,22 +1,107 @@
 <template>
   <div class="RecruitList">
     <!-- Bar containing all sort inputs -->
-    <!-- <div id="sort-bar">
-    <select name="sortBy" id="select" v-model="sortBy">
-      <option value="alphabetically">Alphabetically</option>
-      <option value="location">pjlocation</option>
-    </select>
-    <button v-on:click="ascending = !ascending" class="sort-button">
-      <i v-if="ascending" class="fa fa-sort-up"></i>
-      <i v-else class="fa fa-sort-down"></i>
-    </button>
-    <input type="text" v-model="pjLocation" id="location-input"></input>
-    <input type="text" v-model="searchValue" placeholder="Search" id="search-input"></input>
-    <i class="fa fa-search"></i>
-  </div> -->
+    <b-field>
+      <b-input
+        placeholder="프로젝트 타이틀 검색..."
+        type="text"
+        v-model="searchValue"
+      ></b-input>
+
+      <b-dropdown class="ml-3" aria-role="list" v-model="selectedLoc">
+        <template #trigger="{ active }">
+          <b-button
+            label="지역"
+            type="is-primary"
+            :icon-right="active ? 'menu-up' : 'menu-down'"
+            centered
+          />
+        </template>
+
+        <!-- <b-button label="지역별" type="is-primary" slot="trigger" /> -->
+        <b-dropdown-item aria-role="listitem" :value="null" selected="selected"
+          >전체</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="서울"
+          >서울</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="경기"
+          >경기</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="인천"
+          >인천</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="대전"
+          >대전</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="세종"
+          >세종</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="충북"
+          >충북</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="충남"
+          >충남</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="강원"
+          >강원</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="부산"
+          >부산</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="울산"
+          >울산</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="대구"
+          >대구</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="경북"
+          >경북</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="경남"
+          >경남</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="광주"
+          >광주</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="전북"
+          >전북</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="전남"
+          >전남</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="제주"
+          >제주</b-dropdown-item
+        >
+      </b-dropdown>
+      <b-dropdown aria-role="list" v-model="selectedCate">
+        <template #trigger="{ active }">
+          <b-button
+            label="카테고리별"
+            type="is-primary"
+            :icon-right="active ? 'menu-up' : 'menu-down'"
+          />
+        </template>
+        <b-dropdown-item aria-role="listitem" :value="null" selected="selected"
+          >전체</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="웹앱"
+          >웹앱</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="모바일앱"
+          >모바일앱</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="데이터사이언스"
+          >데이터사이언스</b-dropdown-item
+        >
+        <b-dropdown-item aria-role="listitem" value="게임개발"
+          >게임개발</b-dropdown-item
+        >
+      </b-dropdown>
+    </b-field>
 
     <div class="container">
-      <div class="card" v-for="pj in allPjs" :key="pj.index">
+      <div class="card mt-4 mb-4" v-for="pj in filteredPjs" :key="pj.index">
         <header class="card-header">
           <p class="card-header-title">
             <router-link
@@ -28,33 +113,14 @@
         <div class="card-content">
           <div class="content">
             {{ pj.pjDescription }}
-            <b-tag type="is-info">{{ pj.location }}</b-tag>
+            <b-tag type="is-primary" class="mr-2">{{ pj.location }} </b-tag>
+            <b-tag type="is-primary">{{ pj.pjCategory }}</b-tag>
             <br />
             <footer class="card-footer"></footer>
           </div>
         </div>
       </div>
     </div>
-
-    <hr />
-    <b-pagination
-      :total="total"
-      v-model="current"
-      :range-before="rangeBefore"
-      :range-after="rangeAfter"
-      :order="order"
-      :size="size"
-      :simple="isSimple"
-      :rounded="isRounded"
-      :per-page="perPage"
-      :icon-prev="prevIcon"
-      :icon-next="nextIcon"
-      aria-next-label="Next page"
-      aria-previous-label="Previous page"
-      aria-page-label="Page"
-      aria-current-label="Current page"
-    >
-    </b-pagination>
   </div>
 </template>
 <script>
@@ -65,33 +131,12 @@ export default {
   data() {
     const all = [];
     const allPjs = [];
-    // const result = [...recs, ...pjs];
-    // console.log(result);
     return {
+      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       all,
       allPjs,
-      // allPjs: {
-      //   applications: [],
-      //   location: "",
-      //   needNum: 0,
-      //   needPosi: "",
-      //   pjCategory: "",
-      //   pjDbms: "",
-      //   pjDescription: "",
-      //   pjDuration: "",
-      //   pjLang: "",
-      //   pjSeq: 0,
-      //   pjTitle: "",
-      //   pjTools: "",
-      //   preference: "",
-      //   recDate: "",
-      //   recDuration: "",
-      //   recSeq: [],
-      //   recStatus: 0,
-      //   trackSeq: null,
-      //   userId: []
-      // },
-      // result,
+      selectedLoc: null,
+      selectedCate: null,
       sortBy: "alphabetically",
       searchValue: "",
       pjLocation: null,
@@ -112,10 +157,9 @@ export default {
   methods: {
     retrieveRecAndPj() {
       http
-        .get("/recruit/gettotalpj?userId=user1")
+        .get("/recruit/gettotalpj?userId=" + this.loginUser)
         .then(response => {
           this.all = response.data;
-          console.log(response.data);
           //Joined된 데이터 나누기
           var array = [];
           this.all.forEach(function(element) {
@@ -129,29 +173,6 @@ export default {
             array.push(allPj);
           });
           this.allPjs = array;
-          console.log(this.allPjs);
-        })
-        .catch(e => {
-          console.log(e);
-          this.errors.push(e);
-        });
-    },
-    retrieveRecs() {
-      http
-        .get("/recruit/getrecs?userId=user1")
-        .then(response => {
-          this.recs = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-          this.errors.push(e);
-        });
-    },
-    retrievePjs() {
-      http
-        .get("/recruit/getpjs?userId=user1")
-        .then(response => {
-          this.pjs = response.data;
         })
         .catch(e => {
           console.log(e);
@@ -159,51 +180,63 @@ export default {
         });
     }
   },
-  //   computed: {
-  //   filteredPjs() {
-  //     let tempPjs = this.pjs
-
-  //     if (this.searchValue != '' && this.searchValue) {
-  //         tempPjs = tempPjs.filter((item) => {
-  //           return item.title
-  //             .toUpperCase()
-  //             .includes(this.searchValue.toUpperCase())
-  //         })
-  //       }
-
-  //       if (this.pjLocation)
-  //       tempPjs = tempPjs.filter((item) => {
-  //         return (item.location <= this.maxCookingTime)
-  //       })
-
-  //         tempPjs = tempPjs.sort((a, b) => {
-  //             if (this.sortBy == 'alphabetically') {
-  //                 let fa = a.title.toLowerCase(), fb = b.title.toLowerCase()
-
-  //               if (fa < fb) {
-  //                 return -1
-  //               }
-  //               if (fa > fb) {
-  //                 return 1
-  //               }
-  //               return 0
-  //             } else if (this.sortBy == 'cookingTime') {
-  //               return a.cookingTime - b.cookingTime
-  //         }
-  //         })
-
-  //         if (!this.ascending) {
-  //         	tempPjs.reverse()
-  //         }
-
-  //         return tempPjs
-  //   }
-  // },
   mounted() {
-    // this.retrieveRecs();
-    // this.retrievePjs();
     this.retrieveRecAndPj();
-    this.retrievePjs();
+  },
+  computed: {
+    filteredPjs: function() {
+      if (
+        this.searchValue.toString() === "" &&
+        this.selectedLoc === null &&
+        this.selectedCate === null
+      ) {
+        return this.allPjs;
+      } else {
+        if (this.searchValue.toString() != "") {
+          var s = this.searchValue.toString();
+          const loc = this.selectedLoc;
+          const cate = this.selectedCate;
+          if (this.selectedLoc != null) {
+            return this.allPjs.filter(function(item) {
+              return item.pjTitle.includes(s) && item.location == loc;
+            });
+          } else if (this.selectedCate != null) {
+            return this.allPjs.filter(function(item) {
+              return item.pjTitle.includes(s) && item.pjCategory == cate;
+            });
+          } else if (this.selectedCate != null && this.selectedLoc != null) {
+            return this.allPjs.filter(function(item) {
+              return (
+                item.pjTitle.includes(s) &&
+                item.pjCategory == cate &&
+                item.selectedLoc == loc
+              );
+            });
+          } else
+            return this.allPjs.filter(function(item) {
+              return item.pjTitle.includes(s);
+            });
+        } else if (this.selectedCate != null) {
+          const loc = this.selectedLoc;
+          const cate = this.selectedCate;
+          if (this.selectedLoc != null) {
+            return this.allPjs.filter(function(item) {
+              return item.pjCategory === cate && item.location == loc;
+            });
+          } else
+            return this.allPjs.filter(function(item) {
+              return item.pjCategory == cate;
+            });
+        } else if (this.selectedLoc != null) {
+          const loc = this.selectedLoc;
+          console.log(loc);
+          return this.allPjs.filter(function(item) {
+            return item.location === loc;
+          });
+        }
+        return this.allPjs;
+      }
+    }
   }
 };
 </script>
