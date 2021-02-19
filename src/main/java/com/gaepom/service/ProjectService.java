@@ -6,6 +6,9 @@ import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 import com.gaepom.domain.User;
 
+import com.gaepom.domain.ProjectTracking;
+
+
 public interface ProjectService {
 	
 	//Project Tracking쪽에서 쓰세요 
@@ -21,8 +24,9 @@ public interface ProjectService {
 
 	Project updateProject(Long id, Project project);
 
-	// void updateProjectWithRecSeq(Long pjSeq, Long recSeq);
-	// void updateProjectWithRecSeq2(Project project, Long recSeq);
+	
+	void updateProjTracking(ProjectTracking projectTracking);
+
 
 	void deleteProject(Project project);
 
