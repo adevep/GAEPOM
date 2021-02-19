@@ -3,14 +3,13 @@
     <div class="container is-max-desktop">
       <div class="notification is-accent">
         <h1><strong>가입 정보 입력</strong></h1>
-        <br />
         <BInputWithValidation
           rules="required|id-minmax:6,15|id-char"
           label="ID"
           placeholder="아이디"
           v-model="userid"
         />
-        <br />
+
         <BInputWithValidation
           rules="required|pw-minmax:6,15|pw-char"
           label="Password"
@@ -19,21 +18,21 @@
           vid="password"
           v-model="password"
         />
-        <br />
+
         <BInputWithValidation
           rules="required|name-char|name-minmax:2,4"
           label="Name"
           placeholder="이름"
           v-model="name"
         />
-        <br />
+
         <BInputWithValidation
           rules="required|numeric|max:2"
           label="Age"
           placeholder="나이"
           v-model="age"
         />
-        <br />
+
         <BInputWithValidation
           rules="required|email"
           type="email"
@@ -41,29 +40,21 @@
           placeholder="이메일"
           v-model="email"
         />
-        <br />
+
         <BInputWithValidation
           rules="required|phonenum-char"
           label="PhoneNumber"
           placeholder="전화번호"
           v-model="phonenum"
         />
-        <br />
+
         <BInputWithValidation
-          rules="required|max:15"
+          rules="required|max:2"
           label="Address"
-          placeholder="예시) 고양시 일산서구"
+          placeholder="예시) 서울"
           v-model="address"
         />
-        <br />
-        <BCheckboxesWithValidation rules="required" label="Stack">
-          <b-checkbox v-model="stack" native-value="Java">Java</b-checkbox>
-          <b-checkbox v-model="stack" native-value="JavaScript">JavaScript</b-checkbox>
-          <b-checkbox v-model="stack" native-value="Vue.js">Vue.js</b-checkbox>
-          <b-checkbox v-model="stack" native-value="PPT">PPT</b-checkbox>
-          <b-checkbox v-model="stack" native-value="Excel">Excel</b-checkbox>
-      </BCheckboxesWithValidation>
-        <br />
+        
         <BSelectWithValidation
           rules="required"
           label="Position"
@@ -74,7 +65,15 @@
           <option value="기획자">기획자</option>
           <option value="디자이너">디자이너</option>
         </BSelectWithValidation>
-        <br />
+
+        <BCheckboxesWithValidation rules="required" label="Stack">
+          <b-checkbox v-model="stack" native-value="Java">Java</b-checkbox>
+          <b-checkbox v-model="stack" native-value="JavaScript">JavaScript</b-checkbox>
+          <b-checkbox v-model="stack" native-value="Vue.js">Vue.js</b-checkbox>
+          <b-checkbox v-model="stack" native-value="PPT">PPT</b-checkbox>
+          <b-checkbox v-model="stack" native-value="Excel">Excel</b-checkbox>
+      </BCheckboxesWithValidation>
+
         <b-field label="User-Image" align="left">
           <input
             type="file"
@@ -101,6 +100,9 @@
 <script>
 /**
  * *  vee-validation 사용
+ * ? BSelectWithValidation | Buefy의 <b-select>와 동일 + 유효성 검증 로직 적용
+ * ? BInputWithValidation | Buefy의 <b-input>과 동일 + 유효성 검증 로직 적용
+ * ? BCheckboxesWithValidation | Buefy의 <b-checkbox>와 동일 + 유효성 검증 로직 적용
  */
 import { ValidationObserver } from "vee-validate";
 import BSelectWithValidation from "../inputs/BSelectWithValidation";
