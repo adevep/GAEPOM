@@ -26,9 +26,11 @@ public class PortfolioController {
 
 	// ===== 포트폴리오 생성 =====
 	@PostMapping("/insertportfolio")
-	public ResponseEntity<Portfolio> createPortfolio(@RequestParam(required = true) String userid, Portfolio portfolio) {
-		Portfolio createportfolio = portfolioService.createPortfolio(portfolio, userid);
-
+	public ResponseEntity<Portfolio> createPortfolio(@RequestParam String[] pftoolslist,
+			@RequestParam String[] pflanglist, @RequestParam String[] pfdbmslist,
+			@RequestParam(required = true) String userid, Portfolio portfolio) {
+		Portfolio createportfolio = portfolioService.createPortfolio(pftoolslist, pflanglist, pfdbmslist, userid,
+				portfolio);
 		return new ResponseEntity<>(createportfolio, HttpStatus.CREATED);
 	}
 
@@ -36,7 +38,6 @@ public class PortfolioController {
 	@GetMapping("/portfolio/{pfSeq}")
 	public ResponseEntity<Portfolio> findPfSeqGetPortfolio(@PathVariable("pfSeq") Long pfSeq) {
 		Portfolio pfseqportfolio = portfolioService.findPfSeqGetPortfolio(pfSeq);
-
 		return new ResponseEntity<>(pfseqportfolio, HttpStatus.OK);
 	}
 
@@ -44,7 +45,6 @@ public class PortfolioController {
 	@GetMapping("/portfolios")
 	public ResponseEntity<List<Portfolio>> findUserIdGetPortfolio(@RequestParam(required = true) String userid) {
 		List<Portfolio> useridportfolios = portfolioService.findUserIdGetPortfolio(userid);
-
 		return new ResponseEntity<>(useridportfolios, HttpStatus.OK);
 	}
 
@@ -52,25 +52,19 @@ public class PortfolioController {
 	@GetMapping("/portfolio")
 	public ResponseEntity<List<Portfolio>> findAllPortfolios() {
 		List<Portfolio> allportfolios = portfolioService.findAllPortfolios();
-		
 		return new ResponseEntity<>(allportfolios, HttpStatus.OK);
 	}
 
 	// ===== 특정 포트폴리오 수정 =====
 	@PutMapping("/updateportfolio/{pfSeq}")
-	public ResponseEntity<Portfolio> updatePortfolio(@PathVariable("pfSeq") Long pfSeq, Portfolio portfolio) {
-		Portfolio currentPortfolio = portfolioService.findPfSeqGetPortfolio(pfSeq);
-		portfolioService.updatePortfolio(pfSeq, portfolio);
-		
-		return new ResponseEntity<>(currentPortfolio, HttpStatus.OK);
+	public ResponseEntity<Portfolio> updatePortfolio(@PathVariable("pfSeq") Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, Portfolio portfolio) {
+		Portfolio updatedportfolio = portfolioService.updatePortfolio(pfseq, pftoolslist, pflanglist, pfdbmslist, portfolio);
+		return new ResponseEntity<>(updatedportfolio, HttpStatus.OK);
 	}
 
 	// ===== 특정 포트폴리오 삭제 =====
 	@DeleteMapping("/deleteportfolio/{pfSeq}")
-	public ResponseEntity<Portfolio> deletePortfolio(@PathVariable("pfSeq") Long pfSeq) {
-		Portfolio deleteportfolio = portfolioService.deleteByPfSeq(pfSeq);
+	public void deletePortfolio(@PathVariable("pfSeq") Long pfSeq) {
 		portfolioService.deleteByPfSeq(pfSeq);
-
-		return new ResponseEntity<>(deleteportfolio, HttpStatus.NO_CONTENT);
 	}
 }

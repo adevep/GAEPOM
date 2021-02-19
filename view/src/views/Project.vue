@@ -2,7 +2,7 @@
   <div class="project">
     <h1>This is project page</h1>
     <recruit-list></recruit-list>
-    <!-- <project-details></project-details> -->
+   <!-- <project-details></project-details> -->
   </div>
 </template>
 <script>

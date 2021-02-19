@@ -15,12 +15,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-//@ToString
+@ToString
 @Builder
 
 @Entity
@@ -30,7 +31,8 @@ public class User {
 	@Id
 	@Column(name="user_id")
 	private String userId;
-
+	
+	@JsonIgnore
 	private String password;
 
 	private String name;

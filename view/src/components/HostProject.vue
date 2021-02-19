@@ -16,7 +16,7 @@
           <b-input v-model="pjDuration" maxlength="30"></b-input>
         </b-field>
         <b-field label="지역" align="left">
-          <b-input v-model="location" maxlength="30"></b-input>
+        <b-input v-model="location" maxlength="30"></b-input>
         </b-field>
         <b-field label="사용 툴" align="left">
           <b-input v-model="pjTools" maxlength="30"></b-input>

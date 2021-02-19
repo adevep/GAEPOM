@@ -20,12 +20,12 @@ import com.gaepom.exception.UserNotFoundException;
 public class UserServiceImp implements UserService {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserRepository userrepo;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	public User login(String userid, String password) {
-		Optional<User> findUser = userRepo.findById(userid);
+		Optional<User> findUser = userrepo.findById(userid);
 		if (findUser.isPresent()) {
 			if (findUser.get().getPassword().equals(password)) {
 				return findUser.get();
@@ -37,9 +37,8 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-
 	public User getUser(String userid) {
-		Optional<User> findUser = userRepo.findById(userid);
+		Optional<User> findUser = userrepo.findById(userid);
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {
@@ -47,24 +46,20 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public List<User> getUserList(User User) {
-		Optional<User> findUser = userRepo.findById(User.getUserId());
-		if (findUser.isPresent()) {
-			return (List<User>) userRepo.findAll();
-		} else {
-			throw new UserNotFoundException("회원이 없습니다.");
-		}
+	public List<User> getUserList() {
+		return (List<User>) userrepo.findAll();
 	}
 	
-	
-	public User insertUser(User user, MultipartFile mfile) {
+	public List<User> getUserListByPostion(String position) {
+		return userrepo.findAllUserByPosition(position);
+	}
 
-		Optional<User> findUser = userRepo.findById(user.getUserId());
+	public User insertUser(User user, String[] stacklist, MultipartFile mfile) {
+
+		Optional<User> findUser = userrepo.findById(user.getUserId());
 		// 회원 가입이니까 기존 회원 없어야 됨
 		if (!findUser.isPresent()) {
-
 			String imgname = null;
-
 			try {
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
@@ -72,25 +67,25 @@ public class UserServiceImp implements UserService {
 				e.printStackTrace();
 				logger.debug(user.getUserId() + " 회원 이미지 등록 오류 발생");
 			}
-
 			user.setUserImage(imgname);
-			userRepo.save(user);
+			user.setStack(String.join(",", stacklist));
+			userrepo.save(user);
+			logger.info(user.getUserId() + " 회원가입 완료");
 			return user;
-			
 		} else {
 			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
 		}
 	}
-	
-	public User insertUserNoimg(User user) {
 
-		Optional<User> findUser = userRepo.findById(user.getUserId());
+	public User insertUserNoimg(User user, String[] stacklist) {
+
+		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (!findUser.isPresent()) {
-
-			user.setUserImage("lion.jpg");
-			userRepo.save(user);
+			user.setUserImage("default.png");
+			user.setStack(String.join(",", stacklist));
+			userrepo.save(user);
+			logger.info(user.getUserId() + " 회원가입 완료");
 			return user;
-
 		} else {
 			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
 		}
@@ -98,7 +93,7 @@ public class UserServiceImp implements UserService {
 	}
 
 	public User findUserByUserId(String userid) {
-		Optional<User> findUser = userRepo.findById(userid);
+		Optional<User> findUser = userrepo.findById(userid);
 		if (findUser.isPresent()) {
 			return findUser.get();
 		} else {
@@ -106,43 +101,39 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public User updateUser(User user, MultipartFile mfile) {
-		System.out.println(user.getUserId());
-		Optional<User> findUser = userRepo.findById(user.getUserId());
+	public User updateUser(User user, String[] stacklist, MultipartFile mfile) {
+		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
 			String imgname = null;
-
 			try {
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
-				
+
 				String filename = findUser.get().getUserImage();
 				File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
-				
-				if (file.exists() && !filename.equals("lion.jpg")) {
+
+				if (file.exists() && !filename.equals("default.png")) {
 					if (file.delete()) {
 						logger.debug("사진 파일 삭제 완료");
 					} else {
 						logger.debug("사진 파일 삭제 실패");
 					}
 				}
-
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 				logger.debug("오류 발생");
 			}
-
 			findUser.get().setPassword(user.getPassword());
 			findUser.get().setName(user.getName());
 			findUser.get().setAge(user.getAge());
 			findUser.get().setEmail(user.getEmail());
 			findUser.get().setPhoneNum(user.getPhoneNum());
 			findUser.get().setAddress(user.getAddress());
-			findUser.get().setStack(user.getStack());
+			findUser.get().setStack(String.join(",", stacklist));
 			findUser.get().setUserImage(imgname);
 			findUser.get().setPosition(user.getPosition());
 
-			userRepo.save(findUser.get());
+			userrepo.save(findUser.get());
 			logger.info(user.getUserId() + " 정보 업데이트 완료");
 			return findUser.get();
 		} else {
@@ -150,32 +141,31 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public User updateUserNoimg(User user) {
-		Optional<User> findUser = userRepo.findById(user.getUserId());
+	public User updateUserNoimg(User user, String[] stacklist) {
+		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
-			
+
 			String filename = findUser.get().getUserImage();
 			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
-			
-			if (file.exists() && !filename.equals("lion.jpg")) {
+
+			if (file.exists() && !filename.equals("default.png")) {
 				if (file.delete()) {
 					logger.debug("사진 파일 삭제 완료");
 				} else {
 					logger.debug("사진 파일 삭제 실패");
 				}
 			}
-
 			findUser.get().setPassword(user.getPassword());
 			findUser.get().setName(user.getName());
 			findUser.get().setAge(user.getAge());
 			findUser.get().setEmail(user.getEmail());
 			findUser.get().setPhoneNum(user.getPhoneNum());
 			findUser.get().setAddress(user.getAddress());
-			findUser.get().setStack(user.getStack());
-			findUser.get().setUserImage("lion.jpg");
+			findUser.get().setStack(String.join(",", stacklist));
+			findUser.get().setUserImage("default.png");
 			findUser.get().setPosition(user.getPosition());
 
-			userRepo.save(findUser.get());
+			userrepo.save(findUser.get());
 			logger.info(user.getUserId() + " 정보 업데이트 완료");
 			return findUser.get();
 		} else {
@@ -183,32 +173,28 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public void deleteUser(User user) {
+	public void deleteUser(String userid) {
 
-		Optional<User> findUser = userRepo.findById(user.getUserId());
-		
+		Optional<User> findUser = userrepo.findById(userid);
+
 		if (findUser.isPresent()) {
 
 			String filename = findUser.get().getUserImage();
 
 			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
 
-			if (file.exists() && !filename.equals("lion.jpg")) {
+			if (file.exists() && !filename.equals("default.png")) {
 				if (file.delete()) {
-					logger.info(user.getUserId() + "유저 사진 파일 삭제");
+					logger.info(userid + "유저 사진 파일 삭제");
 				} else {
 					logger.debug("탈퇴 유저 사진 파일 삭제 실패");
 				}
 			}
-
-			userRepo.delete(findUser.get());
-			logger.info(user.getUserId() + " 유저 탈퇴 완료");
-
+			userrepo.delete(findUser.get());
+			logger.info(userid + " 유저 탈퇴 완료");
 		} else {
 			throw new UserNotFoundException("해당하는 아이디의 유저가 없습니다");
 		}
 	}
 
-
 }
-

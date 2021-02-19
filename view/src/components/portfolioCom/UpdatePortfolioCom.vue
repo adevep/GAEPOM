@@ -41,37 +41,7 @@
         ></b-input>
       </b-field>
       <br />
-      <b-field label="프로젝트 사용언어" align="left">
-        <b-select v-model="pfLang" expanded>
-          <option value="Java">Java</option>
-          <option value="Python">Python</option>
-          <option value="GoLang">Go</option>
-          <option value="node.js">Node.js</option>
-          <option value="Vue.js">Vue.js</option>
-          <option value="JavaScript">JavaScript</option>
-          <option value="Tensorflow">Tensorflow</option>
-        </b-select>
-      </b-field>
-      <br />
-      <b-field label="프로젝트 사용툴" align="left">
-        <b-select v-model="pfTools" expanded>
-          <option value="Eclipse">Eclipse</option>
-          <option value="IntelliJ">IntelliJ</option>
-          <option value="VSCode">Visual Studio Code</option>
-        </b-select>
-      </b-field>
-      <br />
-      <b-field label="프로젝트 DBMS" align="left">
-        <b-select v-model="pfDbms" expanded>
-          <option value="Oracle">OracleDB</option>
-          <option value="MySQL">MySQL</option>
-          <option value="MariaDB">MariaDB</option>
-          <option value="MicrosoftSQL"> SQL Server</option>
-          <option value="PostgreSQL">PostgreSQL</option>
-        </b-select>
-      </b-field>
-      <br />
-      <b-field label="프로젝트 외부링크" type="" message="" align="left">
+          <b-field label="프로젝트 외부링크" type="" message="" align="left">
         <b-input
           v-model="pfLink"
           maxlength="30"
@@ -80,12 +50,79 @@
         ></b-input>
       </b-field>
       <br />
-      <b-field label="프로젝트 카테고리" align="left">
+            <b-field label="프로젝트 카테고리" align="left">
         <b-select v-model="pfCategory" expanded>
-          <option value="카테고리1">카테고리1</option>
-          <option value="카테고리2">카테고리2</option>
-          <option value="카테고리3">카테고리3</option>
+          <option
+            value="모바일앱"
+            >모바일앱
+          </option>
+          <option
+            value="웹앱"
+            >웹앱
+          </option>
+          <option
+            value="데이터사이언스"
+            >데이터사이언스
+          </option>
+          <option
+            value="게임개발"
+            >게임개발
+          </option>
         </b-select>
+      </b-field>
+      <br />
+    <b-field label="프로젝트 사용언어" align="left">
+        <b-checkbox v-model="pfLang" native-value="Java">
+          Java
+        </b-checkbox>
+        <b-checkbox v-model="pfLang" native-value="Python">
+          Python
+        </b-checkbox>
+        <b-checkbox v-model="pfLang" native-value="C++">
+          C++
+        </b-checkbox>
+        <b-checkbox v-model="pfLang" native-value="JavaScript">
+          JavaScript
+        </b-checkbox>
+        <b-checkbox v-model="pfLang" native-value="Vue">
+          Vue
+        </b-checkbox>
+        <b-checkbox v-model="pfLang" native-value="React">
+          React
+        </b-checkbox>
+      </b-field>
+      <br />
+     <b-field label="프로젝트 사용툴" align="left">
+        <b-checkbox v-model="pfTools" native-value="Eclipse">
+          Eclipse
+        </b-checkbox>
+        <b-checkbox v-model="pfTools" native-value="IntelliJ">
+          IntelliJ
+        </b-checkbox>
+        <b-checkbox v-model="pfTools" native-value="VS Code">
+          VS Code
+        </b-checkbox>
+        <b-checkbox v-model="pfTools" native-value="Jupyter Notebook">
+          Jupyter Notebook
+        </b-checkbox>
+      </b-field>
+      <br />
+      <b-field label="프로젝트 DBMS" align="left">
+        <b-checkbox v-model="pfDbms" native-value="ORACLE">
+          ORACLE
+        </b-checkbox>
+        <b-checkbox v-model="pfDbms" native-value="MySQL">
+          MySQL
+        </b-checkbox>
+        <b-checkbox v-model="pfDbms" native-value="MariaDB">
+          MariaDB
+        </b-checkbox>
+        <b-checkbox v-model="pfDbms" native-value="MongoDB">
+          MongoDB
+        </b-checkbox>
+        <b-checkbox v-model="pfDbms" native-value="PostgreSQL">
+          PostgreSQL
+        </b-checkbox>
       </b-field>
       <br />
       <br />
@@ -111,11 +148,11 @@ export default {
       pfDuration: "",
       pfDescription: "",
       participation: "",
-      pfLang: "",
-      pfTools: "",
-      pfDbms: "",
       pfLink: "",
-      pfCategory: ""
+      pfCategory: "",
+      pfLang: [],
+      pfTools: [],
+      pfDbms: []
     };
   },
   methods: {
@@ -127,42 +164,36 @@ export default {
           this.pfDuration = response.data.pfDuration;
           this.pfDescription = response.data.pfDescription;
           this.participation = response.data.participation;
-          this.pfLang = response.data.pfLang;
-          this.pfTools = response.data.pfTools;
-          this.pfDbms = response.data.pfDbms;
-          this.pfLink = response.data.pfLink;
+           this.pfLink = response.data.pfLink;
           this.pfCategory = response.data.pfCategory;
+          this.pfLang = response.data.pfLang.split(',');
+          this.pfTools = response.data.pfTools.split(',');
+          this.pfDbms = response.data.pfDbms.split(',');
         })
         .catch(e => {
           console.log(e);
-          this.errors.push(e);
         });
     },
     updatePortfolio() {
       let formData = new FormData();
 
-      formData.append(
-        "userid",
-        JSON.parse(sessionStorage.getItem("user")).userId
-      );
       formData.append("pfSubtitle", this.pfSubtitle);
       formData.append("pfDuration", this.pfDuration);
       formData.append("pfDescription", this.pfDescription);
       formData.append("participation", this.participation);
-      formData.append("pfLang", this.pfLang);
-      formData.append("pfTools", this.pfTools);
-      formData.append("pfDbms", this.pfDbms);
       formData.append("pfLink", this.pfLink);
       formData.append("pfCategory", this.pfCategory);
+      formData.append("pflanglist", this.pfLang);
+      formData.append("pftoolslist", this.pfTools);
+      formData.append("pfdbmslist", this.pfDbms);
 
       axios
         .put(
           "http://localhost:80/updateportfolio/" + this.$route.params.pfSeq,
           formData
         )
-        .then(response => {
-          sessionStorage.setItem("portfolio", JSON.stringify(response.data));
-          router.push({ name: "portfoliolist" });
+        .then(() => {
+          router.push({ name: "mypage" });
         })
         .catch(function() {
           console.log("FAILURE!!");

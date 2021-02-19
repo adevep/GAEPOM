@@ -10,17 +10,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 
 @Entity
 @Table(name = "t_comment")
@@ -49,8 +50,9 @@ public class Comment {
 	@Column(name = "user_id")
 	private String userId;
 	
-	@ManyToOne
-	@JoinColumn(name = "track_seq")
+	@ManyToOne 
+	@JsonBackReference(value="comment")
+	@JoinColumn(name = "track_seq", nullable=true)
 	private ProjectTracking trackSeq;
 
 }
