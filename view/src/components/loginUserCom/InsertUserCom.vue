@@ -1,7 +1,7 @@
 <template>
   <ValidationObserver ref="observer" v-slot="{ handleSubmit }" autocomplete="off">
     <div class="container is-max-desktop">
-      <div class="notification is-accent">
+      <div class="notification is-accent" align="center">
         <h1><strong>가입 정보 입력</strong></h1>
         <br />
         <BInputWithValidation
@@ -10,6 +10,7 @@
           placeholder="아이디"
           v-model="userid"
           size="is-medium"
+		  align="left"
           rounded
         />
 
@@ -21,6 +22,7 @@
           placeholder="비밀번호"
           v-model="password"
           size="is-medium"
+		  align="left"
           rounded
         />
 
@@ -30,6 +32,7 @@
           placeholder="이름"
           v-model="name"
           size="is-medium"
+		  align="left"
           rounded
         />
 
@@ -39,6 +42,7 @@
           placeholder="나이"
           v-model="age"
           size="is-medium"
+		  align="left"
           rounded
         />
 
@@ -49,6 +53,7 @@
           placeholder="이메일"
           v-model="email"
           size="is-medium"
+		  align="left"
           rounded
         />
 
@@ -58,6 +63,7 @@
           placeholder="전화번호"
           v-model="phonenum"
           size="is-medium"
+		  align="left"
           rounded
         />
         
@@ -67,6 +73,7 @@
           placeholder="예시) 경기도 고양시 일산서구(시군구까지)"
           v-model="address"
           size="is-medium"
+		  align="left"
           rounded
         />
 
@@ -76,6 +83,7 @@
           placeholder="희망직무"
           v-model="position"
           size="is-medium"
+		  align="left"
           rounded
         >
           <option value="개발자">개발자</option>
