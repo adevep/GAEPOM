@@ -276,7 +276,7 @@ export default {
                   item.stack.toLowerCase().includes(lowstk)
                 );
               });
-            }
+            }         
           }
         } else {
           if (this.selectedLoc !== "지역") {
