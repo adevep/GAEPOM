@@ -1,7 +1,6 @@
 <template>
-  <div class="RecruitList">
-    <!-- Bar containing all sort inputs -->
-    <b-field>
+  <div class="container">
+    <b-field class="pt-4">
       <b-input
         placeholder="프로젝트 타이틀 검색..."
         type="text"
@@ -81,7 +80,10 @@
             :icon-right="active ? 'menu-up' : 'menu-down'"
           />
         </template>
-        <b-dropdown-item aria-role="listitem" value="카테고리" selected="selected"
+        <b-dropdown-item
+          aria-role="listitem"
+          value="카테고리"
+          selected="selected"
           >전체</b-dropdown-item
         >
         <b-dropdown-item aria-role="listitem" value="웹앱"
@@ -202,7 +204,10 @@ export default {
             return this.allPjs.filter(function(item) {
               return item.pjTitle.includes(s) && item.pjCategory == cate;
             });
-          } else if (this.selectedCate != "카테고리" && this.selectedLoc != "지역") {
+          } else if (
+            this.selectedCate != "카테고리" &&
+            this.selectedLoc != "지역"
+          ) {
             return this.allPjs.filter(function(item) {
               return (
                 item.pjTitle.includes(s) &&

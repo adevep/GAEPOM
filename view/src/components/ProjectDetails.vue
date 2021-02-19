@@ -14,8 +14,14 @@
           <div class="media-content">
             <div class="content" v-for="pj in allPjs" :key="pj.index">
               <p>
-                <!-- <strong>{{ pj.userId.name }}</strong> -->
-                <small>@{{ pj.userId.userId }}</small>
+                <strong>{{ pj.userId.name }}</strong>
+                <router-link
+                  :to="{
+                    name: 'yourpage',
+                    params: { pickedid: pj.userId.userId }
+                  }"
+                  >@{{ pj.userId.userId }}</router-link
+                >
                 <br />
                 {{ pj.userId.words }}
                 {{ pj.userId.position }}

@@ -1,13 +1,7 @@
 <template>
   <div class="container">
     <b-field class="pt-4">
-      <div id="sort-bar">
-        <b-input
-          type="text"
-          v-model="searchStack"
-          placeholder="Search"
-        ></b-input>
-      </div>
+      <b-input type="text" v-model="searchStack" placeholder="Search"></b-input>
       <b-dropdown aria-role="list" v-model="selectedLoc">
         <template #trigger="{ active }">
           <b-button
