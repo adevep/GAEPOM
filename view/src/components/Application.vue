@@ -28,9 +28,9 @@
           {{ props.row.aplPosi }}
         </b-table-column>
         <b-table-column field="words" label="각오" v-slot="props" centered>
-          <b-input v-model="words" maxlength="30"></b-input>
+          <b-input v-bind:value="words" maxlength="20"></b-input>
           <a
-            @click="updateApp(props.row.aplSeq, props.row)"
+            v-on:click="updateApp(props.row.aplSeq, props.row)"
             class="tag is-warn pr-2 prl-2"
           >
             변경
@@ -49,7 +49,7 @@
             합격
           </span>
           <span v-else-if="props.row.selected == 2" class="tag is-danger">
-            합격
+            거절
           </span>
         </b-table-column>
         <b-table-column field="pjSeq" label="프로젝트" v-slot="props" centered>
@@ -67,14 +67,9 @@
         </b-table-column>
         <b-table-column field="aplSeq" label="삭제" centered v-slot="props">
           <a class="tag is-warn" @click="deleteApp(props.row.aplSeq)">
-            {{ props.row.aplSeq }}삭제
-          </a>
-        </b-table-column>
-        <!-- <b-table-column field="edit" label="삭제" centered v-slot="props">
-          <a @click="deleteApp(props.row.aplSeq)" class="tag is-danger">
             삭제
           </a>
-        </b-table-column> -->
+        </b-table-column>
       </b-table>
     </section>
   </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="container is-max-desktop">
     <div class="notification is-accent">
-      <h1><strong>프로젝트 모집글 만들기</strong></h1>
-      <section class="mt-6 mb-5">
+      <h1><strong>프로젝트 모집글 수정하기</strong></h1>
+      <section class="mt-6 mb-5" v-for="app in allPjs" :key="app.index">
         <b-field label="아이디" align="left">
           <b-input v-model="userId" maxlength="30"></b-input>
         </b-field>
@@ -13,22 +13,102 @@
           <b-input v-model="pjDescription" maxlength="30"></b-input>
         </b-field>
         <b-field label="프로젝트 기간 (예상)" align="left">
-          <b-input v-model="pjDuration" maxlength="30"></b-input>
+          {{ app.pjDuration }}
+        </b-field>
+        <b-field>
+          <b-datepicker
+            placeholder="클릭해 기간을 변경하세요."
+            v-model="pjDuration"
+            range
+          >
+          </b-datepicker>
         </b-field>
         <b-field label="지역" align="left">
-          <b-input v-model="location" maxlength="30"></b-input>
+          <!-- <b-input v-model="location" maxlength="30"></b-input> -->
+          <b-select v-model="location" expanded>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="인천">인천</option>
+            <option value="대전">대전</option>
+            <option value="광주">광주</option>
+            <option value="부산">부산</option>
+            <option value="제주">제주</option>
+            <option value="울산">울산</option>
+            <option value="대구">대구</option>
+            <option value="세종">세종</option>
+            <option value="충북">충북</option>
+            <option value="충남">충남</option>
+            <option value="전북">전북</option>
+            <option value="전남">전남</option>
+            <option value="경북">경북</option>
+            <option value="경남">경남</option>
+          </b-select>
         </b-field>
-        <b-field label="사용 툴" align="left">
-          <b-input v-model="pjTools" maxlength="30"></b-input>
+        <b-field label="프로젝트 사용 툴" align="left">
+          <!-- <b-input v-model="pjTools" maxlength="30"></b-input> -->
+          {{ app.pjTools }}
+        </b-field>
+        <b-field>
+          <b-checkbox v-model="pjTools" native-value="Eclipse">
+            Eclipse
+          </b-checkbox>
+          <b-checkbox v-model="pjTools" native-value="IntelliJ">
+            IntelliJ
+          </b-checkbox>
+          <b-checkbox v-model="pjTools" native-value="VS Code">
+            VS Code
+          </b-checkbox>
+          <b-checkbox v-model="pjTools" native-value="Jupyter Notebook">
+            Jupyter Notebook
+          </b-checkbox>
         </b-field>
         <b-field label="프로젝트 분류" align="left">
-          <b-input v-model="pjCategory" maxlength="30"></b-input>
+          <!-- <b-input v-model="pjCategory" maxlength="30"></b-input> -->
+          <b-select v-model="pjCategory" expanded>
+            <option value="모바일앱">모바일앱</option>
+            <option value="웹앱">웹앱</option>
+            <option value="게임">게임</option>
+            <option value="데이터사이언스">데이터사이언스</option>
+          </b-select>
         </b-field>
-        <b-field label="사용 언어" align="left">
-          <b-input v-model="pjLang" maxlength="30"></b-input>
+        <b-field label="프로젝트 사용 언어" align="left">
+          <!-- <b-input v-model="pjLang" maxlength="30"></b-input> -->
+          <b-checkbox v-model="pjLang" native-value="Java">
+            Java
+          </b-checkbox>
+          <b-checkbox v-model="pjLang" native-value="Python">
+            Python
+          </b-checkbox>
+          <b-checkbox v-model="pjLang" native-value="C++">
+            C++
+          </b-checkbox>
+          <b-checkbox v-model="pjLang" native-value="JavaScript">
+            JavaScript
+          </b-checkbox>
+          <b-checkbox v-model="pjLang" native-value="Vue">
+            Vue
+          </b-checkbox>
+          <b-checkbox v-model="pjLang" native-value="React">
+            React
+          </b-checkbox>
         </b-field>
-        <b-field label="DBMS" align="left">
-          <b-input v-model="pjDbms" maxlength="30"></b-input>
+        <b-field label="프로젝트 DBMS" align="left">
+          <!-- <b-input v-model="pjDbms" maxlength="30"></b-input> -->
+          <b-checkbox v-model="pjDbms" native-value="ORACLE">
+            ORACLE
+          </b-checkbox>
+          <b-checkbox v-model="pjDbms" native-value="MySQL">
+            MySQL
+          </b-checkbox>
+          <b-checkbox v-model="pjDbms" native-value="MariaDB">
+            MariaDB
+          </b-checkbox>
+          <b-checkbox v-model="pjDbms" native-value="MongoDB">
+            MongoDB
+          </b-checkbox>
+          <b-checkbox v-model="pjDbms" native-value="PostgreSQL">
+            PostgreSQL
+          </b-checkbox>
         </b-field>
         <b-field label="모집 인원" align="left">
           <b-input
@@ -41,13 +121,31 @@
           </b-input>
         </b-field>
         <b-field label="모집 직무" align="left">
-          <b-input v-model="needPosi" maxlength="30"></b-input>
+          <!-- <b-input v-model="needPosi" maxlength="30"></b-input> -->
+          <b-checkbox v-model="needPosi" native-value="개발자">
+            개발자
+          </b-checkbox>
+          <b-checkbox v-model="needPosi" native-value="기획자">
+            기획자
+          </b-checkbox>
+          <b-checkbox v-model="needPosi" native-value="디자이너">
+            디자이너
+          </b-checkbox>
+          <b-checkbox v-model="needPosi" native-value="퍼블리셔">
+            퍼블리셔
+          </b-checkbox>
         </b-field>
         <b-field label="우대사항" align="left">
           <b-input v-model="preference" maxlength="30"></b-input>
         </b-field>
         <b-field label="모집 기간" align="left">
-          <b-input v-model="recDuration" maxlength="30"></b-input>
+          <!-- <b-input v-model="recDuratio" maxlength="30"></b-input> -->
+          <b-datepicker
+            placeholder="클릭해 기간을 선택하세요."
+            v-model="recDuration"
+            range
+          >
+          </b-datepicker>
         </b-field>
       </section>
       <b-button
@@ -79,17 +177,17 @@ export default {
       userId: "",
       pjTitle: "",
       pjDescription: "",
-      pjCategory:"",
-      pjDuration: "",
-      pjTools: "",
-      pjLang: "",
-      pjDbms: "",
+      pjCategory: "",
+      pjDuration: [],
+      pjTools: [],
+      pjLang: [],
+      pjDbms: [],
       needNum: "",
-      needPosi: "",
+      needPosi: [],
       location: "",
       preference: "",
       recStatus: 0,
-      recDuration: "",
+      recDuration: [],
       recSeq: "",
       pjNum2: this.$route.params.pjNum
       //recSeq: ""
@@ -122,7 +220,6 @@ export default {
             allPjs3 = entry;
           });
           console.log(allPjs3);
-
 
           // this.allPjs.forEach(function(eachObj) {
           //   for (var key in eachObj) {
@@ -184,7 +281,7 @@ export default {
             pjCategory: this.pjCategory,
             pjTools: this.pjTools,
             pjLang: this.pjLang,
-            pjDbms: this.pjDbms,
+            pjDbms: this.pjDbms
             //recSeq: { recSeq: this.recSeq }
           };
           http
