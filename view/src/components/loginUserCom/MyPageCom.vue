@@ -250,7 +250,7 @@ import router from "../../router";
 export default {
   data: () => ({
     loginUser: {
-      userImage: "lion.jpg",
+      userImage: "default.png",
       userId: "",
       name: "",
       email: "",
@@ -287,6 +287,9 @@ export default {
         )
         .then((response) => {
           this.portfolio = response.data;
+          // console.log(this.portfolio[0].pfLang)
+          // this.portfolio[0].pfLang = this.portfolio[0].pfLang.split(",")
+          // console.log(this.portfolio[0].pfLang)
         })
         .catch(() => {
           alert("조회 실패");

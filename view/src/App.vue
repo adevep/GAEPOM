@@ -69,7 +69,7 @@
               >모집글작성</router-link
             ></b-dropdown-item
           >
-          <b-dropdown-item aria-role="listitem" @click="logoutActions(userInfo)"
+          <b-dropdown-item aria-role="listitem" @click="logout()"
             >로그아웃</b-dropdown-item
           >
         </b-dropdown>

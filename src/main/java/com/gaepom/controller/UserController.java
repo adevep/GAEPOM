@@ -23,12 +23,12 @@ public class UserController {
 	private UserService userservice;
 
 	@PostMapping("/insertuser")
-	public User insertUser(User user, @RequestParam("file") MultipartFile mfile) {
+	public User insertUser(User user, @RequestParam String[] stacklist, @RequestParam(value = "file", required = false) MultipartFile mfile) {
 		User inserteduser = null;
-		if (!mfile.isEmpty()) {
-			inserteduser = userservice.insertUser(user, mfile);
+		if (mfile != null) {
+			inserteduser = userservice.insertUser(user, stacklist, mfile);
 		} else {
-			inserteduser = userservice.insertUserNoimg(user);
+			inserteduser = userservice.insertUserNoimg(user, stacklist);
 		}
 		return inserteduser;
 	}
@@ -53,17 +53,17 @@ public class UserController {
 
 
 	@PutMapping("/updateuser")
-	public User updateUser(User user, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+	public User updateUser(User user, @RequestParam String[] stacklist, @RequestParam(value = "file", required = false) MultipartFile mfile) {
 		User updateduser = null;
 		if (mfile != null) {
-			updateduser = userservice.updateUser(user, mfile);
+			updateduser = userservice.updateUser(user, stacklist, mfile);
 		} else {
-			updateduser = userservice.updateUserNoimg(user);
+			updateduser = userservice.updateUserNoimg(user, stacklist);
 		}
 		return updateduser;
 
 	}
-
+	
 	@DeleteMapping("/deleteuser")
 	public void deleteUser(@RequestParam String userid) {
 		userservice.deleteUser(userid);

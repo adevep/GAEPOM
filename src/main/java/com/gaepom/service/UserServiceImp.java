@@ -54,7 +54,7 @@ public class UserServiceImp implements UserService {
 		return userrepo.findAllUserByPosition(position);
 	}
 
-	public User insertUser(User user, MultipartFile mfile) {
+	public User insertUser(User user, String[] stacklist, MultipartFile mfile) {
 
 		Optional<User> findUser = userrepo.findById(user.getUserId());
 		// 회원 가입이니까 기존 회원 없어야 됨
@@ -68,19 +68,23 @@ public class UserServiceImp implements UserService {
 				logger.debug(user.getUserId() + " 회원 이미지 등록 오류 발생");
 			}
 			user.setUserImage(imgname);
+			user.setStack(String.join(",", stacklist));
 			userrepo.save(user);
+			logger.info(user.getUserId() + " 회원가입 완료");
 			return user;
 		} else {
 			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
 		}
 	}
 
-	public User insertUserNoimg(User user) {
+	public User insertUserNoimg(User user, String[] stacklist) {
 
 		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (!findUser.isPresent()) {
-			user.setUserImage("lion.jpg");
+			user.setUserImage("default.png");
+			user.setStack(String.join(",", stacklist));
 			userrepo.save(user);
+			logger.info(user.getUserId() + " 회원가입 완료");
 			return user;
 		} else {
 			throw new UserException("해당 ID는 이미 가입된 회원입니다.");
@@ -97,8 +101,7 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public User updateUser(User user, MultipartFile mfile) {
-		System.out.println(user.getUserId());
+	public User updateUser(User user, String[] stacklist, MultipartFile mfile) {
 		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
 			String imgname = null;
@@ -109,7 +112,7 @@ public class UserServiceImp implements UserService {
 				String filename = findUser.get().getUserImage();
 				File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
 
-				if (file.exists() && !filename.equals("lion.jpg")) {
+				if (file.exists() && !filename.equals("default.png")) {
 					if (file.delete()) {
 						logger.debug("사진 파일 삭제 완료");
 					} else {
@@ -126,7 +129,7 @@ public class UserServiceImp implements UserService {
 			findUser.get().setEmail(user.getEmail());
 			findUser.get().setPhoneNum(user.getPhoneNum());
 			findUser.get().setAddress(user.getAddress());
-			findUser.get().setStack(user.getStack());
+			findUser.get().setStack(String.join(",", stacklist));
 			findUser.get().setUserImage(imgname);
 			findUser.get().setPosition(user.getPosition());
 
@@ -138,14 +141,14 @@ public class UserServiceImp implements UserService {
 		}
 	}
 
-	public User updateUserNoimg(User user) {
+	public User updateUserNoimg(User user, String[] stacklist) {
 		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
 
 			String filename = findUser.get().getUserImage();
 			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
 
-			if (file.exists() && !filename.equals("lion.jpg")) {
+			if (file.exists() && !filename.equals("default.png")) {
 				if (file.delete()) {
 					logger.debug("사진 파일 삭제 완료");
 				} else {
@@ -158,8 +161,8 @@ public class UserServiceImp implements UserService {
 			findUser.get().setEmail(user.getEmail());
 			findUser.get().setPhoneNum(user.getPhoneNum());
 			findUser.get().setAddress(user.getAddress());
-			findUser.get().setStack(user.getStack());
-			findUser.get().setUserImage("lion.jpg");
+			findUser.get().setStack(String.join(",", stacklist));
+			findUser.get().setUserImage("default.png");
 			findUser.get().setPosition(user.getPosition());
 
 			userrepo.save(findUser.get());
@@ -180,7 +183,7 @@ public class UserServiceImp implements UserService {
 
 			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
 
-			if (file.exists() && !filename.equals("lion.jpg")) {
+			if (file.exists() && !filename.equals("default.png")) {
 				if (file.delete()) {
 					logger.info(userid + "유저 사진 파일 삭제");
 				} else {
