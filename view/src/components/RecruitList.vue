@@ -136,7 +136,6 @@ export default {
       allPjs,
       selectedLoc: "지역",
       selectedCate: "카테고리",
-      sortBy: "alphabetically",
       searchValue: "",
       pjLocation: null,
       total: all.length,
