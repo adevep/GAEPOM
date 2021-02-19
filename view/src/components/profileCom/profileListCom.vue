@@ -247,7 +247,7 @@ export default {
                 return (
                   (item.stack.toUpperCase().includes(upstk) ||
                     item.stack.toLowerCase().includes(lowstk)) &&
-                  item.address === loc &&
+                  item.address.includes(loc) &&
                   item.position === pos
                 );
               });
@@ -256,7 +256,7 @@ export default {
                 return (
                   (item.stack.toUpperCase().includes(upstk) ||
                     item.stack.toLowerCase().includes(lowstk)) &&
-                  item.address === loc
+                  item.address.includes(loc)
                 );
               });
             }
@@ -282,11 +282,11 @@ export default {
           if (this.selectedLoc !== "지역") {
             if (this.selectedPos !== "포지션") {
               return this.cardData.filter(function(item) {
-                return item.address === loc && item.position === pos;
+                return item.address.includes(loc) && item.position === pos;
               });
             } else {
               return this.cardData.filter(function(item) {
-                return item.address === loc;
+                return item.address.includes(loc);
               });
             }
           } else {

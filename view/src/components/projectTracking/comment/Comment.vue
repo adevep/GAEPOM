@@ -1,30 +1,9 @@
-<style scoped>
-* {
-  box-sizing: border-box;
-}
-
-.header {
-  width: 75%;
-  background-color: rgb(155, 155, 155);
-  padding: 30px 30px;
-  color: rgb(0, 0, 0);
-  text-align: center;
-}
-
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-</style>
-
 <template>
   <div>
     <div id="header" class="header">
-      <comment-input></comment-input>
+        <comment-list></comment-list>
     </div>
-
-    <commentList></commentList>
+    <comment-input></comment-input>
   </div>
 </template>
 

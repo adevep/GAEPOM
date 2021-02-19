@@ -45,6 +45,10 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 	public ProjectRecruit getProjectRecruit(Long id) {
 		return recruitRecruitRepo.findById(id).get();
 	}
+	
+	public Object getRecByPj(Long pjSeq, ProjectRecruit recruit) {
+		return recruitRecruitRepo.findNeedNum(pjSeq);
+	}
 
 	public ProjectRecruit updateRec(Long id, ProjectRecruit recruit) {
 		System.out.println("projectRecruit check1" + recruit);

@@ -45,9 +45,9 @@ public class ProjectServiceImp implements ProjectService {
 //		return projectRepo.findById(project.getPjSeq()).get();
 //	}
 
-	public Project updateProject(Project project) {
+	public Project updateProject(Long id, Project project) {
 		System.out.println("여기오나?");
-		Project findProject = projectRepo.findById(project.getPjSeq()).get();
+		Project findProject = projectRepo.findById(id).get();
 
 		findProject.setPjTitle(project.getPjTitle());
 		findProject.setPjDescription(project.getPjDescription());
@@ -94,4 +94,5 @@ public class ProjectServiceImp implements ProjectService {
 	public void deleteProject(Project project) {
 		projectRepo.deleteById(project.getPjSeq());
 	}
+
 }

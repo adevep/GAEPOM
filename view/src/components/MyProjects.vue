@@ -12,6 +12,15 @@
         >
           {{ props.row.pjSeq }}
         </b-table-column>
+            <b-table-column
+          field="pjCategory"
+          label="분야"
+          sortable
+          v-slot="props"
+          centered
+        >
+          {{ props.row.pjCategory }}
+        </b-table-column>
         <b-table-column
           field="pjTitle"
           label="프로젝트"
@@ -26,7 +35,7 @@
         </b-table-column>
         <b-table-column
           field="pjDescription"
-          label="프로젝트"
+          label="설명"
           sortable
           v-slot="props"
           centered
@@ -41,8 +50,9 @@
           centered
         >
           <router-link
+            class="tag is-success"
             :to="{ name: 'AllApps', params: { pjSeq: props.row.pjSeq } }"
-            >클릭</router-link
+            >지원자</router-link
           >
         </b-table-column>
         <b-table-column
@@ -53,11 +63,12 @@
           centered
         >
           <router-link
+          class="tag is-warn"
             :to="{
               name: 'updateproject',
               params: { pjNum: props.row.pjSeq }
             }"
-            >클릭</router-link
+            >수정</router-link
           >
         </b-table-column>
       </b-table>

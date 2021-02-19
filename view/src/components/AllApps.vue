@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <section>
       <b-table
-        :data="apps"
+        :data="filteredApps"
         ref="table"
         :hoverable="isHoverable"
         :opened-detailed="defaultOpenedDetails"
@@ -84,27 +84,40 @@
           v-slot="props"
         >
           <a
-            v-if="props.row.selected == 0"
-            class="tag is-warn"
+            class="tag is-success"
             @click="acceptApp(props.row.aplSeq, props.row)"
           >
-            수락 {{ props.row.selected }}
+            수락
           </a>
           <a
-            v-else-if="props.row.selected == 1"
-            class="tag is-success"
+            class="tag is-danger"
             @click="rejectApp(props.row.aplSeq, props.row)"
           >
-            확정 {{ props.row.selected }}
-          </a>
-          <a
-            v-else-if="props.row.selected == 2"
-            class="tag is-danger"
-            @click="acceptApp(props.row.aplSeq, props.row)"
-          >
-            거절 {{ props.row.selected }}
+            거절
           </a>
         </b-table-column>
+        <b-table-column
+          field="selected"
+          label="결정"
+          sortable
+          centered
+          v-slot="props"
+        >
+          <a v-if="props.row.selected == 0" class="tag is-warn">
+            수락
+          </a>
+          <a v-else-if="props.row.selected == 1" class="tag is-success">
+            확정
+          </a>
+          <a v-else-if="props.row.selected == 2" class="tag is-danger">
+            거절
+          </a>
+        </b-table-column>
+        <!-- <b-table-column label="확인" v-slot="props">
+          <b-field v-if="countNumber(props.row.selected)">{{
+            props.row.selected
+          }}</b-field>
+        </b-table-column> -->
         <template #detail="props">
           <article class="media">
             <figure class="media-left">
@@ -141,18 +154,34 @@ export default {
     return {
       loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       apps,
+      accepted: "",
+      needNum: "",
       defaultOpendDetails: [1],
       showDetailcon: true,
-      isHoverable: true
+      isHoverable: true,
+      pjSeq2: this.$route.params.pjSeq, 
+      count:0
     };
   },
   methods: {
     retrieveApps() {
       http
-        .get("/app/getpjapp/"+ this.pjSeq + "?userId=" + this.loginUser)
+        .get("/app/getpjapp/" + this.pjSeq2 + "?userId=" + this.loginUser)
         .then(response => {
           this.apps = response.data;
           console.log(response.data);
+          http
+            .get(
+              "/recruit/getbypj/" + this.pjSeq2 + "?userId=" + this.loginUser
+            )
+            .then(response => {
+              this.needNum = response.data;
+            })
+            .catch(e => {
+              alert("에러");
+              console.log(e);
+              this.errors.push(e);
+            });
         })
         .catch(e => {
           console.log(e);
@@ -166,11 +195,9 @@ export default {
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then(response => {
-          console.log("업데이트 성공?");
           console.log(response.data.selected);
         })
         .catch(e => {
-          console.log("실패했나?");
           console.log(e);
           this.errors.push(e);
         });
@@ -182,19 +209,86 @@ export default {
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then(response => {
-          console.log("업데이트 성공?");
           console.log(response.data.selected);
         })
         .catch(e => {
-          console.log("실패했나?");
           console.log(e);
           this.errors.push(e);
         });
-    }
+    },
+    confirmCustom() {
+      this.$buefy.dialog.confirm({
+        title: "팀원들이 확정되었습니다.",
+        message: `축하합니다.`,
+        cancelText: "?",
+        confirmText: "팀원들과 함께 프로젝트 트래킹 페이지 만들기.",
+        type: "is-success",
+        onConfirm: () => this.$buefy.toast.open("User agreed")
+      });
+    },
+    countNumber(selected) {
+      //alert(selected)
+      if (selected === 1 && this.needNum != null){
+       this.count+=selected
+      }
+      
+      
+      // if (count >= this.needNum){
+      //         alert(count);
+        return true;
+      
+      }
+      // if (selected == 1 && this.needNum != null) {
+      //   count = Object.keys(selected).length;
+      //   alert(this.needNum)
+      //   alert(count);
+      //   if (count >= this.needNum) {
+      //     return true;
+      //   }
+      // }
+    
   },
   mounted() {
     this.retrieveApps();
     this.retrievePjs();
+  },
+  computed: {
+    filteredApps: function() {
+      var countFiltered;
+      if (this.needNum != null) {
+        console.log(this.needNum);
+        countFiltered = this.apps.filter(function(element) {
+          return element.selected == 1;
+        }).length;
+        console.log("계산값" + countFiltered);
+        if (countFiltered >= this.needNum) {
+          return this.apps.filter(function(item) {
+            return item.selected == 1;
+          });
+        }
+      }
+      return this.apps;
+    },
+    acceptedApps: function() {
+      var countFiltered;
+      if (this.needNum != null) {
+        console.log(this.needNum);
+        countFiltered = this.apps.filter(function(element) {
+          return element.selected == 1;
+        }).length;
+        return countFiltered;
+      } else return countFiltered;
+    }
   }
+  // watch: {
+  //   filteredApps: {
+  //     deep: true,
+  //     handler: function(newVal) {
+
+  //       this.message = "확정되었습니다.";
+  //       console.log(newVal);
+  //     }
+  //   }
+  // }
 };
 </script>

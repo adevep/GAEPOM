@@ -97,7 +97,20 @@ public class ProjectRecruitController {
 		List<ProjectRecruit> recs = projectRecruitService.getProjectRecruitList(recruit);
 		return new ResponseEntity<>(recs, HttpStatus.OK);
 	}
+	
+	// 프로젝트 번호로 모집글 검색 (필터링)
+	@GetMapping("/getbypj/{id}")
+	public ResponseEntity<Object> getRecByPj(User user, @PathVariable("id") Long pjSeq, ProjectRecruit recruit ) {
+		if (user.getUserId() == null) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		Object needNum = projectRecruitService.getRecByPj(pjSeq, recruit);
+		
+		return new ResponseEntity<>(needNum, HttpStatus.OK);
+	}
 
+	
 	// 프로젝트와 모집글 함께 생성
 	@PostMapping("create")
 	public ResponseEntity<Project> insertProjectRecruit(User user, @RequestBody RequestWrapper requestWrapper) {
@@ -183,15 +196,26 @@ public class ProjectRecruitController {
 	}
 
 	// 프로젝트 수정
+//	@PutMapping("/updatepj/{id}")
+//	public ResponseEntity<ProjectRecruit> updateRecruit(User user, @PathVariable("id") long id,
+//			@RequestBody ProjectRecruit recruit) {
+//		if (user.getUserId() == null) {
+//			System.out.println("실패");
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		ProjectRecruit rec = projectRecruitService.updateProjectRecruit(id, recruit);
+//		return new ResponseEntity<>(rec, HttpStatus.CREATED);
+//	}
+
 	@PutMapping("/updatepj/{id}")
-	public ResponseEntity<ProjectRecruit> updateRecruit(User user, @PathVariable("id") long id,
-			@RequestBody ProjectRecruit recruit) {
+	public ResponseEntity<Project> updateProject(User user, @PathVariable("id") long id, @RequestBody Project project) {
 		if (user.getUserId() == null) {
 			System.out.println("실패");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		ProjectRecruit rec = projectRecruitService.updateProjectRecruit(id, recruit);
-		return new ResponseEntity<>(rec, HttpStatus.CREATED);
+		System.out.println("성공");
+		Project pj = projectService.updateProject(id, project);
+		return new ResponseEntity<>(pj, HttpStatus.CREATED);
 	}
 
 	// 모집글수정

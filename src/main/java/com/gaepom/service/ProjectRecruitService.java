@@ -1,5 +1,7 @@
 package com.gaepom.service;
 import java.util.List;
+
+import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectRecruit;
 public interface ProjectRecruitService {
 	List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit);
@@ -10,6 +12,9 @@ public interface ProjectRecruitService {
 	List<Object> getTotalRecruitByLocation(String location);
 	List<Object> getTotalRecruitByCategory(String pjCategory);
 
+	List<Object> getTotalRecruitByLocation(String location);
+
+	List<Object> getTotalRecruitByCategory(String pjCategory);
 
 	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
 
@@ -20,5 +25,7 @@ public interface ProjectRecruitService {
 	ProjectRecruit updateRec(Long id, ProjectRecruit recruit);
 
 	void deleteProjectRecruit(ProjectRecruit recruit);
+
+	Object getRecByPj(Long pjSeq, ProjectRecruit recruit);
 
 }
