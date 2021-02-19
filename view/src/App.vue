@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container is-fluid">
-     <link
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
     />

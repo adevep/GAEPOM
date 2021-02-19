@@ -12,6 +12,17 @@
         </div>
       </div>
     </section> -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap"
+      rel="stylesheet"
+    />
+
     <section class="hero is-white is-fullheight">
       <div class="hero-body">
         <div class="container">
@@ -30,9 +41,9 @@
               <h2
                 class=" subtitled subtitle has-text-grey is-4 has-text-weight-normal is-family-sans-serif"
               >
-                당신만을 위한, 당신이 찾던 그 팀</br>
-                당신이 완성할 그 프로젝트 </br>
-                지금 여기서 시작하세요</br>
+                당신만을 위한, 당신이 찾던 그 팀<br />
+                당신이 완성할 그 프로젝트 <br />
+                지금 여기서 시작하세요<br />
               </h2>
               <div class="buttons">
                 <button class="button is-black">팀원찾기</button>
@@ -55,6 +66,75 @@
         </div>
       </div>
     </section>
+    <section class="hero is-medium has-text-centered">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-8">
+              <figure class="image is-medium">
+                <img src="../assets/main2.png" />
+              </figure>
+              <h1 class="title titled 40by40">
+                개발자들을 위한 플랫폼, '개폼'
+              </h1>
+
+              <h2 class="subtitle subtitled is-4">
+                지금 이 곳에서 함께 프로젝트를 진행할 동료들을 모집하거나 직접
+                프로젝트에 참여해보세요! <br />
+                그리고 완성된 프로젝트를 자랑해 보세요. 피드백과 좋아요를 받을
+                수 있습니다. 당신의 멋진 아이디어를 실현해 보세요!
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>개폼</strong> by
+          <a href="https://github.com/adevep/GAEPOM">개폼난다</a>. All Rights
+          Reserved 2021
+        </p>
+      </div>
+    </footer>
+    <!-- <section class="hero is-white is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns  is-vcentered">
+            <div
+              class="column
+          is-10-mobile is-offset-1-mobile
+          is-10-tablet is-offset-1-tablet
+          is-4-desktop is-offset-1-desktop
+          is-4-widescreen is-offset-1-widescreen
+          is-4-fullhd is-offset-1-fullhd"
+            >
+              <figure class="image">
+                <img src="../assets/main2.png" />
+              </figure>
+            </div>
+            <div
+              class="column
+          is-10-mobile is-offset-1-mobile
+          is-10-tablet is-offset-1-tablet
+          is-5-desktop is-offset-1-desktop
+          is-5-widescreen is-offset-1-widescreen
+          is-5-fullhd is-offset-1-fullhd"
+            >
+              <h1 class="titled title is-1 mb-6">
+                absurd illustrations that make sense
+              </h1>
+              <h2 class="subtitled subtitle">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Laborum cupiditate dolorum vitae dolores nesciunt totam magni
+                quas.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
   </div>
 </template>
 
@@ -71,21 +151,8 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.custom {
+  font-color: #274c5e;
 }
 </style>
