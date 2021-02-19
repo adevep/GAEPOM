@@ -71,13 +71,13 @@
         </b-table-column>
 
         <b-table-column
-          field="pfLang"
-          label="포트폴리오 사용언어"
+          field="participation"
+          label="포트폴리오 포지션"
           sortable
           centered
           v-slot="props"
         >
-          {{ props.row.pfLang }}
+          {{ props.row.pfPosition }}
         </b-table-column>
 
         <b-table-column
@@ -91,11 +91,23 @@
         </b-table-column>
 
         <b-table-column
+          field="pfLang"
+          label="포트폴리오 사용언어"
+          sortable
+          centered
+          v-slot="props"
+          v-if="props.row.pfPosition === '개발자'"
+        >
+          {{ props.row.pfLang }}
+        </b-table-column>
+
+        <b-table-column
           field="pfDbms"
           label="포트폴리오 DBMS"
           sortable
           centered
           v-slot="props"
+          v-if="props.row.pfPosition === '개발자'"
         >
           {{ props.row.pfDbms }}
         </b-table-column>
