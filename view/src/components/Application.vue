@@ -51,52 +51,6 @@
             변경
           </a>
         </b-table-column> -->
-          <b-button
-            label="지원하기"
-            type="is-primary"
-            size="is-medium"
-            @click="isCardModalActive = true"
-          />
-        <section>
-          <b-modal v-model="isCardModalActive" :width="640" scroll="keep">
-            <div class="modal-card" style="width: auto">
-              <header class="modal-card-head">
-                <p class="modal-card-title">프로젝트 지원하기</p>
-                <button type="button" class="delete" @click="$emit('close')" />
-              </header>
-              <section class="modal-card-body">
-                <b-field label="나를 어필할 한마디를 적어주세요!">
-                  <b-input
-                    v-model="words"
-                    type="text"
-                    placeholder="나의 한마디"
-                    required
-                  >
-                  </b-input>
-                </b-field>
-
-                <b-field label="지원 직무">
-                  <b-select v-model="aplPosi" expanded>
-                    <option
-                      v-for="(value, index) in posiArray"
-                      :key="index"
-                      v-bind:value="value"
-                      >{{ value }}</option
-                    >
-                  </b-select>
-                </b-field>
-              </section>
-              <footer class="modal-card-foot">
-                <b-button label="Close" @click="isCardModalActive = false" />
-                <b-button
-                  label="지원하기"
-                  v-on:click="submitApp()"
-                  type="is-primary"
-                />
-              </footer>
-            </div>
-          </b-modal>
-        </section>
 
         <b-table-column
           field="selected"

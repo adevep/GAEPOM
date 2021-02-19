@@ -113,6 +113,11 @@
             거절
           </a>
         </b-table-column>
+        <!-- <b-table-column label="확인" v-slot="props">
+          <b-field v-if="countNumber(props.row.selected)">{{
+            props.row.selected
+          }}</b-field>
+        </b-table-column> -->
         <template #detail="props">
           <article class="media">
             <figure class="media-left">
@@ -154,7 +159,8 @@ export default {
       defaultOpendDetails: [1],
       showDetailcon: true,
       isHoverable: true,
-      pjSeq2: this.$route.params.pjSeq
+      pjSeq2: this.$route.params.pjSeq, 
+      count:0
     };
   },
   methods: {
@@ -219,7 +225,28 @@ export default {
         type: "is-success",
         onConfirm: () => this.$buefy.toast.open("User agreed")
       });
-    }
+    },
+    countNumber(selected) {
+      //alert(selected)
+      if (selected === 1 && this.needNum != null){
+       this.count+=selected
+      }
+      
+      
+      // if (count >= this.needNum){
+      //         alert(count);
+        return true;
+      
+      }
+      // if (selected == 1 && this.needNum != null) {
+      //   count = Object.keys(selected).length;
+      //   alert(this.needNum)
+      //   alert(count);
+      //   if (count >= this.needNum) {
+      //     return true;
+      //   }
+      // }
+    
   },
   mounted() {
     this.retrieveApps();
@@ -235,7 +262,6 @@ export default {
         }).length;
         console.log("계산값" + countFiltered);
         if (countFiltered >= this.needNum) {
-          // this.confirmCustom()
           return this.apps.filter(function(item) {
             return item.selected == 1;
           });
@@ -253,14 +279,15 @@ export default {
         return countFiltered;
       } else return countFiltered;
     }
-  },
+  }
   // watch: {
-  //   acceptedApps: function() {
-  //     if (this.countFiltered >= this.needNum) {
-  //       this.confirmCustom();
-  //     } 
-  //     alert(this.countFiltered)
-  //     alert(this.needNum)
+  //   filteredApps: {
+  //     deep: true,
+  //     handler: function(newVal) {
+
+  //       this.message = "확정되었습니다.";
+  //       console.log(newVal);
+  //     }
   //   }
   // }
 };
