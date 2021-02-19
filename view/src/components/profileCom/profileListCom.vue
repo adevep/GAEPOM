@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+
     <b-field class="pt-4">
       <b-input type="text" v-model="searchStack" placeholder="Search"></b-input>
       <b-dropdown aria-role="list" v-model="selectedLoc">

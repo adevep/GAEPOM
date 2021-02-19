@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+
     <b-field class="pt-4">
       <b-input
         placeholder="프로젝트 타이틀 검색..."

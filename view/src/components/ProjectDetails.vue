@@ -5,10 +5,7 @@
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img
-                class="is-rounded"
-                src="https://bulma.io/images/placeholders/128x128.png"
-              />
+              <img class="is-rounded" :src="imgURL + loginUser.userImage" />
             </p>
           </figure>
           <div class="media-content">
@@ -83,7 +80,7 @@
             <h4 class="title is-4">우대사항:</h4>
             <h5 class="subtitle is-5">{{ pj.preference }}</h5>
 
-            <div v-if="loginUser != pj.userId.userId">
+            <div v-if="loginUser.userId != pj.userId.userId">
               <b-button
                 label="지원하기"
                 type="is-primary"
@@ -99,7 +96,7 @@
                     <button
                       type="button"
                       class="delete"
-                      @click="$emit('close')"
+                      @click="isCardModalActive = false"
                     />
                   </header>
                   <section class="modal-card-body">
@@ -147,6 +144,7 @@
 </template>
 <script>
 import http from "../http-common";
+import { mapState } from "vuex";
 
 export default {
   name: "ProjectDetails",
@@ -156,7 +154,10 @@ export default {
     const allPjs = [];
     const posiArray = [];
     return {
-      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
+      loginUser: {
+        userImage: "default.png",
+        userId: JSON.parse(sessionStorage.getItem("user")).userId
+      },
       all,
       allPjs,
       posiArray,
@@ -166,10 +167,18 @@ export default {
       isCardModalActive: false
     };
   },
+  computed: {
+    ...mapState(["imgURL"])
+  },
   methods: {
     retrieveRecAndPj() {
       http
-        .get("/recruit/gettotalpj/" + this.pjSeq + "?userId=" + this.loginUser)
+        .get(
+          "/recruit/gettotalpj/" +
+            this.pjSeq +
+            "?userId=" +
+            this.loginUser.userId
+        )
         .then(response => {
           this.all = response.data;
           console.log(response.data);
@@ -215,7 +224,7 @@ export default {
       let formData = new FormData();
 
       //   formData.append("aplSeq", this.allPjs.shift().aplSeq);
-      formData.append("userId", this.loginUser);
+      formData.append("userId", this.loginUser.userId);
       formData.append("words", this.words);
       formData.append("aplPosi", this.aplPosi);
       formData.append("selected", 0);

@@ -1,5 +1,14 @@
 <template>
-  <div class="ProjectDetails">
+  <div class="mypage">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+
     <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
         <article class="media">
@@ -18,16 +27,6 @@
 
             <nav class="level is-mobile">
               <div class="level-left">
-                <a class="level-item">
-                  <span class="icon is-small"
-                    ><i class="fas fa-reply"></i
-                  ></span>
-                </a>
-                <a class="level-item">
-                  <span class="icon is-small"
-                    ><i class="fas fa-retweet"></i
-                  ></span>
-                </a>
                 <a class="level-item">
                   <span class="icon is-small"
                     ><i class="fas fa-heart"></i
@@ -256,24 +255,8 @@
                 </div>
               </b-collapse>
             </section>
-
-            <b-taglist>
-              <b-tag type="is-primary">1</b-tag>
-              <b-tag type="is-primary is-light">2</b-tag>
-              <b-tag type="is-link">3</b-tag>
-              <b-tag type="is-link is-light">4</b-tag>
-              <b-tag type="is-link is-light">5</b-tag>
-            </b-taglist>
           </b-tab-item>
-          <b-tab-item label="댓글">
-            <b-taglist>
-              <b-tag type="is-primary">1</b-tag>
-              <b-tag type="is-primary is-light">2</b-tag>
-              <b-tag type="is-link">3</b-tag>
-              <b-tag type="is-link is-light">4</b-tag>
-              <b-tag type="is-link is-light">5</b-tag>
-            </b-taglist>
-          </b-tab-item>
+          <b-tab-item label="댓글"> </b-tab-item>
         </b-tabs>
       </section>
     </div>
