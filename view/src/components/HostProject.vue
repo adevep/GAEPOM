@@ -4,16 +4,18 @@
       <h1><strong>프로젝트 모집글 만들기</strong></h1>
       <section class="mt-6 mb-5">
         <b-field label="프로젝트주제" align="left">
-          <b-input v-model="pjTitle" maxlength="30"></b-input>
+          <b-input v-model="pjTitle" maxlength="20" required></b-input>
         </b-field>
         <b-field label="프로젝트를 간단히 설명해 주세요." align="left">
-          <b-input v-model="pjDescription" maxlength="30"></b-input>
+          <b-input v-model="pjDescription" maxlength="20" required></b-input>
         </b-field>
         <b-field label="프로젝트 예상 기간" align="left">
           <b-datepicker
             placeholder="클릭해 기간을 선택하세요."
             v-model="pjDuration"
             range
+            required
+            mobile-native: true
           >
           </b-datepicker>
         </b-field>
@@ -53,9 +55,10 @@
         </b-field>
         <b-field label="프로젝트 분류" align="left">
           <b-select v-model="pjCategory" expanded>
-            <option value="Mobile App">Mobile App</option>
-            <option value="Web App">Web App</option>
-            <option value="Game">Game</option>
+            <option value="모바일앱">모바일앱 </option>
+            <option value="웹앱">웹앱</option>
+            <option value="데이터사이언스">데이터사이언스</option>
+            <option value="게임개발">게임개발</option>
           </b-select>
         </b-field>
         <b-field label="프로젝트 사용언어" align="left">
@@ -102,6 +105,7 @@
             type="number"
             min="1"
             max="100"
+            required
           >
           </b-input>
         </b-field>
@@ -121,13 +125,15 @@
           </b-checkbox>
         </b-field>
         <b-field label="우대사항" align="left">
-          <b-input v-model="preference" maxlength="30"></b-input>
+          <b-input v-model="preference" maxlength="30" required></b-input>
         </b-field>
         <b-field label="모집 기간" align="left">
           <b-datepicker
             placeholder="클릭해 기간을 선택하세요."
             v-model="recDuration"
             range
+            mobile-native: true
+
           >
           </b-datepicker>
         </b-field>
@@ -165,7 +171,7 @@ export default {
       recStatus: 0,
       recDuration: [],
       recSeq: "",
-      pjCategory:""
+      pjCategory: ""
     };
   },
   methods: {

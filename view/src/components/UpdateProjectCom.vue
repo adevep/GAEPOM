@@ -2,10 +2,7 @@
   <div class="container is-max-desktop">
     <div class="notification is-accent">
       <h1><strong>프로젝트 모집글 수정하기</strong></h1>
-      <section class="mt-6 mb-5" v-for="app in allPjs" :key="app.index">
-        <b-field label="아이디" align="left">
-          <b-input v-model="userId" maxlength="30"></b-input>
-        </b-field>
+      <section class="mt-6 mb-5">
         <b-field label="프로젝트주제" align="left">
           <b-input v-model="pjTitle" maxlength="30"></b-input>
         </b-field>
@@ -13,13 +10,14 @@
           <b-input v-model="pjDescription" maxlength="30"></b-input>
         </b-field>
         <b-field label="프로젝트 기간 (예상)" align="left">
-          {{ app.pjDuration }}
-        </b-field>
-        <b-field>
+          <div>변경하지 않는 경우 기존 기간을 유지합니다.</div>
+
           <b-datepicker
             placeholder="클릭해 기간을 변경하세요."
             v-model="pjDuration"
             range
+            mobile-native:
+            true
           >
           </b-datepicker>
         </b-field>
@@ -45,10 +43,6 @@
           </b-select>
         </b-field>
         <b-field label="프로젝트 사용 툴" align="left">
-          <!-- <b-input v-model="pjTools" maxlength="30"></b-input> -->
-          {{ app.pjTools }}
-        </b-field>
-        <b-field>
           <b-checkbox v-model="pjTools" native-value="Eclipse">
             Eclipse
           </b-checkbox>
@@ -67,8 +61,8 @@
           <b-select v-model="pjCategory" expanded>
             <option value="모바일앱">모바일앱</option>
             <option value="웹앱">웹앱</option>
-            <option value="게임">게임</option>
             <option value="데이터사이언스">데이터사이언스</option>
+            <option value="게임개발">게임개발</option>
           </b-select>
         </b-field>
         <b-field label="프로젝트 사용 언어" align="left">
@@ -139,11 +133,14 @@
           <b-input v-model="preference" maxlength="30"></b-input>
         </b-field>
         <b-field label="모집 기간" align="left">
-          <!-- <b-input v-model="recDuratio" maxlength="30"></b-input> -->
+          <div>변경하지 않는 경우 기존 기간을 유지합니다.</div>
+
           <b-datepicker
             placeholder="클릭해 기간을 선택하세요."
             v-model="recDuration"
             range
+            mobile-native:
+            true
           >
           </b-datepicker>
         </b-field>
@@ -235,15 +232,15 @@ export default {
           this.userId = this.loginUser;
           this.pjTitle = allPjs3.pjTitle;
           this.pjDescription = allPjs3.pjDescription;
-          this.pjDuration = allPjs3.pjDuration;
-          this.pjTools = allPjs3.pjTools;
-          this.pjLang = allPjs3.pjLang;
-          this.pjDbms = allPjs3.pjDbms;
+          this.pjDuration = allPjs3.pjDuration.split("-");
+          this.pjTools = allPjs3.pjTools.split(",");
+          this.pjLang = allPjs3.pjLang.split(",");
+          this.pjDbms = allPjs3.pjDbms.split(",");
           this.needNum = allPjs3.needNum;
-          this.needPosi = allPjs3.needPosi;
+          this.needPosi = allPjs3.needPosi.split(",");
           this.location = allPjs3.location;
           this.preference = allPjs3.preference;
-          this.recDuration = allPjs3.recDuration;
+          this.recDuration = allPjs3.recDuration.split("-");
           this.pjCategory = allPjs3.pjCategory;
           this.recSeq = allPjs3.recSeq.recSeq;
         })
@@ -258,10 +255,10 @@ export default {
           "/recruit/updaterec/" + this.recSeq + "?userId=" + this.loginUser,
           {
             needNum: this.needNum,
-            needPosi: this.needPosi,
+            needPosi: this.needPosi.join(),
             location: this.location,
             preference: this.preference,
-            recDuration: this.recDuration
+            recDuration: this.recDuration.join("-")
           }
         )
         .then(response => {
@@ -274,14 +271,14 @@ export default {
           // 페이지 이동
           //this.$router.push(Project)
           const data = {
-            userId: { userId: this.userId },
+            userId: { userId: this.loginUser },
             pjTitle: this.pjTitle,
             pjDescription: this.pjDescription,
-            pjDuration: this.pjDuration,
+            pjDuration: this.pjDuration.join("-"),
             pjCategory: this.pjCategory,
-            pjTools: this.pjTools,
-            pjLang: this.pjLang,
-            pjDbms: this.pjDbms
+            pjTools: this.pjTools.join(),
+            pjLang: this.pjLang.join(),
+            pjDbms: this.pjDbms.join()
             //recSeq: { recSeq: this.recSeq }
           };
           http
