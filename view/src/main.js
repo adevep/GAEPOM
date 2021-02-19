@@ -6,6 +6,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
+import "./vee-validate";
 
 Vue.use(Buefy);
 //Vue.prototype.$http = axios;np

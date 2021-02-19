@@ -25,15 +25,6 @@
             프로젝트 트래커
           </b-navbar-item>
         </b-navbar-dropdown>
-        <!-- <b-navbar-dropdown label="포트폴리오">
-          <b-navbar-item tag="router-link" :to="{ path: '/insertportfolio' }">
-            프로젝트 등록
-          </b-navbar-item>
-          <b-navbar-item tag="router-link" :to="{ path: '/portfolios' }">
-            모든 포트폴리오
-          </b-navbar-item>
-        </b-navbar-dropdown> ?-->
-
       </template>
       <template #end>
         <b-dropdown aria-role="list">

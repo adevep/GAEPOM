@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-max-desktop" style="width: 550px; height: 50px;">
+  <div class="container is-max-desktop">
     <div class="notification is-accent" align="center">
       <h1>
         <strong>포트폴리오 등록</strong>

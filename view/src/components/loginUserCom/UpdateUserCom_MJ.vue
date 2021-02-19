@@ -1,18 +1,20 @@
 <template>
-  <ValidationObserver ref="observer" v-slot="{ handleSubmit }" autocomplete="off">
+  <ValidationObserver
+    ref="observer"
+    v-slot="{ handleSubmit }"
+    autocomplete="off"
+  >
     <div class="container is-max-desktop">
       <div class="notification is-accent">
-        <h1><strong>가입 정보 입력</strong></h1>
+        <center>
+          <h1>
+            <strong
+              >{{ userid }} 님 <br />
+              회원 정보 수정</strong
+            >
+          </h1>
+        </center>
         <br />
-        <BInputWithValidation
-          rules="required|id-char|id-minmax:6,15"
-          label="ID"
-          placeholder="아이디"
-          v-model="userid"
-          size="is-medium"
-          rounded
-        />
-
         <BInputWithValidation
           rules="required|pw-char|pw-minmax:6,15"
           label="Password"
@@ -60,11 +62,11 @@
           size="is-medium"
           rounded
         />
-        
+
         <BInputWithValidation
           rules="required|max:10"
           label="Address"
-          placeholder="예시) 경기도 고양시(시군구까지)"
+          placeholder="예시) 경기도 고양시"
           v-model="address"
           size="is-medium"
           rounded
@@ -83,44 +85,94 @@
           <option value="디자이너">디자이너</option>
         </BSeletWithValidation>
 
-        <BCheckboxesWithValidation rules="required" label="Stack" v-if="position === '개발자'">
+        <BCheckboxesWithValidation
+          rules="required"
+          label="Stack"
+          v-if="position === '개발자'"
+        >
           <b-checkbox v-model="stacklist" native-value="Java">Java</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Python">Python</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="JavaScript">JavaScript</b-checkbox>
+          <b-checkbox v-model="stacklist" native-value="Python"
+            >Python</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="JavaScript"
+            >JavaScript</b-checkbox
+          >
           <b-checkbox v-model="stacklist" native-value="C">C</b-checkbox>
           <b-checkbox v-model="stacklist" native-value="R">R</b-checkbox>
           <b-checkbox v-model="stacklist" native-value="SQL">SQL</b-checkbox>
-      </BCheckboxesWithValidation>
-        <BCheckboxesWithValidation rules="required" label="Stack" v-else-if="position === '기획자'">
-          <b-checkbox v-model="stacklist" native-value="Gloo maps">Gloo maps</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Plectica">Plectica</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Trello">Trello</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Axure">Axure</b-checkbox>
+        </BCheckboxesWithValidation>
+        <BCheckboxesWithValidation
+          rules="required"
+          label="Stack"
+          v-else-if="position === '기획자'"
+        >
+          <b-checkbox v-model="stacklist" native-value="Gloo maps"
+            >Gloo maps</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Plectica"
+            >Plectica</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Trello"
+            >Trello</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Axure"
+            >Axure</b-checkbox
+          >
           <b-checkbox v-model="stacklist" native-value="OVEN">OVEN</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Power Mockup">Power Mockup</b-checkbox>
-      </BCheckboxesWithValidation>
-        <BCheckboxesWithValidation rules="required" label="Stack" v-else-if="position === '디자이너'">
-          <b-checkbox v-model="stacklist" native-value="Sketch">Sketch</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Figma">Figma</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Photoshop">Photoshop</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Adobe XD">Adobe XD</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Framer X">Framer X</b-checkbox>
-          <b-checkbox v-model="stacklist" native-value="Illustrator">Illustrator</b-checkbox>
-      </BCheckboxesWithValidation>
+          <b-checkbox v-model="stacklist" native-value="Power Mockup"
+            >Power Mockup</b-checkbox
+          >
+        </BCheckboxesWithValidation>
+        <BCheckboxesWithValidation
+          rules="required"
+          label="Stack"
+          v-else-if="position === '디자이너'"
+        >
+          <b-checkbox v-model="stacklist" native-value="Sketch"
+            >Sketch</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Figma"
+            >Figma</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Photoshop"
+            >Photoshop</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Adobe XD"
+            >Adobe XD</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Framer X"
+            >Framer X</b-checkbox
+          >
+          <b-checkbox v-model="stacklist" native-value="Illustrator"
+            >Illustrator</b-checkbox
+          >
+        </BCheckboxesWithValidation>
 
-        <b-field label="User-Image" align="left">
+        <b-field
+          label="Current UserImage"
+          align="left"
+          message="<주의> 이미지 재등록 없을시 기본 이미지로 변경"
+        >
+          <img :src="imgURL + userimage" alt="" width="300" />
+        </b-field>
+        <br />
+        <b-field align="left">
           <input
             type="file"
             id="file"
             ref="file"
+            placeholder="Add profile picture"
             v-on:change="handleFileUpload()"
           />
         </b-field>
         <br />
         <br />
         <div class="buttons">
-          <button class="button is-success" v-on:click="handleSubmit(submitUser)">
-            <span>회원가입</span>
+          <button
+            class="button is-success"
+            v-on:click="handleSubmit(submitUser)"
+          >
+            <span>정보수정</span>
           </button>
           <button class="button" @click="resetForm">
             <span>재입력</span>
@@ -143,15 +195,16 @@ import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
 import BInputWithValidation from "../veeInputs/BInputWithValidation";
 import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
 
-import router from "../../router";
 import axios from "axios";
+import router from "../../router";
+import { mapState } from "vuex";
 
 export default {
   components: {
     ValidationObserver,
     BSeletWithValidation,
     BInputWithValidation,
-    BCheckboxesWithValidation
+    BCheckboxesWithValidation,
   },
   data() {
     return {
@@ -163,14 +216,35 @@ export default {
       phonenum: "",
       address: "",
       position: "",
+      userimage: "",
       stacklist: [],
-      file: ""
+      // 이미지 파일 받아주는 변수
+      file: null,
     };
   },
   methods: {
+    userUpdateInfoCall() {
+      axios
+        .get(
+          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+        )
+        .then((response) => {
+          this.userid = response.data.userId;
+          this.name = response.data.name;
+          this.age = response.data.age;
+          this.email = response.data.email;
+          this.phonenum = response.data.phoneNum;
+          this.address = response.data.address;
+          this.stacklist = response.data.stack.split(",");
+          this.position = response.data.position;
+          this.userimage = response.data.userImage;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     submitUser() {
       let formData = new FormData();
-
       formData.append("userId", this.userid);
       formData.append("password", this.password);
       formData.append("name", this.name);
@@ -183,18 +257,19 @@ export default {
       formData.append("file", this.file);
 
       axios
-        .post("http://localhost:80/insertuser", formData, {
+        .put("http://localhost:80/updateuser", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(() => {
-          alert("개폼 회원가입 완료");
+        .then((response) => {
+          sessionStorage.setItem("user", JSON.stringify(response.data));
+          alert("유저정보 수정 성공");
+          router.push({ name: "mypage" });
         })
         .catch(() => {
-          alert("개폼 회원가입 실패");
+          alert("유저정보 수정 실패");
         });
-      router.push({ name: "insertusercheck" });
     },
     resetForm() {
       this.userid = "";
@@ -213,7 +288,13 @@ export default {
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
-    }
-  }
+    },
+  },
+  computed: {
+    ...mapState(["imgURL"]),
+  },
+  mounted() {
+    this.userUpdateInfoCall();
+  },
 };
 </script>
