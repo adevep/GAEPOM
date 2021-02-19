@@ -143,7 +143,7 @@
           <article class="media">
             <figure class="media-left">
               <!-- <p class="image is-64x64">
-                <img src="../../assets/lion.jpg" />
+                <img src="../../assets/jpg" />
               </p> -->
             </figure>
             <div class="media-content">
@@ -181,7 +181,8 @@ export default {
       currentUserPosition: JSON.parse(sessionStorage.getItem("user")).position,
       currentUserAddress: JSON.parse(sessionStorage.getItem("user")).address,
       defaultOpenedDetails: [1],
-      isHoverable: true
+      isHoverable: true,
+      cc: 4,
     };
   },
   methods: {
@@ -191,7 +192,7 @@ export default {
           "/portfolios?userid=" +
             JSON.parse(sessionStorage.getItem("user")).userId
         )
-        .then(response => {
+        .then((response) => {
           this.portfolio = response.data;
         })
         .catch(() => {
@@ -201,7 +202,7 @@ export default {
     updatePortfolio(pfseq) {
       return this.$router.push({
         name: "updatePortfolio",
-        params: { pfSeq: pfseq }
+        params: { pfSeq: pfseq },
       });
     },
     deletePortfolio(pfseq) {
@@ -215,10 +216,10 @@ export default {
         })
         .catch(function() {});
       return this.$router.push({ name: "Home" });
-    }
+    },
   },
   mounted() {
     this.retrievePortfolios();
-  }
+  },
 };
 </script>

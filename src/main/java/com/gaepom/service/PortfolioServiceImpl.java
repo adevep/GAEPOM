@@ -31,8 +31,6 @@ public class PortfolioServiceImpl implements PortfolioService {
 		Optional<User> user = userrepo.findById(userid);
 		if (user.isPresent()) {
 			
-			String.join(",", pftoolslist);
-			
 			portfolio.setPfTools(String.join(",", pftoolslist));
 			portfolio.setPfLang(String.join(",", pflanglist));
 			portfolio.setPfDbms(String.join(",", pfdbmslist));

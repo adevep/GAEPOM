@@ -52,9 +52,22 @@
       <br />
             <b-field label="프로젝트 카테고리" align="left">
         <b-select v-model="pfCategory" expanded>
-          <option value="Mobile App">Mobile App</option>
-          <option value="Web App">Web App</option>
-          <option value="Game">Game</option>
+          <option
+            value="모바일앱"
+            >모바일앱
+          </option>
+          <option
+            value="웹앱"
+            >웹앱
+          </option>
+          <option
+            value="데이터사이언스"
+            >데이터사이언스
+          </option>
+          <option
+            value="게임개발"
+            >게임개발
+          </option>
         </b-select>
       </b-field>
       <br />
