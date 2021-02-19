@@ -26,8 +26,8 @@ public class CommentServiceImpl implements CommentService{
 		commentRepo.save(comment);
 	}
 	
-	public Comment getComment(Comment comment) {
-		return commentRepo.findById(comment.getCmtSeq()).get();
+	public Comment getComment(Long cmtSeq) {
+		return commentRepo.findById(cmtSeq).get();
 	}
 	
 	public void updateComment(Comment comment) {
