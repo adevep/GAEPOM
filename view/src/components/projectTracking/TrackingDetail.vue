@@ -1,77 +1,141 @@
 <template>
   <div class="TrackingDetail">
-    <h2>Tracking Detail</h2>
-    <center>
-      <table border="1">
-        <tr>
-          <td>Title</td>
-          <td>{{ trackInfo.project.pjTitle }}</td>
-        </tr>
-        <tr>
-          <td>Duration</td>
-          <td>{{ trackInfo.project.pjDuration }}</td>
-        </tr>
-        <tr>
-          <td>Tools</td>
-          <td>{{ trackInfo.project.pjTools }}</td>
-        </tr>
-        <tr>
-          <td>Category</td>
-          <td>{{ trackInfo.project.pjCategory }}</td>
-        </tr>
-        <tr>
-          <td>Language</td>
-          <td>{{ trackInfo.project.pjLang }}</td>
-        </tr>
-        <tr>
-          <td>DBMS</td>
-          <td>{{ trackInfo.project.pjDbms }}</td>
-        </tr>
-        <!-- <tr>
+    <div class="container is-max-desktop pt-5">
+      <section class="mt-6 mb-5">
+        <article class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img
+                class="is-rounded"
+                src="https://bulma.io/images/placeholders/128x128.png"
+              />
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content" >
+              <p>
+                <strong>{{  trackInfo.project.userId.name }}</strong>
+                <small>@{{  trackInfo.project.userId.userId }}</small>
+                <br />
+                {{  trackInfo.project.userId.words }}
+                {{  trackInfo.project.userId.position }}
+              </p> 
+            </div> 
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <a class="level-item">
+                  <span class="icon is-small"
+                    ><i class="fas fa-reply"></i
+                  ></span>
+                </a>
+                <a class="level-item">
+                  <span class="icon is-small"
+                    ><i class="fas fa-retweet"></i
+                  ></span>
+                </a>
+                <a class="level-item">
+                  <span class="icon is-small"
+                    ><i class="fas fa-heart"></i
+                  ></span>
+                </a>
+              </div>
+            </nav>
+          </div>
+        </article>
+      </section>
+      <section>
+        <b-tabs type="is-boxed">
+          <b-tab-item label="프로젝트">
+            <b-taglist>
+              <b-tag type="is-primary">{{  trackInfo.project.pjCategory }}</b-tag>
+              <b-tag type="is-primary is-light">{{  trackInfo.project.recSeq.location }}</b-tag>
+              <b-tag type="is-link">{{  trackInfo.project.pjTools }}</b-tag>
+              <b-tag type="is-link is-light">{{ trackInfo.project.pjLang }}</b-tag>
+              <b-tag type="is-link is-light">{{ trackInfo.project.pjDuration }}</b-tag>
+            </b-taglist>
+            <center>
+              <table border="1">
+                <tr>
+                  <td>Title</td>
+                  <td>{{ trackInfo.project.pjTitle }}</td>
+                </tr>
+                <tr>
+                  <td>Duration</td>
+                  <td>{{ trackInfo.project.pjDuration }}</td>
+                </tr>
+                <tr>
+                  <td>Tools</td>
+                  <td>{{ trackInfo.project.pjTools }}</td>
+                </tr>
+                <tr>
+                  <td>Category</td>
+                  <td>{{ trackInfo.project.pjCategory }}</td>
+                </tr>
+                <tr>
+                  <td>Language</td>
+                  <td>{{ trackInfo.project.pjLang }}</td>
+                </tr>
+                <tr>
+                  <td>DBMS</td>
+                  <td>{{ trackInfo.project.pjDbms }}</td>
+                </tr>
+                <!-- <tr>
                      <td>applications</td> 
                      <td>{{value.project.pjTitle}}</td>
                 </tr> -->
-        <tr>
-          <td>Description</td>
-          <td>{{ trackInfo.project.pjDescription }}</td>
-        </tr>
-        <tr>
-          <td>Stage</td>
-          <td>{{ trackInfo.stage }}</td>
-        </tr>
-        <tr>
-          <td>Issue</td>
-          <td>{{ trackInfo.issue }}</td>
-        </tr>
-        <tr>
-          <td>Output</td>
-          <td>{{ trackInfo.output }}</td>
-        </tr>
-        <tr>
-          <td>Image</td>
-          <td>{{ trackInfo.trackImage }}</td>
-        </tr>
-      </table>
+                <tr>
+                  <td>Description</td>
+                  <td>{{ trackInfo.project.pjDescription }}</td>
+                </tr>
+                <tr>
+                  <td>Stage</td>
+                  <td>{{ trackInfo.stage }}</td>
+                </tr>
+                <tr>
+                  <td>Issue</td>
+                  <td>{{ trackInfo.issue }}</td>
+                </tr>
+                <tr>
+                  <td>Output</td>
+                  <td>{{ trackInfo.output }}</td>
+                </tr>
+                <tr>
+                  <td>Image</td>
+                  <td>{{ trackInfo.trackImage }}</td>
+                </tr>
+              </table>
 
-      <br />
-      <li>tracklike : {{ trackInfo.trackLike }}</li>
-      <li>likeFlag : {{ likeFlag }}</li>
-      <br />
-      <button v-on:click="addTrackingLike(trackInfo.trackSeq)">
-        좋아요 선택하기</button
-      ><br />
-      <button @click="deleteTracking">삭제</button>
-      <router-link
-        tag="button"
-        :to="{ name: 'ProjectTrackingUpdate', params: { trackSeq: trackInfo } }"
-        >수정</router-link
-      >
-      <!-- <router-link tag="td" :to="{name: 'ProjectTrackingDetail', params: {trackSeq: value.trackSeq}}">{{value.project.pjTitle}}</router-link> -->
-    </center>
+              <br />
+              <li>tracklike : {{ trackInfo.trackLike }}</li>
+              <li>likeFlag : {{ likeFlag }}</li>
+              <br />
+              <button v-on:click="addTrackingLike(trackInfo.trackSeq)">
+                좋아요 선택하기</button
+              ><br />
+              <button @click="deleteTracking">삭제</button>
+              <router-link
+                tag="button"
+                :to="{
+                  name: 'ProjectTrackingUpdate',
+                  params: { trackSeq: trackInfo },
+                }"
+                >수정</router-link
+              >
+            </center>
+            <!-- <h4 class="title is-4">우대사항:</h4>
+            <h5 class="subtitle is-5">{{ pj.preference }}</h5> -->
+          </b-tab-item>
+          <b-tab-item label="댓글">
+            <comment/>
+          </b-tab-item>
+        </b-tabs>
+      </section>
+    </div>
   </div>
 </template>
 <script>
 import ProjectTracking from "../../views/ProjectTracking.vue";
+import Comment from "./comment/Comment.vue";
 
 export default {
   name: "TrackingDetail",
@@ -85,12 +149,14 @@ export default {
       likeSeq: '' 
     };
   },
+  components: {
+    Comment,
+  },
   created() {
     this.tracking();
   },
   methods: {
     tracking: function() {
-      alert(this.$route.params.track.trackSeq);
       this.axios
         .get("/getprojecttracking", {
           params: {
