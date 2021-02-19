@@ -19,6 +19,7 @@ public interface UserService {
 	public User findUserByUserId(String userid);
 	public User updateUser(User user, String[] stacklist, MultipartFile mfile);
 	public User updateUserNoimg(User user, String[] stacklist);
+	public User updateUserTliked(String userid, String tliked);
 	public void deleteUser(String userid);
 	
 }

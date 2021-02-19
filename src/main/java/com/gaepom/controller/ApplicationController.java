@@ -20,7 +20,6 @@ import com.gaepom.domain.Project;
 import com.gaepom.domain.User;
 import com.gaepom.service.ApplicationService;
 
-
 @CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("app")
 @RestController

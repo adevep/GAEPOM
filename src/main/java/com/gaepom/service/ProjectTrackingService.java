@@ -18,6 +18,8 @@ public interface ProjectTrackingService {
 	void updateProjectTracking(ProjectTracking tracking);
 	
 	void updateProjComment(Comment comment);
+	
+	ProjectTracking updateTrackingLike(Long trackSeq, int trackLike);
 
 	void deleteProjectTracking(ProjectTracking tracking);
 

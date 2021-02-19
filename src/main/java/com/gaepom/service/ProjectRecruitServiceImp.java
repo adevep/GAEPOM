@@ -31,12 +31,24 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 		return (List<Object>) recruitRecruitRepo.findTotalRecruitByPjSeq(pjSeq);
 	}
 	
+	public List<Object> getTotalRecruitByLocation(String location) {
+		return (List<Object>) recruitRecruitRepo.findTotalRecruitByLocation(location);
+	}
+	
+	public List<Object> getTotalRecruitByCategory(String pjCategory) {
+		return (List<Object>) recruitRecruitRepo.findTotalRecruitByCategory(pjCategory);
+	}
+	
 	public ProjectRecruit insertProjectRecruit(ProjectRecruit recruit) {
 		return recruitRecruitRepo.save(recruit);
 	}
 
 	public ProjectRecruit getProjectRecruit(Long id) {
 		return recruitRecruitRepo.findById(id).get();
+	}
+	
+	public Object getRecByPj(Long pjSeq, ProjectRecruit recruit) {
+		return recruitRecruitRepo.findNeedNum(pjSeq);
 	}
 
 	public ProjectRecruit updateRec(Long id, ProjectRecruit recruit) {

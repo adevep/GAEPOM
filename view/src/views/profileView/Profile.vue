@@ -10,7 +10,7 @@ import profilelistcom from "@/components/profileCom/profileListCom.vue";
 export default {
   name: "profilecom",
   components: {
-    profilelistcom,
-  },
+    profilelistcom
+  }
 };
 </script>
