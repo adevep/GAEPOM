@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>프로젝트모집글 작성 완전버</title>
+</head>
+
+<body>
+	<center>
+
+		<h3>프로젝트모집</h3>
+		<hr>
+
+		<form action="../insertApplication" method="post">
+			<table border="1">
+				<thead>
+					<th width="70">지원포지션</th>
+				</thead>
+				<tbody>
+					<tr th:each="po : ${needPosi}">
+						<td><input th:text="${po}" type="checkbox" th:value="${po}" th:attr="name='aplPosi'" /></td>
+					</tr>
+			</table>
+			<input type="hidden" th:value="${guser.userId}" th:attr="name='userId'">
+			<input type="hidden" th:value="${recSeq}" th:attr="name='recSeq'">
+			<input type="hidden" th:value="0" th:attr="name='selected'">
+			<!-- <input type="hidden" th:value="${pj.pjSeq}" th:attr="name='pjSeq'"> -->
+			<input type="submit" value="지원하기" />
+		</form>
+			<td th:text = "${guser.userId}"></td>
+			<td th:text = "${recSeq}"></td>
+	</center>
+</body>
+
+</html>
