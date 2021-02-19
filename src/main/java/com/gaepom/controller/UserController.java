@@ -63,7 +63,16 @@ public class UserController {
 		return updateduser;
 
 	}
-	
+
+	@PutMapping("/updateusertliked")
+	public User updateUserTliked(@RequestParam String userid, @RequestParam String tliked) {
+		User updateduser = null;
+		
+		updateduser = userservice.updateUserTliked(userid, tliked);
+
+		return updateduser; 
+	}
+
 	@DeleteMapping("/deleteuser")
 	public void deleteUser(@RequestParam String userid) {
 		userservice.deleteUser(userid);

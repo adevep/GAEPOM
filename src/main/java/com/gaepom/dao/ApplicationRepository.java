@@ -15,7 +15,7 @@ import com.gaepom.domain.Project;
 public interface ApplicationRepository extends CrudRepository<Application, Long>, JpaRepository<Application, Long>{
 
 	
-	@Query("SELECT a FROM Application a WHERE a.userId = :userId and a.selected = 0")
+	@Query("SELECT a FROM Application a WHERE a.userId = :userId")
 	List<Application> findApplicationByUserId (@Param("userId") String userId);
 	
 	@Query("SELECT a FROM Application a WHERE a.userId = :userId and a.selected = 1")

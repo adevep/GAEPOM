@@ -4,11 +4,13 @@ package com.gaepom.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gaepom.domain.Project;
+import com.gaepom.domain.User;
 
 @Repository
 public interface ProjectRepository extends CrudRepository<Project, Long>, JpaRepository<Project, Long> {
@@ -28,5 +30,8 @@ public interface ProjectRepository extends CrudRepository<Project, Long>, JpaRep
 //	
 //	SELECT c1, c2 FROM Country c1, Country c2
 //	WHERE c2 MEMBER OF c1.neighbors
-//	
+	
+	@Query("SELECT a FROM Project a where a.userId =:userId")
+	List<Project> findPjByUserId(@Param("userId") User userId);
+
 }

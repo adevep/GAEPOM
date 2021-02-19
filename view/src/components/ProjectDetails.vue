@@ -14,7 +14,7 @@
           <div class="media-content">
             <div class="content" v-for="pj in allPjs" :key="pj.index">
               <p>
-                <strong>{{ pj.userId.name }}</strong>
+                <!-- <strong>{{ pj.userId.name }}</strong> -->
                 <small>@{{ pj.userId.userId }}</small>
                 <br />
                 {{ pj.userId.words }}
@@ -76,17 +76,16 @@
             <br />
             <h4 class="title is-4">우대사항:</h4>
             <h5 class="subtitle is-5">{{ pj.preference }}</h5>
-            <!-- <div v-if="loginuser!=pj.userId.userId">
-            <b-button>지원하기 </b-button>
-            </div> -->
-            <section>
+
+            <div v-if="loginUser != pj.userId.userId">
               <b-button
                 label="지원하기"
                 type="is-primary"
                 size="is-medium"
                 @click="isCardModalActive = true"
               />
-
+            </div>
+            <section>
               <b-modal v-model="isCardModalActive" :width="640" scroll="keep">
                 <div class="modal-card" style="width: auto">
                   <header class="modal-card-head">
@@ -182,6 +181,7 @@ export default {
           });
           this.allPjs = array;
           console.log(this.allPjs);
+
           //needPosi 나누기
           var array2 = [];
           var posi = {};
@@ -209,7 +209,7 @@ export default {
       let formData = new FormData();
 
       //   formData.append("aplSeq", this.allPjs.shift().aplSeq);
-      formData.append("userId", this.allPjs.shift().userId.userId);
+      formData.append("userId", this.loginUser);
       formData.append("words", this.words);
       formData.append("aplPosi", this.aplPosi);
       formData.append("selected", 0);

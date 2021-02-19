@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
+import com.gaepom.domain.User;
 
 import com.gaepom.domain.ProjectTracking;
 
@@ -24,7 +25,11 @@ public class ProjectServiceImp implements ProjectService {
 	public List<Project> getProjectList(Project project) {
 		return (List<Project>) projectRepo.findAll();
 	}
-
+	
+	public List<Project> getPjByUserId(Project project, User userId) {
+		return (List<Project>) projectRepo.findPjByUserId(userId);
+	}
+	
 	public Project insertProject(Project project) {
 		return projectRepo.save(project);
 	}
@@ -40,9 +45,9 @@ public class ProjectServiceImp implements ProjectService {
 //		return projectRepo.findById(project.getPjSeq()).get();
 //	}
 
-	public Project updateProject(Project project) {
+	public Project updateProject(Long id, Project project) {
 		System.out.println("여기오나?");
-		Project findProject = projectRepo.findById(project.getPjSeq()).get();
+		Project findProject = projectRepo.findById(id).get();
 
 		findProject.setPjTitle(project.getPjTitle());
 		findProject.setPjDescription(project.getPjDescription());
@@ -89,4 +94,5 @@ public class ProjectServiceImp implements ProjectService {
 	public void deleteProject(Project project) {
 		projectRepo.deleteById(project.getPjSeq());
 	}
+
 }
