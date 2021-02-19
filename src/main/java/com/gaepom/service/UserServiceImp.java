@@ -172,6 +172,18 @@ public class UserServiceImp implements UserService {
 			throw new UserNotFoundException("유저가 없습니다.");
 		}
 	}
+	
+	public User updateUserTliked(String userid, String tliked) {
+		Optional<User> findUser = userrepo.findById(userid);
+		if (findUser.isPresent()) {
+			findUser.get().setTLiked(tliked);
+			userrepo.save(findUser.get());
+			logger.info(findUser.get().getUserId() + " 좋아요 수정 완료");
+			return findUser.get();
+		} else {
+			throw new UserNotFoundException("해당 ID의 유저가 없습니다.");
+		}
+	}
 
 	public void deleteUser(String userid) {
 
