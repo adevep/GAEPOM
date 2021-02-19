@@ -68,6 +68,15 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService{
 		projectRepo.save(findProject);
 	}
 	
+	public ProjectTracking updateTrackingLike(Long trackSeq, int trackLike) {
+		ProjectTracking findTracking = trackingRepo.findById(trackSeq).get();
+		findTracking.setTrackLike(trackLike);
+		
+		trackingRepo.save(findTracking);
+		System.out.println("트래킹 좋아요 수정완료");
+		return findTracking;
+	}
+	
 	public void deleteProjectTracking(ProjectTracking tracking) {
 		trackingRepo.deleteById(tracking.getTrackSeq());
 	}

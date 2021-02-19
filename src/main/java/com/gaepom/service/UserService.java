@@ -17,8 +17,14 @@ public interface UserService {
 	public User insertUser(User user, MultipartFile mfile);
 	public User insertUserNoimg(User user);
 	public User findUserByUserId(String userid);
+<<<<<<< Updated upstream
 	public User updateUser(User user, MultipartFile mfile);
 	public User updateUserNoimg(User user);
+=======
+	public User updateUser(User user, String[] stacklist, MultipartFile mfile);
+	public User updateUserNoimg(User user, String[] stacklist);
+	public User updateUserTliked(String userid, String tliked);
+>>>>>>> Stashed changes
 	public void deleteUser(String userid);
 	
 }
