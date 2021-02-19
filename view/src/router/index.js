@@ -5,29 +5,26 @@ import Home from "../views/Home.vue";
 
 
 Vue.use(VueRouter);
-// 로그인한 유저는 reject
+// 로그인 유저 거절
 const rejectAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") != null) {
-    // 이미 로그인 된 유저니까 막아야 함
     alert("먼저 로그아웃을 해주세요!");
-    // 홈으로 redirect
     next("/");
   } else {
     next();
   }
 };
 
-// if (store.state.isLogin === false) {
+// 비 로그인 유저 거절
 const onlyAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") == null) {
-    // 아직 로그인 안 된 유저니까 막아야 함
     alert("로그인 해주세요.");
-    // 홈으로 redirect
-    next("/");
+    next("/login");
   } else {
     next();
   }
 };
+
 const routes = [
   {
     path: "/",
@@ -36,7 +33,7 @@ const routes = [
   },
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     // 라우터 들어오기전에 이 함수 실행
     beforeEnter: rejectAuthUser,
     component: () => import("../views/loginUserView/Login.vue")
@@ -56,20 +53,23 @@ const routes = [
   {
     path: "/portfolios",
     name: "portfoliolist",
+    beforeEnter: onlyAuthUser,
     component: () => import("../views/portfolioView/PortfolioList.vue")
   },
   {
     path: "/insertportfolio",
     name: "insertportfolio",
+    beforeEnter: onlyAuthUser,
     component: () => import("../views/portfolioView/InsertPortfolio.vue")
   },
   {
     path: "/updateportfolio",
     name: "updatePortfolio",
+    beforeEnter: onlyAuthUser,
     component: () => import("../views/portfolioView/UpdatePortfolio.vue")
   },
   {
-    path: "/updateloginuser",
+    path: "/updateuser",
     name: "updateUser",
     beforeEnter: onlyAuthUser,
     component: () => import("../views/loginUserView/UpdateUser.vue")
@@ -79,6 +79,12 @@ const routes = [
     name: "insertuser",
     beforeEnter: rejectAuthUser,
     component: () => import("../views/loginUserView/InsertUser.vue")
+  },
+  {
+    path: "/insertusercheck",
+    name: "insertusercheck",
+    beforeEnter: rejectAuthUser,
+    component: () => import("../views/loginUserView/InsertUserCheck.vue")
   },
   {
     path: "/profile",

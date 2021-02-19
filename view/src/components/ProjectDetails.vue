@@ -14,7 +14,7 @@
           <div class="media-content">
             <div class="content" v-for="pj in allPjs" :key="pj.index">
               <p>
-                <strong>{{ pj.userId.name }}</strong>
+                <!-- <strong>{{ pj.userId.name }}</strong> -->
                 <small>@{{ pj.userId.userId }}</small>
                 <br />
                 {{ pj.userId.words }}

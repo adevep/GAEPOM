@@ -53,6 +53,9 @@ public class User {
 
 	private String position;
 	
+	@Column(name="t_liked")
+	private String tLiked;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy="userId")
 	private List<Portfolio> portfolios;

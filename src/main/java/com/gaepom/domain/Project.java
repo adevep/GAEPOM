@@ -40,7 +40,6 @@ public class Project {
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User userId;
