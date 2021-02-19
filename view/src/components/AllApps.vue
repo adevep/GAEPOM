@@ -235,7 +235,7 @@ export default {
         }).length;
         console.log("계산값" + countFiltered);
         if (countFiltered >= this.needNum) {
-          this.confirmCustom()
+          // this.confirmCustom()
           return this.apps.filter(function(item) {
             return item.selected == 1;
           });
