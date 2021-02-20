@@ -68,7 +68,7 @@
              <!-- <router-link tag ="button" :to="{name: 'ProjectTrackingDetail', params: {trackSeq: trackInfo.trackSeq}}">수정<router-link> -->
         </center>
   </div>
-</template>
+</template> 
 <script>
 // import ProjectTrackingDetail from '../../views/ProjectTrackingDetail.vue';
 import { mapState } from "vuex";
