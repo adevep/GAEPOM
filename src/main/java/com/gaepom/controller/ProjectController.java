@@ -24,7 +24,7 @@ import com.gaepom.service.ProjectService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
-@RequestMapping(value = "project") // http://localhost:80/project/getlist
+@RequestMapping(value = "project")
 
 @SessionAttributes("guser")
 

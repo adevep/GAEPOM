@@ -93,10 +93,6 @@
                     {{ props.row.pfSeq }}
                   </b-table-column>
 
-                  <b-table-column field="id" label="ID" sortable>
-                    {{ currentUserId }}
-                  </b-table-column>
-
                   <b-table-column
                     field="pfSubtitle"
                     label="제목"
@@ -116,6 +112,16 @@
                     width="80"
                   >
                     {{ props.row.pfDuration }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="participation"
+                    label="포지션"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfPosition }}
                   </b-table-column>
 
                   <b-table-column
@@ -140,37 +146,7 @@
                     {{ props.row.participation }}%
                   </b-table-column>
 
-                  <b-table-column
-                    field="pfLang"
-                    label="언어"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfLang }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfTools"
-                    label="Tool"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfTools }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfDbms"
-                    label="DB"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfDbms }}
-                  </b-table-column>
-
-                  <b-table-column
+                   <b-table-column
                     field="pfLink"
                     label="Link"
                     sortable
@@ -189,6 +165,36 @@
                     v-slot="props"
                   >
                     {{ props.row.pfCategory }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfTools"
+                    label="Tool"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfTools }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfLang"
+                    label="언어"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfLang }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfDbms"
+                    label="DB"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfDbms }}
                   </b-table-column>
 
                   <b-table-column
@@ -225,6 +231,7 @@
               </b-button>
             </b-taglist>
           </b-tab-item>
+
           <b-tab-item label="프로젝트 관리">
             <section>
               <b-collapse :open="false" aria-id="contentIdForA11y1">
@@ -302,11 +309,6 @@ export default {
       stack: ""
     },
     portfolio: [],
-    currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
-    currentUserName: JSON.parse(sessionStorage.getItem("user")).name,
-    currentUserPosition: JSON.parse(sessionStorage.getItem("user")).position,
-    currentUserAddress: JSON.parse(sessionStorage.getItem("user")).address,
-
     pfSubtitle: "",
     pfDuration: "",
     pfDescription: "",

@@ -1,6 +1,6 @@
 <template>
   <div class="ProjectDetails">
-  <div class="container is-max-desktop pt-5">
+    <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
         <article class="media">
           <figure class="media-left">
@@ -41,36 +41,35 @@
       <section>
         <b-tabs type="is-boxed">
           <b-tab-item label="유저 정보">
-            <br>
+            <br />
             <h5 class="subtitle is-5" align="left">
               ▶ 이메일 : {{ anotherUser.email }}
             </h5>
-            <br>
+            <br />
             <h5 class="subtitle is-5" align="left">
               ▶ 전화번호 : {{ anotherUser.phoneNum }}
             </h5>
-            <br>
+            <br />
             <h5 class="subtitle is-5" align="left">
               ▶ 포지션 : {{ anotherUser.position }}
             </h5>
-            <br>
+            <br />
             <h5 class="subtitle is-5" align="left">
               ▶ 기술 : {{ anotherUser.stack }}
             </h5>
-            <br>
+            <br />
             <h5 class="subtitle is-5" align="left">
               ▶ 주소 : {{ anotherUser.address }}
             </h5>
-            <br>
+            <br />
 
             <section>
-
               <b-modal v-model="userId" :width="640" scroll="keep">
                 <div class="modal-card" style="width: auto">
                   <header class="modal-card-head">
                     <p class="modal-card-title">프로젝트 지원하기</p>
                     <button type="button" class="delete" />
-                   @click="$emit('close')"
+                    @click="$emit('close')"
                   </header>
                   <section class="modal-card-body">
                     <b-field label="나를 어필할 한마디를 적어주세요!">
@@ -90,7 +89,7 @@
                           :key="index"
                           v-bind:value="value"
                           >{{ value }}</option
-                        > 
+                        >
                       </b-select>
                     </b-field>
                   </section>
@@ -98,18 +97,144 @@
                     <b-button label="Close" />
                     @click="isCardModalActive = false"
                     <b-button label="지원하기" type="is-primary" />
-                  v-on:click="submitApp()" 
+                    v-on:click="submitApp()"
                   </footer>
                 </div>
               </b-modal>
             </section>
           </b-tab-item>
           <b-tab-item label="포트폴리오">
-            <b-taglist>
+            <div id="portfolios" class="container">
+              <section>
+                <b-table
+                  :data="portfolio"
+                  ref="table"
+                  paginated
+                  per-page="3"
+                  aria-next-label="Next page"
+                  aria-previous-label="Previous page"
+                  aria-page-label="Page"
+                  aria-current-label="Current page"
+                >
+                  <b-table-column
+                    field="pfSeq"
+                    label="번호"
+                    width="80"
+                    numeric
+                    v-slot="props"
+                  >
+                    {{ props.row.pfSeq }}
+                  </b-table-column>
 
-            </b-taglist>
+                  <b-table-column
+                    field="pfSubtitle"
+                    label="제목"
+                    sortable
+                    v-slot="props"
+                    width="80"
+                  >
+                    {{ props.row.pfSubtitle }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfDuration"
+                    label="기간"
+                    sortable
+                    centered
+                    v-slot="props"
+                    width="80"
+                  >
+                    {{ props.row.pfDuration }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="participation"
+                    label="포지션"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfPosition }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfDescription"
+                    label="설명"
+                    sortable
+                    centered
+                    v-slot="props"
+                    width="80"
+                  >
+                    {{ props.row.pfDescription }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="participation"
+                    label="참여도"
+                    sortable
+                    centered
+                    v-slot="props"
+                    width="120"
+                  >
+                    {{ props.row.participation }}%
+                  </b-table-column>
+
+                    <b-table-column
+                    field="pfLink"
+                    label="Link"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfLink }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfCategory"
+                    label="카테고리"
+                    sortable
+                    centered
+                    width="150"
+                    v-slot="props"
+                  >
+                    {{ props.row.pfCategory }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfTools"
+                    label="Tool"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfTools }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfLang"
+                    label="언어"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfLang }}
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfDbms"
+                    label="DB"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfDbms }}
+                  </b-table-column>
+
+                </b-table>
+              </section>
+            </div>
           </b-tab-item>
-           <b-tab-item label="프로젝트 관리">
+          <b-tab-item label="프로젝트 관리">
             <b-taglist>
               <b-tag type="is-primary">1</b-tag>
               <b-tag type="is-primary is-light">2</b-tag>
@@ -118,7 +243,7 @@
               <b-tag type="is-link is-light">5</b-tag>
             </b-taglist>
           </b-tab-item>
-           <b-tab-item label="댓글">
+          <b-tab-item label="댓글">
             <b-taglist>
               <b-tag type="is-primary">1</b-tag>
               <b-tag type="is-primary is-light">2</b-tag>
@@ -130,11 +255,7 @@
         </b-tabs>
       </section>
     </div>
-
-
   </div>
-
-  
 </template>
 
 <script>
@@ -153,20 +274,48 @@ export default {
       position: "",
       stack: "",
     },
+    portfolio: [],
+    currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
+    currentUserName: JSON.parse(sessionStorage.getItem("user")).name,
+    currentUserPosition: JSON.parse(sessionStorage.getItem("user")).position,
+    currentUserAddress: JSON.parse(sessionStorage.getItem("user")).address,
+
+    pfSubtitle: "",
+    pfDuration: "",
+    pfDescription: "",
+    participation: "",
+    pfLang: "",
+    pfTools: "",
+    pfDbms: "",
+    pfLink: "",
+    pfCategory: "",
   }),
   computed: {
     ...mapState(["imgURL"]),
   },
   methods: {
+    retrievePortfolios() {
+      axios
+        .get("/portfolios?userid=" + this.$route.params.pickedid)
+        .then((response) => {
+          this.portfolio = response.data;
+          // console.log(this.portfolio[0].pfLang)
+          // this.portfolio[0].pfLang = this.portfolio[0].pfLang.split(",")
+          // console.log(this.portfolio[0].pfLang)
+        })
+        .catch(() => {
+          alert("조회 실패");
+        });
+    },
     anotherUserInfoCall() {
-        axios
-          .get("/getuser?userid=" + this.$route.params.pickedid)
-          .then((response) => {
-            this.anotherUser = response.data;
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+      axios
+        .get("/getuser?userid=" + this.$route.params.pickedid)
+        .then((response) => {
+          this.anotherUser = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     getPortfolio(user) {
       this.$store.state.anotherUser = user;
@@ -175,8 +324,8 @@ export default {
   },
   mounted() {
     this.anotherUserInfoCall();
+    this.retrievePortfolios();
   },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

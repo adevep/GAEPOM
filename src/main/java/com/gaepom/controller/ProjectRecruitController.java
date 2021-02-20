@@ -22,7 +22,7 @@ import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 import com.gaepom.service.ProjectService;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8082")
 @RestController
 @RequestMapping(value = "recruit")
 public class ProjectRecruitController {
