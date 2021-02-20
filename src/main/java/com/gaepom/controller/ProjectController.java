@@ -46,11 +46,8 @@ public class ProjectController {
 	public Project getProject(User user, Long projectId) {
 		
 		try {
-			Optional<Project> getProject = projRepo.findById(projectId);
-			
-			System.out.println("list 반환 성공");
+			Optional<Project> getProject = projRepo.findById(projectId);		
 			return getProject.get();
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 			return null;
