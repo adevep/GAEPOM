@@ -38,10 +38,12 @@ export default {
                 console.warn(response)
                 console.warn(response.data)
                 console.log("==========add==========")
+                this.success();
                 // 페이지 이동
                 this.$router.push(ProjectTracking)
 
             }).catch((ex) => {
+                this.danger();
                 console.warn("ERROR!!!!! : ",ex)
             });
         },
@@ -55,7 +57,21 @@ export default {
           }).catch(error => {
               console.log("에러" + error);
           })
-        }
+        },
+         success() {
+                this.$buefy.notification.open({
+                    message: '트래킹 작성이 완료되었습니다.',
+                    type: 'is-success',
+                    position: 'is-bottom-right',
+                })
+            },
+           danger() {
+                this.$buefy.notification.open({
+                    message: `트래킹 내용을 정확히 입력해주세요.`,
+                    type: 'is-danger',
+                    position: 'is-bottom-right',
+                })
+            },
     },
     mounted () {
       this.showProject();
