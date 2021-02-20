@@ -166,15 +166,26 @@
         </template>
       </b-table>
     </section>
-     <b-button type="is-success" outlined v-if="checkCount == needNum"
-      > <router-link
-      :to="{
-        name: 'ProjectTrackingInsert',
-        params: { pjseq: this.$route.params.pjSeq },
-      }"
-      >트래킹 작성</router-link
-    ></b-button
+    <b-message
+      title="Success with icon"
+      type="is-success"
+      has-icon
+      aria-close-label="Close message"
+      v-if="checkCount == needNum"
     >
+      팀원들이 확정되었습니다. 팀원들과 함께 프로젝트 트래킹 페이지를
+      만들어볼까요?
+      <br />
+      <router-link
+        class="button"
+        :to="{
+          name: 'ProjectTrackingInsert',
+          params: { pjseq: this.$route.params.pjSeq }
+        }"
+        >프로젝트 작성하기</router-link
+      >
+    </b-message>
+    <b-message v-else></b-message>
   </div>
 </template>
 <script>
@@ -241,9 +252,10 @@ export default {
     },
     rejectApp(id, app) {
       {
-         if (app.selected != 2 && this.checkCount > 0) {
+        if (app.selected != 2 && this.checkCount > 0) {
           app.selected = 2;
-          this.checkCount -= 1;}
+          this.checkCount -= 1;
+        }
       }
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
