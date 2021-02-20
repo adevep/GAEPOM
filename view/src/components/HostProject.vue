@@ -68,6 +68,48 @@
                 Jupyter Notebook
               </b-checkbox>
             </b-field>
+            <b-field>
+              <b-checkbox v-model="pjTools" native-value="Gloo maps"
+                >Gloo maps</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Plectica"
+                >Plectica</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Trello"
+                >Trello</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Axure"
+                >Axure</b-checkbox
+              >
+            </b-field>
+            <b-field>
+              <b-checkbox v-model="pjTools" native-value="Oven"
+                >Oven</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Power Mockup"
+                >Power Mockup</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Sketch"
+                >Sketch</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Figma"
+                >Figma</b-checkbox
+              >
+            </b-field>
+            <b-field>
+              <b-checkbox v-model="pjTools" native-value="Photoshop"
+                >Photoshop</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Adobe XD"
+                >Adobe XD</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Framer X"
+                >Framer X</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Illustrator"
+                >Illustrator</b-checkbox
+              >
+            </b-field>
           </BCheckboxesWithValidation>
           <BCheckboxesWithValidation rules="required">
             <b-field label="프로젝트 분류" align="left">
@@ -188,7 +230,6 @@ import { ValidationObserver } from "vee-validate";
 import BInputWithValidation from "./veeInputs//BInputWithValidation";
 import BCheckboxesWithValidation from "./veeInputs/BCheckboxesWithValidation";
 import BSeletWithValidation from "./veeInputs/BSeletWithValidation";
-
 import http from "../http-common";
 export default {
   name: "AddProject",
@@ -272,17 +313,6 @@ export default {
           console.warn("ERROR!!!!! : ", ex);
         });
     }
-    // showProject: function() {
-    //   this.axios.get('/getproject', {
-    //     params: {
-    //       projectId: 2
-    //     }
-    //   }).then(response => {
-    //     this.project = response.data
-    //   }).catch(error => {
-    //       console.log("에러" + error);
-    //   })
-    // }
   },
   mounted() {
     //this.showProject();
