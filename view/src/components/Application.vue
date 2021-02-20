@@ -30,28 +30,8 @@
         <b-table-column field="words" label="각오" v-slot="props" centered>
           <b-field>
             {{ props.row.words }}
-            <a @click="isCardModalActive=true" class="tag is-warn pr-2 prl-2">
-              변경
-            </a>
           </b-field>
-          <!-- <b-field v-if="editWords">
-            <b-input  v-model="words"></b-input>
-            <a
-            v-on:click="updateApp(props.row.aplSeq, props.row)"
-            class="tag is-warn pr-2 prl-2"
-          >
-          </b-field> -->
         </b-table-column>
-        <!-- <b-table-column v-if="editWords" field="words" label="각오" v-slot="props" centered>
-          <b-input v-model="words" maxlength="20"></b-input>
-          <a
-            v-on:click="updateApp(props.row.aplSeq, props.row)"
-            class="tag is-warn pr-2 prl-2"
-          >
-            변경
-          </a>
-        </b-table-column> -->
-
         <b-table-column
           field="selected"
           label="진행사항"
@@ -134,10 +114,12 @@ export default {
         .then(response => {
           this.retrieveApps();
           console.log(response.data);
+          this.success();
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
+          this.danger();
         });
     },
     deleteApp(id) {
@@ -146,12 +128,28 @@ export default {
         .then(response => {
           console.log(response.data);
           this.retrieveApps();
+          this.success();
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
+          this.danger();
         });
-    }
+    },
+    success() {
+                this.$buefy.notification.open({
+                    message: '성공적으로 11완료되었습니다.',
+                    type: 'is-success',
+                    position: 'is-bottom-right',
+                })
+            },
+     danger() {
+                this.$buefy.notification.open({
+                    message: `다시 한번 확인해주세요.`,
+                    type: 'is-danger',
+                    position: 'is-bottom-right',
+                })
+            },
   },
   mounted() {
     this.retrieveApps();

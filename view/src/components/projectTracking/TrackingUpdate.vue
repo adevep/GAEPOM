@@ -70,12 +70,28 @@ export default {
                 console.log("==========update==========")
                 console.warn(response.data)
                 console.log("==========update==========")
+                this.success();
                 // 페이지 이동
                 this.$router.push({ name: 'ProjectTrackingDetail', params: {track: this.trackInfo}})
             }).catch((ex) => {
+                this.danger();
                 console.warn("ERROR!!!!! : ",ex)
             });
         },
+         success() {
+                this.$buefy.notification.open({
+                    message: '트래킹 수정이 완료되었습니다.',
+                    type: 'is-success',
+                    position: 'is-bottom-right',
+                })
+            },
+         danger() {
+                this.$buefy.notification.open({
+                    message: `트래킹 수정 내용을 정확히 입력해주세요.`,
+                    type: 'is-danger',
+                    position: 'is-bottom-right',
+                })
+            },
     },
     mounted() {
         this.trackInfo = this.$route.params.trackSeq
