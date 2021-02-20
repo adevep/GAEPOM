@@ -55,55 +55,61 @@
           </b-field>
           <BCheckboxesWithValidation rules="required">
             <b-field label="프로젝트 사용 툴" align="left">
-          <b-checkbox v-model="pjTools" native-value="Eclipse">
-            Eclipse
-          </b-checkbox>
-          <b-checkbox v-model="pjTools" native-value="IntelliJ">
-            IntelliJ
-          </b-checkbox>
-          <b-checkbox v-model="pjTools" native-value="VS Code">
-            VS Code
-          </b-checkbox>
-          <b-checkbox v-model="pjTools" native-value="Jupyter Notebook">
-            Jupyter Notebook
-          </b-checkbox>
-        </b-field>
-        <b-field>
-          <b-checkbox v-model="pjTools" native-value="Gloo maps"
-            >Gloo maps</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Plectica"
-            >Plectica</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Trello"
-            >Trello</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Axure">Axure</b-checkbox>
-        </b-field>
-        <b-field>
-          <b-checkbox v-model="pjTools" native-value="Oven">Oven</b-checkbox>
-          <b-checkbox v-model="pjTools" native-value="Power Mockup"
-            >Power Mockup</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Sketch"
-            >Sketch</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Figma">Figma</b-checkbox>
-        </b-field>
-        <b-field>
-          <b-checkbox v-model="pjTools" native-value="Photoshop"
-            >Photoshop</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Adobe XD"
-            >Adobe XD</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Framer X"
-            >Framer X</b-checkbox
-          >
-          <b-checkbox v-model="pjTools" native-value="Illustrator"
-            >Illustrator</b-checkbox
-          >
-        </b-field>
+              <b-checkbox v-model="pjTools" native-value="Eclipse">
+                Eclipse
+              </b-checkbox>
+              <b-checkbox v-model="pjTools" native-value="IntelliJ">
+                IntelliJ
+              </b-checkbox>
+              <b-checkbox v-model="pjTools" native-value="VS Code">
+                VS Code
+              </b-checkbox>
+              <b-checkbox v-model="pjTools" native-value="Jupyter Notebook">
+                Jupyter Notebook
+              </b-checkbox>
+            </b-field>
+            <b-field>
+              <b-checkbox v-model="pjTools" native-value="Gloo maps"
+                >Gloo maps</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Plectica"
+                >Plectica</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Trello"
+                >Trello</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Axure"
+                >Axure</b-checkbox
+              >
+            </b-field>
+            <b-field>
+              <b-checkbox v-model="pjTools" native-value="Oven"
+                >Oven</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Power Mockup"
+                >Power Mockup</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Sketch"
+                >Sketch</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Figma"
+                >Figma</b-checkbox
+              >
+            </b-field>
+            <b-field>
+              <b-checkbox v-model="pjTools" native-value="Photoshop"
+                >Photoshop</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Adobe XD"
+                >Adobe XD</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Framer X"
+                >Framer X</b-checkbox
+              >
+              <b-checkbox v-model="pjTools" native-value="Illustrator"
+                >Illustrator</b-checkbox
+              >
+            </b-field>
           </BCheckboxesWithValidation>
           <BCheckboxesWithValidation rules="required">
             <b-field label="프로젝트 분류" align="left">
@@ -311,22 +317,20 @@ export default {
         });
     },
     success() {
-                this.$buefy.notification.open({
-                    message: '모집글 작성이 완료되었습니다.',
-                    type: 'is-success',
-                    position: 'is-bottom-right',
-                })
-            },
-        danger() {
-                this.$buefy.notification.open({
-                    message: `모집글을 정확히 작성해주세요.`,
-                    type: 'is-danger',
-                    position: 'is-bottom-right',
-                })
-            },
-
+      this.$buefy.notification.open({
+        message: "모집글 작성이 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `모집글을 정확히 작성해주세요.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
+    }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>

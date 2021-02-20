@@ -145,7 +145,7 @@
                     {{ props.row.participation }}%
                   </b-table-column>
 
-                   <b-table-column
+                  <b-table-column
                     field="pfLink"
                     label="Link"
                     sortable
@@ -225,7 +225,7 @@
             </div>
 
             <b-taglist>
-              <b-button tag="router-link" to="/insertportfolio" type="is-info">
+              <b-button tag="router-link" to="/insertportfolio">
                 포트폴리오 등록
               </b-button>
             </b-taglist>
@@ -233,34 +233,23 @@
 
           <b-tab-item label="프로젝트 관리">
             <section>
-              <b-collapse :open="false" aria-id="contentIdForA11y1">
-                <template #trigger>
-                  <b-button
-                    label="내 지원서 보기"
-                    type="is-primary"
-                    aria-controls="contentIdForA11y1"
-                  />
-                </template>
-                <div class="content">
-                  <application></application>
-                </div>
-              </b-collapse>
-            </section>
-            <br />
-
-            <section>
-              <b-collapse :open="false" aria-id="contentIdForA11y1">
-                <template #trigger>
-                  <b-button
-                    label="내 주최 프로젝트 보기"
-                    type="is-primary"
-                    aria-controls="contentIdForA11y1"
-                  />
-                </template>
-                <div class="content">
+              <b-tabs :size="medium" :type="boxed" :expanded="expanded">
+                <b-tab-item
+                  label="내가 주최한 프로젝트 모집글"
+                  icon="google-photos"
+                >
                   <my-projects></my-projects>
-                </div>
-              </b-collapse>
+                </b-tab-item>
+                <b-tab-item
+                  label="내가 주최한 프로젝트 트래킹글"
+                  icon="google-photos"
+                >
+                주최한 프로젝트 트래킹 글 테이블
+                </b-tab-item>
+                <b-tab-item label="내 지원서" icon="library-music">
+                  <application></application>
+                </b-tab-item>
+              </b-tabs>
             </section>
           </b-tab-item>
           <b-tab-item label="댓글"> </b-tab-item>

@@ -30,28 +30,8 @@
         <b-table-column field="words" label="각오" v-slot="props" centered>
           <b-field>
             {{ props.row.words }}
-            <a @click="isCardModalActive=true" class="tag is-warn pr-2 prl-2">
-              변경
-            </a>
           </b-field>
-          <!-- <b-field v-if="editWords">
-            <b-input  v-model="words"></b-input>
-            <a
-            v-on:click="updateApp(props.row.aplSeq, props.row)"
-            class="tag is-warn pr-2 prl-2"
-          >
-          </b-field> -->
         </b-table-column>
-        <!-- <b-table-column v-if="editWords" field="words" label="각오" v-slot="props" centered>
-          <b-input v-model="words" maxlength="20"></b-input>
-          <a
-            v-on:click="updateApp(props.row.aplSeq, props.row)"
-            class="tag is-warn pr-2 prl-2"
-          >
-            변경
-          </a>
-        </b-table-column> -->
-
         <b-table-column
           field="selected"
           label="진행사항"
