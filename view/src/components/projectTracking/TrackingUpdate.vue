@@ -68,7 +68,7 @@
              <!-- <router-link tag ="button" :to="{name: 'ProjectTrackingDetail', params: {trackSeq: trackInfo.trackSeq}}">수정<router-link> -->
         </center>
   </div>
-</template>
+</template> 
 <script>
 // import ProjectTrackingDetail from '../../views/ProjectTrackingDetail.vue';
 import { mapState } from "vuex";
@@ -110,6 +110,8 @@ export default {
           formData.append("position", this.project.userId.position);
           formData.append("stacklist", this.project.userId.stacklist);
 
+
+        
           console.log(formData)
           this.axios.put('/updateprojecttracking', formData , {
           headers: {

@@ -1,7 +1,7 @@
 <template>
   <div class="projectTracking">
-    <h1>This is projectTracking page</h1>
-    <TrackingList msg="리스트 출력" />
+    <h1 style="font-size:200%;">당신의 꿈을 펼쳐라</h1>
+    <tracking-list />
   </div>
 </template>
 
