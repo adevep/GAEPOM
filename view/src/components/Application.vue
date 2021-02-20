@@ -134,10 +134,12 @@ export default {
         .then(response => {
           this.retrieveApps();
           console.log(response.data);
+          this.success();
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
+          this.danger();
         });
     },
     deleteApp(id) {
@@ -146,12 +148,28 @@ export default {
         .then(response => {
           console.log(response.data);
           this.retrieveApps();
+          this.success();
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
+          this.danger();
         });
-    }
+    },
+    success() {
+                this.$buefy.notification.open({
+                    message: '성공적으로 11완료되었습니다.',
+                    type: 'is-success',
+                    position: 'is-bottom-right',
+                })
+            },
+     danger() {
+                this.$buefy.notification.open({
+                    message: `다시 한번 확인해주세요.`,
+                    type: 'is-danger',
+                    position: 'is-bottom-right',
+                })
+            },
   },
   mounted() {
     this.retrieveApps();

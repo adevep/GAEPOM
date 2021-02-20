@@ -1,7 +1,6 @@
 package com.gaepom.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +22,10 @@ import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 import com.gaepom.service.ProjectService;
 
-@CrossOrigin(origins = "http://localhost:8082")
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value = "recruit")
 public class ProjectRecruitController {
-
 	@Autowired
 	private ProjectRecruitService projectRecruitService;
 

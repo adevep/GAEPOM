@@ -239,11 +239,27 @@ export default {
         })
         .then(function() {
           alert("SUCCESS!!");
+          //this.success();
         })
         .catch(function() {
           alert("FAILURE!!");
+          //this.danger();
         });
-    }
+    },
+    success() {
+                this.$buefy.notification.open({
+                    message: '성공적으로 완료되었습니다.',
+                    type: 'is-success',
+                    position: 'is-bottom-right',
+                })
+            },
+    danger() {
+                this.$buefy.notification.open({
+                    message: `다시 한번 확인해주세요.`,
+                    type: 'is-danger',
+                    position: 'is-bottom-right',
+                })
+            },
   },
   mounted() {
     this.retrieveRecAndPj();
