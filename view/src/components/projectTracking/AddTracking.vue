@@ -38,12 +38,14 @@ export default {
                 console.warn(response)
                 console.warn(response.data)
                 console.log("==========add==========")
-                this.success();
+
+                // this.success();
+                // alert("1");
                 // 페이지 이동
                 this.$router.push(ProjectTracking)
 
             }).catch((ex) => {
-                this.danger();
+                //this.danger();
                 console.warn("ERROR!!!!! : ",ex)
             });
         },

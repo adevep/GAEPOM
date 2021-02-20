@@ -56,6 +56,42 @@
             Jupyter Notebook
           </b-checkbox>
         </b-field>
+        <b-field>
+          <b-checkbox v-model="pjTools" native-value="Gloo maps"
+            >Gloo maps</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Plectica"
+            >Plectica</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Trello"
+            >Trello</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Axure">Axure</b-checkbox>
+        </b-field>
+        <b-field>
+          <b-checkbox v-model="pjTools" native-value="Oven">Oven</b-checkbox>
+          <b-checkbox v-model="pjTools" native-value="Power Mockup"
+            >Power Mockup</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Sketch"
+            >Sketch</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Figma">Figma</b-checkbox>
+        </b-field>
+        <b-field>
+          <b-checkbox v-model="pjTools" native-value="Photoshop"
+            >Photoshop</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Adobe XD"
+            >Adobe XD</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Framer X"
+            >Framer X</b-checkbox
+          >
+          <b-checkbox v-model="pjTools" native-value="Illustrator"
+            >Illustrator</b-checkbox
+          >
+        </b-field>
         <b-field label="프로젝트 분류" align="left">
           <!-- <b-input v-model="pjCategory" maxlength="30"></b-input> -->
           <b-select v-model="pjCategory" expanded>

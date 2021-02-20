@@ -119,12 +119,10 @@ export default {
           this.words = apps2.words;
           console.log(response.data);
           console.log(apps2);
-          this.success();
         })
         .catch(e => {
           console.log(e);
           this.errors.push(e);
-          this.danger();
         });
     },
     updateApp(id, app) {
@@ -160,7 +158,7 @@ export default {
     },
     success() {
                 this.$buefy.notification.open({
-                    message: '성공적으로 완료되었습니다.',
+                    message: '성공적으로 11완료되었습니다.',
                     type: 'is-success',
                     position: 'is-bottom-right',
                 })
