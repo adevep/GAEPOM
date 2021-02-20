@@ -19,18 +19,6 @@
           rounded
         />
 
-        <!-- <b-field label="Portfolio Duration" align="left">
-          <div>변경하지 않는 경우 기존 기간을 유지합니다.</div>
-          <b-datepicker
-            placeholder="클릭해 기간을 선택하세요."
-            v-model="pfDuration"
-            range
-            mobile-native:
-            true
-          >
-          </b-datepicker>
-        </b-field> -->
-
         <BInputWithValidation
           rules="required"
           label="프로젝트 기간"
