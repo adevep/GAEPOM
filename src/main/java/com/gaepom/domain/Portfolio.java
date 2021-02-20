@@ -24,7 +24,6 @@ import lombok.Setter;
 @Getter
 @Setter
 
-@Builder
 @Entity
 public class Portfolio {
 	
@@ -36,7 +35,6 @@ public class Portfolio {
 	@Column(name="pf_subtitle")
 	private String pfSubtitle;
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name="pf_duration", insertable = false, updatable = false, columnDefinition = "date default sysdate")
 	private Date pfDuration;
 	

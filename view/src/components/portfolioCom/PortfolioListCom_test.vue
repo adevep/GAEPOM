@@ -8,7 +8,8 @@
         per-page="3"
         :opened-detailed="defaultOpenedDetails"
         detailed
-        detail-key="pfSubtitle"
+        detail-key="userId"
+        @details-open="(row) => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)"
         aria-next-label="Next page"
         aria-previous-label="Previous page"
         aria-page-label="Page"
@@ -24,35 +25,42 @@
           {{ props.row.pfSeq }}
         </b-table-column>
 
-        <!-- <b-table-column field="id" label="ID" sortable v-slot="props">
-          <a @click="props.toggleDetails(props.row)">
+        <b-table-column field="pfSubtitle" label="제목" sortable v-slot="props">
+          <template v-if="showDetailIcon">
+            {{ props.row.currentUserId }} 
+          </template>
+          <template v-else>
+            <a @click="props.toggleDetails(props.row)">
             {{ props.row.currentUserId }} 
             {{ currentUserId }}
-          </a>
-        </b-table-column> -->
+            </a>
+          </template>
+        </b-table-column>
 
-        <b-table-column
+        <!-- <b-table-column
           field="pfSubtitle"
           label="포트폴리오 제목"
           sortable
           v-slot="props"
         >
           {{ props.row.pfSubtitle }}
-        </b-table-column>
+        </b-table-column> -->
 
         <b-table-column
-          field="pfDu"
-          label="포트폴리오 기간"
+          field="pfDuration"
+          label="기간"
           sortable
           centered
           v-slot="props"
         >
-          {{ props.row.pfDuration }}
+        <span class="tag is-success">
+            {{ new Date(props.row.pfDuration).toLocaleDateString() }}
+          </span>
         </b-table-column>
 
         <b-table-column
           field="pfDescription"
-          label="포트폴리오 설명"
+          label="설명"
           sortable
           centered
           v-slot="props"
@@ -115,6 +123,7 @@
         <b-table-column
           field="pfLink"
           label="포트폴리오 외부주소"
+          sortable
           centered
           v-slot="props"
         >
@@ -124,13 +133,14 @@
         <b-table-column
           field="pfCategory"
           label="포트폴리오 카테고리"
+          sortable
           centered
           v-slot="props"
         >
           {{ props.row.pfCategory }}
         </b-table-column>
 
-        <b-table-column label="변경" centered v-slot="props">
+        <b-table-column label="변경" sortable centered v-slot="props">
           <b-button
             type="is-info"
             outlined
@@ -151,11 +161,6 @@
 
         <template #detail="">
           <article class="media">
-            <figure class="media-left">
-              <!-- <p class="image is-64x64">
-                <img src="../../assets/jpg" />
-              </p> -->
-            </figure>
             <div class="media-content">
               <div class="content">
                 <p>
@@ -197,7 +202,6 @@ export default {
   },
   methods: {
     retrievePortfolios() {
-      this.pfDuration = this.pfDu.join("-");
       http
         .get(
           "/portfolios?userid=" +
@@ -205,8 +209,6 @@ export default {
         )
         .then((response) => {
           this.portfolio = response.data;
-          this.pfDu[0] = new Date(this.portfolio.pfDuration.split("-")[0]);
-          this.pfDu[1] = new Date(this.portfolio.pfDuration.split("-")[1]);
         })
         .catch(() => {
           alert("조회 실패");

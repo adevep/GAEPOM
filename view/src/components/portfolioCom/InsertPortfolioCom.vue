@@ -22,7 +22,7 @@
         <b-field label="프로젝트 기간" align="left">
           <b-datepicker
             placeholder="클릭해 기간을 선택하세요."
-            v-model="pfDuration"
+            v-model="pfDu"
             range
             required
             :mobile-native="true"
@@ -246,8 +246,8 @@ export default {
   data() {
     return {
       pfSubtitle: "",
-      // pfDuration: "",
-      pfDuration: [],
+      // pfDuration: [],
+      pfDu: [],
       pfDescription: "",
       participation: "",
       pfLink: "",
@@ -260,6 +260,8 @@ export default {
   },
   methods: {
     insertPortfolio() {
+      this.pfDuration = this.pfDu.join("-");
+
       let formData = new FormData();
 
       formData.append(
@@ -267,8 +269,7 @@ export default {
         JSON.parse(sessionStorage.getItem("user")).userId
       );
       formData.append("pfSubtitle", this.pfSubtitle);
-      // formData.append("pfDuration", this.pfDuration);
-      formData.append("pfDuration", this.pfDuration.join("-"));
+      formData.append("pfDuration", this.pfDuration);
       formData.append("pfDescription", this.pfDescription);
       formData.append("participation", this.participation);
       formData.append("pfLink", this.pfLink);
