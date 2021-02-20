@@ -186,7 +186,7 @@ export default {
         showProject: function() {
           this.axios.get('/project/getproject', {
             params: {
-              projectId: 20
+              projectId: 2
             }
           }).then(response => {
             this.project = response.data
