@@ -19,14 +19,25 @@
           rounded
         />
 
-        <BInputWithValidation
+        <b-field label="프로젝트 기간" align="left">
+          <b-datepicker
+            placeholder="클릭해 기간을 선택하세요."
+            v-model="pfDuration"
+            range
+            required
+            mobile-native: true
+          >
+          </b-datepicker>
+        </b-field>
+
+        <!-- <BInputWithValidation
           rules="required"
           label="프로젝트 기간"
           v-model="pfDuration"
           size="is-medium"
           align="left"
           rounded
-        />
+        /> -->
 
         <BInputWithValidation
           rules="required|numeric|max:2"
@@ -49,7 +60,7 @@
         />
 
         <BInputWithValidation
-          rules="required|max:200"
+          rules="required|max:1024"
           label="프로젝트 설명"
           placeholder="해당하는 프로젝트를 자유롭게 소개해주세요!"
           type="textarea"
@@ -235,7 +246,8 @@ export default {
   data() {
     return {
       pfSubtitle: "",
-      pfDuration: "",
+      // pfDuration: "",
+      pfDuration: [],
       pfDescription: "",
       participation: "",
       pfLink: "",
@@ -255,7 +267,8 @@ export default {
         JSON.parse(sessionStorage.getItem("user")).userId
       );
       formData.append("pfSubtitle", this.pfSubtitle);
-      formData.append("pfDuration", this.pfDuration);
+      // formData.append("pfDuration", this.pfDuration);
+      formData.append("pfDuration", this.pfDuration.join("-"));
       formData.append("pfDescription", this.pfDescription);
       formData.append("participation", this.participation);
       formData.append("pfLink", this.pfLink);
@@ -273,7 +286,8 @@ export default {
     },
     resetForm() {
       this.pfSubtitle = "";
-      this.pfDuration = "";
+      // this.pfDuration = "";
+      this.pfDuration = [];
       this.pfDescription = "";
       this.participation = "";
       this.pfLink = "";
