@@ -36,7 +36,7 @@
 
       </template>
       <template #end>
-        <b-dropdown aria-role="list">
+        <b-dropdown aria-role="list" v-if="loginCheck == null">
           <template #trigger="{ active }">
             <b-button
               label="로그인/회원가입"
@@ -53,7 +53,7 @@
             ></b-dropdown-item
           >
         </b-dropdown>
-        <b-dropdown aria-role="list">
+        <b-dropdown aria-role="list" v-if="loginCheck != null">
           <template #trigger="{ active }">
             <b-button
               label="My Menu"
@@ -80,20 +80,26 @@
 </template>
 
 <script>
-//import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import router from "./router";
 
 export default {
   data() {
     return {
-      loginUser: JSON.parse(sessionStorage.getItem("user")),
+      loginCheck: sessionStorage.getItem('user'),
     };
   },
-  computed: {},
+  watch: {
+  '$store.state.loginUser': function() {
+     this.loginCheck = this.$store.state.loginUser
+  }
+  },
   methods: {
+    ...mapActions(['loginUserAct']),
     logout() {
       if (sessionStorage.getItem("user") != null) {
         sessionStorage.removeItem("user");
+        this.loginUserAct(null)
         router.push({ name: "Home" });
       } else {
         alert("로그인을 먼저 해주세요");

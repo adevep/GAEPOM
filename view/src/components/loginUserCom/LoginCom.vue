@@ -21,6 +21,7 @@
           >
           </b-input>
         </b-field>
+        <center>
         <b-button
           type="is-primary"
           outlined
@@ -28,7 +29,7 @@
           position="is-centered"
           size="is-large"
           >로그인</b-button
-        >
+        > </center>
         <br /><br />
       </div>
     </div>
@@ -37,6 +38,7 @@
 <script>
 import router from "../../router";
 import axios from "axios";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -44,8 +46,8 @@ export default {
       password: "",
     };
   },
-  computed: {},
   methods: {
+    ...mapActions(['loginUserAct']),
     login() {
       axios
         .post(
@@ -56,6 +58,7 @@ export default {
         )
         .then(response => {
           sessionStorage.setItem("user", JSON.stringify(response.data));
+          this.loginUserAct(response.data)
           router.push({ name: "mypage" });
         })
         .catch(() => {
