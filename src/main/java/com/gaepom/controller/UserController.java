@@ -67,9 +67,7 @@ public class UserController {
 	@PutMapping("/updateusertliked")
 	public User updateUserTliked(@RequestParam String userid, @RequestParam String tliked) {
 		User updateduser = null;
-		
 		updateduser = userservice.updateUserTliked(userid, tliked);
-
 		return updateduser; 
 	}
 
