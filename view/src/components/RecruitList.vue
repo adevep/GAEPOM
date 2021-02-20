@@ -1,7 +1,11 @@
 <template>
-  <div class="RecruitList">
-    <!-- Bar containing all sort inputs -->
-    <b-field>
+  <div class="container">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+
+    <b-field class="pt-4">
       <b-input
         placeholder="프로젝트 타이틀 검색..."
         type="text"
@@ -11,15 +15,14 @@
       <b-dropdown class="ml-3" aria-role="list" v-model="selectedLoc">
         <template #trigger="{ active }">
           <b-button
-            label="지역"
+            :label="selectedLoc"
             type="is-primary"
             :icon-right="active ? 'menu-up' : 'menu-down'"
             centered
           />
         </template>
 
-        <!-- <b-button label="지역별" type="is-primary" slot="trigger" /> -->
-        <b-dropdown-item aria-role="listitem" :value="null" selected="selected"
+        <b-dropdown-item aria-role="listitem" value="지역" selected="selected"
           >전체</b-dropdown-item
         >
         <b-dropdown-item aria-role="listitem" value="서울"
@@ -77,12 +80,15 @@
       <b-dropdown aria-role="list" v-model="selectedCate">
         <template #trigger="{ active }">
           <b-button
-            label="카테고리별"
+            :label="selectedCate"
             type="is-primary"
             :icon-right="active ? 'menu-up' : 'menu-down'"
           />
         </template>
-        <b-dropdown-item aria-role="listitem" :value="null" selected="selected"
+        <b-dropdown-item
+          aria-role="listitem"
+          value="카테고리"
+          selected="selected"
           >전체</b-dropdown-item
         >
         <b-dropdown-item aria-role="listitem" value="웹앱"
@@ -135,9 +141,8 @@ export default {
       loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       all,
       allPjs,
-      selectedLoc: null,
-      selectedCate: null,
-      sortBy: "alphabetically",
+      selectedLoc: "지역",
+      selectedCate: "카테고리",
       searchValue: "",
       pjLocation: null,
       total: all.length,
@@ -187,8 +192,8 @@ export default {
     filteredPjs: function() {
       if (
         this.searchValue.toString() === "" &&
-        this.selectedLoc === null &&
-        this.selectedCate === null
+        this.selectedLoc === "지역" &&
+        this.selectedCate === "카테고리"
       ) {
         return this.allPjs;
       } else {
@@ -196,15 +201,18 @@ export default {
           var s = this.searchValue.toString();
           const loc = this.selectedLoc;
           const cate = this.selectedCate;
-          if (this.selectedLoc != null) {
+          if (this.selectedLoc != "지역") {
             return this.allPjs.filter(function(item) {
               return item.pjTitle.includes(s) && item.location == loc;
             });
-          } else if (this.selectedCate != null) {
+          } else if (this.selectedCate != "카테고리") {
             return this.allPjs.filter(function(item) {
               return item.pjTitle.includes(s) && item.pjCategory == cate;
             });
-          } else if (this.selectedCate != null && this.selectedLoc != null) {
+          } else if (
+            this.selectedCate != "카테고리" &&
+            this.selectedLoc != "지역"
+          ) {
             return this.allPjs.filter(function(item) {
               return (
                 item.pjTitle.includes(s) &&
@@ -216,10 +224,10 @@ export default {
             return this.allPjs.filter(function(item) {
               return item.pjTitle.includes(s);
             });
-        } else if (this.selectedCate != null) {
+        } else if (this.selectedCate != "카테고리") {
           const loc = this.selectedLoc;
           const cate = this.selectedCate;
-          if (this.selectedLoc != null) {
+          if (this.selectedLoc != "지역") {
             return this.allPjs.filter(function(item) {
               return item.pjCategory === cate && item.location == loc;
             });
@@ -227,7 +235,7 @@ export default {
             return this.allPjs.filter(function(item) {
               return item.pjCategory == cate;
             });
-        } else if (this.selectedLoc != null) {
+        } else if (this.selectedLoc != "지역") {
           const loc = this.selectedLoc;
           console.log(loc);
           return this.allPjs.filter(function(item) {
