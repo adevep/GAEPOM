@@ -35,110 +35,110 @@
     <section>
       <div class="container">
         <div class="section">
-            <b-field grouped group-multiline class="mb-6">
+          <b-field grouped group-multiline class="mb-6">
             <b-field>
-            <b-dropdown aria-role="list" v-model="selectedLoc">
-              <template #trigger="{ active }">
-                <b-button
-                  :label="selectedLoc"
-                  :icon-right="active ? 'menu-up' : 'menu-down'"
-                  centered
-                />
-              </template>
+              <b-dropdown aria-role="list" v-model="selectedLoc">
+                <template #trigger="{ active }">
+                  <b-button
+                    :label="selectedLoc"
+                    :icon-right="active ? 'menu-up' : 'menu-down'"
+                    centered
+                  />
+                </template>
 
-              <b-dropdown-item
-                aria-role="listitem"
-                value="지역"
-                selected="selected"
-                >전체</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="서울"
-                >서울</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="경기"
-                >경기</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="인천"
-                >인천</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="대전"
-                >대전</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="세종"
-                >세종</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="충북"
-                >충북</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="충남"
-                >충남</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="강원"
-                >강원</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="부산"
-                >부산</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="울산"
-                >울산</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="대구"
-                >대구</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="경북"
-                >경북</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="경남"
-                >경남</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="광주"
-                >광주</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="전북"
-                >전북</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="전남"
-                >전남</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="제주"
-                >제주</b-dropdown-item
-              >
-            </b-dropdown>
-            <b-dropdown aria-role="list" v-model="selectedCate">
-              <template #trigger="{ active }">
-                <b-button
-                  :label="selectedCate"
-                  :icon-right="active ? 'menu-up' : 'menu-down'"
-                />
-              </template>
-              <b-dropdown-item
-                aria-role="listitem"
-                value="카테고리"
-                selected="selected"
-                >전체</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="웹앱"
-                >웹앱</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="모바일앱"
-                >모바일앱</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="데이터사이언스"
-                >데이터사이언스</b-dropdown-item
-              >
-              <b-dropdown-item aria-role="listitem" value="게임개발"
-                >게임개발</b-dropdown-item
-              >
-            </b-dropdown>
+                <b-dropdown-item
+                  aria-role="listitem"
+                  value="지역"
+                  selected="selected"
+                  >전체</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="서울"
+                  >서울</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="경기"
+                  >경기</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="인천"
+                  >인천</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="대전"
+                  >대전</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="세종"
+                  >세종</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="충북"
+                  >충북</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="충남"
+                  >충남</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="강원"
+                  >강원</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="부산"
+                  >부산</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="울산"
+                  >울산</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="대구"
+                  >대구</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="경북"
+                  >경북</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="경남"
+                  >경남</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="광주"
+                  >광주</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="전북"
+                  >전북</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="전남"
+                  >전남</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="제주"
+                  >제주</b-dropdown-item
+                >
+              </b-dropdown>
+              <b-dropdown aria-role="list" v-model="selectedCate">
+                <template #trigger="{ active }">
+                  <b-button
+                    :label="selectedCate"
+                    :icon-right="active ? 'menu-up' : 'menu-down'"
+                  />
+                </template>
+                <b-dropdown-item
+                  aria-role="listitem"
+                  value="카테고리"
+                  selected="selected"
+                  >전체</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="웹앱"
+                  >웹앱</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="모바일앱"
+                  >모바일앱</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="데이터사이언스"
+                  >데이터사이언스</b-dropdown-item
+                >
+                <b-dropdown-item aria-role="listitem" value="게임개발"
+                  >게임개발</b-dropdown-item
+                >
+              </b-dropdown>
+            </b-field>
+            <b-field class="ml-2">
+              <b-input
+                placeholder="프로젝트 타이틀 검색..."
+                type="text"
+                v-model="searchValue"
+              ></b-input>
+            </b-field>
           </b-field>
-          <b-field class="ml-2">
-            <b-input
-              placeholder="프로젝트 타이틀 검색..."
-              type="text"
-              v-model="searchValue"
-            ></b-input>
-          </b-field>
-</b-field>
           <div class="container">
             <div
               class="card mt-4 mb-4"
