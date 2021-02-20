@@ -1,22 +1,28 @@
 package com.gaepom.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
-
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.dao.ProjectTrackingRepository;
-
 import com.gaepom.domain.Comment;
-
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectTracking;
+import com.gaepom.domain.User;
+import com.gaepom.exception.UserNotFoundException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class ProjectTrackingServicImpl implements ProjectTrackingService{
 	@Autowired
 	private ProjectTrackingRepository trackingRepo;
@@ -33,8 +39,33 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService{
 	}
 	
 	@Transactional
-	public void insertProjectTracking(ProjectTracking tracking) {
+	public ProjectTracking insertProjectTracking(ProjectTracking tracking,  Project project, User user,  MultipartFile mfile) {
+		String imgname = null;
+		System.out.println("================================"+mfile);
+		try {
+			imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
+			mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			
+		}
+		
+		System.out.println("================================"+mfile);
+		System.out.println("================================"+imgname);
+		tracking.setTrackImage(imgname);
+		project.setUserId(user);
+		tracking.setProject(project);
 		trackingRepo.save(tracking);
+		
+		return tracking;
+	}
+	
+	public ProjectTracking insertProjectTrackingNoImg(ProjectTracking tracking, Project project, User user) {
+		
+		project.setUserId(user);
+		tracking.setProject(project);
+		trackingRepo.save(tracking);
+		return tracking;
 	}
 	
 	public ProjectTracking getProjectTracking(Long tracking) {
@@ -48,26 +79,93 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService{
 		trackingRepo.save(findTracking);
 	}
 	
-	public void updateProjectTracking(ProjectTracking tracking) {
-		ProjectTracking findProjectTracking = trackingRepo.findById(tracking.getTrackSeq()).get();
-		Project findProject = projectRepo.findById(tracking.getProject().getPjSeq()).get();
-		findProject.setPjTitle(tracking.getProject().getPjTitle());
-		findProject.setPjDescription(tracking.getProject().getPjDescription());
-		findProject.setPjDuration(tracking.getProject().getPjDuration());
-		findProject.setPjTools(tracking.getProject().getPjTools());
-		findProject.setPjCategory(tracking.getProject().getPjCategory());
-		findProject.setPjLang(tracking.getProject().getPjLang());
-		findProject.setPjDbms(tracking.getProject().getPjDbms());		
-		findProjectTracking.setStage(tracking.getStage());
-		findProjectTracking.setIssue(tracking.getIssue());
-		findProjectTracking.setOutput(tracking.getOutput());
-		findProjectTracking.setTrackImage(tracking.getTrackImage());
-		findProjectTracking.setTrackLink(tracking.getTrackLink());
+	public ProjectTracking updateProjectTracking(ProjectTracking tracking, Project project, User user) {
+		Optional<ProjectTracking> findProjectTracking = trackingRepo.findById(tracking.getTrackSeq());
+	
+		if (findProjectTracking.isPresent()) {
+
+			String filename = findProjectTracking.get().getTrackImage();
+			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+
+			if (file.exists() && !filename.equals("default.png")) {
+				if (file.delete()) {
+					log.debug("사진 파일 삭제 완료");
+				} else {
+					log.debug("사진 파일 삭제 실패");
+				}
+			}
+				
+		Project findProject = projectRepo.findById(project.getPjSeq()).get();
+			findProject.setPjTitle(project.getPjTitle());
+			findProject.setPjDescription(project.getPjDescription());
+			findProject.setPjDuration(project.getPjDuration());
+			findProject.setPjTools(project.getPjTools());
+			findProject.setPjCategory(project.getPjCategory());
+			findProject.setPjLang(project.getPjLang());
+			findProject.setPjDbms(project.getPjDbms());
+			findProject.setUserId(user);
+		findProjectTracking.get().setStage(tracking.getStage());
+		findProjectTracking.get().setIssue(tracking.getIssue());
+		findProjectTracking.get().setOutput(tracking.getOutput());
+		findProjectTracking.get().setTrackImage("default.png");
+		findProjectTracking.get().setTrackLink(tracking.getTrackLink());
 		
-		trackingRepo.save(findProjectTracking);
+		trackingRepo.save(findProjectTracking.get());
 		projectRepo.save(findProject);
+		
+		return findProjectTracking.get();
+	}else {
+			return null;
+		}
 	}
 	
+	public ProjectTracking updateProjectTrackingImg(ProjectTracking tracking, Project project, User user, MultipartFile mfile) {
+		Optional<ProjectTracking> findProjectTracking = trackingRepo.findById(tracking.getTrackSeq());
+		
+		if (findProjectTracking.isPresent()) {
+			String imgname = null;
+			try {
+				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
+				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
+
+				String filename = findProjectTracking.get().getTrackImage();
+				File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+
+				if (file.exists() && !filename.equals("default.png")) {
+					if (file.delete()) {
+						log.debug("사진 파일 삭제 완료");
+					} else {
+						log.debug("사진 파일 삭제 실패");
+					}
+				}
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				log.debug("오류 발생");
+			}
+		
+			Project findProject = projectRepo.findById(project.getPjSeq()).get();
+				findProject.setPjTitle(project.getPjTitle());
+				findProject.setPjDescription(project.getPjDescription());
+				findProject.setPjDuration(project.getPjDuration());
+				findProject.setPjTools(project.getPjTools());
+				findProject.setPjCategory(project.getPjCategory());
+				findProject.setPjLang(project.getPjLang());
+				findProject.setPjDbms(project.getPjDbms());
+				findProject.setUserId(user);
+			findProjectTracking.get().setStage(tracking.getStage());
+			findProjectTracking.get().setIssue(tracking.getIssue());
+			findProjectTracking.get().setOutput(tracking.getOutput());
+			findProjectTracking.get().setTrackImage(imgname);
+			findProjectTracking.get().setTrackLink(tracking.getTrackLink());
+			
+			trackingRepo.save(findProjectTracking.get());
+			projectRepo.save(findProject);
+			
+			return findProjectTracking.get();
+		}else {
+			return null;
+		}
+	}	
 	public ProjectTracking updateTrackingLike(Long trackSeq, int trackLike) {
 		ProjectTracking findTracking = trackingRepo.findById(trackSeq).get();
 		findTracking.setTrackLike(trackLike);
@@ -77,8 +175,28 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService{
 		return findTracking;
 	}
 	
-	public void deleteProjectTracking(ProjectTracking tracking) {
-		trackingRepo.deleteById(tracking.getTrackSeq());
+	public void deleteProjectTracking(Long trackSeq) {
+		
+		Optional<ProjectTracking> findProjectTracking = trackingRepo.findById(trackSeq);
+		
+		if (findProjectTracking.isPresent()) {
+
+			String filename = findProjectTracking.get().getTrackImage();
+
+			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
+
+			if (file.exists() && !filename.equals("default.png")) {
+				if (file.delete()) {
+					log.info(trackSeq + "tracking 사진 파일 삭제");
+				} else {
+					log.debug("tracking 사진 파일 삭제 실패");
+				}
+			}
+			trackingRepo.delete(findProjectTracking.get());
+			log.info(trackSeq + " tracking 삭제 완료");
+		} else {
+//			throw new ProjectTrackingNotFoundException("해당하는 tracking이 없습니다");
+		}
 	}
 
 }
