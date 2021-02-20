@@ -19,8 +19,8 @@
             <br />
             <small
               ><a>Like</a> · <a>Reply</a> {{ value.cmtDate }}
-              <span class="close" v-on:click.stop="deletecomment(value.cmtSeq)"
-                >delete</span
+              <span class="close" v-on:click.stop="deletecomment(value.cmtSeq, value.userId)"
+                ><p v-if="value.userId == userInfo.userId">delete</p></span
               ></small
             >
           </p>
@@ -89,7 +89,12 @@ export default {
       this.showComment();
     },
 
-    deletecomment: function(id) {
+    deletecomment: function(id, user) {
+      console.log(typeof(user))  //string
+      console.log(typeof(this.userInfo.userId))  //string
+
+      //본인 댓글만 지울 수 있게 하는 검증
+      if(this.userInfo.userId == user){
       var index = this.commentlist.findIndex(function(item) {
         return item.cmtSeq === id;
       });
@@ -107,6 +112,9 @@ export default {
         .catch((ex) => {
           console.warn("ERROR!!!!! : ", ex);
         });
+      }else{
+        alert("댓글 삭제 불가")
+      }
     },
   },
 
