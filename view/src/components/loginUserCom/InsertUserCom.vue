@@ -36,7 +36,6 @@
           autocomplete="off"
         >
           <div class="notification is-accent" align="center">
-            <h1><strong>가입 정보 입력</strong></h1>
             <br />
             <BInputWithValidation
               rules="required|id-char|id-minmax:6,15"
@@ -271,10 +270,10 @@ export default {
           }
         })
         .then(() => {
-          alert("개폼 회원가입 완료");
+          this.success();
         })
         .catch(() => {
-          alert("개폼 회원가입 실패");
+          this.danger();
         });
       router.push({ name: "insertusercheck" });
     },
@@ -295,6 +294,20 @@ export default {
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "회원가입이 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `회원가입이 완료되지 못했습니다.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
     }
   }
 };

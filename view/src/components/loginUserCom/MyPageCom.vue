@@ -372,12 +372,26 @@ export default {
         .then(() => {
           sessionStorage.removeItem("user");
           this.loginUser = null;
-          alert("회원 탈퇴 완료");
+          this.success();
         })
         .catch(() => {
-          alert("회원 탈퇴 실패");
+          this.danger();
         });
       router.push({ name: "Home" });
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "회원 탈퇴가 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `회원 탈퇴를 실패했습니다.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
     }
   },
   mounted() {

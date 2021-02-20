@@ -293,11 +293,11 @@ export default {
         })
         .then(response => {
           sessionStorage.setItem("user", JSON.stringify(response.data));
-          alert("유저정보 수정 성공");
+          this.success();
           router.push({ name: "mypage" });
         })
         .catch(() => {
-          alert("유저정보 수정 실패");
+          this.danger();
         });
     },
     resetForm() {
@@ -316,6 +316,20 @@ export default {
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "회원정보 수정이 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `회원정보 내용을 정확히 입력해주세요.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
     }
   },
   computed: {
