@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container is-max-desktop pt-5">
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
       rel="stylesheet"
@@ -14,7 +14,10 @@
           <h2 class="subtitle centered">
             함께할 팀원을 선택하세요.
           </h2>
-          <nav class="breadcrumb has-dot-separator is-centered" aria-label="breadcrumbs">
+          <nav
+            class="breadcrumb has-dot-separator is-centered"
+            aria-label="breadcrumbs"
+          >
             <ul>
               <li><a href="#">홈페이지</a></li>
               <li><a href="#">마이페이지</a></li>
@@ -163,6 +166,15 @@
         </template>
       </b-table>
     </section>
+     <b-button type="is-success" outlined v-if="checkCount == needNum"
+      > <router-link
+      :to="{
+        name: 'ProjectTrackingInsert',
+        params: { pjseq: this.$route.params.pjSeq },
+      }"
+      >트래킹 작성</router-link
+    ></b-button
+    >
   </div>
 </template>
 <script>
@@ -181,7 +193,8 @@ export default {
       defaultOpendDetails: [1],
       showDetailcon: true,
       isHoverable: true,
-      pjSeq2: this.$route.params.pjSeq
+      pjSeq2: this.$route.params.pjSeq,
+      checkCount: 0
     };
   },
   methods: {
@@ -211,7 +224,10 @@ export default {
     },
     acceptApp(id, app) {
       {
-        app.selected = 1;
+        if (app.selected != 1 && this.checkCount < this.needNum) {
+          app.selected = 1;
+          this.checkCount += 1;
+        }
       }
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
@@ -225,7 +241,9 @@ export default {
     },
     rejectApp(id, app) {
       {
-        app.selected = 2;
+         if (app.selected != 2 && this.checkCount > 0) {
+          app.selected = 2;
+          this.checkCount -= 1;}
       }
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
