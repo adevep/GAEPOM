@@ -48,7 +48,7 @@
           <b-tab-item label="프로젝트">
             <b-taglist>
               <b-tag type="is-primary">{{  trackInfo.project.pjCategory }}</b-tag>
-              <b-tag type="is-primary is-light">{{  trackInfo.project.recSeq.location }}</b-tag>
+              <!-- <b-tag type="is-primary is-light">{{  trackInfo.project.recSeq.location }}</b-tag> -->
               <b-tag type="is-link">{{  trackInfo.project.pjTools }}</b-tag>
               <b-tag type="is-link is-light">{{ trackInfo.project.pjLang }}</b-tag>
               <b-tag type="is-link is-light">{{ trackInfo.project.pjDuration }}</b-tag>

@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectTracking;
+import com.gaepom.domain.User;
 import com.gaepom.service.ProjectService;
 import com.gaepom.service.ProjectTrackingService;
+import com.gaepom.service.UserService;
 
 //@SessionAttributes("guser")
 @CrossOrigin(origins = "http://localhost:8081")
@@ -27,6 +31,9 @@ public class ProjectTrackingController {
 
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private UserService userService;
 
 
 	@GetMapping("/gettrackinglistaxios")
@@ -58,21 +65,44 @@ public class ProjectTrackingController {
 
 	// TODO: return type 등 고치기
 	@PostMapping("/insertprojecttracking")
-	public ResponseEntity<ProjectTracking> insertProjectTracking(@RequestBody ProjectTracking tracking) {
+	public ResponseEntity<ProjectTracking> insertProjectTracking(ProjectTracking tracking, User user ,Project project, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+		ProjectTracking insertTracking = null;
+		
+		System.out.println("====??????");
+		System.out.println("====controller====" + mfile);
+		System.out.println(tracking);
+		System.out.println(project);
+		System.out.println(user);
+		if(mfile != null) {
+			insertTracking = projectTrackingService.insertProjectTracking(tracking, project, user, mfile);
+			projectService.updateProjTracking(insertTracking, user);
+		} else {
+			
+			insertTracking = projectTrackingService.insertProjectTrackingNoImg(tracking, project, user);
+			projectService.updateProjTracking(insertTracking, user);	
+		}
+		 
 
-		projectTrackingService.insertProjectTracking(tracking);
-		projectService.updateProjTracking(tracking);
-
-		return new ResponseEntity<>(tracking, HttpStatus.OK);
+		return new ResponseEntity<>(insertTracking, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateprojecttracking")
-	public ResponseEntity<ProjectTracking> updateProjectTracking(@RequestBody ProjectTracking tracking) {
+	public ResponseEntity<ProjectTracking> updateProjectTracking(ProjectTracking tracking, Project project, User user, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+		ProjectTracking updateTracking = null;
+			System.out.println(tracking.getTrackSeq());
+			System.out.println(project.getPjSeq());
+			System.out.println(user);
+			System.out.println(mfile);
+			
+			if (mfile != null) {
+				updateTracking= projectTrackingService.updateProjectTrackingImg(tracking, project, user, mfile);
+			} else {
+				updateTracking =projectTrackingService.updateProjectTracking(tracking, project, user);
+			}
+			return new ResponseEntity<>(updateTracking, HttpStatus.OK);
 
-		projectTrackingService.updateProjectTracking(tracking);
-
-		return new ResponseEntity<>(tracking, HttpStatus.OK);
 	}
+	
 	
 	@PutMapping("/updatetrackinglike")
 	public ResponseEntity<ProjectTracking> updateTrackingLike(@RequestParam Long trackSeq, @RequestParam int trackLike) {
@@ -86,8 +116,8 @@ public class ProjectTrackingController {
 	@DeleteMapping("/deleteprojecttracking")
 	public ResponseEntity<HttpStatus> deleteProjectTracking(Long trackSeq) {
 
-		ProjectTracking tracking = projectTrackingService.getProjectTracking(trackSeq);
-		projectTrackingService.deleteProjectTracking(tracking);
+		
+		projectTrackingService.deleteProjectTracking(trackSeq);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
