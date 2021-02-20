@@ -231,6 +231,7 @@ import BInputWithValidation from "./veeInputs//BInputWithValidation";
 import BCheckboxesWithValidation from "./veeInputs/BCheckboxesWithValidation";
 import BSeletWithValidation from "./veeInputs/BSeletWithValidation";
 import http from "../http-common";
+import router from "../router";
 export default {
   name: "AddProject",
   components: {
@@ -302,20 +303,33 @@ export default {
               console.warn(response);
               console.warn(response.data);
               console.log("==========add==========");
-              // 페이지 이동
-              //this.$router.push(Project)
+              this.success();
+              router.push({ name: "mypage" });
             })
             .catch(ex => {
+              this.danger();
               console.warn("ERROR!!!!! : ", ex);
             });
         })
         .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "모집글 작성이 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `모집글을 정확히 작성해주세요.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
     }
   },
-  mounted() {
-    //this.showProject();
-  }
+  mounted() {}
 };
 </script>

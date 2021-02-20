@@ -18,7 +18,6 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 
 	@Autowired
 	private ProjectRepository projectRepo;
-
 	public List<ProjectRecruit> getProjectRecruitList(ProjectRecruit recruit) {
 		return (List<ProjectRecruit>) recruitRecruitRepo.findAll();
 	}

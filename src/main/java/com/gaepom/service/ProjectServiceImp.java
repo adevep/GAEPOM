@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
-import com.gaepom.domain.User;
-
 import com.gaepom.domain.ProjectTracking;
+import com.gaepom.domain.User;
 
 
 @Service

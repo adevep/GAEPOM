@@ -3,10 +3,8 @@ package com.gaepom.service;
 import java.util.List;
 
 import com.gaepom.domain.Project;
-import com.gaepom.domain.ProjectRecruit;
-import com.gaepom.domain.User;
-
 import com.gaepom.domain.ProjectTracking;
+import com.gaepom.domain.User;
 
 
 public interface ProjectService {

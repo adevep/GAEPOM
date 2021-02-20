@@ -1,8 +1,35 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="container is-max-desktop pt-5">
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <section>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title ">
+            지원자 수정
+          </h1>
+          <h2 class="subtitle centered">
+            함께할 팀원을 선택하세요.
+          </h2>
+          <nav class="breadcrumb has-dot-separator is-centered" aria-label="breadcrumbs">
+            <ul>
+              <li><a href="#">홈페이지</a></li>
+              <li><a href="#">마이페이지</a></li>
+              <li><a href="#">프로젝트</a></li>
+              <li class="is-active">
+                <a href="#" aria-current="page">지원자 수정</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
     <section>
       <b-table
-        :data="filteredApps"
+        :data="isEmpty ? [] : filteredApps"
         ref="table"
         :hoverable="isHoverable"
         :opened-detailed="defaultOpenedDetails"
@@ -143,7 +170,7 @@ import http from "../http-common";
 
 export default {
   name: "AllApps",
-  props: ["pjSeq"],
+  // props: ["pjSeq"],
   data() {
     const apps = [];
     return {

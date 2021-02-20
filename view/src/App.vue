@@ -87,29 +87,31 @@
       </template>
     </b-navbar>
     <router-view />
+    <default-footer></default-footer>
   </div>
 </template>
 <script>
 import { mapActions } from "vuex";
 import router from "./router";
-
+import DefaultFooter from "@/components/Footer.vue";
 export default {
+  components: { DefaultFooter },
   data() {
     return {
-      loginCheck: sessionStorage.getItem('user'),
+      loginCheck: sessionStorage.getItem("user")
     };
   },
   watch: {
-  '$store.state.loginUser': function() {
-     this.loginCheck = this.$store.state.loginUser
-  }
+    "$store.state.loginUser": function() {
+      this.loginCheck = this.$store.state.loginUser;
+    }
   },
   methods: {
-    ...mapActions(['loginUserAct']),
+    ...mapActions(["loginUserAct"]),
     logout() {
       if (sessionStorage.getItem("user") != null) {
         sessionStorage.removeItem("user");
-        this.loginUserAct(null)
+        this.loginUserAct(null);
         router.push({ name: "Home" });
       } else {
         alert("로그인을 먼저 해주세요");

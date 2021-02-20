@@ -1,28 +1,14 @@
 <template>
   <div class="hello">
-    <!-- <section class="hero is-link is-fullheight-with-navbar">
-      <div class="hero-body">
-        <div class="container">
-          <p class="title">
-            개폼난다
-          </p>
-          <p class="subtitle" v-if="$store.state.userInfo != null">
-            {{ userInfo.name }}님 개폼에 오신 걸 환영합니다.
-          </p>
-        </div>
-      </div>
-    </section> -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap"
       rel="stylesheet"
     />
-
     <section class="hero is-white is-fullheight">
       <div class="hero-body">
         <div class="container">
@@ -89,15 +75,7 @@
         </div>
       </div>
     </section>
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>
-          <strong>개폼</strong> by
-          <a href="https://github.com/adevep/GAEPOM">개폼난다</a>. All Rights
-          Reserved 2021
-        </p>
-      </div>
-    </footer>
+
     <!-- <section class="hero is-white is-fullheight">
       <div class="hero-body">
         <div class="container">
@@ -139,20 +117,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "HelloWorld",
-  props: {
-    msg: String
-  },
-  data: () => ({}),
-  computed: {
-    ...mapState(["userInfo"])
-  }
+  data: () => ({})
 };
 </script>
-<style scoped>
-.custom {
-  font-color: #274c5e;
-}
-</style>
