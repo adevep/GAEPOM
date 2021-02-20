@@ -44,7 +44,7 @@
         </b-table-column>
         <b-table-column
           field="pjSeq"
-          label="지원자 보기"
+          label="지원현황"
           sortable
           v-slot="props"
           centered
