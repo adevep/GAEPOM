@@ -5,7 +5,7 @@
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img class="is-rounded" :src="imgURL + loginUser.userImage" />
+              <img class="is-rounded" :src="imgURL + loginUser.userImage2" />
             </p>
           </figure>
           <div class="media-content">
@@ -156,6 +156,7 @@ export default {
     return {
       loginUser: {
         userImage: "default.png",
+        userImage2: JSON.parse(sessionStorage.getItem("user")).userImage,
         userId: JSON.parse(sessionStorage.getItem("user")).userId
       },
       all,
