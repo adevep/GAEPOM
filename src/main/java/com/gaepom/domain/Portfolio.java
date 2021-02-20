@@ -1,11 +1,15 @@
 package com.gaepom.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,8 +36,9 @@ public class Portfolio {
 	@Column(name="pf_subtitle")
 	private String pfSubtitle;
 	
-	@Column(name="pf_duration")
-	private String pfDuration;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@Column(name="pf_duration", insertable = false, updatable = false, columnDefinition = "date default sysdate")
+	private Date pfDuration;
 	
 	@Column(name="pf_description", length = 1024)
 	private String pfDescription;

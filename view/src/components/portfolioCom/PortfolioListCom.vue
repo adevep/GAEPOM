@@ -1,6 +1,11 @@
 <template>
   <div id="portfolios" class="container">
     <section>
+      <b-field grouped group-multiline>
+        <div class="control">
+          <b-switch v-model="showDetailIcon">Show detail icon</b-switch>
+        </div>
+      </b-field>
       <b-table
         :data="portfolio"
         ref="table"
@@ -9,6 +14,8 @@
         :opened-detailed="defaultOpenedDetails"
         detailed
         detail-key="userId"
+        @details-open="(row) => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)"
+        :show-detail-icon="showDetailIcon"
         aria-next-label="Next page"
         aria-previous-label="Previous page"
         aria-page-label="Page"
@@ -24,35 +31,42 @@
           {{ props.row.pfSeq }}
         </b-table-column>
 
-        <!-- <b-table-column field="id" label="ID" sortable v-slot="props">
-          <a @click="props.toggleDetails(props.row)">
+        <b-table-column field="pfSubtitle" label="제목" sortable v-slot="props">
+          <template v-if="showDetailIcon">
+            {{ props.row.currentUserId }} 
+          </template>
+          <template v-else>
+            <a @click="props.toggleDetails(props.row)">
             {{ props.row.currentUserId }} 
             {{ currentUserId }}
-          </a>
-        </b-table-column> -->
+            </a>
+          </template>
+        </b-table-column>
 
-        <b-table-column
+        <!-- <b-table-column
           field="pfSubtitle"
           label="포트폴리오 제목"
           sortable
           v-slot="props"
         >
           {{ props.row.pfSubtitle }}
-        </b-table-column>
+        </b-table-column> -->
 
         <b-table-column
           field="pfDuration"
-          label="포트폴리오 기간"
+          label="기간"
           sortable
           centered
           v-slot="props"
         >
-          {{ props.row.pfDuration }}
+        <span class="tag is-success">
+            {{ new Date(props.row.pfDuration).toLocaleDateString() }}
+          </span>
         </b-table-column>
 
         <b-table-column
           field="pfDescription"
-          label="포트폴리오 설명"
+          label="설명"
           sortable
           centered
           v-slot="props"
@@ -153,11 +167,6 @@
 
         <template #detail="">
           <article class="media">
-            <figure class="media-left">
-              <!-- <p class="image is-64x64">
-                <img src="../../assets/jpg" />
-              </p> -->
-            </figure>
             <div class="media-content">
               <div class="content">
                 <p>

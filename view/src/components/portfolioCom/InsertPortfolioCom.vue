@@ -25,7 +25,7 @@
             v-model="pfDuration"
             range
             required
-            mobile-native: true
+            :mobile-native="true"
           >
           </b-datepicker>
         </b-field>
@@ -60,7 +60,7 @@
         />
 
         <BInputWithValidation
-          rules="required|max:1024"
+          rules="required|max:300"
           label="프로젝트 설명"
           placeholder="해당하는 프로젝트를 자유롭게 소개해주세요!"
           type="textarea"
@@ -287,7 +287,6 @@ export default {
     },
     resetForm() {
       this.pfSubtitle = "";
-      // this.pfDuration = "";
       this.pfDuration = [];
       this.pfDescription = "";
       this.participation = "";

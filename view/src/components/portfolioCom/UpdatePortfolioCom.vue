@@ -19,14 +19,17 @@
           rounded
         />
 
-        <BInputWithValidation
-          rules="required"
-          label="프로젝트 기간"
-          v-model="pfDuration"
-          size="is-medium"
-          align="left"
-          rounded
-        />
+        <b-field label="프로젝트 기간" align="left">
+          <b-datepicker
+            label="변경하지 않는 경우 기존 기간을 유지합니다"
+            placeholder="클릭해 기간을 선택하세요."
+            v-model="pfDuration"
+            range
+            required
+            :mobile-native="true"
+          >
+          </b-datepicker>
+        </b-field>
 
         <BInputWithValidation
           rules="required|numeric|max:2"
@@ -216,7 +219,7 @@ export default {
   data() {
     return {
       pfSubtitle: "",
-      pfDuration: "",
+      pfDuration: [],
       pfDescription: "",
       participation: "",
       pfLink: "",
@@ -234,7 +237,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.pfSubtitle = response.data.pfSubtitle;
-          this.pfDuration = response.data.pfDuration;
+          this.pfDuration = response.data.pfDuration.split("-");
           this.pfDescription = response.data.pfDescription;
           this.participation = response.data.participation;
           this.pfLink = response.data.pfLink;
@@ -282,7 +285,7 @@ export default {
     },
     resetForm() {
       this.pfSubtitle = "";
-      this.pfDuration = "";
+      this.pfDuration = [];
       this.pfDescription = "";
       this.participation = "";
       this.pfLink = "";

@@ -38,7 +38,7 @@
         </article>
       </section>
       <section>
-        <b-tabs type="is-boxed">
+        <b-tabs type="">
           <b-tab-item label="유저 정보">
             <br />
             <h5 class="subtitle is-5" align="left">

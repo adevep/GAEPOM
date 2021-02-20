@@ -11,7 +11,7 @@
         </b-field>
         <b-field label="프로젝트 기간 (예상)" align="left">
           <div>변경하지 않는 경우 기존 기간을 유지합니다.</div>
-
+          <br>
           <b-datepicker
             placeholder="클릭해 기간을 변경하세요."
             v-model="pjDuration"
