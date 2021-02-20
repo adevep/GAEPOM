@@ -1,7 +1,7 @@
 import { required, confirmed, length, email, numeric, max } from "vee-validate/dist/rules";
 import { extend } from "vee-validate";
 
-// 기본 제공 rules 시작
+// 기본 제공 Rules 시작
 extend("required", {
   ...required,
   message: "필수 입력 항목입니다."
@@ -31,8 +31,9 @@ extend("max", {
   ...max,
   message: "허용된 범위를 초과했습니다..",
 });
-// 기본 제공 rule 끝
+// 기본 제공 Rules 끝
 
+// Custom Rules 시작
 // ID(최소, 최대)
 extend("id-minmax", {
   validate(value, { min, max }) {
@@ -44,9 +45,9 @@ extend("id-minmax", {
 // ID(소문자, 숫자))
 extend("id-char", {
   validate(value) {
-    return /^.*(?=.*[a-z])(?=.*[0-9]).*$/.test(value);
+    return /^.*(?=.*[a-z]|[0-9]).*$/.test(value);
   },
-  message: "영문 소문자, 숫자를 모두 사용하셔야 합니다."
+  message: "알파펫 소문자와 숫자로 구성해주세요."
 });
 
 // Password(최소, 최대)
@@ -88,3 +89,4 @@ extend("phonenum-char", {
   },
   message: "예시를 참고해주세요.(예시: 01X-XXXX-XXXX)"
 });
+// Custom Rules 끝

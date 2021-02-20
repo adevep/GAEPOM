@@ -27,7 +27,7 @@ public class PortfolioController {
 	// ===== 포트폴리오 생성 =====
 	@PostMapping("/insertportfolio")
 	public ResponseEntity<Portfolio> createPortfolio(@RequestParam String[] pftoolslist,
-			@RequestParam String[] pflanglist, @RequestParam String[] pfdbmslist,
+			@RequestParam(required = false) String[] pflanglist, @RequestParam(required = false) String[] pfdbmslist,
 			@RequestParam(required = true) String userid, Portfolio portfolio) {
 		Portfolio createportfolio = portfolioService.createPortfolio(pftoolslist, pflanglist, pfdbmslist, userid,
 				portfolio);
