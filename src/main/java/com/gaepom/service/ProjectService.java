@@ -13,21 +13,15 @@ import com.gaepom.domain.ProjectTracking;
 
 public interface ProjectService {
 	
-	//Project Tracking쪽에서 쓰세요 
 	List<Project> getProjectList(Project project);
 
 	List<Project> getPjByUserId(Project project, User userId);
 	
-
 	Project insertProject(Project project);
 
 	Project getProject(Long id);
-	//ㄴProject getProject(Project project);
 
 	Project updateProject(Long id, Project project);
-
-	
-//	void updateProjTrackingImg(ProjectTracking projectTracking, MultipartFile mfile);
 
 	void updateProjTracking(ProjectTracking projectTracking, User user);
 
