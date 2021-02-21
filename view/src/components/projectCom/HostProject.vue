@@ -4,10 +4,38 @@
     v-slot="{ handleSubmit }"
     autocomplete="off"
   >
-    <div class="container is-max-desktop">
+    <div id="app" class="container is-max-desktop pt-5">
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+        rel="stylesheet"
+      />
+      <section>
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1 class="title ">
+              프로젝트
+            </h1>
+            <h2 class="subtitle centered">
+              새로운 프로젝트를 주최해 보세요.
+            </h2>
+            <nav
+              class="breadcrumb has-dot-separator is-centered"
+              aria-label="breadcrumbs"
+            >
+              <ul>
+                <li><a href="#">홈페이지</a></li>
+                <li><a href="#">마이페이지</a></li>
+                <li class="is-active">
+                  <a href="#" aria-current="page">프로젝트 주최</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </section>
       <div class="notification is-accent">
-        <h1><strong>프로젝트 모집글 만들기</strong></h1>
-        <section class="mt-6 mb-5">
+        <section>
           <b-field label="프로젝트주제" align="left">
             <BInputWithValidation
               v-model="pjTitle"
@@ -211,8 +239,9 @@
           outlined
           @click="handleSubmit(addProjectRec)"
           position="is-centered"
-          size="is-large"
-          >모집글 생성완료</b-button
+          size="is-medium"
+          class="mt-6"
+          >주최하기</b-button
         >
       </div>
       <div class="container is-max-desktop pt-5"></div>
@@ -227,12 +256,11 @@
  * ? BCheckboxesWithValidation | Buefy의 <b-checkbox>와 동일 + 유효성 검증 로직 구현
  */
 import { ValidationObserver } from "vee-validate";
-import BInputWithValidation from "./veeInputs//BInputWithValidation";
-import BCheckboxesWithValidation from "./veeInputs/BCheckboxesWithValidation";
-import BSeletWithValidation from "./veeInputs/BSeletWithValidation";
-
-import http from "../http-common";
-import router from "../router";
+import BInputWithValidation from "../veeInputs//BInputWithValidation";
+import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
+import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
+import http from "../../http-common";
+import router from "../../router";
 export default {
   name: "AddProject",
   components: {
@@ -263,8 +291,26 @@ export default {
   },
   methods: {
     addProjectRec: function() {
+      //DATEPARSING
+      let myDate = new Date(Date.parse(this.recDuration[0]));
+      let myDate2 = new Date(Date.parse(this.recDuration[1]));
+      let date1 =
+        myDate.getFullYear() +
+        "-" +
+        ("0" + (myDate.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + myDate.getDate()).slice(-2);
+      let date2 =
+        myDate2.getFullYear() +
+        "-" +
+        ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + myDate2.getDate()).slice(-2);
+      let date3 = [];
+      date3.push(date1);
+      date3.push(date2);
       this.needPosi = this.needPosi.join();
-      this.recDuration = this.recDuration.join("-");
+      this.recDuration = date3.join("-");
       http
         .post("/recruit/createrec?userId=" + this.loginUser, {
           needNum: this.needNum,
@@ -280,12 +326,30 @@ export default {
           this.recSeq = response.data.recSeq;
           console.log("==========add==========");
           console.log(this.recSeq);
-          // 페이지 이동
-          //this.$router.push(Project)
           this.pjTools = this.pjTools.join();
           this.pjLang = this.pjLang.join();
           this.pjDbms = this.pjDbms.join();
-          this.pjDuration = this.pjDuration.join("-");
+
+          //DATE PARSING
+          let myDate = new Date(Date.parse(this.pjDuration[0]));
+          let myDate2 = new Date(Date.parse(this.pjDuration[1]));
+          let date1 =
+            myDate.getFullYear() +
+            "." +
+            ("0" + (myDate.getMonth() + 1)).slice(-2) +
+            "." +
+            ("0" + myDate.getDate()).slice(-2);
+          let date2 =
+            myDate2.getFullYear() +
+            "." +
+            ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+            "." +
+            ("0" + myDate2.getDate()).slice(-2);
+          let date3 = [];
+          date3.push(date1);
+          date3.push(date2);
+
+          this.pjDuration = date3.join("-");
           const data = {
             userId: { userId: this.loginUser },
             pjTitle: this.pjTitle,

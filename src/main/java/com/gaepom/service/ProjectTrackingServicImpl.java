@@ -17,7 +17,6 @@ import com.gaepom.domain.Comment;
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectTracking;
 import com.gaepom.domain.User;
-import com.gaepom.exception.UserNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,7 +55,6 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 		tracking.setTrackImage(imgname);
 		project.setUserId(user);
 		tracking.setProject(project);
-
 		projectRepo.save(project);
 		trackingRepo.save(tracking);
 
@@ -67,8 +65,8 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 		project.setUserId(user);
 		tracking.setProject(project);
-
 		projectRepo.save(project);
+		tracking.setTrackImage("default.png");
 		trackingRepo.save(tracking);
 
 		return tracking;
@@ -102,7 +100,6 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			}
 
 			Project findProject = projectRepo.findById(project.getPjSeq()).get();
-			
 			findProject.setPjTitle(project.getPjTitle());
 			findProject.setPjDescription(project.getPjDescription());
 			findProject.setPjDuration(project.getPjDuration());
@@ -111,7 +108,6 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			findProject.setPjLang(project.getPjLang());
 			findProject.setPjDbms(project.getPjDbms());
 			findProject.setUserId(user);
-			
 			findProjectTracking.get().setStage(tracking.getStage());
 			findProjectTracking.get().setIssue(tracking.getIssue());
 			findProjectTracking.get().setOutput(tracking.getOutput());
@@ -208,5 +204,4 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 //			throw new ProjectTrackingNotFoundException("해당하는 tracking이 없습니다");
 		}
 	}
-
 }

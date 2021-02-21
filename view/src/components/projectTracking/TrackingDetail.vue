@@ -1,5 +1,22 @@
 <template>
   <div class="TrackingDetail">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
+    />
     <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
         <article class="media">
@@ -23,7 +40,6 @@
                   <strong>{{ trackInfo.project.userId.name }}</strong>
                   <small>@{{ trackInfo.project.userId.userId }}</small>
                   <br />
-                  {{ trackInfo.project.userId.words }}
                   {{ trackInfo.project.userId.position }}
                 </p>
               </router-link>
@@ -61,88 +77,55 @@
               <b-tag type="is-link is-light">{{
                 trackInfo.project.pjLang
               }}</b-tag>
-              <b-tag type="is-link is-light">{{
+              <!-- <b-tag type="is-link is-light">{{
                 trackInfo.project.pjDuration
-              }}</b-tag>
+              }}</b-tag> -->
             </b-taglist>
-            <center>
-              <table border="1">
-                <tr>
-                  <td>Title</td>
-                  <td>{{ trackInfo.project.pjTitle }}</td>
-                </tr>
-                <tr>
-                  <td>Duration</td>
-                  <td>{{ trackInfo.project.pjDuration }}</td>
-                </tr>
-                <tr>
-                  <td>Tools</td>
-                  <td>{{ trackInfo.project.pjTools }}</td>
-                </tr>
-                <tr>
-                  <td>Category</td>
-                  <td>{{ trackInfo.project.pjCategory }}</td>
-                </tr>
-                <tr>
-                  <td>Language</td>
-                  <td>{{ trackInfo.project.pjLang }}</td>
-                </tr>
-                <tr>
-                  <td>DBMS</td>
-                  <td>{{ trackInfo.project.pjDbms }}</td>
-                </tr>
-                <!-- <tr>
-                     <td>applications</td> 
-                     <td>{{value.project.pjTitle}}</td>
-                </tr> -->
-                <tr>
-                  <td>Description</td>
-                  <td>{{ trackInfo.project.pjDescription }}</td>
-                </tr>
-                <tr>
-                  <td>Stage</td>
-                  <td>{{ trackInfo.stage }}</td>
-                </tr>
-                <tr>
-                  <td>Issue</td>
-                  <td>{{ trackInfo.issue }}</td>
-                </tr>
-                <tr>
-                  <td>Output</td>
-                  <td>{{ trackInfo.output }}</td>
-                </tr>
-                <!-- <tr>
-                  <td>Image</td>
-                  <td>{{ trackInfo.trackImage }}</td>
-                </tr> -->
-                <tr>
-                  <td>Image</td>
-                  <td><img
-                class="is-rounded"
-                :src="imgURL + trackInfo.trackImage"
-              /></td>
-                </tr>
-              </table>
-
+            <h2 class="title is-4 mt-5">
+              <i class="xi-lightbulb"></i> {{ trackInfo.project.pjTitle }}
+            </h2>
+            <h2 class="subtitle">
+              {{ trackInfo.project.pjDescription }} 
+            </h2>
+            <br />
+            <!-- <h2 class="subtitle">
+              · 프로젝트 기간 ： {{ trackInfo.project.pjDuration }} <br />
+              · 카테고리 ： {{ trackInfo.project.pjCategory }} <br />
+              · 사용 툴 ： {{ trackInfo.project.pjTools }} <br />
+              · 사용 언어 ： {{ trackInfo.project.pjLang }} <br />
+              · 사용 DBMS ： {{ trackInfo.project.pjDbms }} <br />
+              · 개발 단계 ： {{ trackInfo.stage }} <br />
+              · 이슈 사항 ： {{ trackInfo.issue }} <br />
+              · 프로젝트 결과 ： {{ trackInfo.output }} <br />
+            </h2> -->
+            <h2 class="subtitle">
+              [ 프로젝트 기간 ] <br /> {{ trackInfo.project.pjDuration }} <br /><br />
+              [ 카테고리 ] <br /> {{ trackInfo.project.pjCategory }} <br /><br />
+              [ 사용 툴 ] <br /> {{ trackInfo.project.pjTools }} <br /><br />
+              [ 사용 언어 ] <br /> {{ trackInfo.project.pjLang }} <br /><br />
+              [ 사용 DBMS ] <br /> {{ trackInfo.project.pjDbms }} <br /><br />
+              [ 개발 단계 ] <br /> {{ trackInfo.stage }} <br /><br />
+              [ 이슈 사항 ] <br /> {{ trackInfo.issue }} <br /><br />
+              [ 프로젝트 결과 ] <br /> {{ trackInfo.output }} <br /><br />
+            </h2>
               <br />
+              <!-- <center> -->
               <li>tracklike : {{ trackInfo.trackLike }}</li>
               <li>likeFlag : {{ likeFlag }}</li>
               <br />
-              <button v-on:click="addTrackingLike(trackInfo.trackSeq)">
-                좋아요 선택하기</button
+              <button v-on:click="addTrackingLike(trackInfo.trackSeq)" icon="creation">
+                좋아요 선택하기 </button
               ><br />
-              <button @click="deleteTracking">삭제</button>
               <router-link
                 tag="button"
+                v-if="userdatas.userId == trackInfo.project.userId.userId"
                 :to="{
                   name: 'ProjectTrackingUpdate',
                   params: { trackSeq: trackInfo },
                 }"
                 >수정</router-link
               >
-            </center>
-            <!-- <h4 class="title is-4">우대사항:</h4>
-            <h5 class="subtitle is-5">{{ pj.preference }}</h5> -->
+            <!-- </center> -->
           </b-tab-item>
           <b-tab-item label="댓글">
             <comment />
@@ -153,10 +136,9 @@
   </div>
 </template>
 <script>
-import ProjectTracking from "../../views/ProjectTracking.vue";
+
 import Comment from "./comment/Comment.vue";
 import { mapState } from "vuex";
-
 export default {
   name: "TrackingDetail",
   data() {
@@ -183,7 +165,7 @@ export default {
       this.axios
         .get("/getprojecttracking", {
           params: {
-            trackSeq: this.$route.params.track.trackSeq,
+            trackSeq: this.trackInfo.trackSeq,
           },
         })
         .then((response) => {
@@ -192,22 +174,6 @@ export default {
         })
         .catch((error) => {
           console.log("에러" + error);
-        });
-    },
-    deleteTracking: function() {
-      this.axios
-        .delete("/deleteprojecttracking", {
-          params: {
-            trackSeq: this.trackInfo.trackSeq,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          // 페이지 이동
-          this.$router.push(ProjectTracking);
-        })
-        .catch((ex) => {
-          console.warn("ERROR!!!!! : ", ex);
         });
     },
     showlike: function() {

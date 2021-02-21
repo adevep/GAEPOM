@@ -92,10 +92,9 @@ const routes = [
   {
     path: "/project",
     name: "Project",
-    component: () => import("../views/Project.vue")
+    component: () => import("../views/projectView/Project.vue")
   },
   {
-
     path: "/projectTracking",
     name: "ProjectTracking",
     component: () => import("../views/ProjectTracking.vue")
@@ -103,24 +102,25 @@ const routes = [
   {
     path: "/insertproject",
     name: "insertproject",
-    component: () => import("../views/InsertProject.vue")
+    component: () => import("../views/projectView/InsertProject.vue")
   },
   {
     path: "/project/:pjNum/update",
     name: "updateproject",
-    component: () => import("../views/UpdateProject.vue"),
+    component: () => import("../views/projectView/UpdateProject.vue"),
     props: true
   },
   {
     path: "/project/:pjSeq/details",
     name: "details",
-    component: () => import("../components/ProjectDetails.vue"),
+    beforeEnter: onlyAuthUser,
+    component: () => import("../components/projectCom/ProjectDetails.vue"),
     props: true
   },
   {
     path: "/project/:pjSeq/apps",
     name: "AllApps",
-    component: () => import("../components/AllApps.vue"),
+    component: () => import("../components/applicationCom/AllApps.vue"),
     props: true
   },
   {
@@ -132,7 +132,6 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: () => import("../views/SignUp.vue")
-
   },
   {
     path: "/projectTrackingInsert",
@@ -142,6 +141,7 @@ const routes = [
   {
     path: "/projectTrackingDetail",
     name: "ProjectTrackingDetail",
+    beforeEnter: onlyAuthUser,
     props: true,
     component: () => import("@/views/trackingView/ProjectTrackingDetail.vue")
   },
@@ -149,7 +149,13 @@ const routes = [
     path: "/projectTrackingUpdate",
     name: "ProjectTrackingUpdate",
     component: () => import("@/views/trackingView/ProjectTrackingUpdate.vue")
-  }
+  },
+  {
+    //라우트에 설정된것들을 제외한 링크로 유저가 들어갔을때 
+    //위치는 맨 마지막에 있어야 함
+    path: "/:catchAll(.*)",
+    component: () => import("@/NotFound.vue")
+  },
 ];
 
 const router = new VueRouter({
