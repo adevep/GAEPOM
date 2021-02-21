@@ -1,6 +1,7 @@
 package com.gaepom.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,20 +69,20 @@ public class ProjectTrackingController {
 	public ResponseEntity<ProjectTracking> insertProjectTracking(ProjectTracking tracking, User user ,Project project, @RequestParam(value = "file", required = false) MultipartFile mfile) {
 		ProjectTracking insertTracking = null;
 		
-		System.out.println("====??????");
-		System.out.println("====controller====" + mfile);
 		System.out.println(tracking);
 		System.out.println(project);
 		System.out.println(user);
+		System.out.println(project.getPjTitle());
 		if(mfile != null) {
-			insertTracking = projectTrackingService.insertProjectTracking(tracking, project, user, mfile);
+			Project newProject = projectService.updateProject(project.getPjSeq(), project);
+			insertTracking = projectTrackingService.insertProjectTracking(tracking, newProject, user, mfile);
 			projectService.updateProjTracking(insertTracking, user);
 		} else {
 			
-			insertTracking = projectTrackingService.insertProjectTrackingNoImg(tracking, project, user);
+			Project newProject = projectService.updateProject(project.getPjSeq(), project);
+			insertTracking = projectTrackingService.insertProjectTrackingNoImg(tracking, newProject, user);
 			projectService.updateProjTracking(insertTracking, user);	
 		}
-		 
 
 		return new ResponseEntity<>(insertTracking, HttpStatus.OK);
 	}
@@ -100,9 +101,7 @@ public class ProjectTrackingController {
 				updateTracking =projectTrackingService.updateProjectTracking(tracking, project, user);
 			}
 			return new ResponseEntity<>(updateTracking, HttpStatus.OK);
-
 	}
-	
 	
 	@PutMapping("/updatetrackinglike")
 	public ResponseEntity<ProjectTracking> updateTrackingLike(@RequestParam Long trackSeq, @RequestParam int trackLike) {
@@ -121,5 +120,4 @@ public class ProjectTrackingController {
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-
 }

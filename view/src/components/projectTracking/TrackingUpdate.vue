@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       trackInfo: [],
-      project: []
+      project: [],
     };
   },
   methods: {
@@ -162,51 +162,35 @@ export default {
       this.axios
         .put("/updateprojecttracking", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           console.log("==========update==========");
           console.warn(response.data);
           console.log("==========update==========");
-          this.success();
           // 페이지 이동
           this.trackInfo = response.data;
           this.$router.push({
             name: "ProjectTrackingDetail",
-            params: { track: this.trackInfo }
+            params: { track: this.trackInfo },
           });
         })
-        .catch(ex => {
-          this.danger();
+        .catch((ex) => {
           console.warn("ERROR!!!!! : ", ex);
         });
     },
     handleFileUpload() {
       this.trackInfo.trackImage = this.$refs.file.files[0];
     },
-    success() {
-      this.$buefy.notification.open({
-        message: "트래킹 수정이 완료되었습니다.",
-        type: "is-success",
-        position: "is-bottom-right"
-      });
-    },
-    danger() {
-      this.$buefy.notification.open({
-        message: `트래킹 수정 내용을 정확히 입력해주세요.`,
-        type: "is-danger",
-        position: "is-bottom-right"
-      });
-    }
   },
   computed: {
-    ...mapState(["imgURL"])
+    ...mapState(["imgURL"]),
   },
   mounted() {
     this.trackInfo = this.$route.params.trackSeq;
     this.project = this.trackInfo.project;
     console.log(this.trackInfo);
-  }
+  },
 };
 </script>
