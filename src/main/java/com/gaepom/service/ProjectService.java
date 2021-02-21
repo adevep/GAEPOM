@@ -18,11 +18,13 @@ public interface ProjectService {
 
 	List<Project> getPjByUserId(Project project, User userId);
 	
+	public List<Project> getPjByUserId2(Project project, String userid);
+	
 
 	Project insertProject(Project project);
 
 	Project getProject(Long id);
-	//ㄴProject getProject(Project project);
+	//Project getProject(Project project);
 
 	Project updateProject(Long id, Project project);
 

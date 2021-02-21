@@ -113,3 +113,4 @@ npm-debug.log
 yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,vuejs,visualstudiocode
+src/main/java/com/gaepom/domain/ProjectTracking.java
