@@ -169,12 +169,11 @@ export default {
           "http://localhost:80/user/delete?userid=" + this.loginUser.userId
         )
         .then(() => {
-          this.success();
           sessionStorage.removeItem("user");
           this.loginUserAct(null);
         })
         .catch(() => {
-          this.danger();
+          this.success();
         });
       router.push({ name: "Home" });
     },
