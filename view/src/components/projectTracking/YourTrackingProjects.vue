@@ -1,7 +1,7 @@
 <template>
-  <div id="app" class="container">
+  <div id="yourTrackingProjects" class="container">
     <section>
-      <b-table :data="proj" ref="table" :hoverable="isHoverable">
+      <b-table :data="yourpj" ref="table" :hoverable="isHoverable">
         <b-table-column
           field="aplSeq"
           label="글"
@@ -9,7 +9,7 @@
           numeric
           centered
           v-slot="props"
-        >
+        > 
           {{ props.row.project.pjSeq }}
         </b-table-column>
         <b-table-column
@@ -29,10 +29,7 @@
           centered
         >
           <router-link
-            :to="{
-              name: 'ProjectTrackingDetail',
-              params: { track: props.row }
-            }"
+            :to="{ name: 'ProjectTrackingDetail', params: {track: props.row}}"
             >{{ props.row.project.pjTitle }}</router-link
           >
         </b-table-column>
@@ -45,70 +42,53 @@
         >
           {{ props.row.project.pjDescription }}
         </b-table-column>
-        <b-table-column
-          field="pjSeq"
-          label="관리"
-          sortable
-          v-slot="props"
-          centered
-        >
-          <b-button @click="deleteTracking(props.row.trackSeq)">삭제</b-button>
-        </b-table-column>
+        
       </b-table>
     </section>
   </div>
 </template>
 <script>
 export default {
-  name: "MyTrackingProjects",
+  name: "YourTrackingProjects",
+  props: {
+    auser: String
+  },
   data() {
     return {
-      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       pjs: [],
-      proj: [],
+      yourpj:[],
       defaultOpendDetails: [1],
       showDetailcon: true,
-      isHoverable: true
+      isHoverable: true,
     };
   },
-  created() {
-    this.trackList();
+  mounted() {
+    this.trackList();    
   },
   methods: {
-    trackList: function() {
+   trackList: function() {
+      
+      let yourid = this.auser;
       this.axios
         .get("/gettrackinglistaxios")
-        .then(response => {
+        .then((response) => {
+          
           this.pjs = response.data;
           console.log("==========list==========");
-          console.log(this.pjs);
+          console.log(response);
           console.log("==========list==========");
-          this.proj = this.pjs.filter(function(item) {
-            return (
-              item.project.userId.userId ==
-              JSON.parse(sessionStorage.getItem("user")).userId
-            );
-          });
+          console.log(this.pjs)
+
+          this.yourpj = this.pjs.filter(function(item){
+            return item.project.userId.userId == yourid
+          })
+
+          console.log(this.yourpj)
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("에러" + error);
         });
     },
-    deleteTracking: function(id) {
-      this.axios
-        .delete("/deleteprojecttracking", {
-          params: {
-            trackSeq: id
-          }
-        })
-        .then(response => {
-          console.log(response);
-          this.trackList();
-        })
-        .catch(ex => {
-          console.warn("ERROR!!!!! : ", ex);
-        });
-    }
-  }
-};
+  },
+ };
 </script>

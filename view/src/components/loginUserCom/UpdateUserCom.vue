@@ -19,7 +19,7 @@
             aria-label="breadcrumbs"
           >
             <ul>
-              <li><a href="#">홈페이지</a></li>
+              <li><a href="/">홈페이지</a></li>
               <li class="is-active">
                 <a href="#" aria-current="page">회원정보</a>
               </li>
@@ -104,7 +104,7 @@
               <option value="기획자">기획자</option>
               <option value="디자이너">디자이너</option>
             </BSeletWithValidation>
-
+            <br />
             <BCheckboxesWithValidation
               rules="required"
               label="Stack"
@@ -173,7 +173,7 @@
                 >Illustrator</b-checkbox
               >
             </BCheckboxesWithValidation>
-
+            <br />
             <b-field
               label="Current UserImage"
               align="left"
@@ -195,7 +195,7 @@
             <br />
             <div class="buttons">
               <button
-                class="button is-success"
+                class="button is-warning is-light"
                 v-on:click="handleSubmit(submitUser)"
               >
                 <span>정보수정</span>
@@ -254,7 +254,8 @@ export default {
     userUpdateInfoCall() {
       axios
         .get(
-          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" +
+            JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.userid = response.data.userId;
