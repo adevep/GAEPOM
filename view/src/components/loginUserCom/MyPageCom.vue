@@ -228,7 +228,7 @@
                   label="내가 작성한 프로젝트 트래킹글"
                   icon="creation"
                 >
-                  주최한 프로젝트 트래킹 글 테이블
+                  <my-tracking-projects></my-tracking-projects>
                 </b-tab-item>
                 <b-tab-item label="내 지원서 보기" icon="clipboard-account">
                   <application></application>
@@ -249,10 +249,13 @@ import axios from "axios";
 import router from "../../router";
 import Application from "@/components/applicationCom/Application.vue";
 import MyProjects from "@/components/projectCom/MyProjects.vue";
+import MyTrackingProjects from "@/components/projectTracking/MyTrackingProjects.vue";
+
 export default {
   components: {
     Application,
-    MyProjects
+    MyProjects,
+    MyTrackingProjects
   },
   data: () => ({
     loginUser: {
