@@ -136,7 +136,6 @@
               </b-modal>
             </section>
           </b-tab-item>
-          <b-tab-item label="댓글"></b-tab-item>
         </b-tabs>
       </section>
     </div>

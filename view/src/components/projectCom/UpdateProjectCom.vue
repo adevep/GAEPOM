@@ -315,6 +315,28 @@ export default {
         });
     },
     updateProjectRec: function() {
+      let myDate = new Date(Date.parse(this.recDuration[0]));
+      let myDate2 = new Date(Date.parse(this.recDuration[1]));
+      let date1 =
+        myDate.getFullYear() +
+        "." +
+        ("0" + (myDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate.getDate()).slice(-2);
+      let date2 =
+        myDate2.getFullYear() +
+        "." +
+        ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate2.getDate()).slice(-2);
+      let date3 = [];
+      date3.push(date1);
+      alert(date1)
+      date3.push(date2);
+      alert(date2)
+      this.recDuration = date3.join("-");
+      alert(this.recDuration)
+
       http
         .put(
           "/recruit/updaterec/" + this.recSeq + "?userId=" + this.loginUser,
@@ -323,7 +345,7 @@ export default {
             needPosi: this.needPosi.join(),
             location: this.location,
             preference: this.preference,
-            recDuration: this.recDuration.join("-")
+            recDuration: this.recDuration
           }
         )
         .then(response => {
@@ -335,11 +357,31 @@ export default {
           console.log(this.recSeq);
           // 페이지 이동
           //this.$router.push(Project)
+          let myDate = new Date(Date.parse(this.pjDuration[0]));
+          let myDate2 = new Date(Date.parse(this.pjDuration[1]));
+          let date1 =
+            myDate.getFullYear() +
+            "." +
+            ("0" + (myDate.getMonth() + 1)).slice(-2) +
+            "." +
+            ("0" + myDate.getDate()).slice(-2);
+          let date2 =
+            myDate2.getFullYear() +
+            "." +
+            ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+            "." +
+            ("0" + myDate2.getDate()).slice(-2);
+          let date3 = [];
+          date3.push(date1);
+          date3.push(date2);
+          alert(date1)
+          alert(date2)
+          this.pjDuration = date3.join("-");
           const data = {
             userId: { userId: this.loginUser },
             pjTitle: this.pjTitle,
             pjDescription: this.pjDescription,
-            pjDuration: this.pjDuration.join("-"),
+            pjDuration: this.pjDuration,
             pjCategory: this.pjCategory,
             pjTools: this.pjTools.join(),
             pjLang: this.pjLang.join(),
