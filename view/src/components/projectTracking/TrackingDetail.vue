@@ -33,7 +33,7 @@
               <router-link
                 :to="{
                   name: 'yourpage',
-                  params: { pickedid: trackInfo.project.userId.userId },
+                  params: { pickedid: trackInfo.project.userId.userId }
                 }"
               >
                 <p>
@@ -43,6 +43,25 @@
                   {{ trackInfo.project.userId.position }}
                 </p>
               </router-link>
+              <div v-if="likeFlag == 0">
+                <b-button
+                  class="mt-1"
+                  type="is-link is-light"
+                  v-on:click="addTrackingLike(trackInfo.trackSeq)"
+                  icon-left="heart-outline"
+                >
+                  {{ trackInfo.trackLike }}
+                </b-button>
+              </div>
+              <div v-else>
+                <b-button
+                  type="is-link is-light"
+                  v-on:click="addTrackingLike(trackInfo.trackSeq)"
+                  icon-left="cards-heart"
+                >
+                  {{ trackInfo.trackLike }}
+                </b-button>
+              </div>
             </div>
             <nav class="level is-mobile">
               
@@ -91,48 +110,41 @@
               <i class="xi-lightbulb"></i> {{ trackInfo.project.pjTitle }}
             </h2>
             <h2 class="subtitle">
-              {{ trackInfo.project.pjDescription }} 
+              {{ trackInfo.project.pjDescription }}
             </h2>
             <br />
            
             <h2 class="subtitle">
-              [ 프로젝트 기간 ] <br /> {{ trackInfo.project.pjDuration }} <br /><br />
-              [ 카테고리 ] <br /> {{ trackInfo.project.pjCategory }} <br /><br />
-              [ 사용 툴 ] <br /> {{ trackInfo.project.pjTools }} <br /><br />
-              [ 사용 언어 ] <br /> {{ trackInfo.project.pjLang }} <br /><br />
-              [ 사용 DBMS ] <br /> {{ trackInfo.project.pjDbms }} <br /><br />
-              [ 개발 단계 ] <br /> {{ trackInfo.stage }} <br /><br />
-              [ 이슈 사항 ] <br /> {{ trackInfo.issue }} <br /><br />
-              [ 프로젝트 결과 ] <br /> {{ trackInfo.output }} <br /><br />
+              [ 프로젝트 기간 ] <br />
+              {{ trackInfo.project.pjDuration }} <br /><br />
+              [ 카테고리 ] <br />
+              {{ trackInfo.project.pjCategory }} <br /><br />
+              [ 사용 툴 ] <br />
+              {{ trackInfo.project.pjTools }} <br /><br />
+              [ 사용 언어 ] <br />
+              {{ trackInfo.project.pjLang }} <br /><br />
+              [ 사용 DBMS ] <br />
+              {{ trackInfo.project.pjDbms }} <br /><br />
+              [ 개발 단계 ] <br />
+              {{ trackInfo.stage }} <br /><br />
+              [ 이슈 사항 ] <br />
+              {{ trackInfo.issue }} <br /><br />
+              [ 프로젝트 결과 ] <br />
+              {{ trackInfo.output }} <br /><br />
             </h2>
-              <br />
-              <!-- <center> -->
-            
-              <div v-if="likeFlag == 0">
-            <b-button type="is-link is-light" v-on:click="addTrackingLike(trackInfo.trackSeq)"
-                icon-left="heart-outline">
-                 {{ trackInfo.trackLike }}
-            </b-button>
-              </div>
-              <div v-else>
-            <b-button type="is-link is-light" v-on:click="addTrackingLike(trackInfo.trackSeq)"
-                icon-left="cards-heart">
-                 {{ trackInfo.trackLike }}
-            </b-button>
-              </div>
-              <br />
-              
-              <br />
-              <router-link
-                tag="b-button"
-                v-if="userdatas.userId == trackInfo.project.userId.userId"
-                :to="{
-                  name: 'ProjectTrackingUpdate',
-                  params: { trackSeq: trackInfo },
-                }"
-                >
-                수정</router-link
-              >
+            <br />
+            <img class="is-rounded" :src="imgURL + trackInfo.trackImage" />
+
+            <br />
+            <router-link
+              tag="button"
+              v-if="userdatas.userId == trackInfo.project.userId.userId"
+              :to="{
+                name: 'ProjectTrackingUpdate',
+                params: { trackSeq: trackInfo }
+              }"
+              >수정</router-link
+            >
             <!-- </center> -->
           </b-tab-item>
           <b-tab-item label="댓글">
@@ -144,7 +156,6 @@
   </div>
 </template>
 <script>
-
 import Comment from "./comment/Comment.vue";
 import { mapState } from "vuex";
 export default {
@@ -156,14 +167,14 @@ export default {
       likeArray: [],
       userdatas: JSON.parse(sessionStorage.getItem("user")),
       // uId: this.userdatas.userId,
-      likeSeq: null,
+      likeSeq: null
     };
   },
   components: {
-    Comment,
+    Comment
   },
   computed: {
-    ...mapState(["imgURL"]),
+    ...mapState(["imgURL"])
   },
   created() {
     this.tracking();
@@ -173,14 +184,14 @@ export default {
       this.axios
         .get("/getprojecttracking", {
           params: {
-            trackSeq: this.trackInfo.trackSeq,
-          },
+            trackSeq: this.trackInfo.trackSeq
+          }
         })
-        .then((response) => {
+        .then(response => {
           this.trackInfo = response.data;
           console.log(this.trackInfo);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("에러" + error);
         });
     },
@@ -234,11 +245,11 @@ export default {
             "&tliked=" +
             this.likeArray.toString()
         )
-        .then((response) => {
+        .then(response => {
           console.warn(response.data);
           this.getUser();
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
       this.updateTrackingLike();
@@ -246,12 +257,12 @@ export default {
     getUser: function() {
       this.axios
         .get("http://localhost:80/user/get?userid=" + this.userdatas.userId)
-        .then((response) => {
+        .then(response => {
           console.warn(response.data);
           this.likeSeq = response.data.tliked;
           this.showlike(this.likeSeq);
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
     },
@@ -263,18 +274,18 @@ export default {
             "&trackLike=" +
             this.trackInfo.trackLike
         )
-        .then((response) => {
+        .then(response => {
           console.warn(response.data);
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
-    },
+    }
   },
   mounted() {
     this.trackInfo = this.$route.params.track;
     this.getUser();
     //this.showlike();
-  },
+  }
 };
 </script>

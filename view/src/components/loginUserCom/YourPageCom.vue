@@ -208,84 +208,79 @@
               </section>
             </div>
           </b-tab-item>
-          <b-tab-item label="프로젝트 관리">
+          <b-tab-item label="프로젝트">
             <section>
               <b-tabs :size="medium" :type="boxed" :expanded="expanded">
                 <b-tab-item
-                  label="작성한 프로젝트 모집글"
+                  label="프로젝트 모집글"
                   icon="account-multiple-plus"
                 >
                   <div id="app" class="container">
-    <section>
-      <b-table :data="pjs" ref="table" :hoverable="isHoverable">
-        <b-table-column
-          field="aplSeq"
-          label="글"
-          width="40"
-          numeric
-          centered
-          v-slot="props"
-        >
-          {{ props.row.pjSeq }}
-        </b-table-column>
-        <b-table-column
-          field="pjCategory"
-          label="분야"
-          sortable
-          v-slot="props"
-          centered
-        >
-          {{ props.row.pjCategory }}
-        </b-table-column>
-        <b-table-column
-          field="pjTitle"
-          label="프로젝트"
-          sortable
-          v-slot="props"
-          centered
-        >
-          <router-link
-            :to="{ name: 'details', params: { pjSeq: props.row.pjSeq } }"
-            >{{ props.row.pjTitle }}</router-link
-          >
-        </b-table-column>
-        <b-table-column
-          field="pjDescription"
-          label="설명"
-          sortable
-          v-slot="props"
-          centered
-        >
-          {{ props.row.pjDescription }}
-        </b-table-column>
-        <b-table-column
-          field="pjDurationn"
-          label="기간"
-          sortable
-          v-slot="props"
-          centered
-        >
-          {{ props.row.pjDuration }}
-        </b-table-column>
-
-      </b-table>
-    </section>
-  </div>
+                    <section>
+                      <b-table :data="pjs" ref="table" :hoverable="isHoverable">
+                        <b-table-column
+                          field="aplSeq"
+                          label="글"
+                          width="40"
+                          numeric
+                          centered
+                          v-slot="props"
+                        >
+                          {{ props.row.pjSeq }}
+                        </b-table-column>
+                        <b-table-column
+                          field="pjCategory"
+                          label="분야"
+                          sortable
+                          v-slot="props"
+                          centered
+                        >
+                          {{ props.row.pjCategory }}
+                        </b-table-column>
+                        <b-table-column
+                          field="pjTitle"
+                          label="프로젝트"
+                          sortable
+                          v-slot="props"
+                          centered
+                        >
+                          <router-link
+                            :to="{
+                              name: 'details',
+                              params: { pjSeq: props.row.pjSeq }
+                            }"
+                            >{{ props.row.pjTitle }}</router-link
+                          >
+                        </b-table-column>
+                        <b-table-column
+                          field="pjDescription"
+                          label="설명"
+                          sortable
+                          v-slot="props"
+                          centered
+                        >
+                          {{ props.row.pjDescription }}
+                        </b-table-column>
+                        <b-table-column
+                          field="pjDurationn"
+                          label="기간"
+                          sortable
+                          v-slot="props"
+                          centered
+                        >
+                          {{ props.row.pjDuration }}
+                        </b-table-column>
+                      </b-table>
+                    </section>
+                  </div>
                   <!-- <user-projects></user-projects> -->
                 </b-tab-item>
-                <b-tab-item
-                  label="작성한 프로젝트 트래킹글"
-                  icon="creation"
-                >
+                <b-tab-item label="프로젝트 트래킹글" icon="creation">
                   주최한 프로젝트 트래킹 글 테이블
                 </b-tab-item>
-                <!-- <b-tab-item label="내 지원서 보기" icon="clipboard-account">
-                  <application></application>
-                </b-tab-item> -->
               </b-tabs>
             </section>
           </b-tab-item>
-          <b-tab-item label="댓글"> </b-tab-item>
         </b-tabs>
       </section>
     </div>
@@ -297,18 +292,10 @@ import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import http from "../../http-common";
-// import Application from "@/components/applicationCom/Application.vue";
-//import UserProjects from "@/components/projectCom/UserProjects.vue";
-// import MyProjects from "@/components/projectCom/MyProjects.vue";
 
 export default {
-  components: {
-    //Application,
-   // UserProjects
-    // MyProjects
-  },
   data: () => ({
-    pjs : [],
+    pjs: [],
     // 페이지 생성 오류때문에 빈 변수 가진 객체 사용해줌
     anotherUser: {
       userImage: "default.png",
@@ -334,11 +321,9 @@ export default {
     pfDbms: "",
     pfLink: "",
     pfCategory: "",
-
     defaultOpendDetails: [1],
-      showDetailcon: true,
-      isHoverable: true
-
+    showDetailcon: true,
+    isHoverable: true
   }),
   computed: {
     ...mapState(["imgURL"])
@@ -353,8 +338,8 @@ export default {
           // this.portfolio[0].pfLang = this.portfolio[0].pfLang.split(",")
           // console.log(this.portfolio[0].pfLang)
         })
-        .catch(() => {
-          alert("조회 실패");
+        .catch(e => {
+          console.log(e);
         });
     },
     anotherUserInfoCall() {
@@ -375,7 +360,6 @@ export default {
       router.push({ name: "getPortfolio" });
     },
     retrievePjs() {
-      alert(this.$route.params.pickedid); 
       http
         .get("/recruit/gethostedpj2/" + this.$route.params.pickedid)
         .then(response => {

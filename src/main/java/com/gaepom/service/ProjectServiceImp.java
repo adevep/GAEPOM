@@ -35,6 +35,7 @@ public class ProjectServiceImp implements ProjectService {
 		return (List<Project>) projectRepo.findPjByUserId2(userid);
 	}
 	
+	
 	public Project insertProject(Project project) {
 		return projectRepo.save(project);
 	}
