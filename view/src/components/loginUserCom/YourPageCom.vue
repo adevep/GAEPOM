@@ -1,5 +1,19 @@
 <template>
   <div class="ProjectDetails">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
+    />
     <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
         <article class="media">
@@ -41,67 +55,39 @@
       <section>
         <b-tabs type="is-boxed">
           <b-tab-item label="유저 정보">
+            <h2 class="title is-4 mt-5"><i class="xi-mail"></i> 이메일</h2>
+            <h2 class="subtitle">
+              {{ anotherUser.email }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 이메일 : {{ anotherUser.email }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-call"></i> 연락처</h1>
+            <h2 class="subtitle">
+              {{ anotherUser.phoneNum }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 전화번호 : {{ anotherUser.phoneNum }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-user"></i> 포지션</h1>
+            <h2 class="subtitle">
+              {{ anotherUser.position }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 포지션 : {{ anotherUser.position }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-puzzle"></i> 기술 스택</h1>
+            <h2 class="subtitle">
+              {{ anotherUser.stack }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 기술 : {{ anotherUser.stack }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-maker"></i> 주소</h1>
+            <h2 class="subtitle">
+              {{ anotherUser.address }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 주소 : {{ anotherUser.address }}
-            </h5>
+            <b-button type="is-primary is-light" @click="updateUser()"
+              >정보수정</b-button
+            >
+            &nbsp;
+            <b-button type="is-danger is-light" @click="deleteUser()"
+              >회원탈퇴</b-button
+            >
             <br />
-
-            <section>
-              <b-modal v-model="userId" :width="640" scroll="keep">
-                <div class="modal-card" style="width: auto">
-                  <header class="modal-card-head">
-                    <p class="modal-card-title">프로젝트 지원하기</p>
-                    <button type="button" class="delete" />
-                    @click="$emit('close')"
-                  </header>
-                  <section class="modal-card-body">
-                    <b-field label="나를 어필할 한마디를 적어주세요!">
-                      <b-input
-                        v-model="userId"
-                        type="text"
-                        placeholder="나의 한마디"
-                        required
-                      >
-                      </b-input>
-                    </b-field>
-
-                    <b-field label="지원 직무">
-                      <b-select v-model="userId" expanded>
-                        <option
-                          v-for="(value, index) in posiArray"
-                          :key="index"
-                          v-bind:value="value"
-                          >{{ value }}</option
-                        >
-                      </b-select>
-                    </b-field>
-                  </section>
-                  <footer class="modal-card-foot">
-                    <b-button label="Close" />
-                    @click="isCardModalActive = false"
-                    <b-button label="지원하기" type="is-primary" />
-                    v-on:click="submitApp()"
-                  </footer>
-                </div>
-              </b-modal>
-            </section>
           </b-tab-item>
           <b-tab-item label="포트폴리오">
             <div id="portfolios" class="container">
@@ -109,8 +95,13 @@
                 <b-table
                   :data="portfolio"
                   ref="table"
-                  paginated
-                  per-page="3"
+                  :opened-detailed="defaultOpenedDetails"
+                  detailed
+                  detail-key="pfSeq"
+                  @details-open="
+                    row => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)
+                  "
+                  :show-detail-icon="showDetailIcon"
                   aria-next-label="Next page"
                   aria-previous-label="Previous page"
                   aria-page-label="Page"
@@ -119,7 +110,7 @@
                   <b-table-column
                     field="pfSeq"
                     label="번호"
-                    width="80"
+                    width="70"
                     numeric
                     v-slot="props"
                   >
@@ -131,9 +122,24 @@
                     label="제목"
                     sortable
                     v-slot="props"
-                    width="80"
                   >
-                    {{ props.row.pfSubtitle }}
+                    <template v-if="showDetailIcon">
+                      {{ props.row.pfSubtitle }}
+                    </template>
+                    <template v-else>
+                      <a @click="props.toggleDetails(props.row)">
+                        {{ props.row.pfSubtitle }}
+                      </a>
+                    </template>
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfPosition"
+                    label="포지션"
+                    sortable
+                    v-slot="props"
+                  >
+                    {{ props.row.pfPosition }}
                   </b-table-column>
 
                   <b-table-column
@@ -142,116 +148,88 @@
                     sortable
                     centered
                     v-slot="props"
-                    width="80"
                   >
-                    {{ props.row.pfDuration }}
+                    <span class="tag is-success">
+                      {{ props.row.pfDuration }}
+                    </span>
                   </b-table-column>
 
-                  <b-table-column
-                    field="participation"
-                    label="포지션"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfPosition }}
+                  <b-table-column label="변경" v-slot="props">
+                    <span>
+                      <b-button
+                        type="is-info"
+                        outlined
+                        @click="updatePortfolio(props.row.pfSeq)"
+                        position="is-centered"
+                        size="is-small"
+                        >수정</b-button
+                      >
+                      <b-button
+                        type="is-danger"
+                        outlined
+                        v-on:click="deletePortfolio(props.row.pfSeq)"
+                        position="is-centered"
+                        size="is-small"
+                        >삭제</b-button
+                      >
+                    </span>
                   </b-table-column>
 
-                  <b-table-column
-                    field="pfDescription"
-                    label="설명"
-                    sortable
-                    centered
-                    v-slot="props"
-                    width="80"
-                  >
-                    {{ props.row.pfDescription }}
-                  </b-table-column>
+                  <template #detail="props">
+                    <article class="media">
+                      <div class="media-content">
+                        <div class="content">
+                          <p>
+                            <strong>{{ props.row.pfSubtitle }}</strong>
 
-                  <b-table-column
-                    field="participation"
-                    label="참여도"
-                    sortable
-                    centered
-                    v-slot="props"
-                    width="120"
-                  >
-                    {{ props.row.participation }}%
-                  </b-table-column>
-
-                    <b-table-column
-                    field="pfLink"
-                    label="Link"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfLink }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfCategory"
-                    label="카테고리"
-                    sortable
-                    centered
-                    width="150"
-                    v-slot="props"
-                  >
-                    {{ props.row.pfCategory }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfTools"
-                    label="Tool"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfTools }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfLang"
-                    label="언어"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfLang }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfDbms"
-                    label="DB"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    {{ props.row.pfDbms }}
-                  </b-table-column>
-
+                            <br />
+                            프로젝트 설명 :
+                            <strong>{{ props.row.pfDescription }}</strong>
+                            <br />
+                            참여도 :
+                            <strong>{{ props.row.participation }}%</strong>
+                            <br />
+                            관련 링크 : <strong>{{ props.row.pfLink }}</strong>
+                            <br />
+                            카테고리 :
+                            <strong>{{ props.row.pfCategory }}</strong> <br />
+                            사용 툴 : <strong>{{ props.row.pfTools }}</strong>
+                            <br />
+                            사용 언어 : <strong>{{ props.row.pfLang }}</strong>
+                            <br />
+                            사용 DBMS : <strong>{{ props.row.pfDbms }}</strong>
+                            <br />
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  </template>
                 </b-table>
               </section>
             </div>
           </b-tab-item>
           <b-tab-item label="프로젝트 관리">
-            <b-taglist>
-              <b-tag type="is-primary">1</b-tag>
-              <b-tag type="is-primary is-light">2</b-tag>
-              <b-tag type="is-link">3</b-tag>
-              <b-tag type="is-link is-light">4</b-tag>
-              <b-tag type="is-link is-light">5</b-tag>
-            </b-taglist>
+            <section>
+              <b-tabs :size="medium" :type="boxed" :expanded="expanded">
+                <b-tab-item
+                  label="내가 작성한 프로젝트 모집글"
+                  icon="account-multiple-plus"
+                >
+                  <my-projects></my-projects>
+                </b-tab-item>
+                <b-tab-item
+                  label="내가 작성한 프로젝트 트래킹글"
+                  icon="creation"
+                >
+                  주최한 프로젝트 트래킹 글 테이블
+                </b-tab-item>
+                <b-tab-item label="내 지원서 보기" icon="clipboard-account">
+                  <application></application>
+                </b-tab-item>
+              </b-tabs>
+            </section>
           </b-tab-item>
-          <b-tab-item label="댓글">
-            <b-taglist>
-              <b-tag type="is-primary">1</b-tag>
-              <b-tag type="is-primary is-light">2</b-tag>
-              <b-tag type="is-link">3</b-tag>
-              <b-tag type="is-link is-light">4</b-tag>
-              <b-tag type="is-link is-light">5</b-tag>
-            </b-taglist>
-          </b-tab-item>
+          <b-tab-item label="댓글"> </b-tab-item>
         </b-tabs>
       </section>
     </div>
@@ -262,7 +240,14 @@
 import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
+import Application from "@/components/applicationCom/Application.vue";
+import MyProjects from "@/components/projectCom/MyProjects.vue";
+
 export default {
+  components: {
+    Application,
+    MyProjects
+  },
   data: () => ({
     // 페이지 생성 오류때문에 빈 변수 가진 객체 사용해줌
     anotherUser: {
@@ -272,7 +257,7 @@ export default {
       email: "",
       phoneNum: "",
       position: "",
-      stack: "",
+      stack: ""
     },
     portfolio: [],
     currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
@@ -288,16 +273,16 @@ export default {
     pfTools: "",
     pfDbms: "",
     pfLink: "",
-    pfCategory: "",
+    pfCategory: ""
   }),
   computed: {
-    ...mapState(["imgURL"]),
+    ...mapState(["imgURL"])
   },
   methods: {
     retrievePortfolios() {
       axios
         .get("/portfolios?userid=" + this.$route.params.pickedid)
-        .then((response) => {
+        .then(response => {
           this.portfolio = response.data;
           // console.log(this.portfolio[0].pfLang)
           // this.portfolio[0].pfLang = this.portfolio[0].pfLang.split(",")
@@ -310,22 +295,22 @@ export default {
     anotherUserInfoCall() {
       axios
         .get("/getuser?userid=" + this.$route.params.pickedid)
-        .then((response) => {
+        .then(response => {
           this.anotherUser = response.data;
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     },
     getPortfolio(user) {
       this.$store.state.anotherUser = user;
       router.push({ name: "getPortfolio" });
-    },
+    }
   },
   mounted() {
     this.anotherUserInfoCall();
     this.retrievePortfolios();
-  },
+  }
 };
 </script>
 <style scoped></style>

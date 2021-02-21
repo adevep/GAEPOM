@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import RecruitList from "../components/RecruitList.vue";
+import RecruitList from "@/components/recruitCom/RecruitList.vue";
 
 export default {
   name: "Project",
