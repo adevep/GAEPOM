@@ -18,4 +18,5 @@ public interface PortfolioRepository extends CrudRepository<Portfolio, Long>, Jp
 
 	@Query(value = "SELECT * FROM Portfolio", nativeQuery = true)
 	List<Portfolio> findAllPortfolios();
+
 }

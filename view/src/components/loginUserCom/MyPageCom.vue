@@ -228,7 +228,7 @@
                   label="내가 작성한 프로젝트 트래킹글"
                   icon="creation"
                 >
-                  주최한 프로젝트 트래킹 글 테이블
+                  <my-tracking-projects></my-tracking-projects>
                 </b-tab-item>
                 <b-tab-item label="내 지원서 보기" icon="clipboard-account">
                   <application></application>
@@ -244,15 +244,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import Application from "@/components/applicationCom/Application.vue";
 import MyProjects from "@/components/projectCom/MyProjects.vue";
+import MyTrackingProjects from "@/components/projectTracking/MyTrackingProjects.vue";
+
 export default {
   components: {
     Application,
-    MyProjects
+    MyProjects,
+    MyTrackingProjects
   },
   data: () => ({
     loginUser: {
@@ -279,6 +282,7 @@ export default {
     ...mapState(["imgURL"])
   },
   methods: {
+    ...mapActions(["loginUserAct"]),
     // 포트폴리오 부분
     retrievePortfolios() {
       axios
@@ -336,7 +340,7 @@ export default {
     loginUserInfoCall() {
       axios
         .get(
-          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.loginUser = response.data;
@@ -351,11 +355,11 @@ export default {
     deleteUser() {
       axios
         .delete(
-          "http://localhost:80/deleteuser?userid=" + this.loginUser.userId
+          "http://localhost:80/user/delete?userid=" + this.loginUser.userId
         )
         .then(() => {
           sessionStorage.removeItem("user");
-          this.loginUser = null;
+          this.loginUserAct(null);
           this.success();
         })
         .catch(() => {

@@ -81,7 +81,9 @@
                 trackInfo.project.pjDuration
               }}</b-tag> -->
             </b-taglist>
-              <h2 class="title is-4 mt-5"><i class="xi-lightbulb"></i>  {{ trackInfo.project.pjTitle }}</h2>
+            <h2 class="title is-4 mt-5">
+              <i class="xi-lightbulb"></i> {{ trackInfo.project.pjTitle }}
+            </h2>
             <h2 class="subtitle">
               {{ trackInfo.project.pjDescription }} 
             </h2>
@@ -114,9 +116,9 @@
               <button v-on:click="addTrackingLike(trackInfo.trackSeq)" icon="creation">
                 좋아요 선택하기 </button
               ><br />
-              <button @click="deleteTracking">삭제</button>
               <router-link
                 tag="button"
+                v-if="userdatas.userId == trackInfo.project.userId.userId"
                 :to="{
                   name: 'ProjectTrackingUpdate',
                   params: { trackSeq: trackInfo },
@@ -134,7 +136,7 @@
   </div>
 </template>
 <script>
-import ProjectTracking from "../../views/ProjectTracking.vue";
+
 import Comment from "./comment/Comment.vue";
 import { mapState } from "vuex";
 export default {
@@ -163,7 +165,7 @@ export default {
       this.axios
         .get("/getprojecttracking", {
           params: {
-            trackSeq: this.$route.params.track.trackSeq,
+            trackSeq: this.trackInfo.trackSeq,
           },
         })
         .then((response) => {
@@ -172,22 +174,6 @@ export default {
         })
         .catch((error) => {
           console.log("에러" + error);
-        });
-    },
-    deleteTracking: function() {
-      this.axios
-        .delete("/deleteprojecttracking", {
-          params: {
-            trackSeq: this.trackInfo.trackSeq,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          // 페이지 이동
-          this.$router.push(ProjectTracking);
-        })
-        .catch((ex) => {
-          console.warn("ERROR!!!!! : ", ex);
         });
     },
     showlike: function() {
@@ -235,7 +221,7 @@ export default {
       //
       this.axios
         .put(
-          "/updateusertliked?userid=" +
+          "http://localhost:80/user/updatetliked?userid=" +
             this.userdatas.userId +
             "&tliked=" +
             this.likeArray.toString()
@@ -251,7 +237,7 @@ export default {
     },
     getUser: function() {
       this.axios
-        .get("/getuser?userid=" + this.userdatas.userId)
+        .get("http://localhost:80/user/get?userid=" + this.userdatas.userId)
         .then((response) => {
           console.warn(response.data);
           this.likeSeq = response.data.tliked;

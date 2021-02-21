@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaepom.domain.Project;
@@ -108,6 +109,18 @@ public class ProjectRecruitController {
 		Object needNum = projectRecruitService.getRecByPj(pjSeq, recruit);
 		
 		return new ResponseEntity<>(needNum, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getbypjcheckcount/{id}")
+	public ResponseEntity<Object> getRecByPjCheckCount(User user, @PathVariable("id") Long pjSeq, ProjectRecruit recruit) {
+		if (user.getUserId() == null) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		Object checkCount = projectRecruitService.getCheckCountByPj(pjSeq, recruit);
+		System.out.println(checkCount);
+		
+		return new ResponseEntity<>(checkCount, HttpStatus.OK);
 	}
 
 	
@@ -226,6 +239,17 @@ public class ProjectRecruitController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		ProjectRecruit rec = projectRecruitService.updateRec(id, recruit);
+		return new ResponseEntity<>(rec, HttpStatus.CREATED);
+
+	}
+	
+	@PutMapping("/updatereccount/{id}")
+	public ResponseEntity<ProjectRecruit> updateRecCount(User user, @PathVariable("id") long id, @RequestParam int checkCount) {
+		if (user.getUserId() == null) {
+			System.out.println("실패");
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		ProjectRecruit rec = projectRecruitService.updateRecCount(id, checkCount);
 		return new ResponseEntity<>(rec, HttpStatus.CREATED);
 
 	}
