@@ -186,7 +186,7 @@ export default {
         showProject: function() {
           this.axios.get('/project/getproject', {
             params: {
-              projectId: 2
+              projectId: this.$route.params.pjseq
             }
           }).then(response => {
             this.project = response.data
@@ -207,7 +207,6 @@ export default {
         
     },
     mounted () {
-      alert(this.$route.params.pjseq)
       this.showProject();
     }
 }

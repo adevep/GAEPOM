@@ -49,6 +49,12 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 	public Object getRecByPj(Long pjSeq, ProjectRecruit recruit) {
 		return recruitRecruitRepo.findNeedNum(pjSeq);
 	}
+	
+	//?
+	public Object getCheckCountByPj(Long pjSeq, ProjectRecruit recruit) {
+		System.out.println("서비스");
+		return recruitRecruitRepo.findCheckCount(pjSeq);
+	}
 
 	public ProjectRecruit updateRec(Long id, ProjectRecruit recruit) {
 		System.out.println("projectRecruit check1" + recruit);
@@ -62,6 +68,15 @@ public class ProjectRecruitServiceImp implements ProjectRecruitService {
 		findProjectRecruit.setRecStatus(recruit.getRecStatus());
 		findProjectRecruit.setNeedPosi(recruit.getNeedPosi());
 
+		return recruitRecruitRepo.save(findProjectRecruit);
+	}
+	
+	public ProjectRecruit updateRecCount(Long id, int checkCount) {
+		
+		Long projectRecruitSeq = projectRepo.findById(id).get().getRecSeq().getRecSeq();
+		ProjectRecruit findProjectRecruit = recruitRecruitRepo.findById(projectRecruitSeq).get();
+
+		findProjectRecruit.setCheckCount(checkCount);
 		return recruitRecruitRepo.save(findProjectRecruit);
 	}
 

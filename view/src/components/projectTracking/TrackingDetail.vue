@@ -111,9 +111,16 @@
                   <td>Output</td>
                   <td>{{ trackInfo.output }}</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>Image</td>
                   <td>{{ trackInfo.trackImage }}</td>
+                </tr> -->
+                <tr>
+                  <td>Image</td>
+                  <td><img
+                class="is-rounded"
+                :src="imgURL + trackInfo.trackImage"
+              /></td>
                 </tr>
               </table>
 

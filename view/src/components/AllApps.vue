@@ -165,14 +165,14 @@
         </template>
       </b-table>
     </section>
-    <b-button type="is-success" outlined v-if="checkCount == needNum"
-      > <router-link
-      :to="{
-        name: 'ProjectTrackingInsert',
-        params: { pjseq: this.$route.params.pjSeq },
-      }"
-      >트래킹 작성</router-link
-    ></b-button
+    <b-button type="is-success" outlined v-if="checkCount == needNum">
+      <router-link
+        :to="{
+          name: 'ProjectTrackingInsert',
+          params: { pjseq: this.$route.params.pjSeq },
+        }"
+        >트래킹 작성</router-link
+      ></b-button
     >
   </div>
 </template>
@@ -208,11 +208,26 @@ export default {
             )
             .then((response) => {
               this.needNum = response.data;
+              console.log(response.data);
+              http
+                .get(
+                  "/recruit/getbypjcheckcount/" +
+                    this.pjSeq2 +
+                    "?userId=" +
+                    this.loginUser
+                )
+                .then((response) => {
+                  this.checkCount = response.data;
+                  console.log(response.data);
+                })
+                .catch((e) => {
+                  alert("에러");
+                  console.log(e);
+                });
             })
             .catch((e) => {
               alert("에러");
               console.log(e);
-              this.errors.push(e);
             });
         })
         .catch((e) => {
@@ -222,16 +237,29 @@ export default {
     },
     acceptApp(id, app) {
       {
-        if(app.selected != 1 && this.checkCount < this.needNum) {
+        if (app.selected != 1 && this.checkCount < this.needNum) {
           app.selected = 1;
-        this.checkCount += 1;
+          this.checkCount += 1;
         }
       }
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then((response) => {
-          console.log(response.data.selected);
+          console.log(response.data);
+          alert(this.checkCount)
+          http
+            .put(
+              "/recruit/updatereccount/" + this.pjSeq2 + "?userId=" + this.loginUser + "&checkCount=" + this.checkCount
+            )
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((e) => {
+              alert("에러");
+              console.log(e);
+            });
         })
+
         .catch((e) => {
           console.log(e);
           this.errors.push(e);
@@ -248,6 +276,18 @@ export default {
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then((response) => {
           console.log(response.data.selected);
+
+          http
+            .put(
+              "/recruit/updatereccount/" + this.pjSeq2 + "?userId=" + this.loginUser + "&checkCount=" + this.checkCount
+            )
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((e) => {
+              alert("에러");
+              console.log(e);
+            });
         })
         .catch((e) => {
           console.log(e);

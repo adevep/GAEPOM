@@ -31,11 +31,11 @@ public class Project {
 	@Column(name = "pj_seq")
 	private Long pjSeq;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.REMOVE)
 	@JoinColumn(name="rec_seq", nullable = true)
 	private ProjectRecruit recSeq;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	@JsonIgnore
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;

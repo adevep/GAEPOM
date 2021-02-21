@@ -260,7 +260,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import Application from "@/components/Application.vue";
@@ -295,6 +295,7 @@ export default {
     ...mapState(["imgURL"])
   },
   methods: {
+    ...mapActions(["loginUserAct"]),
     // 포트폴리오 부분
     retrievePortfolios() {
       axios
@@ -371,7 +372,7 @@ export default {
         )
         .then(() => {
           sessionStorage.removeItem("user");
-          this.loginUser = null;
+          this.loginUserAct(null);
           alert("회원 탈퇴 완료");
         })
         .catch(() => {

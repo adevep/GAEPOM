@@ -25,10 +25,7 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	private UserRepository userrepo;
-	@Autowired
-	private PortfolioRepository pfrepo; 
-	@Autowired
-	private ApplicationRepository apprepo;
+
 	@Autowired
 	private CommentRepository comrepo;
 
@@ -212,11 +209,6 @@ public class UserServiceImp implements UserService {
 					logger.debug("탈퇴 유저 사진 파일 삭제 실패");
 				}
 			}
-//			
-//			pfrepo.deletePortfolioByUserId(userid);
-//			System.out.println("1");
-//			apprepo.deleteApplicationByUserId(userid);
-//			System.out.println("2");
 //			comrepo.deleteCommentByUserId(userid);
 //			System.out.println("3");
 			userrepo.delete(findUser.get());
