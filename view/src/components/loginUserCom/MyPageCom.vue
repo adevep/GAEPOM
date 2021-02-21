@@ -123,8 +123,8 @@
 import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
-import Application from "@/components/Application.vue";
-import MyProjects from "@/components/MyProjects.vue";
+import Application from "@/components/applicationCom/Application.vue";
+import MyProjects from "@/components/projectCom/MyProjects.vue";
 import PortfolioList from "@/views/portfolioView/PortfolioList.vue";
 export default {
   components: {

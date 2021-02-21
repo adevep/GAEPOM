@@ -22,7 +22,6 @@
           <b-datepicker
             placeholder="클릭해 기간을 선택하세요."
             v-model="pfDuration"
-            :date-formatter="(date) =>  $moment(date).format('YYYY. MM. DD').range(date, date)"
             range
             required
             icon="calendar-today"
@@ -30,14 +29,6 @@
           >
           </b-datepicker>
         </b-field>
-        <!-- <BInputWithValidation
-          rules="required"
-          label="프로젝트 기간"
-          v-model="pfDuration"
-          size="is-medium"
-          align="left"
-          rounded
-        /> -->
         <BInputWithValidation
           rules="required|numeric|max:2"
           label="프로젝트 참여도"
@@ -59,7 +50,7 @@
         <BInputWithValidation
           rules="required|max:300"
           label="프로젝트 설명"
-          placeholder="해당하는 프로젝트를 자유롭게 소개해주세요!"
+          placeholder="해당 프로젝트를 자유롭게 소개해주세요!"
           type="textarea"
           v-model="pfDescription"
           size="is-medium"
@@ -230,7 +221,6 @@ import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
 import axios from "axios";
 import router from "../../router";
 
-
 export default {
   components: {
     ValidationObserver,
@@ -254,8 +244,24 @@ export default {
   },
   methods: {
     insertPortfolio() {
-      alert("insertPortfolio 진입")
-      this.pfDuration = this.pfDuration.join("-");
+      let myDate = new Date(Date.parse(this.pfDuration[0]));
+      let myDate2 = new Date(Date.parse(this.pfDuration[1]));
+      let date1 =
+        myDate.getFullYear() +
+        "." +
+        ("0" + (myDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate.getDate()).slice(-2);
+      let date2 =
+        myDate2.getFullYear() +
+        "." +
+        ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate2.getDate()).slice(-2);
+      let date3 = [];
+      date3.push(date1);
+      date3.push(date2);
+      this.pfDuration = date3.join("-");
 
       let formData = new FormData();
 
@@ -276,8 +282,17 @@ export default {
         formData.append("pflanglist", this.pfLang);
         formData.append("pfdbmslist", this.pfDbms);
       }
-      axios.post("http://localhost:80/insertportfolio", formData);
-      this.success();
+      axios.post("http://localhost:80/insertportfolio", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+          }
+      })
+      .then(() => {
+        this.success();
+      })
+      .catch(() => {
+        this.danger();
+      });
       router.push({ name: "mypage" });
     },
     resetForm() {

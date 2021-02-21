@@ -1,7 +1,5 @@
 package com.gaepom.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +10,6 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +19,6 @@ import lombok.Setter;
 @Getter
 @Setter
 
-@Builder
 @Entity
 public class Portfolio {
 	
@@ -34,9 +30,6 @@ public class Portfolio {
 	@Column(name="pf_subtitle")
 	private String pfSubtitle;
 	
-//	 @Column(name="pf_duration", insertable = false, updatable = false, columnDefinition = "date default sysdate")
-//	 private Date pfDuration;
-
 	@Column(name="pf_duration")
 	private String pfDuration;
 	

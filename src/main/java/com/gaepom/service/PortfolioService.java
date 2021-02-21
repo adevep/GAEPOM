@@ -12,8 +12,6 @@ public interface PortfolioService {
 
 	List<Portfolio> findUserIdGetPortfolio(String userid);
 
-//	List<Portfolio> findAllPortfolios();
-
 	Portfolio updatePortfolio(Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, Portfolio portfolio);
 
 	void deleteByPfSeq(Long pfSeq);

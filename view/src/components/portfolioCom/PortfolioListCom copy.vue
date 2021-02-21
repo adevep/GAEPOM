@@ -8,6 +8,10 @@
         detailed
         detail-key="pfSeq"
         @details-open="(row) => $buefy.toast.open()"
+        aria-next-label="Next page"
+        aria-previous-label="Previous page"
+        aria-page-label="Page"
+        aria-current-label="Current page"
       >
         <b-table-column
           field="pfSeq"
@@ -43,6 +47,46 @@
           {{ props.row.pfDuration }}
         </b-table-column>
 
+        <!-- <b-table-column
+          field="pfDescription"
+          label="설명"
+          sortable
+          centered
+          v-slot="props"
+        >
+          {{ props.row.pfDescription }}
+        </b-table-column>
+
+        <b-table-column
+          field="participation"
+          label="참여도"
+          sortable
+          centered
+          v-slot="props"
+        >
+          {{ props.row.participation }}
+        </b-table-column>
+
+        <b-table-column
+          field="pfPosition"
+          label="포지션"
+          sortable
+          centered
+          v-slot="props"
+        >
+          {{ props.row.pfPosition }}
+        </b-table-column>
+
+        <b-table-column
+          field="pfTools"
+          label="사용툴"
+          sortable
+          centered
+          v-slot="props"
+        >
+          {{ props.row.pfTools }}
+        </b-table-column> -->
+
         <b-table-column
           field="pfLang"
           label="사용언어"
@@ -51,7 +95,7 @@
           v-slot="props"
           v-if="pfPosition === '개발자'"
         >
-          <b-tag type="is-info" size="is-medium">{{ props.row.pfLang }}</b-tag>
+          {{ props.row.pfLang }}
         </b-table-column>
 
         <b-table-column
@@ -62,7 +106,11 @@
           v-slot="props"
           v-if="pfPosition === '개발자'"
         >
-          <b-tag type="is-dark" size="is-medium">{{ props.row.pfDbms }}</b-tag>
+          {{ props.row.pfDbms }}
+        </b-table-column>
+
+        <b-table-column field="pfLink" label="외부주소" centered v-slot="props">
+          {{ props.row.pfLink }}
         </b-table-column>
 
         <b-table-column
@@ -71,7 +119,7 @@
           centered
           v-slot="props"
         >
-          <b-tag type="is-primary" size="is-medium">{{ props.row.pfCategory }}</b-tag>
+          {{ props.row.pfCategory }}
         </b-table-column>
 
         <b-table-column
@@ -80,7 +128,7 @@
           centered
           >
            <b-button
-            type="is-primary is-light"
+            type="is-danger"
             outlined
             v-on:click="updatePortfolio(props.row.pfSeq)"
             position="is-centered"
@@ -88,13 +136,13 @@
             >수정</b-button
           >
            <b-button
-            type="is-danger is-light"
+            type="is-danger"
             outlined
             v-on:click="deletePortfolio(props.row.pfSeq)"
             position="is-centered"
             size="is-small"
             >삭제</b-button
-         >
+          >
         </b-table-column>
         <template #detail="props">
           <article class="media">
@@ -111,15 +159,14 @@
                   <br />
                   관련 링크 : <strong>{{ props.row.pfLink }}</strong>
                   <br />
-                  <b-field v-if="props.row.pfPosition === '개발자'">
-                  사용 툴 : <b-tag type="is-success" size="is-small">{{ props.row.pfTools }}</b-tag>
-                  </b-field>
-                  <b-field v-if="props.row.pfPosition === '개발자'">
-                  사용 언어 : <b-tag type="is-info" size="is-small">{{ props.row.pfLang }}</b-tag>
-                  </b-field>
-                  <b-field v-if="props.row.pfPosition === '개발자'">
-                  사용 DBMS : <b-tag type="is-dark" size="is-small">{{ props.row.pfDbms }}</b-tag>
-                  </b-field>
+                  카테고리 :
+                  <strong>{{ props.row.pfCategory }}</strong> <br />
+                  사용 툴 : <strong>{{ props.row.pfTools }}</strong>
+                  <br />
+                  사용 언어 : <strong>{{ props.row.pfLang }}</strong>
+                  <br />
+                  사용 DBMS : <strong>{{ props.row.pfDbms }}</strong>
+                  <br />
                 </p>
               </div>
             </div>
@@ -140,7 +187,6 @@ export default {
     const portfolio = [];
     return {
       portfolio,
-      pfPosition: "",
       isHoverable: true,
       cc: 4,
     };

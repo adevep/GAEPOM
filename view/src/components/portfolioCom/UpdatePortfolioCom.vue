@@ -40,7 +40,7 @@
               size="is-medium"
               align="left"
             />
-
+            
             <b-field label="프로젝트 기간" align="left">
               <b-datepicker
                 placeholder="클릭해 기간을 선택하세요."
@@ -52,14 +52,6 @@
               >
               </b-datepicker>
             </b-field>
-
-            <BInputWithValidation
-              rules="required"
-              label="프로젝트 기간"
-              v-model="pfDuration"
-              size="is-medium"
-              align="left"
-            />
 
             <BInputWithValidation
               rules="required|numeric|max:2"
@@ -105,7 +97,6 @@
               rules="required"
               label="프로젝트 희망직무"
               v-model="pfPosition"
-              size="is-medium"
               align="left"
             >
               <option value="개발자">개발자</option>
@@ -209,13 +200,13 @@
             <br />
             <div class="buttons">
               <button
-                class="button is-primary"
+                class="button is-primary is-light"
                 size="is-large"
                 v-on:click="handleSubmit(updatePortfolio)"
               >
                 <span>포트폴리오 수정</span>
               </button>
-              <button class="button" @click="resetForm">
+              <button class="button is-warning is-light" @click="resetForm">
                 <span>재입력</span>
               </button>
             </div>
@@ -250,6 +241,7 @@ export default {
   },
   data() {
     return {
+      pfSeq: "",
       pfSubtitle: "",
       pfDuration: [],
       pfDescription: "",
@@ -263,12 +255,13 @@ export default {
     };
   },
   methods: {
-    portfolioInfoCall() {
+    portfolioUpdateInfoCall() {
       axios
-        .get("/portfolio/" + this.$route.params.pfSeq)
-        .then((response) => {
-          console.log(response.data);
-          alert(response.data);
+        .get(
+          "/portfolio/" + this.$route.params.pfSeq
+        )
+        .then(response => {
+          this.pfSeq = response.data.pfSeq;
           this.pfSubtitle = response.data.pfSubtitle;
           this.pfDuration = response.data.pfDuration;
           this.pfDescription = response.data.pfDescription;
@@ -283,13 +276,33 @@ export default {
             this.pfDbms = response.data.pfDbms.split(",");
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     },
     updatePortfolio() {
+      let myDate = new Date(Date.parse(this.pfDuration[0]));
+      let myDate2 = new Date(Date.parse(this.pfDuration[1]));
+      let date1 =
+        myDate.getFullYear() +
+        "." +
+        ("0" + (myDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate.getDate()).slice(-2);
+      let date2 =
+        myDate2.getFullYear() +
+        "." +
+        ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate2.getDate()).slice(-2);
+      let date3 = [];
+      date3.push(date1);
+      date3.push(date2);
+      this.pfDuration = date3.join("-");
+
       let formData = new FormData();
 
+      formData.append("pfSeq", this.pfSeq);
       formData.append("pfSubtitle", this.pfSubtitle);
       formData.append("pfDuration", this.pfDuration);
       formData.append("pfDescription", this.pfDescription);
@@ -304,16 +317,15 @@ export default {
       }
       axios
         .put(
-          "http://localhost:80/updateportfolio/" + this.$route.params.pfSeq,
-          formData
-        )
-        .then(() => {
+          "http://localhost:80/updateportfolio/" + this.$route.params.pfSeq, formData, {
+        })
+        .then(response => {
           this.success();
+          console.log(response);
           router.push({ name: "mypage" });
         })
-        .catch(function () {
+        .catch(() => {
           this.danger();
-          console.log("FAILURE!!");
         });
     },
     resetForm() {
@@ -340,14 +352,14 @@ export default {
     },
     danger() {
       this.$buefy.notification.open({
-        message: `포트폴리오 수정 내용를 정확히 작성해주세요.`,
+        message: "포트폴리오 수정 내용를 정확히 작성해주세요.",
         type: "is-danger",
         position: "is-bottom-right",
       });
     },
   },
   mounted() {
-    this.portfolioInfoCall();
+    this.portfolioUpdateInfoCall();
   },
 };
 </script>
