@@ -244,7 +244,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import Application from "@/components/applicationCom/Application.vue";
@@ -282,6 +282,7 @@ export default {
     ...mapState(["imgURL"])
   },
   methods: {
+    ...mapActions(["loginUserAct"]),
     // 포트폴리오 부분
     retrievePortfolios() {
       axios
@@ -339,7 +340,7 @@ export default {
     loginUserInfoCall() {
       axios
         .get(
-          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.loginUser = response.data;
@@ -354,11 +355,11 @@ export default {
     deleteUser() {
       axios
         .delete(
-          "http://localhost:80/deleteuser?userid=" + this.loginUser.userId
+          "http://localhost:80/user/delete?userid=" + this.loginUser.userId
         )
         .then(() => {
           sessionStorage.removeItem("user");
-          this.loginUser = null;
+          this.loginUserAct(null);
           this.success();
         })
         .catch(() => {

@@ -81,7 +81,9 @@
                 trackInfo.project.pjDuration
               }}</b-tag> -->
             </b-taglist>
-              <h2 class="title is-4 mt-5"><i class="xi-lightbulb"></i>  {{ trackInfo.project.pjTitle }}</h2>
+            <h2 class="title is-4 mt-5">
+              <i class="xi-lightbulb"></i> {{ trackInfo.project.pjTitle }}
+            </h2>
             <h2 class="subtitle">
               {{ trackInfo.project.pjDescription }} 
             </h2>
@@ -219,7 +221,7 @@ export default {
       //
       this.axios
         .put(
-          "/updateusertliked?userid=" +
+          "http://localhost:80/user/updatetliked?userid=" +
             this.userdatas.userId +
             "&tliked=" +
             this.likeArray.toString()
@@ -235,7 +237,7 @@ export default {
     },
     getUser: function() {
       this.axios
-        .get("/getuser?userid=" + this.userdatas.userId)
+        .get("http://localhost:80/user/get?userid=" + this.userdatas.userId)
         .then((response) => {
           console.warn(response.data);
           this.likeSeq = response.data.tliked;

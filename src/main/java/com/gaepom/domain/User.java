@@ -2,8 +2,10 @@ package com.gaepom.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -57,11 +59,11 @@ public class User {
 	private String tLiked;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="userId")
+	@OneToMany(mappedBy="userId", cascade=CascadeType.REMOVE)
 	private List<Portfolio> portfolios;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="userId")
+	@OneToMany(mappedBy="userId", cascade=CascadeType.REMOVE)
 	private List<Project> projects;
 
 }

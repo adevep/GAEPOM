@@ -1,6 +1,10 @@
 package com.gaepom.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +19,11 @@ public class LoginController {
 
 	@Autowired
 	private UserService userservice;
-
+	
 	@PostMapping("/login")
-	public User login(@RequestParam String userid, @RequestParam String password) {
+	public ResponseEntity<User> login(@RequestParam String userid, @RequestParam String password) {
 		User loginUser = userservice.login(userid, password);
-		return loginUser;
+		return new ResponseEntity<>(loginUser, HttpStatus.OK);
 	}
 }
 
