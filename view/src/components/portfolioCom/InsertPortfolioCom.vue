@@ -16,7 +16,6 @@
           v-model="pfSubtitle"
           size="is-medium"
           align="left"
-          rounded
         />
         <b-field label="프로젝트 기간" align="left">
           <b-datepicker
@@ -36,7 +35,7 @@
           v-model="participation"
           size="is-medium"
           align="left"
-          rounded
+          
         />
         <BInputWithValidation
           rules="required"
@@ -45,7 +44,7 @@
           v-model="pfLink"
           size="is-medium"
           align="left"
-          rounded
+          
         />
         <BInputWithValidation
           rules="required|max:300"
@@ -55,7 +54,7 @@
           v-model="pfDescription"
           size="is-medium"
           align="left"
-          rounded
+          
         />
         <BSeletWithValidation
           rules="required"
@@ -74,7 +73,7 @@
           v-model="pfPosition"
           size="is-medium"
           align="left"
-          rounded
+          
         >
           <option value="개발자">개발자</option>
           <option value="기획자">기획자</option>
@@ -194,7 +193,7 @@
             type="is-primary"
             outlined
             size="is-large"
-            v-on:click="handleSubmit(insertPortfolio)"
+            v-on:click="handleSubmit(submitPortfolio)"
           >
             <span>포트폴리오 등록</span>
           </button>
@@ -243,7 +242,7 @@ export default {
     };
   },
   methods: {
-    insertPortfolio() {
+    submitPortfolio() {
       let myDate = new Date(Date.parse(this.pfDuration[0]));
       let myDate2 = new Date(Date.parse(this.pfDuration[1]));
       let date1 =
@@ -282,7 +281,7 @@ export default {
         formData.append("pflanglist", this.pfLang);
         formData.append("pfdbmslist", this.pfDbms);
       }
-      axios.post("http://localhost:80/insertportfolio", formData, {
+      axios.post("http://localhost:80/portfolio/insert", formData, {
         headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -319,7 +318,7 @@ export default {
     },
     danger() {
       this.$buefy.notification.open({
-        message: "포트폴리오를 정확히 작성해주세요.",
+        message: `포트폴리오를 정확히 작성해주세요.`,
         type: "is-danger",
         position: "is-bottom-right",
       });

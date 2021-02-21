@@ -6,13 +6,13 @@ import com.gaepom.domain.Portfolio;
 
 public interface PortfolioService {
 	
-	Portfolio insertPortfolio(String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid, Portfolio portfolio);
+	public Portfolio insertPortfolio(Portfolio portfolio, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid);
 
-	Portfolio getPortfolio(Long pfSeq);
-
-	List<Portfolio> getPortfolioList(String userid);
-
-	Portfolio updatePortfolio(Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, Portfolio portfolio);
-
-	void deletePortfolio(Long pfSeq);
+	public Portfolio getPortfolio(Long pfSeq);
+	
+	public List<Portfolio> getPortfolioList(String userid);
+	
+	public Portfolio updatePortfolio(Portfolio portfolio, Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist);
+	
+	public void deletePortfolio(Long pfSeq);
 }

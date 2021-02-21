@@ -202,7 +202,7 @@
               <button
                 class="button is-primary is-light"
                 size="is-large"
-                v-on:click="handleSubmit(updatePortfolio)"
+                v-on:click="handleSubmit(submitPortfolio)"
               >
                 <span>포트폴리오 수정</span>
               </button>
@@ -258,7 +258,7 @@ export default {
     portfolioUpdateInfoCall() {
       axios
         .get(
-          "/portfolio/" + this.$route.params.pfSeq
+          "http://localhost:80/portfolio/get?pfSeq=" + this.$route.params.pfSeq
         )
         .then(response => {
           this.pfSeq = response.data.pfSeq;
@@ -280,7 +280,7 @@ export default {
           console.log(e);
         });
     },
-    updatePortfolio() {
+    submitPortfolio() {
       let myDate = new Date(Date.parse(this.pfDuration[0]));
       let myDate2 = new Date(Date.parse(this.pfDuration[1]));
       let date1 =
@@ -317,11 +317,10 @@ export default {
       }
       axios
         .put(
-          "http://localhost:80/updateportfolio/" + this.$route.params.pfSeq, formData, {
+          "http://localhost:80/portfolio/update", formData, {
         })
-        .then(response => {
+        .then(() => {
           this.success();
-          console.log(response);
           router.push({ name: "mypage" });
         })
         .catch(() => {
@@ -352,7 +351,7 @@ export default {
     },
     danger() {
       this.$buefy.notification.open({
-        message: "포트폴리오 수정 내용를 정확히 작성해주세요.",
+        message: `포트폴리오 수정 내용를 정확히 작성해주세요.`,
         type: "is-danger",
         position: "is-bottom-right",
       });

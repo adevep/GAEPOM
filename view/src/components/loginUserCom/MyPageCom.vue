@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import Application from "@/components/applicationCom/Application.vue";

@@ -4,7 +4,6 @@
       <b-table
         :data="portfolio"
         ref="table"
-        :opened-detailed="defaultOpenedDetails"
         detailed
         detail-key="pfSeq"
         @details-open="(row) => $buefy.toast.open()"
@@ -132,7 +131,6 @@
 
 <script>
 import axios from "axios";
-import router from "../../router";
 
 export default {
   name: "portfoliolist",
@@ -140,7 +138,6 @@ export default {
     const portfolio = [];
     return {
       portfolio,
-      pfPosition: "",
       isHoverable: true,
       cc: 4,
     };
@@ -149,15 +146,14 @@ export default {
     portfolioInfoCall() {
       axios
         .get(
-          "/portfolios?userid=" +
+          "http://localhost:80/portfolio/getlist?userid=" +
             JSON.parse(sessionStorage.getItem("user")).userId
         )
-        .then((response) => {
+        .then(response => {
           this.portfolio = response.data;
-          console.log(response.data);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch(() => {
+          alert("포트폴리오 조회 실패");
         });
     },
     updatePortfolio(pfseq) {
@@ -166,19 +162,20 @@ export default {
         params: { pfSeq: pfseq },
       });
     },
+    //
     deletePortfolio(pfSeq) {
       axios
-        .delete("http://localhost:80/deleteportfolio/" + pfSeq)
+        .delete(
+          "http://localhost:80/portfolio/delete?pfSeq=" + pfSeq
+        )
         .then(() => {
-          this.portfolio = null;
-          this.success();
           this.portfolioInfoCall();
-          router.push({ name: "mypage" });
+          this.success();
         })
         .catch(() => {
           this.danger();
         });
-      router.push({ name: "Home" });
+        this.portfolioInfoCall();
     },
     success() {
       this.$buefy.notification.open({

@@ -17,45 +17,34 @@ import com.gaepom.exception.PortfolioNotFoundException;
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
 
-	public static final Logger logger = LoggerFactory.getLogger(PortfolioServiceImpl.class);
-
 	@Autowired
 	private PortfolioRepository portfoliorepo;
 
 	@Autowired
 	private UserRepository userrepo;
 
+	public final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	// ===== CREATE =====
-	public Portfolio insertPortfolio(String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid,
-			Portfolio portfolio) {
-		
-		Optional<User> user = userrepo.findById(userid);
-		
-		if (user.isPresent()) {
+	public Portfolio insertPortfolio(Portfolio portfolio, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid) {
+		Optional<User> findUser = userrepo.findById(userid);
+		if (findUser.isPresent()) {
 			if (pflanglist != null && pfdbmslist == null) {
-				
 				portfolio.setPfTools(String.join(",", pftoolslist));
 				portfolio.setPfLang(String.join(",", pflanglist));
-				portfolio.setUserId(user.get());
-				
+				portfolio.setUserId(findUser.get());
 			} else if (pflanglist == null && pfdbmslist != null) {
-				
 				portfolio.setPfTools(String.join(",", pftoolslist));
 				portfolio.setPfDbms(String.join(",", pfdbmslist));
-				portfolio.setUserId(user.get());
-				
+				portfolio.setUserId(findUser.get());
 			} else if (pflanglist == null && pfdbmslist == null) {
-				
 				portfolio.setPfTools(String.join(",", pftoolslist));
-				portfolio.setUserId(user.get());
-				
+				portfolio.setUserId(findUser.get());
 			} else {
-				
 				portfolio.setPfTools(String.join(",", pftoolslist));
 				portfolio.setPfLang(String.join(",", pflanglist));
 				portfolio.setPfDbms(String.join(",", pfdbmslist));
-				portfolio.setUserId(user.get());
-				
+				portfolio.setUserId(findUser.get());
 			}
 			logger.info("생성 완료 | {}: 포트폴리오 생성됨", portfolio);
 			return portfoliorepo.save(portfolio);
@@ -67,101 +56,90 @@ public class PortfolioServiceImpl implements PortfolioService {
 
 	// ===== READ =====
 	public Portfolio getPortfolio(Long pfSeq) {
-		
-		if (portfoliorepo.findByPfSeq(pfSeq) != null) {
-			logger.info("조회 완료 | {}: 포트폴리오 조회됨", pfSeq);
-			return portfoliorepo.findByPfSeq(pfSeq);
+		Optional<Portfolio> findPortfolio = portfoliorepo.findById(pfSeq);
+		if (findPortfolio.isPresent()) {
+			logger.info("조회 완료 | {}번글: 포트폴리오 조회됨", pfSeq);
+			return findPortfolio.get();
 		} else {
-			logger.error("조회 불가 | {}: 포트폴리오 조회 불가", pfSeq);
-			throw new PortfolioNotFoundException(pfSeq + "번 포트폴리오 조회 불가");
+			logger.error("조회 불가 | {}번글: 포트폴리오 조회 불가", pfSeq);
+			throw new PortfolioNotFoundException(pfSeq + "번글 포트폴리오 조회 불가");
 		}
 	}
 
 	public List<Portfolio> getPortfolioList(String userid) {
-		
 		if (portfoliorepo.findAllPortfolioByUserId(userid) != null) {
-			logger.info("조회 완료 | {}: 포트폴리오 조회됨", userid);
+			logger.info("조회 완료 | {}님: 포트폴리오 조회됨", userid);
 			return portfoliorepo.findAllPortfolioByUserId(userid);
 		} else {
-			logger.error("조회 불가 | {}: 포트폴리오 조회 불가", userid);
+			logger.error("조회 불가 | {}님: 포트폴리오 조회 불가", userid);
 			throw new PortfolioNotFoundException("유저ID: " + userid + " 포트폴리오 조회 불가");
 		}
 	}
 
 	// ===== UPDATE =====
-	public Portfolio updatePortfolio(Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist,
-			Portfolio portfolio) {
-		
-		if (portfoliorepo.findById(pfseq) != null) {
-			
-			Portfolio currentPortfolio = portfoliorepo.findById(pfseq).get();
-			
+	public Portfolio updatePortfolio(Portfolio portfolio, Long pfseq, String[] pftoolslist,
+			String[] pflanglist, String[] pfdbmslist) {
+		Optional<Portfolio> findPortfolio = portfoliorepo.findById(portfolio.getPfSeq());
+		if (findPortfolio.isPresent()) {
 			if (pflanglist != null && pfdbmslist == null) {				
-
-				currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
-				currentPortfolio.setPfDuration(portfolio.getPfDuration());
-				currentPortfolio.setPfDescription(portfolio.getPfDescription());
-				currentPortfolio.setParticipation(portfolio.getParticipation());
-				currentPortfolio.setPfLink(portfolio.getPfLink());
-				currentPortfolio.setPfCategory(portfolio.getPfCategory());
-				currentPortfolio.setPfPosition(portfolio.getPfPosition());
-				currentPortfolio.setPfTools(String.join(",", pftoolslist));
-				currentPortfolio.setPfLang(String.join(",", pflanglist));
-				
+				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findPortfolio.get().setParticipation(portfolio.getParticipation());
+				findPortfolio.get().setPfLink(portfolio.getPfLink());
+				findPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				findPortfolio.get().setPfLang(String.join(",", pflanglist));
 			} else if (pflanglist == null && pfdbmslist != null) {
-				
-				currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
-				currentPortfolio.setPfDuration(portfolio.getPfDuration());
-				currentPortfolio.setPfDescription(portfolio.getPfDescription());
-				currentPortfolio.setParticipation(portfolio.getParticipation());
-				currentPortfolio.setPfLink(portfolio.getPfLink());
-				currentPortfolio.setPfCategory(portfolio.getPfCategory());
-				currentPortfolio.setPfPosition(portfolio.getPfPosition());
-				currentPortfolio.setPfTools(String.join(",", pftoolslist));
-				currentPortfolio.setPfDbms(String.join(",", pfdbmslist));
-				
+				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findPortfolio.get().setParticipation(portfolio.getParticipation());
+				findPortfolio.get().setPfLink(portfolio.getPfLink());
+				findPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				findPortfolio.get().setPfDbms(String.join(",", pfdbmslist));
 			} else if (pflanglist == null && pfdbmslist == null) {
-				
-				currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
-				currentPortfolio.setPfDuration(portfolio.getPfDuration());
-				currentPortfolio.setPfDescription(portfolio.getPfDescription());
-				currentPortfolio.setParticipation(portfolio.getParticipation());
-				currentPortfolio.setPfLink(portfolio.getPfLink());
-				currentPortfolio.setPfCategory(portfolio.getPfCategory());
-				currentPortfolio.setPfPosition(portfolio.getPfPosition());
-				currentPortfolio.setPfTools(String.join(",", pftoolslist));
-				
+				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findPortfolio.get().setParticipation(portfolio.getParticipation());
+				findPortfolio.get().setPfLink(portfolio.getPfLink());
+				findPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
 			} else {
-				
-				currentPortfolio.setPfSubtitle(portfolio.getPfSubtitle());
-				currentPortfolio.setPfDuration(portfolio.getPfDuration());
-				currentPortfolio.setPfDescription(portfolio.getPfDescription());
-				currentPortfolio.setParticipation(portfolio.getParticipation());
-				currentPortfolio.setPfLink(portfolio.getPfLink());
-				currentPortfolio.setPfCategory(portfolio.getPfCategory());
-				currentPortfolio.setPfPosition(portfolio.getPfPosition());
-				currentPortfolio.setPfTools(String.join(",", pftoolslist));
-				currentPortfolio.setPfLang(String.join(",", pflanglist));
-				currentPortfolio.setPfDbms(String.join(",", pfdbmslist));
-				
+				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findPortfolio.get().setParticipation(portfolio.getParticipation());
+				findPortfolio.get().setPfLink(portfolio.getPfLink());
+				findPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				findPortfolio.get().setPfLang(String.join(",", pflanglist));
+				findPortfolio.get().setPfDbms(String.join(",", pfdbmslist));
 			}
-			logger.info("수정 완료 | {}번 포트폴리오 수정됨", pfseq);
-			portfoliorepo.save(currentPortfolio);
-			return currentPortfolio;
+			portfoliorepo.save(findPortfolio.get());
+			logger.info("수정 완료 | {}번글 포트폴리오 수정됨", pfseq);
+			return findPortfolio.get();
 		} else {
-			logger.error("수정 불가 | {}번 포트폴리오 수정 불가", pfseq);
-			throw new PortfolioNotFoundException(pfseq + "번 포트폴리오 수정 불가");
+			logger.error("수정 불가 | {}번글 포트폴리오 수정 불가", pfseq);
+			throw new PortfolioNotFoundException(pfseq + "번글 포트폴리오 수정 불가");
 		}
 	}
 
 	// ===== DELETE =====
 	public void deletePortfolio(Long pfSeq) {
-		if (portfoliorepo.findByPfSeq(pfSeq) != null) {
-			logger.info("삭제 완료 | {}번 포트폴리오 조회 및 삭제 완료됨", pfSeq);
-			portfoliorepo.deleteById(pfSeq);
+		Optional<Portfolio> findPortfolio = portfoliorepo.findById(pfSeq);
+		if (findPortfolio.isPresent()) {
+			portfoliorepo.delete(findPortfolio.get());
+			logger.info("삭제 완료 | {}번글 포트폴리오 조회 및 삭제 완료됨", pfSeq);
 		} else {
-			logger.info("삭제 불가 | {}번 포트폴리오 조회 및 삭제 불가", pfSeq);
-			throw new PortfolioNotFoundException(pfSeq + "번 포트폴리오 삭제 불가");
+			logger.info("삭제 불가 | {}번글 포트폴리오 조회 및 삭제 불가", pfSeq);
+			throw new PortfolioNotFoundException(pfSeq + "번글 포트폴리오 삭제 불가");
 		}
 	}
 }
