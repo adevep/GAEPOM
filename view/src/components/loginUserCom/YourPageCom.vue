@@ -266,8 +266,11 @@
                   </div>
                   <!-- <user-projects></user-projects> -->
                 </b-tab-item>
-                <b-tab-item label="프로젝트 트래킹글" icon="creation">
-                  주최한 프로젝트 트래킹 글 테이블
+                <b-tab-item
+                  label="내가 작성한 프로젝트 트래킹글"
+                  icon="creation"
+                >
+                <your-tracking-projects v-bind:auser="this.$route.params.pickedid" />
                 </b-tab-item>
               </b-tabs>
             </section>
@@ -283,8 +286,12 @@ import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import http from "../../http-common";
+import YourTrackingProjects from "@/components/projectTracking/YourTrackingProjects.vue";
 
 export default {
+  components: {
+    YourTrackingProjects
+  },
   data: () => ({
     pjs: [],
     // 페이지 생성 오류때문에 빈 변수 가진 객체 사용해줌

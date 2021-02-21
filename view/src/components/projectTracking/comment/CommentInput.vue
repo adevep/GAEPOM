@@ -1,10 +1,10 @@
 <template id="commentTestInput">
   <div class="commInput">
-    <br><br>
+    <br /><br />
     <article class="media">
       <!-- <figure class="media-left">
         <p class="image is-64x64">
-          <img src="https://bulma.io/images/placeholders/128x128.png" />
+          <img class="is-rounded" :src="imgURL + userInfo.userImage" />
         </p>
       </figure> -->
       <div class="media-content">
@@ -13,7 +13,7 @@
             <textarea
               class="textarea"
               id="task"
-              v-model="cmt" 
+              v-model="cmt"
               v-on:keyup.enter="addcomment"
               placeholder="Add a comment..."
             ></textarea>
@@ -30,21 +30,46 @@
 </template>
 
 <script>
-import eventBus from '../../../EventBus'
+import eventBus from "../../../EventBus";
+import { mapState } from "vuex";
+
 export default {
   name: "CommentInput",
-  data () {
-        return {
-            cmt:'',
-        }
+  data() {
+    return {
+      cmt: "",
+      userInfo: "",
+    };
+  },
+
+  computed: {
+    ...mapState(["imgURL"]),
+  },
+  methods: {
+    addcomment: function() {
+      // commentList로 이동
+      eventBus.$emit("add-comment", this.cmt);
+      console.log("eventbus 전송 후");
+      this.cmt = "";
     },
-    methods: {
-        addcomment: function () {
-            // commentList로 이동
-            eventBus.$emit('add-comment', this.cmt); 
-            console.log("eventbus 전송 후")
-            this.cmt="";
-        }
-    }
+    showComment: function() {
+      this.axios
+        .get("/getcommentlist", {
+          params: {
+            trackSeq: this.$route.params.track.trackSeq,
+          },
+        })
+        .then((response) => {
+          this.commentlist = response.data;
+          this.commentlist.sort((a, b) => a.cmtSeq - b.cmtSeq);
+        })
+        .catch((error) => {
+          console.log("에러" + error);
+        });
+    },
+  },
+  mounted () {
+    this.userInfo = JSON.parse(sessionStorage.getItem("user"))
+  }
 };
 </script>
