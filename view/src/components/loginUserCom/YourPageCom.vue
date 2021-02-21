@@ -212,20 +212,20 @@
             <section>
               <b-tabs :size="medium" :type="boxed" :expanded="expanded">
                 <b-tab-item
-                  label="내가 작성한 프로젝트 모집글"
+                  label="작성한 프로젝트 모집글"
                   icon="account-multiple-plus"
                 >
-                  <my-projects></my-projects>
+                  <user-projects></user-projects>
                 </b-tab-item>
                 <b-tab-item
-                  label="내가 작성한 프로젝트 트래킹글"
+                  label="작성한 프로젝트 트래킹글"
                   icon="creation"
                 >
                   주최한 프로젝트 트래킹 글 테이블
                 </b-tab-item>
-                <b-tab-item label="내 지원서 보기" icon="clipboard-account">
+                <!-- <b-tab-item label="내 지원서 보기" icon="clipboard-account">
                   <application></application>
-                </b-tab-item>
+                </b-tab-item> -->
               </b-tabs>
             </section>
           </b-tab-item>
@@ -240,13 +240,15 @@
 import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
-import Application from "@/components/applicationCom/Application.vue";
-import MyProjects from "@/components/projectCom/MyProjects.vue";
+//import Application from "@/components/applicationCom/Application.vue";
+import UserProjects from "@/components/projectCom/UserProjects.vue";
+// import MyProjects from "@/components/projectCom/MyProjects.vue";
 
 export default {
   components: {
-    Application,
-    MyProjects
+    //Application,
+    UserProjects
+    // MyProjects
   },
   data: () => ({
     // 페이지 생성 오류때문에 빈 변수 가진 객체 사용해줌

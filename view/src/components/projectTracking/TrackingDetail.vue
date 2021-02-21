@@ -45,6 +45,7 @@
               </router-link>
             </div>
             <nav class="level is-mobile">
+              
               <div class="level-left">
                 <a class="level-item">
                   <span class="icon is-small"
@@ -81,6 +82,11 @@
                 trackInfo.project.pjDuration
               }}</b-tag> -->
             </b-taglist>
+            <img
+                class="is-rounded"
+                :src="imgURL + trackInfo.trackImage"
+              />
+
             <h2 class="title is-4 mt-5">
               <i class="xi-lightbulb"></i> {{ trackInfo.project.pjTitle }}
             </h2>
@@ -88,16 +94,7 @@
               {{ trackInfo.project.pjDescription }} 
             </h2>
             <br />
-            <!-- <h2 class="subtitle">
-              · 프로젝트 기간 ： {{ trackInfo.project.pjDuration }} <br />
-              · 카테고리 ： {{ trackInfo.project.pjCategory }} <br />
-              · 사용 툴 ： {{ trackInfo.project.pjTools }} <br />
-              · 사용 언어 ： {{ trackInfo.project.pjLang }} <br />
-              · 사용 DBMS ： {{ trackInfo.project.pjDbms }} <br />
-              · 개발 단계 ： {{ trackInfo.stage }} <br />
-              · 이슈 사항 ： {{ trackInfo.issue }} <br />
-              · 프로젝트 결과 ： {{ trackInfo.output }} <br />
-            </h2> -->
+           
             <h2 class="subtitle">
               [ 프로젝트 기간 ] <br /> {{ trackInfo.project.pjDuration }} <br /><br />
               [ 카테고리 ] <br /> {{ trackInfo.project.pjCategory }} <br /><br />
@@ -110,20 +107,31 @@
             </h2>
               <br />
               <!-- <center> -->
-              <li>tracklike : {{ trackInfo.trackLike }}</li>
-              <li>likeFlag : {{ likeFlag }}</li>
+            
+              <div v-if="likeFlag == 0">
+            <b-button type="is-link is-light" v-on:click="addTrackingLike(trackInfo.trackSeq)"
+                icon-left="heart-outline">
+                 {{ trackInfo.trackLike }}
+            </b-button>
+              </div>
+              <div v-else>
+            <b-button type="is-link is-light" v-on:click="addTrackingLike(trackInfo.trackSeq)"
+                icon-left="cards-heart">
+                 {{ trackInfo.trackLike }}
+            </b-button>
+              </div>
               <br />
-              <button v-on:click="addTrackingLike(trackInfo.trackSeq)" icon="creation">
-                좋아요 선택하기 </button
-              ><br />
+              
+              <br />
               <router-link
-                tag="button"
+                tag="b-button"
                 v-if="userdatas.userId == trackInfo.project.userId.userId"
                 :to="{
                   name: 'ProjectTrackingUpdate',
                   params: { trackSeq: trackInfo },
                 }"
-                >수정</router-link
+                >
+                수정</router-link
               >
             <!-- </center> -->
           </b-tab-item>
