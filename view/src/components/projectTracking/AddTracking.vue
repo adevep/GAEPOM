@@ -76,6 +76,7 @@ export default {
             },
     },
     mounted () {
+      alert(this.$route.params.pjseq)
       this.showProject();
     }
 }

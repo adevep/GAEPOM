@@ -27,5 +27,8 @@ public interface ApplicationRepository extends CrudRepository<Application, Long>
 	@Query("SELECT a FROM Application a WHERE pjSeq = ?1")
 	List<Application> findApplicationByPjSeq (Project pjSeq);
 	
+//	@Query(value = "DELETE FROM Application WHERE user_id=?", nativeQuery = true)
+//	void deleteApplicationByUserId (String userid);
+	
 	
 }

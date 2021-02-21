@@ -9,8 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gaepom.dao.ApplicationRepository;
+import com.gaepom.dao.CommentRepository;
+import com.gaepom.dao.PortfolioRepository;
 import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.User;
 import com.gaepom.exception.UserException;
@@ -21,6 +25,12 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	private UserRepository userrepo;
+	@Autowired
+	private PortfolioRepository pfrepo; 
+	@Autowired
+	private ApplicationRepository apprepo;
+	@Autowired
+	private CommentRepository comrepo;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -184,7 +194,7 @@ public class UserServiceImp implements UserService {
 			throw new UserNotFoundException("해당 ID의 유저가 없습니다.");
 		}
 	}
-
+	
 	public void deleteUser(String userid) {
 
 		Optional<User> findUser = userrepo.findById(userid);
@@ -202,6 +212,13 @@ public class UserServiceImp implements UserService {
 					logger.debug("탈퇴 유저 사진 파일 삭제 실패");
 				}
 			}
+//			
+//			pfrepo.deletePortfolioByUserId(userid);
+//			System.out.println("1");
+//			apprepo.deleteApplicationByUserId(userid);
+//			System.out.println("2");
+//			comrepo.deleteCommentByUserId(userid);
+//			System.out.println("3");
 			userrepo.delete(findUser.get());
 			logger.info(userid + " 유저 탈퇴 완료");
 		} else {

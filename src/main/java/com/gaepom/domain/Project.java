@@ -2,6 +2,7 @@ package com.gaepom.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -64,7 +65,7 @@ public class Project {
 	@Column(name = "pj_dbms")
 	private String pjDbms;
 	
-	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER, cascade=CascadeType.REMOVE)
 	private List<Application> applications;
 
 //	@Override

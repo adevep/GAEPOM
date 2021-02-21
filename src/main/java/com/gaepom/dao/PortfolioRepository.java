@@ -18,4 +18,7 @@ public interface PortfolioRepository extends CrudRepository<Portfolio, Long>, Jp
 
 	@Query(value = "SELECT * FROM Portfolio", nativeQuery = true)
 	List<Portfolio> findAllPortfolios();
+
+//	@Query(value = "DELETE FROM Portfolio WHERE user_id=?", nativeQuery = true)
+//	void deletePortfolioByUserId(String userid);
 }
