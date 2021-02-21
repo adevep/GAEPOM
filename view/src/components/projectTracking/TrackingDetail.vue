@@ -23,7 +23,6 @@
                   <strong>{{ trackInfo.project.userId.name }}</strong>
                   <small>@{{ trackInfo.project.userId.userId }}</small>
                   <br />
-                  {{ trackInfo.project.userId.words }}
                   {{ trackInfo.project.userId.position }}
                 </p>
               </router-link>
@@ -91,10 +90,6 @@
                   <td>DBMS</td>
                   <td>{{ trackInfo.project.pjDbms }}</td>
                 </tr>
-                <!-- <tr>
-                     <td>applications</td> 
-                     <td>{{value.project.pjTitle}}</td>
-                </tr> -->
                 <tr>
                   <td>Description</td>
                   <td>{{ trackInfo.project.pjDescription }}</td>
@@ -134,8 +129,6 @@
                 >수정</router-link
               >
             </center>
-            <!-- <h4 class="title is-4">우대사항:</h4>
-            <h5 class="subtitle is-5">{{ pj.preference }}</h5> -->
           </b-tab-item>
           <b-tab-item label="댓글">
             <comment />
