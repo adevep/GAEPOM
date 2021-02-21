@@ -66,7 +66,7 @@
       <section v-for="pj in allPjs" :key="pj.index">
         <b-tabs type="is-boxed">
           <b-tab-item label="프로젝트">
-              <b-taglist>
+            <b-taglist>
               <b-tag type="is-primary">{{ pj.pjCategory }}</b-tag>
               <b-tag type="is-primary is-light">{{ pj.location }}</b-tag>
               <b-tag type="is-link">{{ pj.pjTools }}</b-tag>
@@ -75,13 +75,16 @@
                 new Date(pj.recDate).toLocaleDateString()
               }}</b-tag>
             </b-taglist>
-            <h2 class="title is-4 mt-5"><i class="xi-lightbulb"></i>  {{ pj.pjTitle }}</h2>
+            <h2 class="title is-4 mt-5">
+              <i class="xi-lightbulb"></i> {{ pj.pjTitle }}
+            </h2>
             <h2 class="subtitle">
-              {{ pj.pjDescription }} 
+              {{ pj.pjDescription }}
             </h2>
             <br />
             <h2 class="subtitle">
-              · 모집 직무 및 인원 ： {{ pj.needPosi }} ／ {{ pj.needNum }}명 <br />
+              · 모집 직무 및 인원 ： {{ pj.needPosi }} ／ {{ pj.needNum }}명
+              <br />
               · 모집 기간 ： {{ pj.recDuration }} <br />
               · 사용 툴 ： {{ pj.pjTools }} <br />
               · 사용 언어 ： {{ pj.pjLang }} <br />
@@ -153,7 +156,7 @@
             </section>
 
             <b-message
-              title="Success with icon"
+              title="NOTIFICATION"
               type="is-success"
               has-icon
               aria-close-label="Close message"
@@ -168,7 +171,7 @@
               <router-link
                 class="button"
                 :to="{
-                  name: 'mypage',
+                  name: 'mypage'
                 }"
                 >내 지원서 확인하기</router-link
               >

@@ -168,7 +168,7 @@
     </section>
     
     <b-message
-      title="Success with icon"
+      title="NOTIFICATION"
       type="is-success"
       has-icon
       aria-close-label="Close message"
