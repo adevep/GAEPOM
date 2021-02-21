@@ -44,7 +44,7 @@
         </b-table-column>
         <b-table-column
           field="pjSeq"
-          label="지원자 보기"
+          label="지원현황"
           sortable
           v-slot="props"
           centered
@@ -76,7 +76,7 @@
   </div>
 </template>
 <script>
-import http from "../http-common";
+import http from "../../http-common";
 
 export default {
   name: "MyProjects",

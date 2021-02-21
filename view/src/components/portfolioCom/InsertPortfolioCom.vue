@@ -249,7 +249,7 @@ export default {
       pfPosition: "",
       pfLang: [],
       pfTools: [],
-      pfDbms: [],
+      pfDbms: []
     };
   },
   methods: {

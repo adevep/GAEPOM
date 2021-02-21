@@ -21,9 +21,7 @@ import com.gaepom.domain.User;
 @Aspect
 @Configuration
 public class LoadDatabase {
-
 	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-
 	@Bean
 	CommandLineRunner initDatabase(UserRepository repository, ProjectRecruitRepository repoRecruit,
 			ProjectRepository repoProj, PortfolioRepository repoPf) {

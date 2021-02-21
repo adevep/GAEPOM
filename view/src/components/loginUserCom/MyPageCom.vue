@@ -1,5 +1,11 @@
 <template>
   <div class="mypage">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
@@ -7,6 +13,10 @@
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
     />
 
     <div class="container is-max-desktop pt-5">
@@ -40,26 +50,33 @@
       <section>
         <b-tabs type="">
           <b-tab-item label="유저 정보">
+            <!-- <br /> -->
+            <!-- <section class="section is-medium"> -->
+            <h2 class="title is-4 mt-5"><i class="xi-mail"></i> 이메일</h2>
+            <!-- <h1 class="title"><b-icon icon="xi-mail"></b-icon>이메일</h1> -->
+            <h2 class="subtitle">
+              {{ loginUser.email }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 이메일 : {{ loginUser.email }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-call"></i> 연락처</h1>
+            <h2 class="subtitle">
+              {{ loginUser.phoneNum }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 전화번호 : {{ loginUser.phoneNum }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-user"></i> 포지션</h1>
+            <h2 class="subtitle">
+              {{ loginUser.position }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 포지션 : {{ loginUser.position }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-puzzle"></i> 기술 스택</h1>
+            <h2 class="subtitle">
+              {{ loginUser.stack }}
+            </h2>
             <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 기술 : {{ loginUser.stack }}
-            </h5>
-            <br />
-            <h5 class="subtitle is-5" align="left">
-              ▶ 주소 : {{ loginUser.address }}
-            </h5>
+            <h1 class="title is-4 mt-2"><i class="xi-maker"></i> 주소</h1>
+            <h2 class="subtitle">
+              {{ loginUser.address }}
+            </h2>
             <br />
             <b-button type="is-primary is-light" @click="updateUser()"
               >정보수정</b-button
@@ -78,18 +95,18 @@
             <section>
               <b-tabs :size="medium" :type="boxed" :expanded="expanded">
                 <b-tab-item
-                  label="내가 주최한 프로젝트 모집글"
-                  icon="google-photos"
+                  label="내가 작성한 프로젝트 모집글"
+                  icon="account-multiple-plus"
                 >
                   <my-projects></my-projects>
                 </b-tab-item>
                 <b-tab-item
-                  label="내가 주최한 프로젝트 트래킹글"
-                  icon="google-photos"
+                  label="내가 작성한 프로젝트 트래킹글"
+                  icon="creation"
                 >
-                주최한 프로젝트 트래킹 글 테이블
+                  주최한 프로젝트 트래킹 글 테이블
                 </b-tab-item>
-                <b-tab-item label="내 지원서" icon="library-music">
+                <b-tab-item label="내 지원서 보기" icon="clipboard-account">
                   <application></application>
                 </b-tab-item>
               </b-tabs>
@@ -154,12 +171,26 @@ export default {
         .then(() => {
           sessionStorage.removeItem("user");
           this.loginUser = null;
-          alert("회원 탈퇴 완료");
+          this.success();
         })
         .catch(() => {
-          alert("회원 탈퇴 실패");
+          this.danger();
         });
       router.push({ name: "Home" });
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "회원 탈퇴가 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `회원 탈퇴를 실패했습니다.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
     }
   },
   mounted() {
