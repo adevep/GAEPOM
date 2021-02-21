@@ -32,24 +32,23 @@ public class PortfolioController {
 			@RequestParam String[] pftoolslist,
 			@RequestParam(required = false) String[] pflanglist,
 			@RequestParam(required = false) String[] pfdbmslist,
-			@RequestParam(required = true) String userid, Portfolio portfolio) {
-		Portfolio createportfolio = portfolioservice.createPortfolio(pftoolslist, pflanglist, pfdbmslist, userid,
-				portfolio);
-		return new ResponseEntity<>(createportfolio, HttpStatus.CREATED);
+			@RequestParam String userid, Portfolio portfolio) {
+		Portfolio insertportfolio = portfolioservice.createPortfolio(pftoolslist, pflanglist, pfdbmslist, userid, portfolio);
+		return new ResponseEntity<>(insertportfolio, HttpStatus.CREATED);
 	}
 
 	// ===== 특정 시퀀스(@param pfSeq)로 포트폴리오 조회 =====
-	@GetMapping("/portfolio/{pfSeq}")
-	public ResponseEntity<Portfolio> findPfSeqGetPortfolio(@PathVariable("pfSeq") Long pfSeq) {
-		Portfolio pfseqportfolio = portfolioservice.findPfSeqGetPortfolio(pfSeq);
-		return new ResponseEntity<>(pfseqportfolio, HttpStatus.OK);
+	@GetMapping("/get")
+	public ResponseEntity<Portfolio> findPfSeqGetPortfolio(@RequestParam Long pfSeq) {
+		Portfolio getportfolio = portfolioservice.findPfSeqGetPortfolio(pfSeq);
+		return new ResponseEntity<>(getportfolio, HttpStatus.OK);
 	}
 
 	// ===== 특정 유저명(@param userId)으로 포트폴리오 조회 =====
-	@GetMapping("/portfolios")
-	public ResponseEntity<List<Portfolio>> findUserIdGetPortfolio(@RequestParam(required = true) String userid) {
-		List<Portfolio> useridportfolios = portfolioservice.findUserIdGetPortfolio(userid);
-		return new ResponseEntity<>(useridportfolios, HttpStatus.OK);
+	@GetMapping("/getlist")
+	public ResponseEntity<List<Portfolio>> findUserIdGetPortfolio(@RequestParam String userid) {
+		List<Portfolio> getportfolios = portfolioservice.findUserIdGetPortfolio(userid);
+		return new ResponseEntity<>(getportfolios, HttpStatus.OK);
 	}
 
 	// ===== 특정 포트폴리오 수정 =====
