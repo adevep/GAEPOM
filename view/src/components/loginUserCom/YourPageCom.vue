@@ -79,15 +79,6 @@
             <h2 class="subtitle">
               {{ anotherUser.address }}
             </h2>
-            <br />
-            <b-button type="is-primary is-light" @click="updateUser()"
-              >정보수정</b-button
-            >
-            &nbsp;
-            <b-button type="is-danger is-light" @click="deleteUser()"
-              >회원탈퇴</b-button
-            >
-            <br />
           </b-tab-item>
           <b-tab-item label="포트폴리오">
             <div id="portfolios" class="container">

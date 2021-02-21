@@ -215,7 +215,7 @@
         <div class="buttons">
           <button
             class="button"
-            type="is-primary"
+            type="button is-warning is-light"
             outlined
             size="is-large"
             v-on:click="handleSubmit(submitPortfolio)"
