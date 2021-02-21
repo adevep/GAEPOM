@@ -1,5 +1,5 @@
 <template>
-  <div class="mentor">
+  <div id="app" class="container is-max-desktop pt-5">
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
@@ -9,7 +9,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
     />
-
     <!-- <section class="hero is-fullheight is-default is-bold">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -43,8 +42,29 @@
           </div>
         </div>
       </div> -->
-
-    <!-- Image -->
+    <!-- Image --> 
+    <!-- <section>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title ">
+           [ 이주의 멘토 ] - 2월 마지막주
+          </h1>
+          <h2 class="subtitle centered">
+            함께할 팀원을 선택하세요.
+          </h2>
+          <nav class="breadcrumb has-dot-separator is-centered" aria-label="breadcrumbs">
+            <ul>
+              <li><a href="#">홈페이지</a></li>
+              <li><a href="#">마이페이지</a></li>
+              <li><a href="#">프로젝트</a></li>
+              <li class="is-active">
+                <a href="#" aria-current="page">지원자 수정</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section> -->
     <section class="hero ">
       <div class="hero-body">
         <div class="container">
@@ -55,12 +75,10 @@
               <figure class="image is-16by16">
                 <!-- <img src="../assets/hee_self3.jpeg" alt="" height="800" width="600"/> -->
                 <!-- <img src="../assets/hee_self3.jpeg" alt="" ratio="16by9"/> -->
-
                 <img src="../assets/hee_blue.png" alt="" ratio="16by9" class="center" />
               </figure>
             </div>
           </div>
-
           <section class="section">
             <div class="columns">
               <div class="column is-8 is-offset-2">
@@ -83,7 +101,6 @@
               </div>
             </div>
           </section>
-
           <div class="is-divider"></div>
           <!-- 
         <section class="section">
@@ -95,7 +112,6 @@
                 <p>This is a starter template for creating a beautiful, customizable blog with minimal
                   effort. You’ll only have to change a few settings and you’re ready to go. As with all Jigsaw sites,
                   configuration settings can be found in config</p>
-               
               </div>
             </div>
           </div>
@@ -154,9 +170,7 @@
         </div>
       </div>
     </section>
-
     <!-- Articles -->
-
     <section class="hero ">
       <div class="hero-body">
         <div class="container">
@@ -179,15 +193,12 @@
                   <p class="has-text-dark">
                     前 마이크로 소프트 재직(2018.02 - 2019.06) <br>
                     現 구글 콤퓨타미래전략부 팀장...^^ (여기 뭐라할까...)
-                    
                   </p>
                 </div>
               </div>
             </div>
           </section>
-
           <div class="is-divider"></div>
-
           <section class="section">
             <div class="columns is-variable is-8">
               <div class="column is-5 is-offset-1">
@@ -207,7 +218,6 @@
                   <p class="has-text-dark">
                     - tvN 「유 퀴즈 온더 블럭」134회 '한국대 최고 아웃풋 청년' 출연 <br>
                     - SBS 「놀라운 대회 스타킹!」100회 '100회 특집! 코딩신동' 출연 <br>
-                    
                   </p>
                 </div>
               </div>
@@ -217,7 +227,6 @@
       </div>
     </section>
   </div>
-
   <!-- </div>
     </div>
   </section>

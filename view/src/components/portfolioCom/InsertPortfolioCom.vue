@@ -234,7 +234,7 @@ export default {
       pfPosition: "",
       pfLang: [],
       pfTools: [],
-      pfDbms: [],
+      pfDbms: []
     };
   },
   methods: {
@@ -276,19 +276,19 @@ export default {
       });
     },
     success() {
-                this.$buefy.notification.open({
-                    message: '포트폴리오 등록이 완료되었습니다.',
-                    type: 'is-success',
-                    position: 'is-bottom-right',
-                })
-            },
+      this.$buefy.notification.open({
+        message: "포트폴리오 등록이 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
     danger() {
-                this.$buefy.notification.open({
-                    message: `포트폴리오를 정확히 작성해주세요.`,
-                    type: 'is-danger',
-                    position: 'is-bottom-right',
-                })
-            },
-  },
+      this.$buefy.notification.open({
+        message: `포트폴리오를 정확히 작성해주세요.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
+    }
+  }
 };
 </script>

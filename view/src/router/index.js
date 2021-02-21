@@ -92,7 +92,7 @@ const routes = [
   {
     path: "/project",
     name: "Project",
-    component: () => import("../views/Project.vue")
+    component: () => import("../views/projectView/Project.vue")
   },
   {
 
@@ -103,24 +103,24 @@ const routes = [
   {
     path: "/insertproject",
     name: "insertproject",
-    component: () => import("../views/InsertProject.vue")
+    component: () => import("../views/projectView/InsertProject.vue")
   },
   {
     path: "/project/:pjNum/update",
     name: "updateproject",
-    component: () => import("../views/UpdateProject.vue"),
+    component: () => import("../views/projectView/UpdateProject.vue"),
     props: true
   },
   {
     path: "/project/:pjSeq/details",
     name: "details",
-    component: () => import("../components/ProjectDetails.vue"),
+    component: () => import("../components/projectCom/ProjectDetails.vue"),
     props: true
   },
   {
     path: "/project/:pjSeq/apps",
     name: "AllApps",
-    component: () => import("../components/AllApps.vue"),
+    component: () => import("../components/applicationCom/AllApps.vue"),
     props: true
   },
   {

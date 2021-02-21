@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="container">
     <section>
-      <!-- <v-for"app in apps" :key="app.index">
-         -->
       <b-table :data="isEmpty ? [] : apps" :hoverable="isHoverable">
         <b-table-column
           field="aplSeq"
@@ -72,7 +70,7 @@
 </template>
 
 <script>
-import http from "../http-common";
+import http from "../../http-common";
 
 export default {
   name: "Application",
@@ -137,19 +135,19 @@ export default {
         });
     },
     success() {
-                this.$buefy.notification.open({
-                    message: '성공적으로 11완료되었습니다.',
-                    type: 'is-success',
-                    position: 'is-bottom-right',
-                })
-            },
-     danger() {
-                this.$buefy.notification.open({
-                    message: `다시 한번 확인해주세요.`,
-                    type: 'is-danger',
-                    position: 'is-bottom-right',
-                })
-            },
+      this.$buefy.notification.open({
+        message: "성공적으로 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: `다시 한번 확인해주세요.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
+    }
   },
   mounted() {
     this.retrieveApps();

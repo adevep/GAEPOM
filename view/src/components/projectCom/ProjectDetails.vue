@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import http from "../http-common";
+import http from "../../http-common";
 import { mapState } from "vuex";
 
 export default {
@@ -247,19 +247,19 @@ export default {
         });
     },
     success() {
-                this.$buefy.notification.open({
-                    message: '성공적으로 완료되었습니다.',
-                    type: 'is-success',
-                    position: 'is-bottom-right',
-                })
-            },
+      this.$buefy.notification.open({
+        message: "성공적으로 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
+    },
     danger() {
-                this.$buefy.notification.open({
-                    message: `다시 한번 확인해주세요.`,
-                    type: 'is-danger',
-                    position: 'is-bottom-right',
-                })
-            },
+      this.$buefy.notification.open({
+        message: `다시 한번 확인해주세요.`,
+        type: "is-danger",
+        position: "is-bottom-right"
+      });
+    }
   },
   mounted() {
     this.retrieveRecAndPj();

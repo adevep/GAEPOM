@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import hostproject from "@/components/HostProject.vue";
+import hostproject from "@/components/projectCom/HostProject.vue";
 export default {
   name: "insertproject",
   components: {
