@@ -148,8 +148,7 @@ public class ProjectRecruitController {
 
 	// recSeq로 모집글 조회
 	@GetMapping("/get/{id}")
-	public ResponseEntity<ProjectRecruit> getRecruitByRecSeq(User user, @PathVariable("id") long id,
-			@RequestBody ProjectRecruit recruit) {
+	public ResponseEntity<ProjectRecruit> getRecruitByRecSeq(User user, @PathVariable("id") long id) {
 		if (user.getUserId() == null) {
 			System.out.println("실패1");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

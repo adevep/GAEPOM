@@ -154,8 +154,7 @@
   </div>
 </template>
 <script>
-// import ProjectTracking from "../../views/ProjectTracking.vue";
-import http from "../../http-common";
+import ProjectTracking from "../../views/ProjectTracking.vue";
 
 export default {
   name: "AddTracking",
@@ -247,7 +246,7 @@ export default {
           console.log("==========add==========");
           console.warn(response);
           console.log("==========add==========");
-          http
+          this.axios
             .get(
               "/recruit/get/" +
                 this.project.recSeq.recSeq +
@@ -256,13 +255,14 @@ export default {
             )
             .then(response => {
               this.rec = response.data;
+              alert(this.rec)
               //recruit 데이터 받아서 recSeq 0에서 1로 수정
-              http
+              this.axios
                 .put(
                   "/recruit/updaterec/" +
-                    this.project.recSeq +
+                    this.project.recSeq.recSeq +
                     "?userId=" +
-                    this.project.userId,
+                    this.project.userId.userId,
                   {
                     needNum: this.rec.needNum,
                     needPosi: this.rec.needPosi,
@@ -285,7 +285,7 @@ export default {
               this.errors.push(e);
             });
           // 페이지 이동
-          // this.$router.push(ProjectTracking);
+          this.$router.push(ProjectTracking);
         })
         .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
