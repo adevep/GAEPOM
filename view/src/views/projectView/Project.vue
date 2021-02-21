@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <recruit-list></recruit-list>
+    <recruit-list />
   </div>
 </template>
 <script>

@@ -95,7 +95,6 @@ const routes = [
     component: () => import("../views/projectView/Project.vue")
   },
   {
-
     path: "/projectTracking",
     name: "ProjectTracking",
     component: () => import("../views/ProjectTracking.vue")
@@ -114,6 +113,7 @@ const routes = [
   {
     path: "/project/:pjSeq/details",
     name: "details",
+    beforeEnter: onlyAuthUser,
     component: () => import("../components/projectCom/ProjectDetails.vue"),
     props: true
   },
@@ -132,7 +132,6 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: () => import("../views/SignUp.vue")
-
   },
   {
     path: "/projectTrackingInsert",
@@ -142,6 +141,7 @@ const routes = [
   {
     path: "/projectTrackingDetail",
     name: "ProjectTrackingDetail",
+    beforeEnter: onlyAuthUser,
     props: true,
     component: () => import("@/views/trackingView/ProjectTrackingDetail.vue")
   },
@@ -149,7 +149,13 @@ const routes = [
     path: "/projectTrackingUpdate",
     name: "ProjectTrackingUpdate",
     component: () => import("@/views/trackingView/ProjectTrackingUpdate.vue")
-  }
+  },
+  {
+    //라우트에 설정된것들을 제외한 링크로 유저가 들어갔을때 
+    //위치는 맨 마지막에 있어야 함
+    path: "/:catchAll(.*)",
+    component: () => import("@/NotFound.vue")
+  },
 ];
 
 const router = new VueRouter({

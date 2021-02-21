@@ -180,7 +180,27 @@ export default {
       console.log(this.arrLang)
       console.log(this.project.pjLang)
       this.project.pjDbms = this.arrDbms.join();
-      this.project.pjDuration = this.arrDuration.join("-");
+      //dateparsing 
+      let myDate = new Date(Date.parse(this.arrDuration[0]));
+      let myDate2 = new Date(Date.parse(this.arrDuration[1]));
+      let date1 =
+        myDate.getFullYear() +
+        "." +
+        ("0" + (myDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate.getDate()).slice(-2);
+      let date2 =
+        myDate2.getFullYear() +
+        "." +
+        ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate2.getDate()).slice(-2);
+      let date3 = [];
+      date3.push(date1);
+      date3.push(date2);
+      this.arrDuration = date3.join("-");
+
+      this.project.pjDuration = this.arrDuration;
 
       let formData = new FormData();
       formData.append("stage", this.stage);
