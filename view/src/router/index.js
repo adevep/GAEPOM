@@ -6,7 +6,6 @@ Vue.use(VueRouter);
 // 로그인 유저 거절
 const rejectAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") != null) {
-    alert("먼저 로그아웃을 해주세요!");
     next("/");
   } else {
     next();
@@ -16,7 +15,6 @@ const rejectAuthUser = (to, from, next) => {
 // 비 로그인 유저 거절
 const onlyAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") == null) {
-    alert("로그인 해주세요.");
     next("/login");
   } else {
     next();
