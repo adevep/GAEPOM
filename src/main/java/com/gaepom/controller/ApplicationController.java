@@ -2,6 +2,8 @@ package com.gaepom.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,46 +29,48 @@ public class ApplicationController {
 
 	@Autowired
 	private ApplicationService applicationService;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	// 지원 앱 생성 (완료)
 	@PostMapping("/create")
 	public ResponseEntity<Application> insertApplication(User user, Application application) {
 		if (user.getUserId() == null) {
-			// 바꿔야함
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		System.out.println("-------insertApplication--------");
 		Application app = applicationService.insertApplication(application);
+		logger.info("{} 지원 정보 생성 완료", app.getAplSeq());
 		return new ResponseEntity<>(app, HttpStatus.CREATED);
 	}
 
-	// 주최자 프로젝트 시점에 지원자들앱 보기
 	@GetMapping("/getpjapp/{pjSeq}")
 	public ResponseEntity<List<Application>> findAppByPjSeq(User user, @PathVariable("pjSeq") Project pjSeq) {
 		if (user.getUserId() == null) {
-			System.out.println("실패");
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		try {
 			List<Application> apps = applicationService.findAppByPjSeq(pjSeq);
-			System.out.println(apps);
+			logger.info("{} 프로젝트 지원 정보 조회 완료", pjSeq);
 			return new ResponseEntity<>(apps, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("{} 프로젝트 지원 정보 조회 실패", pjSeq);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	// user id로 selected 가 0인경우 해당 지원서 보기
-	// 지원진행중인 앱 보기 (수락 거절 안받은) 초기생성값
 	@GetMapping("/getapp/{userId}")
 	public ResponseEntity<List<Application>> findAppByUserId(User user, @PathVariable("userId") String userId) {
 		if (user.getUserId() == null) {
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		try {
 			List<Application> apps = applicationService.findAppByUserId(userId);
+			logger.info("{} 유저 지원 정보 조회 완료", userId);
 			return new ResponseEntity<>(apps, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("{} 유저 지원 정보 조회 실패", userId);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -74,19 +78,23 @@ public class ApplicationController {
 	@GetMapping("/getlist")
 	public ResponseEntity<List<Application>> findAllApps() {
 		List<Application> apps = applicationService.getApplicationList();
+		logger.info("{} 지원 전체 정보 조회");
 		return new ResponseEntity<>(apps, HttpStatus.OK);
 	}
 
-	// 거절당한 앱 보기 1이면 거정
+	// 거절당한 앱 보기 1이면 거절
 	@GetMapping("/rejectapp/{userId}")
 	public ResponseEntity<List<Application>> findFailedAppByUserId(User user, @PathVariable("userId") String userId) {
 		if (user.getUserId() == null) {
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		try {
 			List<Application> apps = applicationService.findFailedAppByUserId(userId);
+			logger.info("{} 유저 지원 정보 조회 완료", userId);
 			return new ResponseEntity<>(apps, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("{} 유저 지원 정보 조회 실패", userId);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -95,27 +103,29 @@ public class ApplicationController {
 	@GetMapping("/acceptapp/{userId}")
 	public ResponseEntity<List<Application>> findAcceptedAppByUserId(User user, @PathVariable("userId") String userId) {
 		if (user.getUserId() == null) {
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		try {
 			List<Application> apps = applicationService.findAcceptedAppByUserId(userId);
+			logger.info("{} 유저 지원 정보 조회 완료", userId);
 			return new ResponseEntity<>(apps, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error("{} 유저 지원 정보 조회 실패", userId);
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	// 앱 수정
-	// 시험 데이터 http://localhost:80/app/update/8?userId=user1
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Application> updateApplication(User user, @PathVariable("id") long id,
 			@RequestBody Application application) {
 		if (user.getUserId() == null) {
-			System.out.println("실패");
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		System.out.println("성공");
 		Application app = applicationService.updateApplication(id, application);
+		logger.info("{} 지원 정보 갱신 완료", id);
 		return new ResponseEntity<>(app, HttpStatus.CREATED);
 	}
 
@@ -123,11 +133,11 @@ public class ApplicationController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> deleteApplication(User user, @PathVariable("id") long id) {
 		if (user.getUserId() == null) {
-			System.out.println("실패");
+			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		System.out.println("성공");
 		applicationService.deleteApplication(id);
+		logger.info("{} 지원 정보 삭제 완료", id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
 	}
