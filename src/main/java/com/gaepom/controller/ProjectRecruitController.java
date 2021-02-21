@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +24,7 @@ import com.gaepom.domain.RequestWrapper;
 import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 import com.gaepom.service.ProjectService;
+import com.gaepom.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -36,12 +36,10 @@ public class ProjectRecruitController {
 	@Autowired
 	private ProjectService projectService;
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private UserService userService;
 
-	@ModelAttribute("guser")
-	public User setUser() {
-		return new User();
-	}
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 프로젝트 총 리스트 출력 (고쳐서 두개다 추력하게)
 	@GetMapping("/getpjs")
@@ -179,8 +177,7 @@ public class ProjectRecruitController {
 
 	// recSeq로 모집글 조회
 	@GetMapping("/get/{id}")
-	public ResponseEntity<ProjectRecruit> getRecruitByRecSeq(User user, @PathVariable("id") long id,
-			@RequestBody ProjectRecruit recruit) {
+	public ResponseEntity<ProjectRecruit> getRecruitByRecSeq(User user, @PathVariable("id") long id) {
 		if (user.getUserId() == null) {
 			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -225,6 +222,22 @@ public class ProjectRecruitController {
 			return new ResponseEntity<>(pj, HttpStatus.OK);
 		} catch (Exception e) {
 			logger.info("프로젝트 정보 조회 실패");
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/gethostedpj2/{userId}")
+	public ResponseEntity<List<Project>> getPjById(@PathVariable("userId") String userid, Project project) {
+		
+		if (userService.getUser(userid) == null) {
+			System.out.println("실패1");
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		try {	
+			List<Project> pj = projectService.getPjByUserId2(project, userid);
+			System.out.println("프로젝트 불러오기 성공");
+			return new ResponseEntity<>(pj, HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

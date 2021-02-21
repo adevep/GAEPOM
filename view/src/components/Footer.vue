@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer class="footer mt-1">
     <div class="content has-text-centered">
       <p>
         <strong>개폼</strong> by

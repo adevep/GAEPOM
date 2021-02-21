@@ -19,9 +19,9 @@
             aria-label="breadcrumbs"
           >
             <ul>
-              <li><a href="#">홈페이지</a></li>
-              <li><a href="#">마이페이지</a></li>
-              <li><a href="#">프로젝트</a></li>
+              <li><a href="/">홈페이지</a></li>
+              <li><a href="/mypage">마이페이지</a></li>
+              <li><a href="/project">프로젝트</a></li>
               <li class="is-active">
                 <a href="#" aria-current="page">지원자 수정</a>
               </li>
@@ -38,7 +38,7 @@
         :opened-detailed="defaultOpenedDetails"
         detailed
         detail-key="userId"
-        @details-open="(row) => $buefy.toast.open(`Expanded ${row.userId}`)"
+        @details-open="row => $buefy.toast.open(`Expanded ${row.userId}`)"
         :show-detail-icon="showDetailIcon"
       >
         <b-table-column
@@ -144,13 +144,6 @@
         </b-table-column>
         <template #detail="props">
           <article class="media">
-            <figure class="media-left">
-              <p class="image is-64x64">
-                <img
-                  src="https://buefy.org/static/img/placeholder-128x128.png"
-                />
-              </p>
-            </figure>
             <div class="media-content">
               <div class="content">
                 <p>
@@ -165,7 +158,7 @@
         </template>
       </b-table>
     </section>
-    
+
     <b-message
       title="NOTIFICATION"
       type="is-success"
@@ -211,14 +204,14 @@ export default {
     retrieveApps() {
       http
         .get("/app/getpjapp/" + this.pjSeq2 + "?userId=" + this.loginUser)
-        .then((response) => {
+        .then(response => {
           this.apps = response.data;
           console.log(response.data);
           http
             .get(
               "/recruit/getbypj/" + this.pjSeq2 + "?userId=" + this.loginUser
             )
-            .then((response) => {
+            .then(response => {
               this.needNum = response.data;
               console.log(response.data);
               http
@@ -228,21 +221,19 @@ export default {
                     "?userId=" +
                     this.loginUser
                 )
-                .then((response) => {
+                .then(response => {
                   this.checkCount = response.data;
                   console.log(response.data);
                 })
-                .catch((e) => {
-                  alert("에러");
+                .catch(e => {
                   console.log(e);
                 });
             })
-            .catch((e) => {
-              alert("에러");
+            .catch(e => {
               console.log(e);
             });
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
           this.errors.push(e);
         });
@@ -256,23 +247,26 @@ export default {
       }
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
-          alert(this.checkCount)
           http
             .put(
-              "/recruit/updatereccount/" + this.pjSeq2 + "?userId=" + this.loginUser + "&checkCount=" + this.checkCount
+              "/recruit/updatereccount/" +
+                this.pjSeq2 +
+                "?userId=" +
+                this.loginUser +
+                "&checkCount=" +
+                this.checkCount
             )
-            .then((response) => {
+            .then(response => {
               console.log(response.data);
             })
-            .catch((e) => {
-              alert("에러");
+            .catch(e => {
               console.log(e);
             });
         })
 
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
           this.errors.push(e);
         });
@@ -286,22 +280,26 @@ export default {
       }
       http
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
-        .then((response) => {
+        .then(response => {
           console.log(response.data.selected);
 
           http
             .put(
-              "/recruit/updatereccount/" + this.pjSeq2 + "?userId=" + this.loginUser + "&checkCount=" + this.checkCount
+              "/recruit/updatereccount/" +
+                this.pjSeq2 +
+                "?userId=" +
+                this.loginUser +
+                "&checkCount=" +
+                this.checkCount
             )
-            .then((response) => {
+            .then(response => {
               console.log(response.data);
             })
-            .catch((e) => {
-              alert("에러");
+            .catch(e => {
               console.log(e);
             });
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
           this.errors.push(e);
         });
@@ -313,9 +311,9 @@ export default {
         cancelText: "?",
         confirmText: "팀원들과 함께 프로젝트 트래킹 페이지 만들기.",
         type: "is-success",
-        onConfirm: () => this.$buefy.toast.open("User agreed"),
+        onConfirm: () => this.$buefy.toast.open("User agreed")
       });
-    },
+    }
   },
   mounted() {
     this.retrieveApps();
@@ -346,7 +344,7 @@ export default {
         }).length;
         return countFiltered;
       } else return countFiltered;
-    },
-  },
+    }
+  }
 };
 </script>

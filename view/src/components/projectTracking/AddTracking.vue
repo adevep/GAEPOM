@@ -1,5 +1,34 @@
 <template>
-  <div class="container is-max-desktop">
+  <div id="app" class="container is-max-desktop pt-5">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <section>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title ">
+            프로젝트 트레킹
+          </h1>
+          <h2 class="subtitle centered">
+            프로젝트를 진행 해 보세요.
+          </h2>
+          <nav
+            class="breadcrumb has-dot-separator is-centered"
+            aria-label="breadcrumbs"
+          >
+            <ul>
+              <li><a href="/">홈페이지</a></li>
+              <li><a href="/mypage">마이페이지</a></li>
+              <li class="is-active">
+                <a href="#" aria-current="page">프로젝트 주최</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
     <div class="notification is-accent">
       <h1><strong>프로젝트 트레킹글 만들기</strong></h1>
       <section class="mt-6 mb-5">
@@ -170,6 +199,7 @@ export default {
       arrLang: [],
       arrTools: [],
       arrDbms: [],
+      rec: []
     };
   },
 
@@ -177,10 +207,10 @@ export default {
     addTracking: function() {
       this.project.pjTools = this.arrTools.join();
       this.project.pjLang = this.arrLang.join();
-      console.log(this.arrLang)
-      console.log(this.project.pjLang)
+      console.log(this.arrLang);
+      console.log(this.project.pjLang);
       this.project.pjDbms = this.arrDbms.join();
-      //dateparsing 
+      //dateparsing
       let myDate = new Date(Date.parse(this.arrDuration[0]));
       let myDate2 = new Date(Date.parse(this.arrDuration[1]));
       let date1 =
@@ -237,18 +267,54 @@ export default {
           { project: this.project },
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-            },
+              "Content-Type": "multipart/form-data"
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           console.log("==========add==========");
           console.warn(response);
           console.log("==========add==========");
+          this.axios
+            .get(
+              "/recruit/get/" +
+                this.project.recSeq.recSeq +
+                "?userId=" +
+                this.project.userId.userId
+            )
+            .then(response => {
+              this.rec = response.data;
+              //recruit 데이터 받아서 recSeq 0에서 1로 수정
+              this.axios
+                .put(
+                  "/recruit/updaterec/" +
+                    this.project.recSeq.recSeq +
+                    "?userId=" +
+                    this.project.userId.userId,
+                  {
+                    needNum: this.rec.needNum,
+                    needPosi: this.rec.needPosi,
+                    location: this.rec.location,
+                    preference: this.rec.preference,
+                    recDuration: this.rec.recDuration,
+                    recStatus: 1
+                  }
+                )
+                .then(response => {
+                  console.log("==========add==========");
+                  console.warn(response);
+                  console.warn(response.data);
+                  console.log("==========add==========");
+                });
+            })
+            .catch(e => {
+              console.log(e);
+              this.errors.push(e);
+            });
           // 페이지 이동
           this.$router.push(ProjectTracking);
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
     },
@@ -257,19 +323,19 @@ export default {
       this.axios
         .get("/project/getproject", {
           params: {
-            projectId: this.$route.params.pjseq,
-          },
+            projectId: this.$route.params.pjseq
+          }
         })
-        .then((response) => {
+        .then(response => {
           this.project = response.data;
           this.arrLang = this.project.pjLang.split(",");
           this.arrTools = this.project.pjTools.split(",");
           this.arrDbms = this.project.pjDbms.split(",");
           this.arrDuration[0] = new Date(this.project.pjDuration.split("-")[0]);
           this.arrDuration[1] = new Date(this.project.pjDuration.split("-")[1]);
-          console.log(this.project)
+          console.log(this.project);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("에러" + error);
         });
     },
@@ -279,10 +345,10 @@ export default {
       console.log(this.file);
       this.file = this.$refs.file.files[0];
       console.log(this.file);
-    },
+    }
   },
   mounted() {
     this.showProject();
-  },
+  }
 };
 </script>

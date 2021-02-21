@@ -7,18 +7,19 @@
     >
       <figure class="media-left">
         <p class="image is-64x64">
-          <img src="https://bulma.io/images/placeholders/128x128.png" />
+          <img class="is-rounded" :src="imgURL + userInfo.userImage" />
         </p>
       </figure>
       <div class="media-content">
         <div class="content">
           <p>
+            
             <strong>{{ value.userId }}</strong>
             <br />
             {{ value.cmt }}
             <br />
             <small
-              ><a>Like</a> · <a>Reply</a> {{ value.cmtDate }}
+              > {{ value.cmtDate }}
               <span class="close" v-on:click.stop="deletecomment(value.cmtSeq, value.userId)"
                 ><p v-if="value.userId == userInfo.userId">delete</p></span
               ></small
@@ -32,6 +33,7 @@
 
 <script>
 import eventBus from "../../../EventBus";
+import { mapState } from "vuex";
 
 export default {
   name: "CommentList",
@@ -44,6 +46,10 @@ export default {
 
   created: function() {
     eventBus.$on("add-comment", this.addcomment);
+  },
+
+  computed: {
+    ...mapState(["imgURL"]),
   },
 
   methods: {
@@ -81,12 +87,13 @@ export default {
           .post("/insertcomment", this.commentlist[this.commentlist.length - 1])
           .then((response) => {
             console.warn(response.data);
+            this.showComment();
           })
           .catch((ex) => {
             console.warn("ERROR!!!!! : ", ex);
           });
       }
-      this.showComment();
+      
     },
 
     deletecomment: function(id, user) {
