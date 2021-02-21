@@ -52,7 +52,7 @@
           v-slot="props"
           centered
         >
-          <button @click="deleteTracking(props.row.trackSeq)">삭제</button>
+          <b-button @click="deleteTracking(props.row.trackSeq)">삭제</b-button>
         </b-table-column>
       </b-table>
     </section>

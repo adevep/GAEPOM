@@ -83,9 +83,9 @@
               >회원탈퇴</b-button
             >
           </b-tab-item>
-          
+
           <b-tab-item label="포트폴리오 관리">
-                  <portfolio-list></portfolio-list>
+            <portfolio-list></portfolio-list>
           </b-tab-item>
 
           <b-tab-item label="프로젝트 관리">
@@ -122,12 +122,15 @@ import router from "../../router";
 import Application from "@/components/applicationCom/Application.vue";
 import MyProjects from "@/components/projectCom/MyProjects.vue";
 import PortfolioList from "@/views/portfolioView/PortfolioList.vue";
+import MyTrackingProjects from "@/components/projectTracking/MyTrackingProjects.vue";
+
 export default {
   components: {
     Application,
     MyProjects,
-    PortfolioList
-  },
+    PortfolioList,
+    MyTrackingProjects
+},
   data: () => ({
     loginUser: {
       userImage: "default.png",
@@ -137,7 +140,7 @@ export default {
       phoneNum: "",
       position: "",
       stack: ""
-    },
+    }
   }),
   computed: {
     ...mapState(["imgURL"])
@@ -147,7 +150,8 @@ export default {
     loginUserInfoCall() {
       axios
         .get(
-          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" +
+            JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.loginUser = response.data;
