@@ -1,5 +1,22 @@
 <template>
   <div class="ProjectDetails">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
+    />
     <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
         <article class="media">
@@ -58,29 +75,31 @@
                 new Date(pj.recDate).toLocaleDateString()
               }}</b-tag>
             </b-taglist>
-            <h4 class="title is-4">{{ pj.pjTitle }}</h4>
-            <h5 class="subtitle is-5">
-              프로젝트는 "{{ pj.pjDescription }}" 입니다.
-              <br />
-              저희는 {{ pj.needNum }}명의 {{ pj.needPosi }}를 찾고 있습니다.
-              <br />
-              모집기간은 "{{ pj.recDuration }}"입니다.
-              <br />
-
-              <!-- {{ pj.recStatus }} -->
-              사용툴은 {{ pj.pjTools }}와 같습니다.
-              <br />
-              사용언어는 {{ pj.pjLang }}와 같습니다.
-              <br />
-              사용DBMS는 {{ pj.pjDbms }}와 같습니다.
-              <br />
-              저희와 함께하시려면 {{ pj.location }}로 오세요.
-            </h5>
+            <h2 class="title is-4 mt-5">
+              <i class="xi-lightbulb"></i> {{ pj.pjTitle }}
+            </h2>
+            <h2 class="subtitle">
+              {{ pj.pjDescription }}
+            </h2>
             <br />
-            <h4 class="title is-4">우대사항:</h4>
-            <h5 class="subtitle is-5">{{ pj.preference }}</h5>
+            <h2 class="subtitle">
+              · 모집 직무 및 인원 ： {{ pj.needPosi }} ／ {{ pj.needNum }}명
+              <br />
+              · 모집 기간 ： {{ pj.recDuration }} <br />
+              · 사용 툴 ： {{ pj.pjTools }} <br />
+              · 사용 언어 ： {{ pj.pjLang }} <br />
+              · 사용 DBMS ： {{ pj.pjDbms }} <br />
+              · 지역 ： {{ pj.location }} <br />
+              · 우대사항 ： {{ pj.preference }} <br />
+            </h2>
 
-            <div v-if="loginUser.userId != pj.userId.userId">
+            <!-- 프로젝트 주최자와 로그인한 유저및 이전에 지원한 유저의 데이터랑 다를때만 지원버튼 출력 -->
+            <div
+              v-if="
+                loginUser.userId != pj.userId.userId &&
+                  loginUser.userId != appliedUser
+              "
+            >
               <b-button
                 label="지원하기"
                 type="is-primary"
@@ -135,8 +154,30 @@
                 </div>
               </b-modal>
             </section>
+
+            <b-message
+              title="NOTIFICATION"
+              type="is-success"
+              has-icon
+              aria-close-label="Close message"
+              v-if="
+                loginUser.userId != pj.userId.userId &&
+                  loginUser.userId == appliedUser
+              "
+            >
+              이미 지원하신 프로젝트 입니다.
+
+              <br />
+              <router-link
+                class="button"
+                :to="{
+                  name: 'mypage'
+                }"
+                >내 지원서 확인하기</router-link
+              >
+            </b-message>
+            <b-message v-else></b-message>
           </b-tab-item>
-          <b-tab-item label="댓글"></b-tab-item>
         </b-tabs>
       </section>
     </div>
@@ -145,6 +186,7 @@
 <script>
 import http from "../../http-common";
 import { mapState } from "vuex";
+import router from "../../router";
 
 export default {
   name: "ProjectDetails",
@@ -153,6 +195,7 @@ export default {
     const all = [];
     const allPjs = [];
     const posiArray = [];
+    const apps = [];
     return {
       loginUser: {
         userImage: "default.png",
@@ -161,6 +204,8 @@ export default {
       },
       all,
       allPjs,
+      apps,
+      appliedUser: "",
       posiArray,
       aplPosi: "",
       words: "",
@@ -205,7 +250,6 @@ export default {
           array.forEach(function(element) {
             posi = [element.needPosi.split(",")].reduce(function(r, o) {
               Object.keys(o).forEach(function(k) {
-                //var n = "p";
                 r[k] = o[k];
               });
               return r;
@@ -214,7 +258,6 @@ export default {
             console.log(posi);
           });
           this.posiArray = posi;
-          //console.log(this.allPjs.shift().pjSeq);
         })
         .catch(e => {
           console.log(e);
@@ -224,7 +267,6 @@ export default {
     submitApp() {
       let formData = new FormData();
 
-      //   formData.append("aplSeq", this.allPjs.shift().aplSeq);
       formData.append("userId", this.loginUser.userId);
       formData.append("words", this.words);
       formData.append("aplPosi", this.aplPosi);
@@ -238,12 +280,30 @@ export default {
           }
         })
         .then(function() {
-          alert("SUCCESS!!");
-          //this.success();
+          alert("success");
+          router.push({ name: "Home" });
         })
         .catch(function() {
           alert("FAILURE!!");
           //this.danger();
+        });
+    },
+    retrieveApps() {
+      http
+        .get("/app/getpjapp/" + this.pjSeq + "?userId=" + this.loginUser.userId)
+        .then(response => {
+          this.apps = response.data;
+          console.log(response.data);
+          var apps2 = "";
+          this.apps.forEach(function(entry) {
+            apps2 = entry;
+          });
+          this.appliedUser = apps2.userId;
+          //alert(this.appliedUser);
+        })
+        .catch(e => {
+          console.log(e);
+          this.errors.push(e);
         });
     },
     success() {
@@ -263,6 +323,7 @@ export default {
   },
   mounted() {
     this.retrieveRecAndPj();
+    this.retrieveApps();
   }
 };
 </script>

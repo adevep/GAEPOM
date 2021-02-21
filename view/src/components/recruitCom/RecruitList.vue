@@ -180,31 +180,19 @@ export default {
     const all = [];
     const allPjs = [];
     return {
-      loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
+      // loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       all,
       allPjs,
       selectedLoc: "지역",
       selectedCate: "카테고리",
       searchValue: "",
-      pjLocation: null,
-      total: all.length,
-      //pagination은 나중에 연동시켜야함
-      current: 10,
-      perPage: 1,
-      rangeBefore: 3,
-      rangeAfter: 1,
-      order: "",
-      size: "",
-      isSimple: false,
-      isRounded: false,
-      prevIcon: "chevron-left",
-      nextIcon: "chevron-right"
+      pjLocation: null
     };
   },
   methods: {
     retrieveRecAndPj() {
       http
-        .get("/recruit/gettotalpj?userId=" + this.loginUser)
+        .get("/recruit/gettotalpj?userId=user1")
         .then(response => {
           this.all = response.data;
           //Joined된 데이터 나누기
