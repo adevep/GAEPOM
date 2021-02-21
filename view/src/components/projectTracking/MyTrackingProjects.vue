@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <section>
-      <b-table :data="pjs" ref="table" :hoverable="isHoverable">
+      <b-table :data="proj" ref="table" :hoverable="isHoverable">
         <b-table-column
           field="aplSeq"
           label="글"
@@ -53,24 +53,7 @@
           centered
         >
           <button @click="deleteTracking(props.row.trackSeq)">삭제</button>
-          <!-- <p>{{props.row}}</p> -->
         </b-table-column>
-        <!-- <b-table-column
-          field="update"
-          label="수정하기"
-          sortable
-          v-slot="props"
-          centered
-        >
-          <router-link
-            class="tag is-warn"
-            :to="{
-              name: 'updateproject',
-              params: { pjNum: props.row.pjSeq }
-            }"
-            >수정</router-link
-          >
-        </b-table-column> -->
       </b-table>
     </section>
   </div>
@@ -79,15 +62,17 @@
 export default {
   name: "MyTrackingProjects",
   data() {
-    const pjs = [];
     return {
-      tracks: [],
       loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
-      pjs,
+      pjs: [],
+      proj: [],
       defaultOpendDetails: [1],
       showDetailcon: true,
       isHoverable: true
     };
+  },
+  created() {
+    this.trackList();
   },
   methods: {
     trackList: function() {
@@ -95,10 +80,15 @@ export default {
         .get("/gettrackinglistaxios")
         .then(response => {
           this.pjs = response.data;
-          this.tracks = this.pjs;
           console.log("==========list==========");
-          console.log(response);
+          console.log(this.pjs);
           console.log("==========list==========");
+          this.proj = this.pjs.filter(function(item) {
+            return (
+              item.project.userId.userId ==
+              JSON.parse(sessionStorage.getItem("user")).userId
+            );
+          });
         })
         .catch(error => {
           console.log("에러" + error);
@@ -119,10 +109,6 @@ export default {
           console.warn("ERROR!!!!! : ", ex);
         });
     }
-  },
-
-  mounted() {
-    this.trackList();
   }
 };
 </script>
