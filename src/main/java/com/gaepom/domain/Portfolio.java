@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
+@Builder
 @Entity
 public class Portfolio {
 	
@@ -35,8 +34,11 @@ public class Portfolio {
 	@Column(name="pf_subtitle")
 	private String pfSubtitle;
 	
-	@Column(name="pf_duration", insertable = false, updatable = false, columnDefinition = "date default sysdate")
-	private Date pfDuration;
+//	 @Column(name="pf_duration", insertable = false, updatable = false, columnDefinition = "date default sysdate")
+//	 private Date pfDuration;
+
+	@Column(name="pf_duration")
+	private String pfDuration;
 	
 	@Column(name="pf_description", length = 1024)
 	private String pfDescription;

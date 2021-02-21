@@ -49,11 +49,11 @@ public class PortfolioController {
 	}
 
 	// ===== 모든 포트폴리오 조회 =====
-	@GetMapping("/portfolio")
-	public ResponseEntity<List<Portfolio>> findAllPortfolios() {
-		List<Portfolio> allportfolios = portfolioService.findAllPortfolios();
-		return new ResponseEntity<>(allportfolios, HttpStatus.OK);
-	}
+//	@GetMapping("/portfolio")
+//	public ResponseEntity<List<Portfolio>> findAllPortfolios() {
+//		List<Portfolio> allportfolios = portfolioService.findAllPortfolios();
+//		return new ResponseEntity<>(allportfolios, HttpStatus.OK);
+//	}
 
 	// ===== 특정 포트폴리오 수정 =====
 	@PutMapping("/updateportfolio/{pfSeq}")

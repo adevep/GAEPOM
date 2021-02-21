@@ -86,15 +86,15 @@ public class PortfolioServiceImpl implements PortfolioService {
 		}
 	}
 
-	public List<Portfolio> findAllPortfolios() {
-		if (portfoliorepo.findAllPortfolios() != null) {
-			logger.info("조회 완료 | 모든 포트폴리오 조회됨");
-			return (List<Portfolio>) portfoliorepo.findAll();
-		} else {
-			logger.info("조회 완료 | 모든 포트폴리오 조회 불가");
-			throw new PortfolioNotFoundException("모든 포트폴리오 조회 불가");
-		}
-	}
+//	public List<Portfolio> findAllPortfolios() {
+//		if (portfoliorepo.findAllPortfolios() != null) {
+//			logger.info("조회 완료 | 모든 포트폴리오 조회됨");
+//			return (List<Portfolio>) portfoliorepo.findAll();
+//		} else {
+//			logger.info("조회 완료 | 모든 포트폴리오 조회 불가");
+//			throw new PortfolioNotFoundException("모든 포트폴리오 조회 불가");
+//		}
+//	}
 
 	// ===== UPDATE =====
 	public Portfolio updatePortfolio(Long pfseq, String[] pftoolslist, String[] pflanglist, String[] pfdbmslist,

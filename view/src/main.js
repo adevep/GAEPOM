@@ -5,6 +5,7 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import Buefy from "buefy";
+import VueMoment from "vue-moment";
 import "buefy/dist/buefy.css";
 import "./vee-validate";
 
@@ -13,6 +14,7 @@ Vue.use(Buefy);
 //Vue.config.productionTip = false;
 // Vue.prototype.$axios = axios;
 Vue.use(VueAxios, axios);
+Vue.use(VueMoment)
 
 new Vue({
   router,

@@ -234,10 +234,11 @@ export default {
     portfolioInfoCall() {
       axios
         .get("/portfolio/" + this.$route.params.pfSeq)
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
+          alert(response.data)
           this.pfSubtitle = response.data.pfSubtitle;
-          this.pfDuration = response.data.pfDuration.split("-");
+          this.pfDuration = response.data.pfDuration;
           this.pfDescription = response.data.pfDescription;
           this.participation = response.data.participation;
           this.pfLink = response.data.pfLink;

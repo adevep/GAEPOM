@@ -18,18 +18,18 @@
           align="left"
           rounded
         />
-
         <b-field label="프로젝트 기간" align="left">
           <b-datepicker
             placeholder="클릭해 기간을 선택하세요."
-            v-model="pfDu"
+            v-model="pfDuration"
+            :date-formatter="(date) =>  $moment(date).format('YYYY. MM. DD').range(date, date)"
             range
             required
+            icon="calendar-today"
             :mobile-native="true"
           >
           </b-datepicker>
         </b-field>
-
         <!-- <BInputWithValidation
           rules="required"
           label="프로젝트 기간"
@@ -38,7 +38,6 @@
           align="left"
           rounded
         /> -->
-
         <BInputWithValidation
           rules="required|numeric|max:2"
           label="프로젝트 참여도"
@@ -216,6 +215,7 @@
     </div>
   </ValidationObserver>
 </template>
+
 <script>
 /**
  * *  vee-validation 사용
@@ -227,20 +227,21 @@ import { ValidationObserver } from "vee-validate";
 import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
 import BInputWithValidation from "../veeInputs/BInputWithValidation";
 import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
-import router from "../../router";
 import axios from "axios";
+import router from "../../router";
+
+
 export default {
   components: {
     ValidationObserver,
     BSeletWithValidation,
     BInputWithValidation,
-    BCheckboxesWithValidation
+    BCheckboxesWithValidation,
   },
   data() {
     return {
       pfSubtitle: "",
-      // pfDuration: [],
-      pfDu: [],
+      pfDuration: [],
       pfDescription: "",
       participation: "",
       pfLink: "",
@@ -253,9 +254,11 @@ export default {
   },
   methods: {
     insertPortfolio() {
-      this.pfDuration = this.pfDu.join("-");
+      alert("insertPortfolio 진입")
+      this.pfDuration = this.pfDuration.join("-");
 
       let formData = new FormData();
+
       formData.append(
         "userid",
         JSON.parse(sessionStorage.getItem("user")).userId
@@ -268,6 +271,7 @@ export default {
       formData.append("pfCategory", this.pfCategory);
       formData.append("pfPosition", this.pfPosition);
       formData.append("pftoolslist", this.pfTools);
+
       if (this.pfPosition === "개발자") {
         formData.append("pflanglist", this.pfLang);
         formData.append("pfdbmslist", this.pfDbms);
@@ -292,19 +296,19 @@ export default {
       });
     },
     success() {
-                this.$buefy.notification.open({
-                    message: '포트폴리오 등록이 완료되었습니다.',
-                    type: 'is-success',
-                    position: 'is-bottom-right',
-                })
-            },
+      this.$buefy.notification.open({
+        message: "포트폴리오 등록이 완료되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right",
+      });
+    },
     danger() {
-                this.$buefy.notification.open({
-                    message: `포트폴리오를 정확히 작성해주세요.`,
-                    type: 'is-danger',
-                    position: 'is-bottom-right',
-                })
-            },
+      this.$buefy.notification.open({
+        message: "포트폴리오를 정확히 작성해주세요.",
+        type: "is-danger",
+        position: "is-bottom-right",
+      });
+    },
   },
 };
 </script>

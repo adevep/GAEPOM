@@ -1,48 +1,32 @@
 <template>
-  <div id="portfolios" class="container">
+  <div class="portfoliolist">
     <section>
-      <b-table
-        :data="portfolio"
-        ref="table"
-        paginated
-        per-page="3"
-        :opened-detailed="defaultOpenedDetails"
-        detailed
-        detail-key="pfSubtitle"
-        aria-next-label="Next page"
-        aria-previous-label="Previous page"
-        aria-page-label="Page"
-        aria-current-label="Current page"
-      >
+      <b-table :data="portfolio" :hoverable="isHoverable" ref="table">
         <b-table-column
           field="pfSeq"
           label="글"
-          width="30"
+          width="80"
+          sortable
+          centered
           numeric
           v-slot="props"
         >
           {{ props.row.pfSeq }}
         </b-table-column>
 
-        <!-- <b-table-column field="id" label="ID" sortable v-slot="props">
-          <a @click="props.toggleDetails(props.row)">
-            {{ props.row.currentUserId }} 
-            {{ currentUserId }}
-          </a>
-        </b-table-column> -->
-
         <b-table-column
           field="pfSubtitle"
-          label="포트폴리오 제목"
+          label="제목"
           sortable
+          centered
           v-slot="props"
         >
           {{ props.row.pfSubtitle }}
         </b-table-column>
 
         <b-table-column
-          field="pfDu"
-          label="포트폴리오 기간"
+          field="pfDuration"
+          label="기간"
           sortable
           centered
           v-slot="props"
@@ -52,7 +36,7 @@
 
         <b-table-column
           field="pfDescription"
-          label="포트폴리오 설명"
+          label="설명"
           sortable
           centered
           v-slot="props"
@@ -62,7 +46,7 @@
 
         <b-table-column
           field="participation"
-          label="포트폴리오 참여도"
+          label="참여도"
           sortable
           centered
           v-slot="props"
@@ -71,8 +55,8 @@
         </b-table-column>
 
         <b-table-column
-          field="participation"
-          label="포트폴리오 포지션"
+          field="pfPosition"
+          label="포지션"
           sortable
           centered
           v-slot="props"
@@ -82,7 +66,7 @@
 
         <b-table-column
           field="pfTools"
-          label="포트폴리오 사용툴"
+          label="사용툴"
           sortable
           centered
           v-slot="props"
@@ -92,91 +76,63 @@
 
         <b-table-column
           field="pfLang"
-          label="포트폴리오 사용언어"
+          label="사용언어"
           sortable
           centered
           v-slot="props"
-          v-if="props.row.pfPosition === '개발자'"
+          v-if="pfPosition === '개발자'"
         >
           {{ props.row.pfLang }}
         </b-table-column>
 
         <b-table-column
           field="pfDbms"
-          label="포트폴리오 DBMS"
+          label="DBMS"
           sortable
           centered
           v-slot="props"
-          v-if="props.row.pfPosition === '개발자'"
+          v-if="pfPosition === '개발자'"
         >
           {{ props.row.pfDbms }}
         </b-table-column>
 
-        <b-table-column
-          field="pfLink"
-          label="포트폴리오 외부주소"
-          centered
-          v-slot="props"
-        >
+        <b-table-column field="pfLink" label="외부주소" centered v-slot="props">
           {{ props.row.pfLink }}
         </b-table-column>
 
         <b-table-column
           field="pfCategory"
-          label="포트폴리오 카테고리"
+          label="카테고리"
           centered
           v-slot="props"
         >
           {{ props.row.pfCategory }}
         </b-table-column>
 
-        <b-table-column label="변경" centered v-slot="props">
+        <b-table-column label="수정하기" centered>
           <b-button
-            type="is-info"
+            type="is-primary is-light"
             outlined
-            @click="updatePortfolio(props.row.pfSeq)"
+            @click="updatePortfolio()"
             position="is-centered"
             size="is-small"
             >수정</b-button
           >
           <b-button
-            type="is-danger"
+            type="is-danger is-light"
             outlined
-            v-on:click="deletePortfolio(props.row.pfSeq)"
+            @click="deletePortfolio()"
             position="is-centered"
             size="is-small"
             >삭제</b-button
           >
         </b-table-column>
-
-        <template #detail="">
-          <article class="media">
-            <figure class="media-left">
-              <!-- <p class="image is-64x64">
-                <img src="../../assets/jpg" />
-              </p> -->
-            </figure>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>{{ currentUserName }} </strong>
-                  <small>@{{ currentUserId }}</small>
-                  <br />
-                  {{ currentUserAddress }}
-                  <br />
-                  {{ currentUserPosition }}
-                </p>
-              </div>
-            </div>
-          </article>
-        </template>
       </b-table>
     </section>
   </div>
 </template>
 
 <script>
-import http from "../../http-common";
 import axios from "axios";
 import router from "../../router";
 
@@ -186,37 +142,36 @@ export default {
     const portfolio = [];
     return {
       portfolio,
-      currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
-      currentUserName: JSON.parse(sessionStorage.getItem("user")).name,
-      currentUserPosition: JSON.parse(sessionStorage.getItem("user")).position,
-      currentUserAddress: JSON.parse(sessionStorage.getItem("user")).address,
-      defaultOpenedDetails: [1],
+      showDetailcon: true,
       isHoverable: true,
       cc: 4,
     };
   },
   methods: {
     retrievePortfolios() {
-      this.pfDuration = this.pfDu.join("-");
-      http
+      axios
         .get(
           "/portfolios?userid=" +
             JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then((response) => {
           this.portfolio = response.data;
-          this.pfDu[0] = new Date(this.portfolio.pfDuration.split("-")[0]);
-          this.pfDu[1] = new Date(this.portfolio.pfDuration.split("-")[1]);
+          this.pfDuration[0] = new Date.parse(this.portfolio.pfDuration[0]);
+          this.pfDuration[1] = new Date.parse(this.portfolio.pfDuration[1]);
+          console.log(response.data);
         })
-        .catch(() => {
-          alert("조회 실패");
+        .catch(e => {
+          console.log(e);
         });
     },
-    updatePortfolio(pfseq) {
-      return this.$router.push({
-        name: "updatePortfolio",
-        params: { pfSeq: pfseq },
-      });
+    // updatePortfolio(pfseq) {
+    //   return this.$router.push({
+    //     name: "updatePortfolio",
+    //     params: { pfSeq: pfseq },
+    //   });
+    // },
+    updatePortfolio() {
+      router.push({ name: "updatePortfolio" });
     },
     deletePortfolio(pfseq) {
       axios
@@ -227,7 +182,9 @@ export default {
           this.retrievePortfolios();
           router.push({ name: "portfoliolist" });
         })
-        .catch(function() {});
+        .catch((e) => {
+          console.warn("포트폴리오 리스트 조회 실패 | " + e);
+        });
       return this.$router.push({ name: "Home" });
     },
   },

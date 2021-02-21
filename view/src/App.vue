@@ -75,7 +75,12 @@
               >
               <b-dropdown-item has-link aria-role="listitem"
                 ><router-link to="/insertproject"
-                  >모집글작성</router-link
+                  >모집글 작성</router-link
+                ></b-dropdown-item
+              >
+              <b-dropdown-item has-link aria-role="listitem"
+                ><router-link to="/insertportfolio"
+                  >포트폴리오 작성</router-link
                 ></b-dropdown-item
               >
               <b-dropdown-item aria-role="listitem" @click="logout()"
