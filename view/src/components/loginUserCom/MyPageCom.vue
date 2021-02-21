@@ -151,6 +151,9 @@
                       >삭제</b-button
                     >
                 </span>
+
+          <!-- </b-tab-item> -->
+
             </b-table-column>
 
             <template #detail="props">
@@ -178,6 +181,11 @@
         </b-table>
 
     </section>
+                    <b-taglist>
+              <b-button tag="router-link" to="/insertportfolio">
+                포트폴리오 등록
+              </b-button>
+            </b-taglist>
           </b-tab-item>
 
           <b-tab-item label="프로젝트 관리">

@@ -12,9 +12,9 @@ public interface ProjectRecruitService {
 	List<Object> getTotalRecruitByLocation(String location);
 	List<Object> getTotalRecruitByCategory(String pjCategory);
 
-	List<Object> getTotalRecruitByLocation(String location);
-
-	List<Object> getTotalRecruitByCategory(String pjCategory);
+//	List<Object> getTotalRecruitByLocation(String location);
+//
+//	List<Object> getTotalRecruitByCategory(String pjCategory);
 
 	ProjectRecruit insertProjectRecruit(ProjectRecruit recruit);
 
