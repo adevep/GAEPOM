@@ -104,7 +104,7 @@
                   label="내가 작성한 프로젝트 트래킹글"
                   icon="creation"
                 >
-                  주최한 프로젝트 트래킹 글 테이블
+                  <my-tracking-projects></my-tracking-projects>
                 </b-tab-item>
                 <b-tab-item label="내 지원서 보기" icon="clipboard-account">
                   <application></application>
