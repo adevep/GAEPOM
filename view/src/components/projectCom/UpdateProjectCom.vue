@@ -331,11 +331,8 @@ export default {
         ("0" + myDate2.getDate()).slice(-2);
       let date3 = [];
       date3.push(date1);
-      alert(date1)
       date3.push(date2);
-      alert(date2)
       this.recDuration = date3.join("-");
-      alert(this.recDuration)
 
       http
         .put(
@@ -374,8 +371,6 @@ export default {
           let date3 = [];
           date3.push(date1);
           date3.push(date2);
-          alert(date1)
-          alert(date2)
           this.pjDuration = date3.join("-");
           const data = {
             userId: { userId: this.loginUser },

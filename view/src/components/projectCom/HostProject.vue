@@ -291,6 +291,7 @@ export default {
   },
   methods: {
     addProjectRec: function() {
+      //DATEPARSING
       let myDate = new Date(Date.parse(this.recDuration[0]));
       let myDate2 = new Date(Date.parse(this.recDuration[1]));
       let date1 =
@@ -307,12 +308,9 @@ export default {
         ("0" + myDate2.getDate()).slice(-2);
       let date3 = [];
       date3.push(date1);
-      alert(date1)
       date3.push(date2);
-alert(date2)
-this.needPosi = this.needPosi.join();
+      this.needPosi = this.needPosi.join();
       this.recDuration = date3.join("-");
-      alert(this.recDuration)
       http
         .post("/recruit/createrec?userId=" + this.loginUser, {
           needNum: this.needNum,
@@ -328,16 +326,13 @@ this.needPosi = this.needPosi.join();
           this.recSeq = response.data.recSeq;
           console.log("==========add==========");
           console.log(this.recSeq);
-          // 페이지 이동
-          //this.$router.push(Project)
           this.pjTools = this.pjTools.join();
           this.pjLang = this.pjLang.join();
           this.pjDbms = this.pjDbms.join();
 
-          //dateparsing
+          //DATE PARSING
           let myDate = new Date(Date.parse(this.pjDuration[0]));
           let myDate2 = new Date(Date.parse(this.pjDuration[1]));
-          alert(myDate2);
           let date1 =
             myDate.getFullYear() +
             "." +
@@ -350,14 +345,11 @@ this.needPosi = this.needPosi.join();
             ("0" + (myDate2.getMonth() + 1)).slice(-2) +
             "." +
             ("0" + myDate2.getDate()).slice(-2);
-          alert(date2)
           let date3 = [];
           date3.push(date1);
           date3.push(date2);
-          alert(date3);
 
           this.pjDuration = date3.join("-");
-          alert(this.pjDuration);
           const data = {
             userId: { userId: this.loginUser },
             pjTitle: this.pjTitle,

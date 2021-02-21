@@ -79,8 +79,13 @@
             <br />
             <h4 class="title is-4">우대사항:</h4>
             <h5 class="subtitle is-5">{{ pj.preference }}</h5>
-
-            <div v-if="loginUser.userId != pj.userId.userId">
+            <!-- 프로젝트 주최자와 로그인한 유저및 이전에 지원한 유저의 데이터랑 다를때만 지원버튼 출력 -->
+            <div
+              v-if="
+                loginUser.userId != pj.userId.userId &&
+                  loginUser.userId != appliedUser
+              "
+            >
               <b-button
                 label="지원하기"
                 type="is-primary"
@@ -135,6 +140,29 @@
                 </div>
               </b-modal>
             </section>
+
+            <b-message
+              title="Success with icon"
+              type="is-success"
+              has-icon
+              aria-close-label="Close message"
+              v-if="
+                loginUser.userId != pj.userId.userId &&
+                  loginUser.userId == appliedUser
+              "
+            >
+              이미 지원하신 프로젝트 입니다.
+
+              <br />
+              <router-link
+                class="button"
+                :to="{
+                  name: 'mypage',
+                }"
+                >내 지원서 확인하기</router-link
+              >
+            </b-message>
+            <b-message v-else></b-message>
           </b-tab-item>
         </b-tabs>
       </section>
@@ -144,6 +172,7 @@
 <script>
 import http from "../../http-common";
 import { mapState } from "vuex";
+import router from "../../router";
 
 export default {
   name: "ProjectDetails",
@@ -152,6 +181,7 @@ export default {
     const all = [];
     const allPjs = [];
     const posiArray = [];
+    const apps = [];
     return {
       loginUser: {
         userImage: "default.png",
@@ -160,6 +190,8 @@ export default {
       },
       all,
       allPjs,
+      apps,
+      appliedUser: "",
       posiArray,
       aplPosi: "",
       words: "",
@@ -204,7 +236,6 @@ export default {
           array.forEach(function(element) {
             posi = [element.needPosi.split(",")].reduce(function(r, o) {
               Object.keys(o).forEach(function(k) {
-                //var n = "p";
                 r[k] = o[k];
               });
               return r;
@@ -213,7 +244,6 @@ export default {
             console.log(posi);
           });
           this.posiArray = posi;
-          //console.log(this.allPjs.shift().pjSeq);
         })
         .catch(e => {
           console.log(e);
@@ -223,7 +253,6 @@ export default {
     submitApp() {
       let formData = new FormData();
 
-      //   formData.append("aplSeq", this.allPjs.shift().aplSeq);
       formData.append("userId", this.loginUser.userId);
       formData.append("words", this.words);
       formData.append("aplPosi", this.aplPosi);
@@ -237,12 +266,30 @@ export default {
           }
         })
         .then(function() {
-          alert("SUCCESS!!");
-          //this.success();
+          alert("success");
+          router.push({ name: "Home" });
         })
         .catch(function() {
           alert("FAILURE!!");
           //this.danger();
+        });
+    },
+    retrieveApps() {
+      http
+        .get("/app/getpjapp/" + this.pjSeq + "?userId=" + this.loginUser.userId)
+        .then(response => {
+          this.apps = response.data;
+          console.log(response.data);
+          var apps2 = "";
+          this.apps.forEach(function(entry) {
+            apps2 = entry;
+          });
+          this.appliedUser = apps2.userId;
+          //alert(this.appliedUser);
+        })
+        .catch(e => {
+          console.log(e);
+          this.errors.push(e);
         });
     },
     success() {
@@ -262,6 +309,7 @@ export default {
   },
   mounted() {
     this.retrieveRecAndPj();
+    this.retrieveApps();
   }
 };
 </script>

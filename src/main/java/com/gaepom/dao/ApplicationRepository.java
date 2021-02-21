@@ -27,5 +27,4 @@ public interface ApplicationRepository extends CrudRepository<Application, Long>
 	@Query("SELECT a FROM Application a WHERE pjSeq = ?1")
 	List<Application> findApplicationByPjSeq (Project pjSeq);
 	
-	
 }
