@@ -66,14 +66,18 @@ public class PortfolioServiceImpl implements PortfolioService {
 		}
 	}
 
-	public List<Portfolio> getPortfolioList(String userid) {
-		if (portfoliorepo.findAllPortfolioByUserId(userid) != null) {
-			logger.info("조회 완료 | {}님: 포트폴리오 조회됨", userid);
-			return portfoliorepo.findAllPortfolioByUserId(userid);
+	public Portfolio getUserPortfolio(String userid) {
+		if (portfoliorepo.findPortfolioByUserId(userid) != null) {
+			logger.info("조회 완료 | {}번글: 포트폴리오 조회됨", userid);
+			return portfoliorepo.findPortfolioByUserId(userid);
 		} else {
-			logger.error("조회 불가 | {}님: 포트폴리오 조회 불가", userid);
-			throw new PortfolioNotFoundException("유저ID: " + userid + " 포트폴리오 조회 불가");
+			logger.error("조회 불가 | {}번글: 포트폴리오 조회 불가", userid);
+			throw new PortfolioNotFoundException(userid + "번글 포트폴리오 조회 불가");
 		}
+	}
+
+	public List<Portfolio> getPortfolioList() {
+		return (List<Portfolio>) portfoliorepo.findAll();
 	}
 
 	// ===== UPDATE =====
@@ -128,6 +132,60 @@ public class PortfolioServiceImpl implements PortfolioService {
 		} else {
 			logger.error("수정 불가 | {}번글 포트폴리오 수정 불가", pfseq);
 			throw new PortfolioNotFoundException(pfseq + "번글 포트폴리오 수정 불가");
+		}
+	}
+
+	public Portfolio updateUserPortfolio(Portfolio portfolio, String userid, String[] pftoolslist,
+			String[] pflanglist, String[] pfdbmslist) {
+		Optional<Portfolio> findUserPortfolio = portfoliorepo.findById(portfolio.getPfSeq());
+		if (findUserPortfolio.isPresent()) {
+			if (pflanglist != null && pfdbmslist == null) {				
+				findUserPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findUserPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findUserPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findUserPortfolio.get().setParticipation(portfolio.getParticipation());
+				findUserPortfolio.get().setPfLink(portfolio.getPfLink());
+				findUserPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findUserPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findUserPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				findUserPortfolio.get().setPfLang(String.join(",", pflanglist));
+			} else if (pflanglist == null && pfdbmslist != null) {
+				findUserPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findUserPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findUserPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findUserPortfolio.get().setParticipation(portfolio.getParticipation());
+				findUserPortfolio.get().setPfLink(portfolio.getPfLink());
+				findUserPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findUserPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findUserPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				findUserPortfolio.get().setPfDbms(String.join(",", pfdbmslist));
+			} else if (pflanglist == null && pfdbmslist == null) {
+				findUserPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findUserPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findUserPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findUserPortfolio.get().setParticipation(portfolio.getParticipation());
+				findUserPortfolio.get().setPfLink(portfolio.getPfLink());
+				findUserPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findUserPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findUserPortfolio.get().setPfTools(String.join(",", pftoolslist));
+			} else {
+				findUserPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
+				findUserPortfolio.get().setPfDuration(portfolio.getPfDuration());
+				findUserPortfolio.get().setPfDescription(portfolio.getPfDescription());
+				findUserPortfolio.get().setParticipation(portfolio.getParticipation());
+				findUserPortfolio.get().setPfLink(portfolio.getPfLink());
+				findUserPortfolio.get().setPfCategory(portfolio.getPfCategory());
+				findUserPortfolio.get().setPfPosition(portfolio.getPfPosition());
+				findUserPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				findUserPortfolio.get().setPfLang(String.join(",", pflanglist));
+				findUserPortfolio.get().setPfDbms(String.join(",", pfdbmslist));
+			}
+			portfoliorepo.save(findUserPortfolio.get());
+			logger.info("수정 완료 | {}번글 포트폴리오 수정됨", userid);
+			return findUserPortfolio.get();
+		} else {
+			logger.error("수정 불가 | {}번글 포트폴리오 수정 불가", userid);
+			throw new PortfolioNotFoundException(userid + "번글 포트폴리오 수정 불가");
 		}
 	}
 

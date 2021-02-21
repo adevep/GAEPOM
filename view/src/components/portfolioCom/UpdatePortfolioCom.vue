@@ -258,10 +258,10 @@ export default {
     portfolioUpdateInfoCall() {
       axios
         .get(
-          "http://localhost:80/portfolio/get?pfSeq=" + this.$route.params.pfSeq
+          "http://localhost:80/portfolio/getpf?pfSeq=" + this.$route.params.pfSeq
         )
         .then(response => {
-          this.pfSeq = response.data.pfSeq;
+          // this.pfSeq = response.data.pfSeq;
           this.pfSubtitle = response.data.pfSubtitle;
           this.pfDuration = response.data.pfDuration;
           this.pfDescription = response.data.pfDescription;
@@ -302,6 +302,7 @@ export default {
 
       let formData = new FormData();
 
+      // formData.append("userid", this.userid);
       formData.append("pfSeq", this.pfSeq);
       formData.append("pfSubtitle", this.pfSubtitle);
       formData.append("pfDuration", this.pfDuration);
@@ -317,7 +318,7 @@ export default {
       }
       axios
         .put(
-          "http://localhost:80/portfolio/update", formData, {
+          "http://localhost:80/portfolio/updateuserpf", formData, {
         })
         .then(() => {
           this.success();

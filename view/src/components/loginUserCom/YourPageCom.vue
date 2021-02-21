@@ -80,124 +80,8 @@
               {{ anotherUser.address }}
             </h2>
           </b-tab-item>
-          <b-tab-item label="포트폴리오">
-            <div id="portfolios" class="container">
-              <section>
-                <b-table
-                  :data="portfolio"
-                  ref="table"
-                  :opened-detailed="defaultOpenedDetails"
-                  detailed
-                  detail-key="pfSeq"
-                  @details-open="
-                    row => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)
-                  "
-                  :show-detail-icon="showDetailIcon"
-                  aria-next-label="Next page"
-                  aria-previous-label="Previous page"
-                  aria-page-label="Page"
-                  aria-current-label="Current page"
-                >
-                  <b-table-column
-                    field="pfSeq"
-                    label="번호"
-                    width="70"
-                    numeric
-                    v-slot="props"
-                  >
-                    {{ props.row.pfSeq }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfSubtitle"
-                    label="제목"
-                    sortable
-                    v-slot="props"
-                  >
-                    <template v-if="showDetailIcon">
-                      {{ props.row.pfSubtitle }}
-                    </template>
-                    <template v-else>
-                      <a @click="props.toggleDetails(props.row)">
-                        {{ props.row.pfSubtitle }}
-                      </a>
-                    </template>
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfPosition"
-                    label="포지션"
-                    sortable
-                    v-slot="props"
-                  >
-                    {{ props.row.pfPosition }}
-                  </b-table-column>
-
-                  <b-table-column
-                    field="pfDuration"
-                    label="기간"
-                    sortable
-                    centered
-                    v-slot="props"
-                  >
-                    <span class="tag is-success">
-                      {{ props.row.pfDuration }}
-                    </span>
-                  </b-table-column>
-
-                  <b-table-column label="변경" v-slot="props">
-                    <span>
-                      <b-button
-                        type="is-info"
-                        outlined
-                        @click="updatePortfolio(props.row.pfSeq)"
-                        position="is-centered"
-                        size="is-small"
-                        >수정</b-button
-                      >
-                      <b-button
-                        type="is-danger"
-                        outlined
-                        v-on:click="deletePortfolio(props.row.pfSeq)"
-                        position="is-centered"
-                        size="is-small"
-                        >삭제</b-button
-                      >
-                    </span>
-                  </b-table-column>
-
-                  <template #detail="props">
-                    <article class="media">
-                      <div class="media-content">
-                        <div class="content">
-                          <p>
-                            <strong>{{ props.row.pfSubtitle }}</strong>
-
-                            <br />
-                            프로젝트 설명 :
-                            <strong>{{ props.row.pfDescription }}</strong>
-                            <br />
-                            참여도 :
-                            <strong>{{ props.row.participation }}%</strong>
-                            <br />
-                            관련 링크 : <strong>{{ props.row.pfLink }}</strong>
-                            <br />
-                            카테고리 :
-                            <strong>{{ props.row.pfCategory }}</strong> <br />
-                            사용 툴 : <strong>{{ props.row.pfTools }}</strong>
-                            <br />
-                            사용 언어 : <strong>{{ props.row.pfLang }}</strong>
-                            <br />
-                            사용 DBMS : <strong>{{ props.row.pfDbms }}</strong>
-                            <br />
-                          </p>
-                        </div>
-                      </div>
-                    </article>
-                  </template>
-                </b-table>
-              </section>
-            </div>
+          <b-tab-item label="포트폴리오 관리">
+            <portfolio-list></portfolio-list>
           </b-tab-item>
           <b-tab-item label="프로젝트">
             <section>
@@ -302,7 +186,7 @@ export default {
       email: "",
       phoneNum: "",
       position: "",
-      stack: ""
+      stack: "",
     },
     portfolio: [],
     currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
@@ -324,7 +208,7 @@ export default {
     isHoverable: true
   }),
   computed: {
-    ...mapState(["imgURL"])
+    ...mapState(["imgURL"]),
   },
   methods: {
     retrievePortfolios() {
@@ -345,10 +229,10 @@ export default {
         .get(
           "http://localhost:80/user/get?userid=" + this.$route.params.pickedid
         )
-        .then(response => {
+        .then((response) => {
           this.anotherUser = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },

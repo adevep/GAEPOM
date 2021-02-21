@@ -20,6 +20,10 @@
           {{ props.row.pfSeq }}
         </b-table-column>
 
+        <b-table-column field="id" label="ID" centered>
+          {{ currentUserId }}
+        </b-table-column>
+        
         <b-table-column
           field="pfSubtitle"
           label="제목"
@@ -145,6 +149,7 @@ export default {
     const portfolio = [];
     return {
       portfolio,
+      currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
       isHoverable: true,
       cc: 4
     };
@@ -153,13 +158,17 @@ export default {
     portfolioInfoCall() {
       axios
         .get(
-          "http://localhost:80/portfolio/getlist?userid=" +
-            JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/portfolio/getlist?pfSeq=" + this.pfSeq
+            // JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.portfolio = response.data;
         })
+<<<<<<< Updated upstream
         .catch(e => {
+=======
+        .catch((e) => {
+>>>>>>> Stashed changes
           console.log(e);
         });
     },

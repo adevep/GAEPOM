@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaepom.domain.Portfolio;
+import com.gaepom.domain.User;
 import com.gaepom.service.PortfolioService;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -38,26 +39,42 @@ public class PortfolioController {
 	}
 
 	// ===== 특정 시퀀스(@param pfSeq)의 포트폴리오 조회 =====
-	@GetMapping("/get")
+	@GetMapping("/getpf")
 	public ResponseEntity<Portfolio> getPortfolio(@RequestParam Long pfSeq) {
 		Portfolio getedportfolio = portfolioservice.getPortfolio(pfSeq);
 		return new ResponseEntity<>(getedportfolio, HttpStatus.OK);
 	}
 
+	// ===== 특정 유저ID(@param User userid)의 포트폴리오 조회 =====
+	@GetMapping("/getuserpf")
+	public ResponseEntity<Portfolio> getUserPortfolio(@RequestParam String userid) {
+		Portfolio getuserportfolio = portfolioservice.getUserPortfolio(userid);
+		return new ResponseEntity<>(getuserportfolio, HttpStatus.OK);
+	}
+
 	// ===== 모든 포트폴리오 조회 =====
 	@GetMapping("/getlist")
-	public ResponseEntity<List<Portfolio>> getPortfolioList(@RequestParam String userid) {
-		List<Portfolio> portfolios = portfolioservice.getPortfolioList(userid);
+	public ResponseEntity<List<Portfolio>> getPortfolioList() {
+		List<Portfolio> portfolios = portfolioservice.getPortfolioList();
 		return new ResponseEntity<>(portfolios, HttpStatus.OK);
 	}
 
 	// ===== 특정 시퀀스(@param pfSeq)의 포트폴리오 수정 =====
-	@PutMapping("/update")
+	@PutMapping("/updatepf")
 	public ResponseEntity<Portfolio> updatePortfolio(Portfolio portfolio,
 			@RequestParam Long pfSeq, String[] pftoolslist,
 			String[] pflanglist, String[] pfdbmslist) {
 		Portfolio updatedportfolio = portfolioservice.updatePortfolio(portfolio, pfSeq, pftoolslist, pflanglist, pfdbmslist);
 		return new ResponseEntity<>(updatedportfolio, HttpStatus.OK);
+	}
+
+	// ===== 특정 유저ID(@param User userid)의 포트폴리오 수정 =====
+	@PutMapping("/updateuserpf")
+	public ResponseEntity<Portfolio> updateUserPortfolio(Portfolio portfolio,
+			@RequestParam String userid, String[] pftoolslist,
+			String[] pflanglist, String[] pfdbmslist) {
+		Portfolio updateuserportfolio = portfolioservice.updateUserPortfolio(portfolio, userid, pftoolslist, pflanglist, pfdbmslist);
+		return new ResponseEntity<>(updateuserportfolio, HttpStatus.OK);
 	}
 
 	// ===== 특정 시퀀스(@param pfSeq)의 포트폴리오 삭제 =====

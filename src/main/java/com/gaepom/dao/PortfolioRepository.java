@@ -13,7 +13,7 @@ public interface PortfolioRepository extends CrudRepository<Portfolio, Long> {
 //	Portfolio findByPfSeq(Long pfSeq);
 
 	@Query(value = "SELECT * FROM Portfolio WHERE user_id=?", nativeQuery = true)
-	List<Portfolio> findAllPortfolioByUserId(String userid);
+	Portfolio findPortfolioByUserId(String userid);
 
 //	@Query(value = "SELECT * FROM Portfolio", nativeQuery = true)
 //	List<Portfolio> findAllPortfolios();
