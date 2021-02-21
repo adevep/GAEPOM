@@ -254,7 +254,7 @@ export default {
     userUpdateInfoCall() {
       axios
         .get(
-          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.userid = response.data.userId;
@@ -286,7 +286,7 @@ export default {
       formData.append("file", this.file);
 
       axios
-        .put("http://localhost:80/updateuser", formData, {
+        .put("http://localhost:80/user/update", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

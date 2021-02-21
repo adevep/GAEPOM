@@ -22,9 +22,13 @@ public interface ProjectRecruitService {
 	ProjectRecruit updateProjectRecruit(Long id, ProjectRecruit recruit);
 
 	ProjectRecruit updateRec(Long id, ProjectRecruit recruit);
+	
+	ProjectRecruit updateRecCount(Long id, int checkCount);
 
 	void deleteProjectRecruit(ProjectRecruit recruit);
 
 	Object getRecByPj(Long pjSeq, ProjectRecruit recruit);
+	
+	Object getCheckCountByPj(Long pjSeq, ProjectRecruit recruit);
 
 }

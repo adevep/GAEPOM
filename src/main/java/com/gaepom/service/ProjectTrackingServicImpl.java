@@ -68,6 +68,7 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 		projectRepo.save(project);
 		tracking.setTrackImage("default.png");
 		trackingRepo.save(tracking);
+
 		return tracking;
 	}
 

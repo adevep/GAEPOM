@@ -13,7 +13,6 @@ public interface UserService {
 	public User login(String userid, String password);
 	public User getUser(String userid);
 	public List<User> getUserList();
-	public List<User> getUserListByPostion(String position);
 	public User insertUser(User user, String[] stacklist, MultipartFile mfile);
 	public User insertUserNoimg(User user, String[] stacklist);
 	public User findUserByUserId(String userid);
