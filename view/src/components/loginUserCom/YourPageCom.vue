@@ -379,12 +379,9 @@ export default {
       http
         .get("/recruit/gethostedpj2/" + this.$route.params.pickedid)
         .then(response => {
-          alert(1)    
           this.pjs = response.data;
-          console.log(response.data);
         })
         .catch(e => {
-          alert(2)
           console.log(e);
           this.errors.push(e);
         });
