@@ -17,7 +17,7 @@
               프로젝트
             </h1>
             <h2 class="subtitle centered">
-              새로운 프로젝트를 주최해 보세요. 
+              새로운 프로젝트를 주최해 보세요.
             </h2>
             <nav
               class="breadcrumb has-dot-separator is-centered"
@@ -256,11 +256,11 @@
  * ? BCheckboxesWithValidation | Buefy의 <b-checkbox>와 동일 + 유효성 검증 로직 구현
  */
 import { ValidationObserver } from "vee-validate";
-import BInputWithValidation from "./veeInputs//BInputWithValidation";
-import BCheckboxesWithValidation from "./veeInputs/BCheckboxesWithValidation";
-import BSeletWithValidation from "./veeInputs/BSeletWithValidation";
-import http from "../http-common";
-import router from "../router";
+import BInputWithValidation from "../veeInputs//BInputWithValidation";
+import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
+import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
+import http from "../../http-common";
+import router from "../../router";
 export default {
   name: "AddProject",
   components: {

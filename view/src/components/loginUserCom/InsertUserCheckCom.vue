@@ -1,6 +1,5 @@
 <template>
-  <section>
-  </section>
+  <section></section>
 </template>
 
 <script>
@@ -13,7 +12,7 @@ export default {
         onConfirm: () => router.push({ name: "login" }),
         onCancel: () => router.push({ name: "Home" })
       });
-    },
+    }
   },
   mounted() {
     this.confirm();

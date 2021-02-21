@@ -166,6 +166,7 @@
         </template>
       </b-table>
     </section>
+    
     <b-message
       title="Success with icon"
       type="is-success"
@@ -189,11 +190,10 @@
   </div>
 </template>
 <script>
-import http from "../http-common";
+import http from "../../http-common";
 
 export default {
   name: "AllApps",
-  // props: ["pjSeq"],
   data() {
     const apps = [];
     return {

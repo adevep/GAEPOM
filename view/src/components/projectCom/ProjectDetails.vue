@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import http from "../http-common";
+import http from "../../http-common";
 import { mapState } from "vuex";
 
 export default {

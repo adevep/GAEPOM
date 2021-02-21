@@ -16,7 +16,8 @@
             프로젝트 수정하기
           </h1>
           <h2 class="subtitle centered">
-프로젝트 확인해주세요.          </h2>
+            프로젝트 확인해주세요.
+          </h2>
           <nav
             class="breadcrumb has-dot-separator is-centered"
             aria-label="breadcrumbs"
@@ -55,7 +56,6 @@
               </b-datepicker>
             </b-field>
             <b-field label="지역" align="left">
-              <!-- <b-input v-model="location" maxlength="30"></b-input> -->
               <b-select v-model="location" expanded>
                 <option value="서울">서울</option>
                 <option value="경기">경기</option>
@@ -132,7 +132,6 @@
               >
             </b-field>
             <b-field label="프로젝트 분류" align="left">
-              <!-- <b-input v-model="pjCategory" maxlength="30"></b-input> -->
               <b-select v-model="pjCategory" expanded>
                 <option value="모바일앱">모바일앱</option>
                 <option value="웹앱">웹앱</option>
@@ -141,7 +140,6 @@
               </b-select>
             </b-field>
             <b-field label="프로젝트 사용 언어" align="left">
-              <!-- <b-input v-model="pjLang" maxlength="30"></b-input> -->
               <b-checkbox v-model="pjLang" native-value="Java">
                 Java
               </b-checkbox>
@@ -162,7 +160,6 @@
               </b-checkbox>
             </b-field>
             <b-field label="프로젝트 DBMS" align="left">
-              <!-- <b-input v-model="pjDbms" maxlength="30"></b-input> -->
               <b-checkbox v-model="pjDbms" native-value="ORACLE">
                 ORACLE
               </b-checkbox>
@@ -235,8 +232,8 @@
   </div>
 </template>
 <script>
-import http from "../http-common";
-import router from "../router";
+import http from "../../http-common";
+import router from "../../router";
 
 export default {
   name: "UpdateProject",
@@ -295,16 +292,6 @@ export default {
             allPjs3 = entry;
           });
           console.log(allPjs3);
-
-          // this.allPjs.forEach(function(eachObj) {
-          //   for (var key in eachObj) {
-          //     // eslint-disable-next-line no-prototype-builtins
-          //     if (eachObj.hasOwnProperty(key)) {
-          //       console.log(key, eachObj[key]);
-          //     }
-          //   }
-          // });
-
           console.log("데이터뽑기2");
 
           this.userId = this.loginUser;

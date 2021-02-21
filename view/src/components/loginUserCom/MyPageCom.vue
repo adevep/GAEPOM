@@ -14,7 +14,10 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
     />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css">
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
+    />
 
     <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
@@ -49,27 +52,31 @@
           <b-tab-item label="유저 정보">
             <!-- <br /> -->
             <!-- <section class="section is-medium"> -->
-             <h2 class="title is-4 mt-5"><i class="xi-mail"></i> 이메일</h2>
-             <!-- <h1 class="title"><b-icon icon="xi-mail"></b-icon>이메일</h1> -->
-             <h2 class="subtitle">
-               {{ loginUser.email }}
-              </h2><br>
-              <h1 class="title is-4 mt-2"><i class="xi-call"></i> 연락처</h1>
-             <h2 class="subtitle">
-               {{ loginUser.phoneNum }}
-              </h2><br>
-              <h1 class="title is-4 mt-2"><i class="xi-user"></i> 포지션</h1>
-             <h2 class="subtitle">
-               {{ loginUser.position }}
-              </h2><br>
-               <h1 class="title is-4 mt-2"><i class="xi-puzzle"></i> 기술 스택</h1>
-             <h2 class="subtitle">
-               {{ loginUser.stack }}
-              </h2><br>
-              <h1 class="title is-4 mt-2"><i class="xi-maker"></i> 주소</h1>
-             <h2 class="subtitle">
-               {{ loginUser.address }}
-              </h2>
+            <h2 class="title is-4 mt-5"><i class="xi-mail"></i> 이메일</h2>
+            <!-- <h1 class="title"><b-icon icon="xi-mail"></b-icon>이메일</h1> -->
+            <h2 class="subtitle">
+              {{ loginUser.email }}
+            </h2>
+            <br />
+            <h1 class="title is-4 mt-2"><i class="xi-call"></i> 연락처</h1>
+            <h2 class="subtitle">
+              {{ loginUser.phoneNum }}
+            </h2>
+            <br />
+            <h1 class="title is-4 mt-2"><i class="xi-user"></i> 포지션</h1>
+            <h2 class="subtitle">
+              {{ loginUser.position }}
+            </h2>
+            <br />
+            <h1 class="title is-4 mt-2"><i class="xi-puzzle"></i> 기술 스택</h1>
+            <h2 class="subtitle">
+              {{ loginUser.stack }}
+            </h2>
+            <br />
+            <h1 class="title is-4 mt-2"><i class="xi-maker"></i> 주소</h1>
+            <h2 class="subtitle">
+              {{ loginUser.address }}
+            </h2>
             <br />
             <b-button type="is-primary is-light" @click="updateUser()"
               >정보수정</b-button
@@ -79,105 +86,133 @@
               >회원탈퇴</b-button
             >
           </b-tab-item>
-
           <b-tab-item label="포트폴리오">
-    <section>
+            <div id="portfolios" class="container">
+              <section>
+                <b-table
+                  :data="portfolio"
+                  ref="table"
+                  :opened-detailed="defaultOpenedDetails"
+                  detailed
+                  detail-key="pfSeq"
+                  @details-open="
+                    row => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)
+                  "
+                  :show-detail-icon="showDetailIcon"
+                  aria-next-label="Next page"
+                  aria-previous-label="Previous page"
+                  aria-page-label="Page"
+                  aria-current-label="Current page"
+                >
+                  <b-table-column
+                    field="pfSeq"
+                    label="번호"
+                    width="70"
+                    numeric
+                    v-slot="props"
+                  >
+                    {{ props.row.pfSeq }}
+                  </b-table-column>
 
-        <!-- <b-field grouped group-multiline>
-            <div class="control">
-                <b-switch v-model="showDetailIcon">Show detail icon</b-switch>
-            </div>
-        </b-field> -->
-
-        <b-table
-            :data="portfolio"
-            ref="table"
-            
-            :opened-detailed="defaultOpenedDetails"
-            detailed
-            detail-key="pfSeq"
-            @details-open="(row) => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)"
-            :show-detail-icon="showDetailIcon"
-            aria-next-label="Next page"
-            aria-previous-label="Previous page"
-            aria-page-label="Page"
-            aria-current-label="Current page">
-
-            <b-table-column field="pfSeq" label="번호" width="70" numeric v-slot="props">
-                {{ props.row.pfSeq }}
-            </b-table-column>
-
-            <b-table-column field="pfSubtitle" label="제목" sortable v-slot="props">
-                <template v-if="showDetailIcon">
-                    {{ props.row.pfSubtitle }}
-                </template>
-                <template v-else>
-                    <a @click="props.toggleDetails(props.row)">
+                  <b-table-column
+                    field="pfSubtitle"
+                    label="제목"
+                    sortable
+                    v-slot="props"
+                  >
+                    <template v-if="showDetailIcon">
+                      {{ props.row.pfSubtitle }}
+                    </template>
+                    <template v-else>
+                      <a @click="props.toggleDetails(props.row)">
                         {{ props.row.pfSubtitle }}
-                    </a>
-                </template>
-            </b-table-column>
+                      </a>
+                    </template>
+                  </b-table-column>
 
-            <b-table-column field="pfPosition" label="포지션" sortable v-slot="props">
-                {{ props.row.pfPosition }}
-            </b-table-column>
+                  <b-table-column
+                    field="pfPosition"
+                    label="포지션"
+                    sortable
+                    v-slot="props"
+                  >
+                    {{ props.row.pfPosition }}
+                  </b-table-column>
 
-            <b-table-column field="pfDuration" label="기간" sortable centered v-slot="props">
-                <span class="tag is-success">
-                  {{ props.row.pfDuration }}
-                    <!-- {{ new Date(props.row.date).toLocaleDateString() }} -->
-                </span>
-            </b-table-column>
+                  <b-table-column
+                    field="pfDuration"
+                    label="기간"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    <span class="tag is-success">
+                      {{ props.row.pfDuration }}
+                      <!-- {{ new Date(props.row.date).toLocaleDateString() }} -->
+                    </span>
+                  </b-table-column>
 
-            <b-table-column label="변경" v-slot="props">
-                <span>
-                    <!-- <b-icon pack="fas"
+                  <b-table-column label="변경" v-slot="props">
+                    <span>
+                      <!-- <b-icon pack="fas"
                         :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
                     </b-icon> -->
-                    <b-button
-                      type="is-info"
-                      outlined
-                      @click="updatePortfolio(props.row.pfSeq)"
-                      position="is-centered"
-                      size="is-small"
-                      >수정</b-button
-                    >
-                    <b-button
-                      type="is-danger"
-                      outlined
-                      v-on:click="deletePortfolio(props.row.pfSeq)"
-                      position="is-centered"
-                      size="is-small"
-                      >삭제</b-button
-                    >
-                </span>
-            </b-table-column>
+                      <b-button
+                        type="is-info"
+                        outlined
+                        @click="updatePortfolio(props.row.pfSeq)"
+                        position="is-centered"
+                        size="is-small"
+                        >수정</b-button
+                      >
+                      <b-button
+                        type="is-danger"
+                        outlined
+                        v-on:click="deletePortfolio(props.row.pfSeq)"
+                        position="is-centered"
+                        size="is-small"
+                        >삭제</b-button
+                      >
+                    </span>
+                  </b-table-column>
 
-            <template #detail="props">
-                <article class="media">
-                    
-                    <div class="media-content">
+                  <template #detail="props">
+                    <article class="media">
+                      <div class="media-content">
                         <div class="content">
-                            <p>
-                                <strong>{{ props.row.pfSubtitle }}</strong>
-                                <!-- <small>@{{ props.row.user.first_name }}</small> -->
-                                <br>
-                                프로젝트 설명 : <strong>{{ props.row.pfDescription }}</strong> <br>
-                                참여도 : <strong>{{ props.row.participation }}%</strong> <br>
-                                관련 링크 : <strong>{{ props.row.pfLink }}</strong> <br>
-                                카테고리 : <strong>{{ props.row.pfCategory }}</strong> <br>
-                                사용 툴 :  <strong>{{ props.row.pfTools }}</strong> <br>
-                                사용 언어 : <strong>{{ props.row.pfLang }}</strong> <br>
-                                사용 DBMS : <strong>{{ props.row.pfDbms }}</strong> <br>
-                                
-                            </p>
+                          <p>
+                            <strong>{{ props.row.pfSubtitle }}</strong>
+                            <!-- <small>@{{ props.row.user.first_name }}</small> -->
+                            <br />
+                            프로젝트 설명 :
+                            <strong>{{ props.row.pfDescription }}</strong>
+                            <br />
+                            참여도 :
+                            <strong>{{ props.row.participation }}%</strong>
+                            <br />
+                            관련 링크 : <strong>{{ props.row.pfLink }}</strong>
+                            <br />
+                            카테고리 :
+                            <strong>{{ props.row.pfCategory }}</strong> <br />
+                            사용 툴 : <strong>{{ props.row.pfTools }}</strong>
+                            <br />
+                            사용 언어 : <strong>{{ props.row.pfLang }}</strong>
+                            <br />
+                            사용 DBMS : <strong>{{ props.row.pfDbms }}</strong>
+                            <br />
+                          </p>
                         </div>
-                    </div>
-                </article>
-            </template>
-        </b-table>
-
-    </section>
+                      </div>
+                    </article>
+                  </template>
+                </b-table>
+              </section>
+              <b-taglist>
+                <b-button tag="router-link" to="/insertportfolio">
+                  포트폴리오 등록
+                </b-button>
+              </b-taglist>
+            </div>
           </b-tab-item>
 
           <b-tab-item label="프로젝트 관리">
@@ -187,17 +222,13 @@
                   label="내가 작성한 프로젝트 모집글"
                   icon="account-multiple-plus"
                 >
-                <!-- <b-tab-item
-                  label="내가 주최한 프로젝트 모집글"
-                  icon="account-multiple-plus"
-                > -->
                   <my-projects></my-projects>
                 </b-tab-item>
                 <b-tab-item
                   label="내가 작성한 프로젝트 트래킹글"
                   icon="creation"
-                  >
-                주최한 프로젝트 트래킹 글 테이블
+                >
+                  주최한 프로젝트 트래킹 글 테이블
                 </b-tab-item>
                 <b-tab-item label="내 지원서 보기" icon="clipboard-account">
                   <application></application>
@@ -211,12 +242,13 @@
     </div>
   </div>
 </template>
+
 <script>
 import { mapState } from "vuex";
 import axios from "axios";
 import router from "../../router";
-import Application from "@/components/Application.vue";
-import MyProjects from "@/components/MyProjects.vue";
+import Application from "@/components/applicationCom/Application.vue";
+import MyProjects from "@/components/projectCom/MyProjects.vue";
 export default {
   components: {
     Application,
@@ -230,7 +262,7 @@ export default {
       email: "",
       phoneNum: "",
       position: "",
-      stack: "",
+      stack: ""
     },
     portfolio: [],
     pfSubtitle: "",
@@ -241,12 +273,8 @@ export default {
     pfTools: "",
     pfDbms: "",
     pfLink: "",
-    pfCategory: "",
-                // defaultOpenedDetails: [1],
-                // showDetailIcon: true
-            
+    pfCategory: ""
   }),
-  
   computed: {
     ...mapState(["imgURL"])
   },
@@ -270,6 +298,7 @@ export default {
     },
     insertPortfolio() {
       let formData = new FormData();
+
       formData.append(
         "userid",
         JSON.parse(sessionStorage.getItem("user")).userId
@@ -283,6 +312,7 @@ export default {
       formData.append("pfDbms", this.pfDbms);
       formData.append("pfLink", this.pfLink);
       formData.append("pfCategory", this.pfCategory);
+
       axios.post("http://localhost:80/insertportfolio", formData);
       router.push({ name: "Home" });
     },
