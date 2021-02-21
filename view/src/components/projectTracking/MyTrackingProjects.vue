@@ -77,8 +77,8 @@ export default {
   methods: {
     trackList: function() {
       this.axios
-        .get("/gettrackinglistaxios")
-        .then(response => {
+        .get("/track/gettrackinglist")
+        .then((response) => {
           this.pjs = response.data;
           console.log("==========list==========");
           console.log(this.pjs);
@@ -96,7 +96,7 @@ export default {
     },
     deleteTracking: function(id) {
       this.axios
-        .delete("/deleteprojecttracking", {
+        .delete("/track/deleteprojecttracking", {
           params: {
             trackSeq: id
           }

@@ -70,7 +70,7 @@ export default {
       
       let yourid = this.auser;
       this.axios
-        .get("/gettrackinglistaxios")
+        .get("/track/gettrackinglist")
         .then((response) => {
           
           this.pjs = response.data;

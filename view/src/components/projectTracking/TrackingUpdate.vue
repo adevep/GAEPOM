@@ -160,7 +160,7 @@ export default {
 
       console.log(formData);
       this.axios
-        .put("/updateprojecttracking", formData, {
+        .put("/track/updateprojecttracking", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
