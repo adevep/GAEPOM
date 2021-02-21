@@ -1,5 +1,22 @@
 <template>
   <div class="ProjectDetails">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
+    />
     <div class="container is-max-desktop pt-5">
       <section class="mt-6 mb-5">
         <article class="media">
@@ -49,7 +66,7 @@
       <section v-for="pj in allPjs" :key="pj.index">
         <b-tabs type="is-boxed">
           <b-tab-item label="프로젝트">
-            <b-taglist>
+              <b-taglist>
               <b-tag type="is-primary">{{ pj.pjCategory }}</b-tag>
               <b-tag type="is-primary is-light">{{ pj.location }}</b-tag>
               <b-tag type="is-link">{{ pj.pjTools }}</b-tag>
@@ -58,27 +75,21 @@
                 new Date(pj.recDate).toLocaleDateString()
               }}</b-tag>
             </b-taglist>
-            <h4 class="title is-4">{{ pj.pjTitle }}</h4>
-            <h5 class="subtitle is-5">
-              프로젝트는 "{{ pj.pjDescription }}" 입니다.
-              <br />
-              저희는 {{ pj.needNum }}명의 {{ pj.needPosi }}를 찾고 있습니다.
-              <br />
-              모집기간은 "{{ pj.recDuration }}"입니다.
-              <br />
-
-              <!-- {{ pj.recStatus }} -->
-              사용툴은 {{ pj.pjTools }}와 같습니다.
-              <br />
-              사용언어는 {{ pj.pjLang }}와 같습니다.
-              <br />
-              사용DBMS는 {{ pj.pjDbms }}와 같습니다.
-              <br />
-              저희와 함께하시려면 {{ pj.location }}로 오세요.
-            </h5>
+            <h2 class="title is-4 mt-5"><i class="xi-lightbulb"></i>  {{ pj.pjTitle }}</h2>
+            <h2 class="subtitle">
+              {{ pj.pjDescription }} 
+            </h2>
             <br />
-            <h4 class="title is-4">우대사항:</h4>
-            <h5 class="subtitle is-5">{{ pj.preference }}</h5>
+            <h2 class="subtitle">
+              · 모집 직무 및 인원 ： {{ pj.needPosi }} ／ {{ pj.needNum }}명 <br />
+              · 모집 기간 ： {{ pj.recDuration }} <br />
+              · 사용 툴 ： {{ pj.pjTools }} <br />
+              · 사용 언어 ： {{ pj.pjLang }} <br />
+              · 사용 DBMS ： {{ pj.pjDbms }} <br />
+              · 지역 ： {{ pj.location }} <br />
+              · 우대사항 ： {{ pj.preference }} <br />
+            </h2>
+
             <!-- 프로젝트 주최자와 로그인한 유저및 이전에 지원한 유저의 데이터랑 다를때만 지원버튼 출력 -->
             <div
               v-if="
