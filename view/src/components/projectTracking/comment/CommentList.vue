@@ -81,12 +81,12 @@ export default {
           .post("/insertcomment", this.commentlist[this.commentlist.length - 1])
           .then((response) => {
             console.warn(response.data);
+            this.showComment();
           })
           .catch((ex) => {
             console.warn("ERROR!!!!! : ", ex);
           });
       }
-      this.showComment();
     },
 
     deletecomment: function(id, user) {
