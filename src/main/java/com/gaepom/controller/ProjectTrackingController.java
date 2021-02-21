@@ -3,6 +3,8 @@ package com.gaepom.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +26,8 @@ import com.gaepom.service.ProjectService;
 import com.gaepom.service.ProjectTrackingService;
 import com.gaepom.service.UserService;
 
-//@SessionAttributes("guser")
 @CrossOrigin(origins = "http://localhost:8081")
+@RequestMapping(value = "track")
 @RestController
 public class ProjectTrackingController {
 	@Autowired
@@ -35,17 +38,19 @@ public class ProjectTrackingController {
 	
 	@Autowired
 	private UserService userService;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-	@GetMapping("/gettrackinglistaxios")
+	@GetMapping("/gettrackinglist")
 	public ResponseEntity<List<ProjectTracking>> getProjectTrackingListaxios() {
 
 		try {
-			List<ProjectTracking> projectTrackingList = projectTrackingService.getProjectTrackingList2();
-			System.out.println("list 반환 성공");
-
+			List<ProjectTracking> projectTrackingList = projectTrackingService.getProjectTrackingList();
+			
+			logger.info("tracking list 반환 성공");
 			return new ResponseEntity<>(projectTrackingList, HttpStatus.OK);
 		} catch (Exception e) {
+			logger.debug( e +"tracking list 반환 실패");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -56,10 +61,11 @@ public class ProjectTrackingController {
 		try {
 			ProjectTracking tracking = projectTrackingService.getProjectTracking(trackSeq);
 
-			System.out.println("tracking 반환 성공");
+			logger.info("tracking 반환 성공");
 			return new ResponseEntity<ProjectTracking>(tracking, HttpStatus.OK);
 
 		} catch (Exception e) {
+			logger.debug( e +"tracking 반환 실패");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -69,37 +75,34 @@ public class ProjectTrackingController {
 	public ResponseEntity<ProjectTracking> insertProjectTracking(ProjectTracking tracking, User user ,Project project, @RequestParam(value = "file", required = false) MultipartFile mfile) {
 		ProjectTracking insertTracking = null;
 		
-		System.out.println(tracking);
-		System.out.println(project);
-		System.out.println(user);
-		System.out.println(project.getPjTitle());
 		if(mfile != null) {
 			Project newProject = projectService.updateProject(project.getPjSeq(), project);
 			insertTracking = projectTrackingService.insertProjectTracking(tracking, newProject, user, mfile);
 			projectService.updateProjTracking(insertTracking, user);
+			logger.info("tracking 생성 성공");
 		} else {
 			
 			Project newProject = projectService.updateProject(project.getPjSeq(), project);
 			insertTracking = projectTrackingService.insertProjectTrackingNoImg(tracking, newProject, user);
-			projectService.updateProjTracking(insertTracking, user);	
+			projectService.updateProjTracking(insertTracking, user);
+			logger.info("tracking 생성 성공");
 		}
-
+		
+		logger.debug("tracking 생성 실패");
 		return new ResponseEntity<>(insertTracking, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateprojecttracking")
 	public ResponseEntity<ProjectTracking> updateProjectTracking(ProjectTracking tracking, Project project, User user, @RequestParam(value = "file", required = false) MultipartFile mfile) {
 		ProjectTracking updateTracking = null;
-			System.out.println(tracking.getTrackSeq());
-			System.out.println(project.getPjSeq());
-			System.out.println(user);
-			System.out.println(mfile);
 			
 			if (mfile != null) {
 				updateTracking= projectTrackingService.updateProjectTrackingImg(tracking, project, user, mfile);
 			} else {
 				updateTracking =projectTrackingService.updateProjectTracking(tracking, project, user);
 			}
+			
+			logger.debug("tracking update 실패");
 			return new ResponseEntity<>(updateTracking, HttpStatus.OK);
 	}
 	
@@ -108,6 +111,7 @@ public class ProjectTrackingController {
 		
 		ProjectTracking updateTrackingLike = null;
 		updateTrackingLike = projectTrackingService.updateTrackingLike(trackSeq, trackLike);
+		
 		
 		return new ResponseEntity<>(updateTrackingLike, HttpStatus.OK);
 	}

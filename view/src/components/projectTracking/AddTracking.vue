@@ -262,7 +262,7 @@ export default {
 
       this.axios
         .post(
-          "/insertprojecttracking",
+          "/track/insertprojecttracking",
           formData,
           { project: this.project },
           {

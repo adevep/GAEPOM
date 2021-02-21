@@ -9,9 +9,7 @@ public interface CommentService {
 	List<Comment> getCommentList(Long trackSeq);
 	void insertComment(Comment comment);
 	Comment getComment(Long cmtSeq);
-	void updateComment(Comment comment);
 	void deleteComment(Comment comment);
 	
-	void updateCmtLike(Comment comment);
 
 }

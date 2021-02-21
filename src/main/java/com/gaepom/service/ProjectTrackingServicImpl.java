@@ -7,21 +7,23 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gaepom.dao.CommentRepository;
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.dao.ProjectTrackingRepository;
 import com.gaepom.domain.Comment;
 import com.gaepom.domain.Project;
 import com.gaepom.domain.ProjectTracking;
 import com.gaepom.domain.User;
-
-import lombok.extern.slf4j.Slf4j;
+import com.gaepom.exception.ProjectTrackingException;
+import com.gaepom.exception.ProjectTrackingNotFoundException;
 
 @Service
-@Slf4j
 public class ProjectTrackingServicImpl implements ProjectTrackingService {
 	@Autowired
 	private ProjectTrackingRepository trackingRepo;
@@ -29,11 +31,12 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 	@Autowired
 	private ProjectRepository projectRepo;
 
-	public List<ProjectTracking> getProjectTrackingList(ProjectTracking tracking) {
-		return (List<ProjectTracking>) trackingRepo.findAll();
-	}
+	@Autowired
+	private CommentRepository commentRepo;
 
-	public List<ProjectTracking> getProjectTrackingList2() {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	public List<ProjectTracking> getProjectTrackingList() {
 		return (List<ProjectTracking>) trackingRepo.findAll();
 	}
 
@@ -41,46 +44,69 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 	public ProjectTracking insertProjectTracking(ProjectTracking tracking, Project project, User user,
 			MultipartFile mfile) {
 		String imgname = null;
-		System.out.println("================================" + mfile);
-		try {
-			imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
-			mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+		Optional<ProjectTracking> findTracking = trackingRepo.findById(tracking.getTrackSeq());
 
+		if (!findTracking.isPresent()) {
+			try {
+				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
+				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				logger.debug(project.getPjTitle() + " 트래킹 등록시 오류 발생");
+			}
+
+			tracking.setTrackImage(imgname);
+			project.setUserId(user);
+			tracking.setProject(project);
+			projectRepo.save(project);
+			trackingRepo.save(tracking);
+
+			logger.info(project.getPjTitle() + " 트래킹 등록완료");
+			return tracking;
+		} else {
+			throw new ProjectTrackingException("이미 생성된 트래킹 글입니다");
 		}
-
-		System.out.println("================================" + mfile);
-		System.out.println("================================" + imgname);
-		tracking.setTrackImage(imgname);
-		project.setUserId(user);
-		tracking.setProject(project);
-		projectRepo.save(project);
-		trackingRepo.save(tracking);
-
-		return tracking;
 	}
 
 	public ProjectTracking insertProjectTrackingNoImg(ProjectTracking tracking, Project project, User user) {
+		Optional<ProjectTracking> findTracking = trackingRepo.findById(tracking.getTrackSeq());
 
-		project.setUserId(user);
-		tracking.setProject(project);
-		projectRepo.save(project);
-		tracking.setTrackImage("default.png");
-		trackingRepo.save(tracking);
+		if (!findTracking.isPresent()) {
 
-		return tracking;
+			project.setUserId(user);
+			tracking.setProject(project);
+			projectRepo.save(project);
+			tracking.setTrackImage("default.png");
+			trackingRepo.save(tracking);
+
+			logger.info(project.getPjTitle() + " 트래킹 등록완료");
+			return tracking;
+		} else {
+			throw new ProjectTrackingException("이미 생성된 트래킹 글입니다");
+		}
 	}
 
 	public ProjectTracking getProjectTracking(Long tracking) {
-		return trackingRepo.findById(tracking).get();
+		Optional<ProjectTracking> findTracking = trackingRepo.findById(tracking);
+
+		if (!findTracking.isPresent()) {
+			return trackingRepo.findById(tracking).get();
+		} else {
+			throw new ProjectTrackingNotFoundException("존재하지 않는 트래킹 글입니다");
+		}
 	}
 
 	public void updateProjComment(Comment comment) {
-		ProjectTracking findTracking = trackingRepo.findById(comment.getTrackSeq().getTrackSeq()).get();
-		findTracking.getTcomments().add(comment);
+		Optional<Comment> findComment = commentRepo.findById(comment.getCmtSeq());
 
-		trackingRepo.save(findTracking);
+		if (!findComment.isPresent()) {
+			ProjectTracking findTracking = trackingRepo.findById(comment.getTrackSeq().getTrackSeq()).get();
+			findTracking.getTcomments().add(comment);
+
+			trackingRepo.save(findTracking);
+		} else {
+			throw new ProjectTrackingNotFoundException("존재하지 않는 댓글입니다");
+		}
 	}
 
 	public ProjectTracking updateProjectTracking(ProjectTracking tracking, Project project, User user) {
@@ -93,9 +119,9 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 			if (file.exists() && !filename.equals("default.png")) {
 				if (file.delete()) {
-					log.debug("사진 파일 삭제 완료");
+					logger.debug("사진 파일 삭제 완료");
 				} else {
-					log.debug("사진 파일 삭제 실패");
+					logger.debug("사진 파일 삭제 실패");
 				}
 			}
 
@@ -117,9 +143,10 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			projectRepo.save(findProject);
 			trackingRepo.save(findProjectTracking.get());
 
+			logger.info(project.getPjTitle() + " 정보 업데이트 완료");
 			return findProjectTracking.get();
 		} else {
-			return null;
+			throw new ProjectTrackingNotFoundException("존재하지 않는 트래킹 글입니다");
 		}
 	}
 
@@ -138,14 +165,14 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 				if (file.exists() && !filename.equals("default.png")) {
 					if (file.delete()) {
-						log.debug("사진 파일 삭제 완료");
+						logger.debug("사진 파일 삭제 완료");
 					} else {
-						log.debug("사진 파일 삭제 실패");
+						logger.debug("사진 파일 삭제 실패");
 					}
 				}
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
-				log.debug("오류 발생");
+				logger.debug("오류 발생");
 			}
 
 			Project findProject = projectRepo.findById(project.getPjSeq()).get();
@@ -166,19 +193,26 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			projectRepo.save(findProject);
 			trackingRepo.save(findProjectTracking.get());
 
+			logger.info(project.getPjTitle() + " 정보 업데이트 완료");
 			return findProjectTracking.get();
 		} else {
-			return null;
+			throw new ProjectTrackingNotFoundException("존재하지 않는 트래킹 글입니다");
 		}
 	}
 
 	public ProjectTracking updateTrackingLike(Long trackSeq, int trackLike) {
-		ProjectTracking findTracking = trackingRepo.findById(trackSeq).get();
-		findTracking.setTrackLike(trackLike);
+		Optional<ProjectTracking> findProjectTracking = trackingRepo.findById(trackSeq);
 
-		trackingRepo.save(findTracking);
-		System.out.println("트래킹 좋아요 수정완료");
-		return findTracking;
+		if (findProjectTracking.isPresent()) {
+			ProjectTracking findTracking = trackingRepo.findById(trackSeq).get();
+			findTracking.setTrackLike(trackLike);
+
+			trackingRepo.save(findTracking);
+			logger.info(findProjectTracking.get().getTrackSeq() + " 좋아요 수정 완료");
+			return findTracking;
+		} else {
+			throw new ProjectTrackingNotFoundException("존재하지 않는 트래킹 글입니다");
+		}
 	}
 
 	public void deleteProjectTracking(Long trackSeq) {
@@ -193,15 +227,15 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 			if (file.exists() && !filename.equals("default.png")) {
 				if (file.delete()) {
-					log.info(trackSeq + "tracking 사진 파일 삭제");
+					logger.info(trackSeq + "tracking 사진 파일 삭제");
 				} else {
-					log.debug("tracking 사진 파일 삭제 실패");
+					logger.debug("tracking 사진 파일 삭제 실패");
 				}
 			}
 			trackingRepo.delete(findProjectTracking.get());
-			log.info(trackSeq + " tracking 삭제 완료");
+			logger.info(trackSeq + " tracking 삭제 완료");
 		} else {
-//			throw new ProjectTrackingNotFoundException("해당하는 tracking이 없습니다");
+			throw new ProjectTrackingNotFoundException("해당하는 tracking이 없습니다");
 		}
 	}
 }
