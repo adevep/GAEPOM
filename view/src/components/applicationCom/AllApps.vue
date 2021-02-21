@@ -19,9 +19,9 @@
             aria-label="breadcrumbs"
           >
             <ul>
-              <li><a href="#">홈페이지</a></li>
-              <li><a href="#">마이페이지</a></li>
-              <li><a href="#">프로젝트</a></li>
+              <li><a href="/">홈페이지</a></li>
+              <li><a href="/mypage">마이페이지</a></li>
+              <li><a href="/project">프로젝트</a></li>
               <li class="is-active">
                 <a href="#" aria-current="page">지원자 수정</a>
               </li>

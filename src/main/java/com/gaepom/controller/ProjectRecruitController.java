@@ -24,6 +24,7 @@ import com.gaepom.domain.RequestWrapper;
 import com.gaepom.domain.User;
 import com.gaepom.service.ProjectRecruitService;
 import com.gaepom.service.ProjectService;
+import com.gaepom.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -34,6 +35,9 @@ public class ProjectRecruitController {
 
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private UserService userService;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -207,17 +211,21 @@ public class ProjectRecruitController {
 		}
 	}
 
-	// 프로젝트 수정
-//	@PutMapping("/updatepj/{id}")
-//	public ResponseEntity<ProjectRecruit> updateRecruit(User user, @PathVariable("id") long id,
-//			@RequestBody ProjectRecruit recruit) {
-//		if (user.getUserId() == null) {
-//			System.out.println("실패");
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//		ProjectRecruit rec = projectRecruitService.updateProjectRecruit(id, recruit);
-//		return new ResponseEntity<>(rec, HttpStatus.CREATED);
-//	}
+	@GetMapping("/gethostedpj2/{userId}")
+	public ResponseEntity<List<Project>> getPjById(@PathVariable("userId") String userid, Project project) {
+		
+		if (userService.getUser(userid) == null) {
+			System.out.println("실패1");
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		try {	
+			List<Project> pj = projectService.getPjByUserId2(project, userid);
+			System.out.println("프로젝트 불러오기 성공");
+			return new ResponseEntity<>(pj, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@PutMapping("/updatepj/{id}")
 	public ResponseEntity<Project> updateProject(User user, @PathVariable("id") long id, @RequestBody Project project) {

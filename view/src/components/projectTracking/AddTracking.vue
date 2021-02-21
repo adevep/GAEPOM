@@ -1,5 +1,34 @@
 <template>
-  <div class="container is-max-desktop">
+  <div id="app" class="container is-max-desktop pt-5">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <section>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title ">
+            프로젝트 트레킹
+          </h1>
+          <h2 class="subtitle centered">
+            프로젝트를 진행 해 보세요.
+          </h2>
+          <nav
+            class="breadcrumb has-dot-separator is-centered"
+            aria-label="breadcrumbs"
+          >
+            <ul>
+              <li><a href="/">홈페이지</a></li>
+              <li><a href="/mypage">마이페이지</a></li>
+              <li class="is-active">
+                <a href="#" aria-current="page">프로젝트 주최</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
     <div class="notification is-accent">
       <h1><strong>프로젝트 트레킹글 만들기</strong></h1>
       <section class="mt-6 mb-5">
@@ -272,7 +301,6 @@ export default {
                   }
                 )
                 .then(response => {
-                  alert(response.data);
                   console.log("==========add==========");
                   console.warn(response);
                   console.warn(response.data);
