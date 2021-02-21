@@ -27,4 +27,7 @@ public interface ProjectRecruitRepository extends CrudRepository<ProjectRecruit,
 	@Query("SELECT a.needNum from ProjectRecruit a INNER JOIN Project b on a.recSeq = b.recSeq where b.pjSeq = :pjSeq")
 	Object findNeedNum (@Param("pjSeq") Long pjSeq);
 	
+	@Query("SELECT a.checkCount from ProjectRecruit a INNER JOIN Project b on a.recSeq = b.recSeq where b.pjSeq = :pjSeq")
+	Object findCheckCount (@Param("pjSeq") Long pjSeq);
+	
 }

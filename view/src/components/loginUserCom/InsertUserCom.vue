@@ -264,7 +264,7 @@ export default {
       formData.append("file", this.file);
 
       axios
-        .post("http://localhost:80/insertuser", formData, {
+        .post("http://localhost:80/user/insert", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

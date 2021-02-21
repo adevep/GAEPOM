@@ -50,10 +50,7 @@
       <section>
         <b-tabs type="">
           <b-tab-item label="유저 정보">
-            <!-- <br /> -->
-            <!-- <section class="section is-medium"> -->
             <h2 class="title is-4 mt-5"><i class="xi-mail"></i> 이메일</h2>
-            <!-- <h1 class="title"><b-icon icon="xi-mail"></b-icon>이메일</h1> -->
             <h2 class="subtitle">
               {{ loginUser.email }}
             </h2>
@@ -120,7 +117,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import axios from "axios";
 import router from "../../router";
 import Application from "@/components/applicationCom/Application.vue";
@@ -151,7 +148,7 @@ export default {
     loginUserInfoCall() {
       axios
         .get(
-          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.loginUser = response.data;
@@ -166,11 +163,11 @@ export default {
     deleteUser() {
       axios
         .delete(
-          "http://localhost:80/deleteuser?userid=" + this.loginUser.userId
+          "http://localhost:80/user/delete?userid=" + this.loginUser.userId
         )
         .then(() => {
           sessionStorage.removeItem("user");
-          this.loginUser = null;
+          this.loginUserAct(null);
           this.success();
         })
         .catch(() => {

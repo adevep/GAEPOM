@@ -58,7 +58,7 @@ public class ProjectTracking {
 	private List<Comment> Tcomments;
 	
 	
-	@OneToOne(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade= CascadeType.REMOVE)
+	@OneToOne(mappedBy="trackSeq", fetch=FetchType.LAZY)
 	private Project project;
 
 }

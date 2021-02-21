@@ -196,7 +196,7 @@ export default {
   methods: {
     getUserList() {
       axios
-        .get("http://localhost:80/getuserlist")
+        .get("http://localhost:80/user/getlist")
         .then(response => {
           this.cardData = response.data;
         })
