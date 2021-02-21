@@ -255,7 +255,7 @@ export default {
       //
       this.axios
         .put(
-          "/updateusertliked?userid=" +
+          "http://localhost:80/user/updatetliked?userid=" +
             this.userdatas.userId +
             "&tliked=" +
             this.likeArray.toString()
@@ -271,7 +271,7 @@ export default {
     },
     getUser: function() {
       this.axios
-        .get("/getuser?userid=" + this.userdatas.userId)
+        .get("http://localhost:80/user/get?userid=" + this.userdatas.userId)
         .then((response) => {
           console.warn(response.data);
           this.likeSeq = response.data.tliked;

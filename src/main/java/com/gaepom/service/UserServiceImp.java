@@ -9,12 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gaepom.dao.ApplicationRepository;
 import com.gaepom.dao.CommentRepository;
-import com.gaepom.dao.PortfolioRepository;
 import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.User;
 import com.gaepom.exception.UserException;
@@ -55,10 +52,6 @@ public class UserServiceImp implements UserService {
 
 	public List<User> getUserList() {
 		return (List<User>) userrepo.findAll();
-	}
-	
-	public List<User> getUserListByPostion(String position) {
-		return userrepo.findAllUserByPosition(position);
 	}
 
 	public User insertUser(User user, String[] stacklist, MultipartFile mfile) {

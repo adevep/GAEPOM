@@ -353,7 +353,7 @@ export default {
     loginUserInfoCall() {
       axios
         .get(
-          "/getuser?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
+          "http://localhost:80/user/get?userid=" + JSON.parse(sessionStorage.getItem("user")).userId
         )
         .then(response => {
           this.loginUser = response.data;
@@ -368,7 +368,7 @@ export default {
     deleteUser() {
       axios
         .delete(
-          "http://localhost:80/deleteuser?userid=" + this.loginUser.userId
+          "http://localhost:80/user/delete?userid=" + this.loginUser.userId
         )
         .then(() => {
           sessionStorage.removeItem("user");

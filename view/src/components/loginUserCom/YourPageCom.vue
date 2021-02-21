@@ -309,7 +309,7 @@ export default {
     },
     anotherUserInfoCall() {
       axios
-        .get("/getuser?userid=" + this.$route.params.pickedid)
+        .get("http://localhost:80/user/get?userid=" + this.$route.params.pickedid)
         .then((response) => {
           this.anotherUser = response.data;
         })
