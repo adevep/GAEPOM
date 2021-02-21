@@ -1,5 +1,5 @@
 <template>
-  <div class="portfolios">
+  <div class="container">
     <portfoliolistcom />
   </div>
 </template>

@@ -16,16 +16,18 @@
           v-model="pfSubtitle"
           size="is-medium"
           align="left"
-          rounded
         />
-        <BInputWithValidation
-          rules="required"
-          label="프로젝트 기간"
-          v-model="pfDuration"
-          size="is-medium"
-          align="left"
-          rounded
-        />
+        <b-field label="프로젝트 기간" align="left">
+          <b-datepicker
+            placeholder="클릭해 기간을 선택하세요."
+            v-model="pfDuration"
+            range
+            required
+            icon="calendar-today"
+            :mobile-native="true"
+          >
+          </b-datepicker>
+        </b-field>
         <BInputWithValidation
           rules="required|numeric|max:2"
           label="프로젝트 참여도"
@@ -33,7 +35,7 @@
           v-model="participation"
           size="is-medium"
           align="left"
-          rounded
+          
         />
         <BInputWithValidation
           rules="required"
@@ -42,17 +44,17 @@
           v-model="pfLink"
           size="is-medium"
           align="left"
-          rounded
+          
         />
         <BInputWithValidation
-          rules="required|max:200"
+          rules="required|max:300"
           label="프로젝트 설명"
-          placeholder="해당하는 프로젝트를 자유롭게 소개해주세요!"
+          placeholder="해당 프로젝트를 자유롭게 소개해주세요!"
           type="textarea"
           v-model="pfDescription"
           size="is-medium"
           align="left"
-          rounded
+          
         />
         <BSeletWithValidation
           rules="required"
@@ -71,7 +73,7 @@
           v-model="pfPosition"
           size="is-medium"
           align="left"
-          rounded
+          
         >
           <option value="개발자">개발자</option>
           <option value="기획자">기획자</option>
@@ -191,7 +193,7 @@
             type="is-primary"
             outlined
             size="is-large"
-            v-on:click="handleSubmit(insertPortfolio)"
+            v-on:click="handleSubmit(submitPortfolio)"
           >
             <span>포트폴리오 등록</span>
           </button>
@@ -203,6 +205,7 @@
     </div>
   </ValidationObserver>
 </template>
+
 <script>
 /**
  * *  vee-validation 사용
@@ -214,19 +217,20 @@ import { ValidationObserver } from "vee-validate";
 import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
 import BInputWithValidation from "../veeInputs/BInputWithValidation";
 import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
-import router from "../../router";
 import axios from "axios";
+import router from "../../router";
+
 export default {
   components: {
     ValidationObserver,
     BSeletWithValidation,
     BInputWithValidation,
-    BCheckboxesWithValidation
+    BCheckboxesWithValidation,
   },
   data() {
     return {
       pfSubtitle: "",
-      pfDuration: "",
+      pfDuration: [],
       pfDescription: "",
       participation: "",
       pfLink: "",
@@ -238,8 +242,28 @@ export default {
     };
   },
   methods: {
-    insertPortfolio() {
+    submitPortfolio() {
+      let myDate = new Date(Date.parse(this.pfDuration[0]));
+      let myDate2 = new Date(Date.parse(this.pfDuration[1]));
+      let date1 =
+        myDate.getFullYear() +
+        "." +
+        ("0" + (myDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate.getDate()).slice(-2);
+      let date2 =
+        myDate2.getFullYear() +
+        "." +
+        ("0" + (myDate2.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + myDate2.getDate()).slice(-2);
+      let date3 = [];
+      date3.push(date1);
+      date3.push(date2);
+      this.pfDuration = date3.join("-");
+
       let formData = new FormData();
+
       formData.append(
         "userid",
         JSON.parse(sessionStorage.getItem("user")).userId
@@ -252,17 +276,27 @@ export default {
       formData.append("pfCategory", this.pfCategory);
       formData.append("pfPosition", this.pfPosition);
       formData.append("pftoolslist", this.pfTools);
+
       if (this.pfPosition === "개발자") {
         formData.append("pflanglist", this.pfLang);
         formData.append("pfdbmslist", this.pfDbms);
       }
-      axios.post("http://localhost:80/insertportfolio", formData);
-      this.success();
+      axios.post("http://localhost:80/portfolio/insert", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+          }
+      })
+      .then(() => {
+        this.success();
+      })
+      .catch(() => {
+        this.danger();
+      });
       router.push({ name: "mypage" });
     },
     resetForm() {
       this.pfSubtitle = "";
-      this.pfDuration = "";
+      this.pfDuration = [];
       this.pfDescription = "";
       this.participation = "";
       this.pfLink = "";
@@ -279,16 +313,16 @@ export default {
       this.$buefy.notification.open({
         message: "포트폴리오 등록이 완료되었습니다.",
         type: "is-success",
-        position: "is-bottom-right"
+        position: "is-bottom-right",
       });
     },
     danger() {
       this.$buefy.notification.open({
         message: `포트폴리오를 정확히 작성해주세요.`,
         type: "is-danger",
-        position: "is-bottom-right"
+        position: "is-bottom-right",
       });
-    }
-  }
+    },
+  },
 };
 </script>

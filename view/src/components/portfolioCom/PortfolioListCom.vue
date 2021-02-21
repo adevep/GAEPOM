@@ -1,48 +1,40 @@
 <template>
-  <div id="portfolios" class="container">
+  <div class="portfoliolist">
     <section>
       <b-table
         :data="portfolio"
         ref="table"
-        paginated
-        per-page="3"
-        :opened-detailed="defaultOpenedDetails"
         detailed
-        detail-key="userId"
-        aria-next-label="Next page"
-        aria-previous-label="Previous page"
-        aria-page-label="Page"
-        aria-current-label="Current page"
+        detail-key="pfSeq"
+        @details-open="(row) => $buefy.toast.open()"
       >
         <b-table-column
           field="pfSeq"
           label="글"
-          width="30"
+          width="80"
+          sortable
+          centered
           numeric
           v-slot="props"
         >
           {{ props.row.pfSeq }}
         </b-table-column>
 
-        <!-- <b-table-column field="id" label="ID" sortable v-slot="props">
-          <a @click="props.toggleDetails(props.row)">
-            {{ props.row.currentUserId }} 
-            {{ currentUserId }}
-          </a>
-        </b-table-column> -->
-
         <b-table-column
           field="pfSubtitle"
-          label="포트폴리오 제목"
+          label="제목"
           sortable
+          centered
           v-slot="props"
         >
-          {{ props.row.pfSubtitle }}
+          <a @click="props.toggleDetails(props.row)">
+            {{ props.row.pfSubtitle }}
+          </a>
         </b-table-column>
 
         <b-table-column
           field="pfDuration"
-          label="포트폴리오 기간"
+          label="기간"
           sortable
           centered
           v-slot="props"
@@ -51,122 +43,82 @@
         </b-table-column>
 
         <b-table-column
-          field="pfDescription"
-          label="포트폴리오 설명"
-          sortable
-          centered
-          v-slot="props"
-        >
-          {{ props.row.pfDescription }}
-        </b-table-column>
-
-        <b-table-column
-          field="participation"
-          label="포트폴리오 참여도"
-          sortable
-          centered
-          v-slot="props"
-        >
-          {{ props.row.participation }}
-        </b-table-column>
-
-        <b-table-column
-          field="participation"
-          label="포트폴리오 포지션"
-          sortable
-          centered
-          v-slot="props"
-        >
-          {{ props.row.pfPosition }}
-        </b-table-column>
-
-        <b-table-column
-          field="pfTools"
-          label="포트폴리오 사용툴"
-          sortable
-          centered
-          v-slot="props"
-        >
-          {{ props.row.pfTools }}
-        </b-table-column>
-
-        <b-table-column
           field="pfLang"
-          label="포트폴리오 사용언어"
+          label="사용언어"
           sortable
           centered
           v-slot="props"
-          v-if="props.row.pfPosition === '개발자'"
+          v-if="pfPosition === '개발자'"
         >
-          {{ props.row.pfLang }}
+          <b-tag type="is-info" size="is-medium">{{ props.row.pfLang }}</b-tag>
         </b-table-column>
 
         <b-table-column
           field="pfDbms"
-          label="포트폴리오 DBMS"
+          label="DBMS"
           sortable
           centered
           v-slot="props"
-          v-if="props.row.pfPosition === '개발자'"
+          v-if="pfPosition === '개발자'"
         >
-          {{ props.row.pfDbms }}
-        </b-table-column>
-
-        <b-table-column
-          field="pfLink"
-          label="포트폴리오 외부주소"
-          sortable
-          centered
-          v-slot="props"
-        >
-          {{ props.row.pfLink }}
+          <b-tag type="is-dark" size="is-medium">{{ props.row.pfDbms }}</b-tag>
         </b-table-column>
 
         <b-table-column
           field="pfCategory"
-          label="포트폴리오 카테고리"
-          sortable
+          label="카테고리"
           centered
           v-slot="props"
         >
-          {{ props.row.pfCategory }}
+          <b-tag type="is-primary" size="is-medium">{{ props.row.pfCategory }}</b-tag>
         </b-table-column>
 
-        <b-table-column label="변경" sortable centered v-slot="props">
-          <b-button
-            type="is-info"
+        <b-table-column
+          label="수정 및 삭제"
+          v-slot="props"
+          centered
+          >
+           <b-button
+            type="is-primary is-light"
             outlined
-            @click="updatePortfolio(props.row.pfSeq)"
+            v-on:click="updatePortfolio(props.row.pfSeq)"
             position="is-centered"
             size="is-small"
             >수정</b-button
           >
-          <b-button
-            type="is-danger"
+           <b-button
+            type="is-danger is-light"
             outlined
             v-on:click="deletePortfolio(props.row.pfSeq)"
             position="is-centered"
             size="is-small"
             >삭제</b-button
-          >
+         >
         </b-table-column>
-
-        <template #detail="">
+        <template #detail="props">
           <article class="media">
-            <figure class="media-left">
-              <!-- <p class="image is-64x64">
-                <img src="../../assets/jpg" />
-              </p> -->
-            </figure>
             <div class="media-content">
               <div class="content">
                 <p>
-                  <strong>{{ currentUserName }} </strong>
-                  <small>@{{ currentUserId }}</small>
+                  <strong>{{ props.row.pfSubtitle }}</strong>
                   <br />
-                  {{ currentUserAddress }}
+                  프로젝트 설명 :
+                  <strong>{{ props.row.pfDescription }}</strong>
                   <br />
-                  {{ currentUserPosition }}
+                  참여도 :
+                  <strong>{{ props.row.participation }}%</strong>
+                  <br />
+                  관련 링크 : <strong>{{ props.row.pfLink }}</strong>
+                  <br />
+                  <b-field v-if="props.row.pfPosition === '개발자'">
+                  사용 툴 : <b-tag type="is-success" size="is-small">{{ props.row.pfTools }}</b-tag>
+                  </b-field>
+                  <b-field v-if="props.row.pfPosition === '개발자'">
+                  사용 언어 : <b-tag type="is-info" size="is-small">{{ props.row.pfLang }}</b-tag>
+                  </b-field>
+                  <b-field v-if="props.row.pfPosition === '개발자'">
+                  사용 DBMS : <b-tag type="is-dark" size="is-small">{{ props.row.pfDbms }}</b-tag>
+                  </b-field>
                 </p>
               </div>
             </div>
@@ -178,9 +130,7 @@
 </template>
 
 <script>
-import http from "../../http-common";
 import axios from "axios";
-import router from "../../router";
 
 export default {
   name: "portfoliolist",
@@ -188,27 +138,22 @@ export default {
     const portfolio = [];
     return {
       portfolio,
-      currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
-      currentUserName: JSON.parse(sessionStorage.getItem("user")).name,
-      currentUserPosition: JSON.parse(sessionStorage.getItem("user")).position,
-      currentUserAddress: JSON.parse(sessionStorage.getItem("user")).address,
-      defaultOpenedDetails: [1],
       isHoverable: true,
       cc: 4,
     };
   },
   methods: {
-    retrievePortfolios() {
-      http
+    portfolioInfoCall() {
+      axios
         .get(
-          "/portfolios?userid=" +
+          "http://localhost:80/portfolio/getlist?userid=" +
             JSON.parse(sessionStorage.getItem("user")).userId
         )
-        .then((response) => {
+        .then(response => {
           this.portfolio = response.data;
         })
         .catch(() => {
-          alert("조회 실패");
+          alert("포트폴리오 조회 실패");
         });
     },
     updatePortfolio(pfseq) {
@@ -217,21 +162,38 @@ export default {
         params: { pfSeq: pfseq },
       });
     },
-    deletePortfolio(pfseq) {
+    //
+    deletePortfolio(pfSeq) {
       axios
-        .delete("http://localhost:80/deleteportfolio/" + pfseq)
+        .delete(
+          "http://localhost:80/portfolio/delete?pfSeq=" + pfSeq
+        )
         .then(() => {
-          sessionStorage.removeItem("portfolio");
-          this.portfolio = null;
-          this.retrievePortfolios();
-          router.push({ name: "portfoliolist" });
+          this.portfolioInfoCall();
+          this.success();
         })
-        .catch(function() {});
-      return this.$router.push({ name: "Home" });
+        .catch(() => {
+          this.danger();
+        });
+        this.portfolioInfoCall();
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "포트폴리오가 삭제되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right",
+      });
+    },
+    danger() {
+      this.$buefy.notification.open({
+        message: "포트폴리오 삭제에 실패했습니다.",
+        type: "is-danger",
+        position: "is-bottom-right",
+      });
     },
   },
   mounted() {
-    this.retrievePortfolios();
+    this.portfolioInfoCall();
   },
 };
 </script>

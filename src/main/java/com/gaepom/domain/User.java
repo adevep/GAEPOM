@@ -67,5 +67,3 @@ public class User {
 	private List<Project> projects;
 
 }
-
-
