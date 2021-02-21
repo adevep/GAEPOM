@@ -26,7 +26,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	private UserRepository userrepo;
 
 	// ===== CREATE =====
-	public Portfolio createPortfolio(String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid,
+	public Portfolio insertPortfolio(String[] pftoolslist, String[] pflanglist, String[] pfdbmslist, String userid,
 			Portfolio portfolio) {
 		
 		Optional<User> user = userrepo.findById(userid);
@@ -66,7 +66,8 @@ public class PortfolioServiceImpl implements PortfolioService {
 	}
 
 	// ===== READ =====
-	public Portfolio findPfSeqGetPortfolio(Long pfSeq) {
+	public Portfolio getPortfolio(Long pfSeq) {
+		
 		if (portfoliorepo.findByPfSeq(pfSeq) != null) {
 			logger.info("조회 완료 | {}: 포트폴리오 조회됨", pfSeq);
 			return portfoliorepo.findByPfSeq(pfSeq);
@@ -76,7 +77,8 @@ public class PortfolioServiceImpl implements PortfolioService {
 		}
 	}
 
-	public List<Portfolio> findUserIdGetPortfolio(String userid) {
+	public List<Portfolio> getPortfolioList(String userid) {
+		
 		if (portfoliorepo.findAllPortfolioByUserId(userid) != null) {
 			logger.info("조회 완료 | {}: 포트폴리오 조회됨", userid);
 			return portfoliorepo.findAllPortfolioByUserId(userid);
@@ -153,7 +155,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	}
 
 	// ===== DELETE =====
-	public void deleteByPfSeq(Long pfSeq) {
+	public void deletePortfolio(Long pfSeq) {
 		if (portfoliorepo.findByPfSeq(pfSeq) != null) {
 			logger.info("삭제 완료 | {}번 포트폴리오 조회 및 삭제 완료됨", pfSeq);
 			portfoliorepo.deleteById(pfSeq);
