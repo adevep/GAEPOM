@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container is-max-desktop pt-5">
+  <div class="mentor">
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
@@ -193,6 +193,7 @@
                   <p class="has-text-dark">
                     前 마이크로 소프트 재직(2018.02 - 2019.06) <br>
                     現 구글 콤퓨타미래전략부 팀장...^^ (여기 뭐라할까...)
+                    
                   </p>
                 </div>
               </div>
@@ -218,6 +219,7 @@
                   <p class="has-text-dark">
                     - tvN 「유 퀴즈 온더 블럭」134회 '한국대 최고 아웃풋 청년' 출연 <br>
                     - SBS 「놀라운 대회 스타킹!」100회 '100회 특집! 코딩신동' 출연 <br>
+                    
                   </p>
                 </div>
               </div>
