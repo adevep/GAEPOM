@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
       rel="stylesheet"
@@ -32,8 +32,22 @@
                 지금 여기서 시작하세요<br />
               </h2>
               <div class="buttons">
-                <button class="button is-black">팀원찾기</button>
-                <button class="button">프로젝트</button>
+                <b-button
+                  class="button is-black"
+                  tag="router-link"
+                  to="/profile"
+                  type="is-link"
+                >
+                  팀원찾기
+                </b-button>
+                 <b-button
+                  class="button is-light"
+                  tag="router-link"
+                  to="/project"
+                  type="is-link"
+                >
+                  프로젝트
+                </b-button>
               </div>
             </div>
             <div

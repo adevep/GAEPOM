@@ -29,7 +29,10 @@
           centered
         >
           <router-link
-            :to="{ name: 'ProjectTrackingDetail', params: {track: props.row}}"
+            :to="{
+              name: 'ProjectTrackingDetail',
+              params: { track: props.row }
+            }"
             >{{ props.row.project.pjTitle }}</router-link
           >
         </b-table-column>
@@ -46,13 +49,10 @@
           field="pjSeq"
           label="관리"
           sortable
-          v-slot="props"  
+          v-slot="props"
           centered
         >
-         <button
-            
-            @click="deleteTracking(props.row.trackSeq)"
-            >삭제</button>
+          <button @click="deleteTracking(props.row.trackSeq)">삭제</button>
           <!-- <p>{{props.row}}</p> -->
         </b-table-column>
         <!-- <b-table-column
@@ -76,13 +76,12 @@
   </div>
 </template>
 <script>
-
 export default {
   name: "MyTrackingProjects",
   data() {
     const pjs = [];
     return {
-      tracks:[],
+      tracks: [],
       loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       pjs,
       defaultOpendDetails: [1],
@@ -91,19 +90,17 @@ export default {
     };
   },
   methods: {
-
-
-   trackList: function() {
+    trackList: function() {
       this.axios
         .get("/gettrackinglistaxios")
-        .then((response) => {
+        .then(response => {
           this.pjs = response.data;
           this.tracks = this.pjs;
           console.log("==========list==========");
           console.log(response);
           console.log("==========list==========");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("에러" + error);
         });
     },
@@ -112,19 +109,18 @@ export default {
         .delete("/deleteprojecttracking", {
           params: {
             trackSeq: id
-          },
+          }
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           this.trackList();
-          
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
-    },
+    }
   },
-  
+
   mounted() {
     this.trackList();
   }

@@ -1,13 +1,15 @@
 package com.gaepom.controller;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,15 +35,13 @@ public class ProjectRecruitController {
 	@Autowired
 	private ProjectService projectService;
 
-	@ModelAttribute("guser")
-	public User setUser() {
-		return new User();
-	}
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 프로젝트 총 리스트 출력 (고쳐서 두개다 추력하게)
 	@GetMapping("/getpjs")
 	public ResponseEntity<List<Project>> findAllRecs(User user, Project project) {
 		if (user.getUserId() == null) {
+			logger.info("유저 아이디가 존재하지 않습니다.");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		List<Project> pjs = projectService.getProjectList(project);
