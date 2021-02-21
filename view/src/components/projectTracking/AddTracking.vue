@@ -255,7 +255,6 @@ export default {
             )
             .then(response => {
               this.rec = response.data;
-              alert(this.rec)
               //recruit 데이터 받아서 recSeq 0에서 1로 수정
               this.axios
                 .put(

@@ -233,12 +233,10 @@ export default {
                   console.log(response.data);
                 })
                 .catch((e) => {
-                  alert("에러");
                   console.log(e);
                 });
             })
             .catch((e) => {
-              alert("에러");
               console.log(e);
             });
         })
@@ -258,7 +256,6 @@ export default {
         .put(`/app/update/${id}?userId=` + this.loginUser, app)
         .then((response) => {
           console.log(response.data);
-          alert(this.checkCount)
           http
             .put(
               "/recruit/updatereccount/" + this.pjSeq2 + "?userId=" + this.loginUser + "&checkCount=" + this.checkCount
@@ -267,7 +264,6 @@ export default {
               console.log(response.data);
             })
             .catch((e) => {
-              alert("에러");
               console.log(e);
             });
         })
@@ -297,7 +293,6 @@ export default {
               console.log(response.data);
             })
             .catch((e) => {
-              alert("에러");
               console.log(e);
             });
         })
