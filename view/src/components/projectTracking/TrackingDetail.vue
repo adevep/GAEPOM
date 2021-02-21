@@ -114,9 +114,9 @@
               <button v-on:click="addTrackingLike(trackInfo.trackSeq)" icon="creation">
                 좋아요 선택하기 </button
               ><br />
-              <button @click="deleteTracking">삭제</button>
               <router-link
                 tag="button"
+                v-if="userdatas.userId == trackInfo.project.userId.userId"
                 :to="{
                   name: 'ProjectTrackingUpdate',
                   params: { trackSeq: trackInfo },
@@ -134,7 +134,7 @@
   </div>
 </template>
 <script>
-import ProjectTracking from "../../views/ProjectTracking.vue";
+
 import Comment from "./comment/Comment.vue";
 import { mapState } from "vuex";
 export default {
@@ -163,7 +163,7 @@ export default {
       this.axios
         .get("/getprojecttracking", {
           params: {
-            trackSeq: this.$route.params.track.trackSeq,
+            trackSeq: this.trackInfo.trackSeq,
           },
         })
         .then((response) => {
@@ -172,22 +172,6 @@ export default {
         })
         .catch((error) => {
           console.log("에러" + error);
-        });
-    },
-    deleteTracking: function() {
-      this.axios
-        .delete("/deleteprojecttracking", {
-          params: {
-            trackSeq: this.trackInfo.trackSeq,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          // 페이지 이동
-          this.$router.push(ProjectTracking);
-        })
-        .catch((ex) => {
-          console.warn("ERROR!!!!! : ", ex);
         });
     },
     showlike: function() {
