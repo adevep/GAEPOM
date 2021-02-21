@@ -44,8 +44,23 @@
                      <td><input type="text" v-model="trackInfo.output" placeholder=""/></td>
                  </tr>
                  <tr>
-                     <td>Image</td>
-                     <td><input type="text" v-model="trackInfo.trackImage" placeholder=""/></td>
+                     <b-field
+                            label="Current UserImage"
+                            align="left"
+                            message="<주의> 이미지 재등록 없을시 기본 이미지로 변경"
+                        >
+                            <img :src="imgURL + trackInfo.trackImage" alt="" width="500" />
+                        </b-field>
+                        <br />
+                        <b-field align="left">
+                            <input
+                            type="file"
+                            id="file"
+                            ref="file"
+                            placeholder="Add tracking picture"
+                            v-on:change="handleFileUpload()"
+                            />
+                        </b-field>
                  </tr>
             </table>
             <br>
@@ -53,48 +68,77 @@
              <!-- <router-link tag ="button" :to="{name: 'ProjectTrackingDetail', params: {trackSeq: trackInfo.trackSeq}}">수정<router-link> -->
         </center>
   </div>
-</template>
+</template> 
 <script>
 // import ProjectTrackingDetail from '../../views/ProjectTrackingDetail.vue';
+import { mapState } from "vuex";
 export default {
+    
     name: "TrackingUpdate",
     data() {
         return{
-            trackInfo: []
+            trackInfo: [],
+            project: [],
         }
     },
     methods: {
       updateTracking : function() {
-          this.axios.put('/updateprojecttracking', this.trackInfo
-            ).then(response => {
+          let formData = new FormData();
+          formData.append("trackSeq", this.trackInfo.trackSeq);
+          formData.append("stage", this.trackInfo.stage);
+          formData.append("issue", this.trackInfo.issue);
+          formData.append("output", this.trackInfo.output);
+          formData.append("file", this.trackInfo.trackImage);
+          formData.append("trackLink", this.trackInfo.trackLink);
+         
+          formData.append("pjSeq", this.project.pjSeq);
+          formData.append("pjTitle", this.project.pjTitle);
+          formData.append("pjDescription", this.project.pjDescription);
+          formData.append("pjDuration", this.project.pjDuration);
+          formData.append("pjTools", this.project.pjTools);
+          formData.append("pjLang", this.project.pjLang);
+          formData.append("pjDbms", this.project.pjDbms);
+          formData.append("pjCategory", this.project.pjCategory);
+
+          formData.append("userId", this.project.userId.userId);
+          formData.append("password", this.project.userId.password);
+          formData.append("name", this.project.userId.name);
+          formData.append("age", this.project.userId.age);
+          formData.append("email", this.project.userId.email);
+          formData.append("phoneNum", this.project.userId.phonenum);
+          formData.append("address", this.project.userId.address);
+          formData.append("position", this.project.userId.position);
+          formData.append("stacklist", this.project.userId.stacklist);
+
+
+        
+          console.log(formData)
+          this.axios.put('/updateprojecttracking', formData , {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+            }).then(response => {
                 console.log("==========update==========")
                 console.warn(response.data)
                 console.log("==========update==========")
-                this.success();
                 // 페이지 이동
+                this.trackInfo = response.data
                 this.$router.push({ name: 'ProjectTrackingDetail', params: {track: this.trackInfo}})
             }).catch((ex) => {
-                this.danger();
                 console.warn("ERROR!!!!! : ",ex)
             });
         },
-         success() {
-                this.$buefy.notification.open({
-                    message: '트래킹 수정이 완료되었습니다.',
-                    type: 'is-success',
-                    position: 'is-bottom-right',
-                })
-            },
-         danger() {
-                this.$buefy.notification.open({
-                    message: `트래킹 수정 내용을 정확히 입력해주세요.`,
-                    type: 'is-danger',
-                    position: 'is-bottom-right',
-                })
-            },
+         handleFileUpload() {
+      this.trackInfo.trackImage = this.$refs.file.files[0];
     },
+    },
+    computed: {
+    ...mapState(["imgURL"]),
+  },
     mounted() {
         this.trackInfo = this.$route.params.trackSeq
+        this.project = this.trackInfo.project
+        console.log(this.trackInfo)
     }
 }
  </script>

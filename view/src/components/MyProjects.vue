@@ -12,7 +12,7 @@
         >
           {{ props.row.pjSeq }}
         </b-table-column>
-            <b-table-column
+        <b-table-column
           field="pjCategory"
           label="분야"
           sortable
@@ -63,7 +63,7 @@
           centered
         >
           <router-link
-          class="tag is-warn"
+            class="tag is-warn"
             :to="{
               name: 'updateproject',
               params: { pjNum: props.row.pjSeq }

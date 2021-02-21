@@ -4,7 +4,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css"
     />
-
     <b-navbar>
       <template #brand>
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
@@ -25,7 +24,6 @@
           <b-navbar-item tag="router-link" :to="{ path: '/project' }">
             프로젝트 모집
           </b-navbar-item>
-
           <b-navbar-item tag="router-link" :to="{ path: '/projectTracking' }">
             프로젝트 트래커
           </b-navbar-item>
@@ -40,6 +38,7 @@
               scrollable
               max-height="200"
               trap-focus
+              v-if="loginCheck == null"
             >
               <template #trigger>
                 <a class="navbar-item" role="button">
@@ -47,7 +46,6 @@
                   <b-icon icon="menu-down"></b-icon>
                 </a>
               </template>
-
               <b-dropdown-item has-link aria-role="listitem"
                 ><router-link to="/login">로그인</router-link></b-dropdown-item
               >
@@ -57,12 +55,12 @@
                 ></b-dropdown-item
               >
             </b-dropdown>
-
             <b-dropdown
               position="is-bottom-left"
               append-to-body
               aria-role="menu"
               trap-focus
+              v-if="loginCheck != null"
             >
               <template #trigger>
                 <a class="navbar-item" role="button">
@@ -70,7 +68,6 @@
                   <b-icon icon="menu-down"></b-icon>
                 </a>
               </template>
-
               <b-dropdown-item has-link aria-role="listitem"
                 ><router-link to="/mypage"
                   >마이페이지</router-link
@@ -89,26 +86,32 @@
         </div>
       </template>
     </b-navbar>
-
     <router-view />
+    <default-footer></default-footer>
   </div>
 </template>
-
 <script>
-//import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import router from "./router";
-
+import DefaultFooter from "@/components/Footer.vue";
 export default {
+  components: { DefaultFooter },
   data() {
     return {
-      loginUser: JSON.parse(sessionStorage.getItem("user"))
+      loginCheck: sessionStorage.getItem("user")
     };
   },
-  computed: {},
+  watch: {
+    "$store.state.loginUser": function() {
+      this.loginCheck = this.$store.state.loginUser;
+    }
+  },
   methods: {
+    ...mapActions(["loginUserAct"]),
     logout() {
       if (sessionStorage.getItem("user") != null) {
         sessionStorage.removeItem("user");
+        this.loginUserAct(null);
         router.push({ name: "Home" });
       } else {
         alert("로그인을 먼저 해주세요");

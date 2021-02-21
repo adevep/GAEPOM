@@ -54,11 +54,11 @@ public class ProjectTracking {
 	
 
 	@JsonManagedReference(value="comment")
-	@OneToMany(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Comment> Tcomments;
 	
-	@JsonManagedReference(value="track")
-	@OneToOne(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
+	
+	@OneToOne(mappedBy="trackSeq", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private Project project;
 
 }

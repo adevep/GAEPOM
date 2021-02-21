@@ -18,7 +18,6 @@
           align="left"
           rounded
         />
-
         <BInputWithValidation
           rules="required"
           label="프로젝트 기간"
@@ -27,7 +26,6 @@
           align="left"
           rounded
         />
-
         <BInputWithValidation
           rules="required|numeric|max:2"
           label="프로젝트 참여도"
@@ -37,7 +35,6 @@
           align="left"
           rounded
         />
-
         <BInputWithValidation
           rules="required"
           label="프로젝트 외부링크"
@@ -47,7 +44,6 @@
           align="left"
           rounded
         />
-
         <BInputWithValidation
           rules="required|max:200"
           label="프로젝트 설명"
@@ -58,7 +54,6 @@
           align="left"
           rounded
         />
-
         <BSeletWithValidation
           rules="required"
           label="프로젝트 카테고리"
@@ -70,7 +65,6 @@
           <option value="데이터사이언스">데이터사이언스</option>
           <option value="게임개발">게임개발</option>
         </BSeletWithValidation>
-
         <BSeletWithValidation
           rules="required"
           label="프로젝트 희망직무"
@@ -209,7 +203,6 @@
     </div>
   </ValidationObserver>
 </template>
-
 <script>
 /**
  * *  vee-validation 사용
@@ -221,10 +214,8 @@ import { ValidationObserver } from "vee-validate";
 import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
 import BInputWithValidation from "../veeInputs/BInputWithValidation";
 import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
-
 import router from "../../router";
 import axios from "axios";
-
 export default {
   components: {
     ValidationObserver,
@@ -249,7 +240,6 @@ export default {
   methods: {
     insertPortfolio() {
       let formData = new FormData();
-
       formData.append(
         "userid",
         JSON.parse(sessionStorage.getItem("user")).userId
@@ -262,12 +252,10 @@ export default {
       formData.append("pfCategory", this.pfCategory);
       formData.append("pfPosition", this.pfPosition);
       formData.append("pftoolslist", this.pfTools);
-
       if (this.pfPosition === "개발자") {
         formData.append("pflanglist", this.pfLang);
         formData.append("pfdbmslist", this.pfDbms);
       }
-
       axios.post("http://localhost:80/insertportfolio", formData);
       this.success();
       router.push({ name: "mypage" });

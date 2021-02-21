@@ -89,19 +89,15 @@
             </div>
         </b-field> -->
 
-        <b-table
-            :data="portfolio"
-            ref="table"
-            
-            :opened-detailed="defaultOpenedDetails"
-            detailed
-            detail-key="pfSeq"
-            @details-open="(row) => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)"
-            :show-detail-icon="showDetailIcon"
-            aria-next-label="Next page"
-            aria-previous-label="Previous page"
-            aria-page-label="Page"
-            aria-current-label="Current page">
+                  <b-table-column
+                    field="pfLink"
+                    label="Link"
+                    sortable
+                    centered
+                    v-slot="props"
+                  >
+                    {{ props.row.pfLink }}
+                  </b-table-column>
 
             <b-table-column field="pfSeq" label="번호" width="70" numeric v-slot="props">
                 {{ props.row.pfSeq }}
@@ -154,34 +150,7 @@
 
           <!-- </b-tab-item> -->
 
-            </b-table-column>
-
-            <template #detail="props">
-                <article class="media">
-                    
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <strong>{{ props.row.pfSubtitle }}</strong>
-                                <!-- <small>@{{ props.row.user.first_name }}</small> -->
-                                <br>
-                                프로젝트 설명 : <strong>{{ props.row.pfDescription }}</strong> <br>
-                                참여도 : <strong>{{ props.row.participation }}%</strong> <br>
-                                관련 링크 : <strong>{{ props.row.pfLink }}</strong> <br>
-                                카테고리 : <strong>{{ props.row.pfCategory }}</strong> <br>
-                                사용 툴 :  <strong>{{ props.row.pfTools }}</strong> <br>
-                                사용 언어 : <strong>{{ props.row.pfLang }}</strong> <br>
-                                사용 DBMS : <strong>{{ props.row.pfDbms }}</strong> <br>
-                                
-                            </p>
-                        </div>
-                    </div>
-                </article>
-            </template>
-        </b-table>
-
-    </section>
-                    <b-taglist>
+            <b-taglist>
               <b-button tag="router-link" to="/insertportfolio">
                 포트폴리오 등록
               </b-button>
@@ -192,22 +161,18 @@
             <section>
               <b-tabs :size="medium" :type="boxed" :expanded="expanded">
                 <b-tab-item
-                  label="내가 작성한 프로젝트 모집글"
-                  icon="account-multiple-plus"
-                >
-                <!-- <b-tab-item
                   label="내가 주최한 프로젝트 모집글"
-                  icon="account-multiple-plus"
-                > -->
+                  icon="google-photos"
+                >
                   <my-projects></my-projects>
                 </b-tab-item>
                 <b-tab-item
-                  label="내가 작성한 프로젝트 트래킹글"
-                  icon="creation"
-                  >
+                  label="내가 주최한 프로젝트 트래킹글"
+                  icon="google-photos"
+                >
                 주최한 프로젝트 트래킹 글 테이블
                 </b-tab-item>
-                <b-tab-item label="내 지원서 보기" icon="clipboard-account">
+                <b-tab-item label="내 지원서" icon="library-music">
                   <application></application>
                 </b-tab-item>
               </b-tabs>

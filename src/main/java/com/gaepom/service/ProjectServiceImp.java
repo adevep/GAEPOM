@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gaepom.dao.ProjectRecruitRepository;
 import com.gaepom.dao.ProjectRepository;
@@ -34,16 +35,9 @@ public class ProjectServiceImp implements ProjectService {
 		return projectRepo.save(project);
 	}
 
-//	public ProjectRecruit getProjectRecruit(Long id) {
-//		return recruitRecruitRepo.findById(id).get();
-//	}
-
 	public Project getProject(Long id) {
 		return projectRepo.findById(id).get();
 	}
-//	public Project getProject(Project project) {
-//		return projectRepo.findById(project.getPjSeq()).get();
-//	}
 
 	public Project updateProject(Long id, Project project) {
 		System.out.println("여기오나?");
@@ -61,14 +55,21 @@ public class ProjectServiceImp implements ProjectService {
 	}
 
 	
-	public void updateProjTracking(ProjectTracking projectTracking) {
+	public void updateProjTracking(ProjectTracking projectTracking, User user) {
 		Project findProject = projectRepo.findById(projectTracking.getProject().getPjSeq()).get();
 		findProject.setTrackSeq(projectTracking);
-		
+//		findProject.setUserId(user);
 		
 		projectRepo.save(findProject);
 	}
 
+//	public void updateProjTrackingImg(ProjectTracking projectTracking, MultipartFile mfile) {
+//		Project findProject = projectRepo.findById(projectTracking.getProject().getPjSeq()).get();
+//		findProject.setTrackSeq(projectTracking);
+//		
+//		
+//		projectRepo.save(findProject);
+//	}
 
 //	public void updateProjectWithRecSeq(Project project, ProjectRecruit recSeq) {
 //		Project findProject = projectRepo.findById(project.getPjSeq()).get();
