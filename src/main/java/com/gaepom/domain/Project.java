@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class Project {
 	private ProjectRecruit recSeq;
 	
 	@OneToOne
-	@JsonBackReference(value="track")
+	@JsonIgnore
 	@JoinColumn(name="track_seq", nullable= true)
 	private ProjectTracking trackSeq;
 	
@@ -67,13 +67,5 @@ public class Project {
 	
 	@OneToMany(mappedBy="pjSeq", fetch=FetchType.EAGER, cascade=CascadeType.REMOVE)
 	private List<Application> applications;
-
-//	@Override
-//	public String toString() {
-//		return "Project [pjSeq=" + pjSeq + ", recSeq=" + recSeq.getRecSeq() + ", trackSeq=" + trackSeq + ", userId=" + userId.getUserId()
-//				+ ", pjTitle=" + pjTitle + ", pjDescription=" + pjDescription + ", pjDuration=" + pjDuration
-//				+ ", pjTools=" + pjTools + ", pjCategory=" + pjCategory + ", pjLang=" + pjLang + ", pjDbms=" + pjDbms
-//				+ ", applications=" + applications + "]";
-//	}
 
 }	

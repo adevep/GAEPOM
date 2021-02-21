@@ -7,20 +7,27 @@
             <p class="image is-64x64">
               <img
                 class="is-rounded"
-                src="https://bulma.io/images/placeholders/128x128.png"
+                :src="imgURL + trackInfo.project.userId.userImage"
               />
             </p>
           </figure>
           <div class="media-content">
-            <div class="content" >
-              <p>
-                <strong>{{  trackInfo.project.userId.name }}</strong>
-                <small>@{{  trackInfo.project.userId.userId }}</small>
-                <br />
-                {{  trackInfo.project.userId.words }}
-                {{  trackInfo.project.userId.position }}
-              </p> 
-            </div> 
+            <div class="content">
+              <router-link
+                :to="{
+                  name: 'yourpage',
+                  params: { pickedid: trackInfo.project.userId.userId },
+                }"
+              >
+                <p>
+                  <strong>{{ trackInfo.project.userId.name }}</strong>
+                  <small>@{{ trackInfo.project.userId.userId }}</small>
+                  <br />
+                  {{ trackInfo.project.userId.words }}
+                  {{ trackInfo.project.userId.position }}
+                </p>
+              </router-link>
+            </div>
             <nav class="level is-mobile">
               <div class="level-left">
                 <a class="level-item">
@@ -47,11 +54,16 @@
         <b-tabs type="is-boxed">
           <b-tab-item label="프로젝트">
             <b-taglist>
-              <b-tag type="is-primary">{{  trackInfo.project.pjCategory }}</b-tag>
-              <b-tag type="is-primary is-light">{{  trackInfo.project.recSeq.location }}</b-tag>
-              <b-tag type="is-link">{{  trackInfo.project.pjTools }}</b-tag>
-              <b-tag type="is-link is-light">{{ trackInfo.project.pjLang }}</b-tag>
-              <b-tag type="is-link is-light">{{ trackInfo.project.pjDuration }}</b-tag>
+              <b-tag type="is-primary">{{
+                trackInfo.project.pjCategory
+              }}</b-tag>
+              <b-tag type="is-link">{{ trackInfo.project.pjTools }}</b-tag>
+              <b-tag type="is-link is-light">{{
+                trackInfo.project.pjLang
+              }}</b-tag>
+              <b-tag type="is-link is-light">{{
+                trackInfo.project.pjDuration
+              }}</b-tag>
             </b-taglist>
             <center>
               <table border="1">
@@ -126,7 +138,7 @@
             <h5 class="subtitle is-5">{{ pj.preference }}</h5> -->
           </b-tab-item>
           <b-tab-item label="댓글">
-            <comment/>
+            <comment />
           </b-tab-item>
         </b-tabs>
       </section>
@@ -136,6 +148,7 @@
 <script>
 import ProjectTracking from "../../views/ProjectTracking.vue";
 import Comment from "./comment/Comment.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "TrackingDetail",
@@ -146,11 +159,14 @@ export default {
       likeArray: [],
       userdatas: JSON.parse(sessionStorage.getItem("user")),
       // uId: this.userdatas.userId,
-      likeSeq: '' 
+      likeSeq: null,
     };
   },
   components: {
     Comment,
+  },
+  computed: {
+    ...mapState(["imgURL"]),
   },
   created() {
     this.tracking();
@@ -165,6 +181,7 @@ export default {
         })
         .then((response) => {
           this.trackInfo = response.data;
+          console.log(this.trackInfo);
         })
         .catch((error) => {
           console.log("에러" + error);
@@ -187,50 +204,46 @@ export default {
         });
     },
     showlike: function() {
-      console.log("---showlike()-----")
-     console.log(this.likeSeq)
-      if (this.likeSeq != "") {  //4,
-        console.log("show - likeSeq는 null이 아님")
-        this.likeArray = this.likeSeq.split(',');
-
+      if (this.likeSeq != "") {
+        //4,
+        this.likeArray = this.likeSeq.split(",");
         // if(this.likeArray != null){
         for (let i = 0; i < this.likeArray.length; i++) {
           if (this.likeArray[i] == this.trackInfo.trackSeq.toString()) {
             //좋아요 표시되있는것 구분 0 or 1
-            this.likeFlag += 1;
-          } 
+            console.log(this.likeFlag);
+            this.likeFlag = 1;
+          }
         }
-        // }else{
-
-        //   this.likeFlag += 1;
-        // }
       }
     },
     addTrackingLike: function(id) {
-      console.log(this.likeArray)
       //좋아요 수 증가, 해당유저가 좋아요한 트래킹글 추가
-    if(this.likeArray != ""){
-      if (this.likeFlag == 0) {
-        this.likeFlag += 1;
-
-        this.likeArray.splice(this.likeArray.length-1, 1, this.trackInfo.trackSeq + ", ")
-        this.trackInfo.trackLike += 1;
-
+      if (this.likeArray != "") {
+        if (this.likeFlag == 0) {
+          this.likeFlag += 1;
+          this.likeArray.splice(
+            this.likeArray.length - 1,
+            1,
+            this.trackInfo.trackSeq + ","
+          );
+          this.trackInfo.trackLike += 1;
+        } else {
+          this.likeFlag = 0;
+          var num = 0;
+          for (let i = 0; i < this.likeArray.length; i++) {
+            if (this.likeArray[i] == id) {
+              num = i;
+            }
+          }
+          this.likeArray.splice(num, 1); //(start, 삭제하고자 하는 개수)
+          this.trackInfo.trackLike -= 1;
+        }
       } else {
-        this.likeFlag = 0;
-        var index = this.likeArray.findIndex(function(item) {
-          return item.trackSeq === id;
-        });
-
-        this.likeArray.splice(index, 1); //(start, 삭제하고자 하는 개수)
-        this.trackInfo.trackLike -= 1;
+        this.likeFlag += 1;
+        this.likeArray = this.trackInfo.trackSeq + ",hi,";
+        this.trackInfo.trackLike += 1;
       }
-    }else{
-      console.log("ddd")
-       this.likeFlag += 1;
-       this.likeArray = this.trackInfo.trackSeq + ",hi,"
-       this.trackInfo.trackLike += 1;
-    }
       //서버통신부
       //
       this.axios
@@ -247,23 +260,19 @@ export default {
         .catch((ex) => {
           console.warn("ERROR!!!!! : ", ex);
         });
-
       this.updateTrackingLike();
-     
     },
-    getUser: function(){
-      
-      console.log("userID에옹잉")
-      console.log(this.userdatas.userId)
-      this.axios.get("/getuser?userid=" + this.userdatas.userId)
-      .then((response) => {
-        console.warn(response.data);
-        this.likeSeq = response.data.tliked
-        console.log(this.likeSeq)
-      })
-      .catch((ex) => {
-        console.warn("ERROR!!!!! : ", ex);
-      });
+    getUser: function() {
+      this.axios
+        .get("/getuser?userid=" + this.userdatas.userId)
+        .then((response) => {
+          console.warn(response.data);
+          this.likeSeq = response.data.tliked;
+          this.showlike(this.likeSeq);
+        })
+        .catch((ex) => {
+          console.warn("ERROR!!!!! : ", ex);
+        });
     },
     updateTrackingLike: function() {
       this.axios
@@ -284,8 +293,7 @@ export default {
   mounted() {
     this.trackInfo = this.$route.params.track;
     this.getUser();
-    this.showlike();
-    
+    //this.showlike();
   },
 };
 </script>
