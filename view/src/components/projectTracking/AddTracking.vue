@@ -154,7 +154,8 @@
   </div>
 </template>
 <script>
-import ProjectTracking from "../../views/ProjectTracking.vue";
+// import ProjectTracking from "../../views/ProjectTracking.vue";
+import http from "../../http-common";
 
 export default {
   name: "AddTracking",
@@ -170,6 +171,7 @@ export default {
       arrLang: [],
       arrTools: [],
       arrDbms: [],
+      rec: []
     };
   },
 
@@ -177,10 +179,10 @@ export default {
     addTracking: function() {
       this.project.pjTools = this.arrTools.join();
       this.project.pjLang = this.arrLang.join();
-      console.log(this.arrLang)
-      console.log(this.project.pjLang)
+      console.log(this.arrLang);
+      console.log(this.project.pjLang);
       this.project.pjDbms = this.arrDbms.join();
-      //dateparsing 
+      //dateparsing
       let myDate = new Date(Date.parse(this.arrDuration[0]));
       let myDate2 = new Date(Date.parse(this.arrDuration[1]));
       let date1 =
@@ -237,18 +239,55 @@ export default {
           { project: this.project },
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-            },
+              "Content-Type": "multipart/form-data"
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           console.log("==========add==========");
           console.warn(response);
           console.log("==========add==========");
+          http
+            .get(
+              "/recruit/get/" +
+                this.project.recSeq.recSeq +
+                "?userId=" +
+                this.project.userId.userId
+            )
+            .then(response => {
+              this.rec = response.data;
+              //recruit 데이터 받아서 recSeq 0에서 1로 수정
+              http
+                .put(
+                  "/recruit/updaterec/" +
+                    this.project.recSeq +
+                    "?userId=" +
+                    this.project.userId,
+                  {
+                    needNum: this.rec.needNum,
+                    needPosi: this.rec.needPosi,
+                    location: this.rec.location,
+                    preference: this.rec.preference,
+                    recDuration: this.rec.recDuration,
+                    recStatus: 1
+                  }
+                )
+                .then(response => {
+                  alert(response.data);
+                  console.log("==========add==========");
+                  console.warn(response);
+                  console.warn(response.data);
+                  console.log("==========add==========");
+                });
+            })
+            .catch(e => {
+              console.log(e);
+              this.errors.push(e);
+            });
           // 페이지 이동
-          this.$router.push(ProjectTracking);
+          // this.$router.push(ProjectTracking);
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
     },
@@ -257,19 +296,19 @@ export default {
       this.axios
         .get("/project/getproject", {
           params: {
-            projectId: this.$route.params.pjseq,
-          },
+            projectId: this.$route.params.pjseq
+          }
         })
-        .then((response) => {
+        .then(response => {
           this.project = response.data;
           this.arrLang = this.project.pjLang.split(",");
           this.arrTools = this.project.pjTools.split(",");
           this.arrDbms = this.project.pjDbms.split(",");
           this.arrDuration[0] = new Date(this.project.pjDuration.split("-")[0]);
           this.arrDuration[1] = new Date(this.project.pjDuration.split("-")[1]);
-          console.log(this.project)
+          console.log(this.project);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("에러" + error);
         });
     },
@@ -279,10 +318,10 @@ export default {
       console.log(this.file);
       this.file = this.$refs.file.files[0];
       console.log(this.file);
-    },
+    }
   },
   mounted() {
     this.showProject();
-  },
+  }
 };
 </script>
