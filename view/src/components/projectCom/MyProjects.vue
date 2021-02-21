@@ -87,7 +87,8 @@ export default {
       pjs,
       defaultOpendDetails: [1],
       showDetailcon: true,
-      isHoverable: true
+      isHoverable: true,
+      // rec: []
     };
   },
   methods: {
@@ -97,6 +98,21 @@ export default {
         .then(response => {
           this.pjs = response.data;
           console.log(response.data);
+          // http
+          //   .get(
+          //     "/recruit/get/" +
+          //       this.pjs.recSeq.recSeq +
+          //       "?userId=" +
+          //       this.loginUser
+          //   )
+          //   .then(response => {
+          //     this.rec = response.data;
+          //     alert(this.rec.recStatus)
+          //   })
+          //   .catch(e => {
+          //     console.log(e);
+          //     this.errors.push(e);
+          //   });
         })
         .catch(e => {
           console.log(e);

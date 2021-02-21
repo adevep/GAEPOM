@@ -29,7 +29,10 @@
           centered
         >
           <router-link
-            :to="{ name: 'ProjectTrackingDetail', params: {track: props.row}}"
+            :to="{
+              name: 'ProjectTrackingDetail',
+              params: { track: props.row }
+            }"
             >{{ props.row.project.pjTitle }}</router-link
           >
         </b-table-column>
@@ -46,12 +49,10 @@
           field="pjSeq"
           label="관리"
           sortable
-          v-slot="props"  
+          v-slot="props"
           centered
         >
-         <button
-            @click="deleteTracking(props.row.trackSeq)"
-            >삭제</button>
+          <button @click="deleteTracking(props.row.trackSeq)">삭제</button>
         </b-table-column>
       </b-table>
     </section>
@@ -63,30 +64,33 @@ export default {
   data() {
     return {
       loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
-      pjs:[],
-      proj:[],
+      pjs: [],
+      proj: [],
       defaultOpendDetails: [1],
       showDetailcon: true,
       isHoverable: true
     };
   },
   created() {
-     this.trackList();
+    this.trackList();
   },
   methods: {
-   trackList: function() {
+    trackList: function() {
       this.axios
         .get("/gettrackinglistaxios")
-        .then((response) => {
+        .then(response => {
           this.pjs = response.data;
           console.log("==========list==========");
           console.log(this.pjs);
           console.log("==========list==========");
-          this.proj = this.pjs.filter(function(item){
-            return item.project.userId.userId == JSON.parse(sessionStorage.getItem("user")).userId
-          })
+          this.proj = this.pjs.filter(function(item) {
+            return (
+              item.project.userId.userId ==
+              JSON.parse(sessionStorage.getItem("user")).userId
+            );
+          });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("에러" + error);
         });
     },
@@ -95,16 +99,16 @@ export default {
         .delete("/deleteprojecttracking", {
           params: {
             trackSeq: id
-          },
+          }
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           this.trackList();
         })
-        .catch((ex) => {
+        .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
-    },
-  },
+    }
+  }
 };
 </script>

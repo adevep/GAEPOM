@@ -31,7 +31,10 @@ public interface ProjectRepository extends CrudRepository<Project, Long>, JpaRep
 //	SELECT c1, c2 FROM Country c1, Country c2
 //	WHERE c2 MEMBER OF c1.neighbors
 	
-	@Query("SELECT a FROM Project a where a.userId =:userId")
+	@Query("SELECT a FROM Project a INNER JOIN ProjectRecruit b ON a.recSeq = b.recSeq where a.userId =:userId and b.recStatus = 0")
 	List<Project> findPjByUserId(@Param("userId") User userId);
+
+	@Query(value ="SELECT * FROM Project where user_id =?", nativeQuery = true)
+	List<Project> findPjByUserId2(String userid);
 
 }
