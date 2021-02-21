@@ -169,9 +169,9 @@ export default {
           "http://localhost:80/user/delete?userid=" + this.loginUser.userId
         )
         .then(() => {
+          this.success();
           sessionStorage.removeItem("user");
           this.loginUserAct(null);
-          this.success();
         })
         .catch(() => {
           this.danger();
