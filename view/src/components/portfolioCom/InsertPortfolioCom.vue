@@ -1,10 +1,39 @@
 <template>
-  <ValidationObserver
-    ref="observer"
-    v-slot="{ handleSubmit }"
-    autocomplete="off"
-  >
-    <div class="container is-max-desktop">
+  <div id="app" class="container is-max-desktop pt-5">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <section>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title ">
+            포트폴리오 등록
+          </h1>
+          <h2 class="subtitle centered">
+            나를 알려보세요.
+          </h2>
+          <nav
+            class="breadcrumb has-dot-separator is-centered"
+            aria-label="breadcrumbs"
+          >
+            <ul>
+              <li><a href="/">홈페이지</a></li>
+              <li><a href="/mypage">마이페이지</a></li>
+              <li class="is-active">
+                <a href="#" aria-current="page">포트폴리오</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+    <ValidationObserver
+      ref="observer"
+      v-slot="{ handleSubmit }"
+      autocomplete="off"
+    >
       <div class="notification is-accent" align="center">
         <h1>
           <strong>포트폴리오 등록</strong>
@@ -35,7 +64,6 @@
           v-model="participation"
           size="is-medium"
           align="left"
-          
         />
         <BInputWithValidation
           rules="required"
@@ -44,7 +72,6 @@
           v-model="pfLink"
           size="is-medium"
           align="left"
-          
         />
         <BInputWithValidation
           rules="required|max:300"
@@ -54,7 +81,6 @@
           v-model="pfDescription"
           size="is-medium"
           align="left"
-          
         />
         <BSeletWithValidation
           rules="required"
@@ -73,7 +99,6 @@
           v-model="pfPosition"
           size="is-medium"
           align="left"
-          
         >
           <option value="개발자">개발자</option>
           <option value="기획자">기획자</option>
@@ -189,7 +214,7 @@
         <br />
         <div class="buttons">
           <button
-            class="button is-success"
+            class="button"
             type="is-primary"
             outlined
             size="is-large"
@@ -202,8 +227,8 @@
           </button>
         </div>
       </div>
-    </div>
-  </ValidationObserver>
+    </ValidationObserver>
+  </div>
 </template>
 
 <script>
@@ -225,7 +250,7 @@ export default {
     ValidationObserver,
     BSeletWithValidation,
     BInputWithValidation,
-    BCheckboxesWithValidation,
+    BCheckboxesWithValidation
   },
   data() {
     return {
@@ -281,18 +306,19 @@ export default {
         formData.append("pflanglist", this.pfLang);
         formData.append("pfdbmslist", this.pfDbms);
       }
-      axios.post("http://localhost:80/portfolio/insert", formData, {
-        headers: {
+      axios
+        .post("http://localhost:80/portfolio/insert", formData, {
+          headers: {
             "Content-Type": "multipart/form-data"
           }
-      })
-      .then(() => {
-        this.success();
-      })
-      .catch(() => {
-        this.danger();
-      });
-      router.push({ name: "mypage" });
+        })
+        .then(() => {
+          this.success();
+          router.push({ name: "mypage" });
+        })
+        .catch(() => {
+          this.danger();
+        });
     },
     resetForm() {
       this.pfSubtitle = "";
@@ -313,16 +339,16 @@ export default {
       this.$buefy.notification.open({
         message: "포트폴리오 등록이 완료되었습니다.",
         type: "is-success",
-        position: "is-bottom-right",
+        position: "is-bottom-right"
       });
     },
     danger() {
       this.$buefy.notification.open({
         message: `포트폴리오를 정확히 작성해주세요.`,
         type: "is-danger",
-        position: "is-bottom-right",
+        position: "is-bottom-right"
       });
-    },
-  },
+    }
+  }
 };
 </script>

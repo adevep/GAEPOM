@@ -6,7 +6,7 @@
         ref="table"
         detailed
         detail-key="pfSeq"
-        @details-open="(row) => $buefy.toast.open()"
+        @details-open="row => $buefy.toast.open()"
       >
         <b-table-column
           field="pfSeq"
@@ -70,15 +70,13 @@
           centered
           v-slot="props"
         >
-          <b-tag type="is-primary" size="is-medium">{{ props.row.pfCategory }}</b-tag>
+          <b-tag type="is-primary" size="is-medium">{{
+            props.row.pfCategory
+          }}</b-tag>
         </b-table-column>
 
-        <b-table-column
-          label="수정 및 삭제"
-          v-slot="props"
-          centered
-          >
-           <b-button
+        <b-table-column label="수정 및 삭제" v-slot="props" centered>
+          <b-button
             type="is-primary is-light"
             outlined
             v-on:click="updatePortfolio(props.row.pfSeq)"
@@ -86,14 +84,14 @@
             size="is-small"
             >수정</b-button
           >
-           <b-button
+          <b-button
             type="is-danger is-light"
             outlined
             v-on:click="deletePortfolio(props.row.pfSeq)"
             position="is-centered"
             size="is-small"
             >삭제</b-button
-         >
+          >
         </b-table-column>
         <template #detail="props">
           <article class="media">
@@ -111,13 +109,22 @@
                   관련 링크 : <strong>{{ props.row.pfLink }}</strong>
                   <br />
                   <b-field v-if="props.row.pfPosition === '개발자'">
-                  사용 툴 : <b-tag type="is-success" size="is-small">{{ props.row.pfTools }}</b-tag>
+                    사용 툴 :
+                    <b-tag type="is-success" size="is-small">{{
+                      props.row.pfTools
+                    }}</b-tag>
                   </b-field>
                   <b-field v-if="props.row.pfPosition === '개발자'">
-                  사용 언어 : <b-tag type="is-info" size="is-small">{{ props.row.pfLang }}</b-tag>
+                    사용 언어 :
+                    <b-tag type="is-info" size="is-small">{{
+                      props.row.pfLang
+                    }}</b-tag>
                   </b-field>
                   <b-field v-if="props.row.pfPosition === '개발자'">
-                  사용 DBMS : <b-tag type="is-dark" size="is-small">{{ props.row.pfDbms }}</b-tag>
+                    사용 DBMS :
+                    <b-tag type="is-dark" size="is-small">{{
+                      props.row.pfDbms
+                    }}</b-tag>
                   </b-field>
                 </p>
               </div>
@@ -139,7 +146,7 @@ export default {
     return {
       portfolio,
       isHoverable: true,
-      cc: 4,
+      cc: 4
     };
   },
   methods: {
@@ -152,22 +159,19 @@ export default {
         .then(response => {
           this.portfolio = response.data;
         })
-        .catch(() => {
-          alert("포트폴리오 조회 실패");
+        .catch(e => {
+          console.log(e);
         });
     },
     updatePortfolio(pfseq) {
       return this.$router.push({
         name: "updatePortfolio",
-        params: { pfSeq: pfseq },
+        params: { pfSeq: pfseq }
       });
     },
-    //
     deletePortfolio(pfSeq) {
       axios
-        .delete(
-          "http://localhost:80/portfolio/delete?pfSeq=" + pfSeq
-        )
+        .delete("http://localhost:80/portfolio/delete?pfSeq=" + pfSeq)
         .then(() => {
           this.portfolioInfoCall();
           this.success();
@@ -175,25 +179,25 @@ export default {
         .catch(() => {
           this.danger();
         });
-        this.portfolioInfoCall();
+      this.portfolioInfoCall();
     },
     success() {
       this.$buefy.notification.open({
         message: "포트폴리오가 삭제되었습니다.",
         type: "is-success",
-        position: "is-bottom-right",
+        position: "is-bottom-right"
       });
     },
     danger() {
       this.$buefy.notification.open({
         message: "포트폴리오 삭제에 실패했습니다.",
         type: "is-danger",
-        position: "is-bottom-right",
+        position: "is-bottom-right"
       });
-    },
+    }
   },
   mounted() {
     this.portfolioInfoCall();
-  },
+  }
 };
 </script>
