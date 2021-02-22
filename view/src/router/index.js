@@ -93,7 +93,7 @@ const routes = [
     component: () => import("../views/projectView/Project.vue")
   },
   {
-    path: "/projectTracking",
+    path: "/projecttracking",
     name: "ProjectTracking",
     component: () => import("../views/ProjectTracking.vue")
   },
@@ -132,19 +132,19 @@ const routes = [
     component: () => import("../views/SignUp.vue")
   },
   {
-    path: "/projectTrackingInsert",
+    path: "/projecttrackinginsert",
     name: "ProjectTrackingInsert",
     component: () => import("@/views/trackingView/ProjectTrackingInsert.vue")
   },
   {
-    path: "/projectTrackingDetail",
+    path: "/projecttrackingdetail",
     name: "ProjectTrackingDetail",
     beforeEnter: onlyAuthUser,
     props: true,
     component: () => import("@/views/trackingView/ProjectTrackingDetail.vue")
   },
   {
-    path: "/projectTrackingUpdate",
+    path: "/projecttrackingupdate",
     name: "ProjectTrackingUpdate",
     component: () => import("@/views/trackingView/ProjectTrackingUpdate.vue")
   },
