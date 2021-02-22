@@ -5,15 +5,9 @@
       v-for="value in commentlist"
       v-bind:key="value.cmtSeq"
     >
-      <figure class="media-left">
-        <p class="image is-64x64">
-          <img class="is-rounded" :src="imgURL + userInfo.userImage" />
-        </p>
-      </figure>
       <div class="media-content">
         <div class="content">
           <p>
-            
             <strong>{{ value.userId }}</strong>
             <br />
             {{ value.cmt }}
