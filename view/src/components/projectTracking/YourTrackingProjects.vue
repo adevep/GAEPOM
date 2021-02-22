@@ -9,7 +9,7 @@
           numeric
           centered
           v-slot="props"
-        > 
+        >
           {{ props.row.project.pjSeq }}
         </b-table-column>
         <b-table-column
@@ -29,7 +29,10 @@
           centered
         >
           <router-link
-            :to="{ name: 'ProjectTrackingDetail', params: {track: props.row}}"
+            :to="{
+              name: 'ProjectTrackingDetail',
+              params: { track: props.row }
+            }"
             >{{ props.row.project.pjTitle }}</router-link
           >
         </b-table-column>
@@ -42,7 +45,6 @@
         >
           {{ props.row.project.pjDescription }}
         </b-table-column>
-        
       </b-table>
     </section>
   </div>
@@ -56,39 +58,37 @@ export default {
   data() {
     return {
       pjs: [],
-      yourpj:[],
+      yourpj: [],
       defaultOpendDetails: [1],
       showDetailcon: true,
-      isHoverable: true,
+      isHoverable: true
     };
   },
   mounted() {
-    this.trackList();    
+    this.trackList();
   },
   methods: {
-   trackList: function() {
-      
+    trackList: function() {
       let yourid = this.auser;
       this.axios
-        .get("/gettrackinglistaxios")
-        .then((response) => {
-          
+        .get("/track/gettrackinglist")
+        .then(response => {
           this.pjs = response.data;
           console.log("==========list==========");
           console.log(response);
           console.log("==========list==========");
-          console.log(this.pjs)
+          console.log(this.pjs);
 
-          this.yourpj = this.pjs.filter(function(item){
-            return item.project.userId.userId == yourid
-          })
+          this.yourpj = this.pjs.filter(function(item) {
+            return item.project.userId.userId == yourid;
+          });
 
-          console.log(this.yourpj)
+          console.log(this.yourpj);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("에러" + error);
         });
-    },
-  },
- };
+    }
+  }
+};
 </script>

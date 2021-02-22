@@ -29,7 +29,7 @@ public class Project {
 	@Id
 	@GeneratedValue
 	@Column(name = "pj_seq")
-	private Long pjSeq;
+	private long pjSeq;
 	
 	@OneToOne(cascade=CascadeType.REMOVE)
 	@JoinColumn(name="rec_seq", nullable = true)

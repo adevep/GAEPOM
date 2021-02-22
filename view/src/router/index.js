@@ -6,7 +6,6 @@ Vue.use(VueRouter);
 // 로그인 유저 거절
 const rejectAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") != null) {
-    alert("먼저 로그아웃을 해주세요!");
     next("/");
   } else {
     next();
@@ -16,7 +15,6 @@ const rejectAuthUser = (to, from, next) => {
 // 비 로그인 유저 거절
 const onlyAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") == null) {
-    alert("로그인 해주세요.");
     next("/login");
   } else {
     next();
@@ -95,7 +93,7 @@ const routes = [
     component: () => import("../views/projectView/Project.vue")
   },
   {
-    path: "/projectTracking",
+    path: "/projecttracking",
     name: "ProjectTracking",
     component: () => import("../views/ProjectTracking.vue")
   },
@@ -134,21 +132,26 @@ const routes = [
     component: () => import("../views/SignUp.vue")
   },
   {
-    path: "/projectTrackingInsert",
+    path: "/projecttrackinginsert",
     name: "ProjectTrackingInsert",
     component: () => import("@/views/trackingView/ProjectTrackingInsert.vue")
   },
   {
-    path: "/projectTrackingDetail",
+    path: "/projecttrackingdetail",
     name: "ProjectTrackingDetail",
     beforeEnter: onlyAuthUser,
     props: true,
     component: () => import("@/views/trackingView/ProjectTrackingDetail.vue")
   },
   {
-    path: "/projectTrackingUpdate",
+    path: "/projecttrackingupdate",
     name: "ProjectTrackingUpdate",
     component: () => import("@/views/trackingView/ProjectTrackingUpdate.vue")
+  },
+  {
+    path: "/appsent",
+    name: "AppSuccess",
+    component: () => import("@/components/applicationCom/AppSuccess.vue")
   },
   {
     //라우트에 설정된것들을 제외한 링크로 유저가 들어갔을때 
