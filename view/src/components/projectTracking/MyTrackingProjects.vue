@@ -77,7 +77,7 @@ export default {
   methods: {
     trackList: function() {
       this.axios
-        .get("/gettrackinglistaxios")
+        .get("/track/gettrackinglist")
         .then(response => {
           this.pjs = response.data;
           console.log("==========list==========");
@@ -96,7 +96,7 @@ export default {
     },
     deleteTracking: function(id) {
       this.axios
-        .delete("/deleteprojecttracking", {
+        .delete("/track/deleteprojecttracking", {
           params: {
             trackSeq: id
           }
@@ -104,10 +104,18 @@ export default {
         .then(response => {
           console.log(response);
           this.trackList();
+          this.success();
         })
         .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "글이 삭제되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
     }
   }
 };

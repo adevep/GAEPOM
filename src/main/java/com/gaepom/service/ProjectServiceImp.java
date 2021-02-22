@@ -55,6 +55,7 @@ public class ProjectServiceImp implements ProjectService {
 	public Project insertProject(Project project) {
 		
 		Optional<Project> projectcheck = projectRepo.findById(project.getPjSeq());
+		System.out.println(project.getPjSeq());
 		
 		if(!projectcheck.isPresent()) {
 			logger.info("{} 프로젝트 등록", project.getPjTitle());
