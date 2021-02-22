@@ -25,32 +25,31 @@ import lombok.Setter;
 @Entity
 @Table(name = "t_comment")
 public class Comment {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="cmt_seq")
+	@Column(name = "cmt_seq")
 	private Long cmtSeq;
-	
+
 	private String cmt;
-	
-	@Column(name="cmt_date", insertable = false, updatable = false, columnDefinition = "date default sysdate")
+
+	@Column(name = "cmt_date", insertable = false, updatable = false, columnDefinition = "date default sysdate")
 	private Date cmtDate;
-	
-	// 생성될 때 무조건 값 0 넣기
+
 	@Column(name = "cmt_like")
 	private int cmtLike;
 
 	@Column(name = "parent_id", nullable = true)
 	private String parentId;
-	
+
 	@Column(nullable = true)
 	private int depth;
-	
+
 	@Column(name = "user_id")
 	private String userId;
-	
-	@ManyToOne 
-	@JsonBackReference(value="comment")
+
+	@ManyToOne
+	@JsonBackReference(value = "comment")
 	@JoinColumn(name = "track_seq", nullable = true)
 	private ProjectTracking trackSeq;
 

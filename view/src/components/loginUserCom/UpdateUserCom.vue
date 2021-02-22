@@ -212,12 +212,6 @@
 </template>
 
 <script>
-/**
- * *  vee-validation 사용
- * ? BSeletWithValidation | Buefy의 <b-select>와 동일 + 유효성 검증 로직 구현
- * ? BInputWithValidation | Buefy의 <b-input>과 동일 + 유효성 검증 로직 구현
- * ? BCheckboxesWithValidation | Buefy의 <b-checkbox>와 동일 + 유효성 검증 로직 구현
- */
 import { ValidationObserver } from "vee-validate";
 import BSeletWithValidation from "../veeInputs/BSeletWithValidation";
 import BInputWithValidation from "../veeInputs/BInputWithValidation";
@@ -246,7 +240,6 @@ export default {
       position: "",
       userimage: "",
       stacklist: [],
-      // 이미지 파일 받아주는 변수
       file: null
     };
   },

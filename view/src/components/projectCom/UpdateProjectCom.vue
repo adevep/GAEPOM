@@ -187,7 +187,6 @@
               </b-input>
             </b-field>
             <b-field label="모집 직무" align="left">
-              <!-- <b-input v-model="needPosi" maxlength="30"></b-input> -->
               <b-checkbox v-model="needPosi" native-value="개발자">
                 개발자
               </b-checkbox>
@@ -262,7 +261,6 @@ export default {
       recDuration: [],
       recSeq: "",
       pjNum2: this.$route.params.pjNum
-      //recSeq: ""
     };
   },
   methods: {
@@ -346,14 +344,7 @@ export default {
           }
         )
         .then(response => {
-          console.log("==========add==========");
-          console.warn(response);
-          console.warn(response.data);
           this.recSeq = response.data.recSeq;
-          console.log("==========add==========");
-          console.log(this.recSeq);
-          // 페이지 이동
-          //this.$router.push(Project)
           let myDate = new Date(Date.parse(this.pjDuration[0]));
           let myDate2 = new Date(Date.parse(this.pjDuration[1]));
           let date1 =
@@ -389,10 +380,7 @@ export default {
               data
             )
             .then(response => {
-              console.log("==========add pj==========");
-              console.warn(response);
               console.warn(response.data);
-              console.log("==========add==========");
               this.success();
               router.push({ name: "mypage" });
             })

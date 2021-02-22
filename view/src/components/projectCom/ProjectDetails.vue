@@ -93,7 +93,6 @@
               · 우대사항 ： {{ pj.preference }} <br />
             </h2>
 
-            <!-- 프로젝트 주최자와 로그인한 유저및 이전에 지원한 유저의 데이터랑 다를때만 지원버튼 출력 -->
             <div
               v-if="
                 loginUser.userId != pj.userId.userId &&
@@ -227,8 +226,6 @@ export default {
         )
         .then(response => {
           this.all = response.data;
-          console.log(response.data);
-          //Joined된 데이터 나누기
           var array = [];
           this.all.forEach(function(element) {
             var allPj;
@@ -243,7 +240,6 @@ export default {
           this.allPjs = array;
           console.log(this.allPjs);
 
-          //needPosi 나누기
           var array2 = [];
           var posi = {};
 
@@ -255,7 +251,6 @@ export default {
               return r;
             }, {});
             array2.push(posi);
-            console.log(posi);
           });
           this.posiArray = posi;
         })
@@ -285,7 +280,6 @@ export default {
 
 })
         .catch(function() {
-          //this.danger();
         });
     },
     retrieveApps() {
@@ -293,7 +287,6 @@ export default {
         .get("/app/getpjapp/" + this.pjSeq + "?userId=" + this.loginUser.userId)
         .then(response => {
           this.apps = response.data;
-          console.log(response.data);
           var apps2 = "";
           this.apps.forEach(function(entry) {
             apps2 = entry;

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gaepom.dao.ProjectRepository;
 import com.gaepom.domain.Project;
@@ -19,8 +18,6 @@ import com.gaepom.exception.ProjectNotFoundException;
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(value = "project")
-
-@SessionAttributes("guser")
 
 public class ProjectController {
 
@@ -33,7 +30,7 @@ public class ProjectController {
 	public Project getProject(User user, Long projectId) {
 
 		Optional<Project> getProject = projRepo.findById(projectId);
-		
+
 		if (getProject.isPresent()) {
 			logger.info("{} 프로젝트 조회", getProject.get().getPjSeq());
 			return getProject.get();
