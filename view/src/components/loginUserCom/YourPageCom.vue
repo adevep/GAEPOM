@@ -264,7 +264,6 @@
                       </b-table>
                     </section>
                   </div>
-                  <!-- <user-projects></user-projects> -->
                 </b-tab-item>
                 <b-tab-item label="진행중인 프로젝트" icon="creation">
                   <your-tracking-projects
