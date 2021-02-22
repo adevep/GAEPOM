@@ -350,6 +350,7 @@ export default {
           date3.push(date2);
 
           this.pjDuration = date3.join("-");
+
           const data = {
             userId: { userId: this.loginUser },
             pjTitle: this.pjTitle,

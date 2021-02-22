@@ -90,7 +90,7 @@
                   detailed
                   detail-key="pfSeq"
                   @details-open="
-                    row => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)
+                    (row) => $buefy.toast.open(`Expanded ${row.pfSubtitle}`)
                   "
                   :show-detail-icon="showDetailIcon"
                   aria-next-label="Next page"
@@ -134,6 +134,17 @@
                   </b-table-column>
 
                   <b-table-column
+                    field="pfCategory"
+                    label="카테고리"
+                    centered
+                    v-slot="props"
+                  >
+                    <b-tag type="is-primary" size="is-medium">{{
+                      props.row.pfCategory
+                    }}</b-tag>
+                  </b-table-column>
+
+                  <b-table-column
                     field="pfDuration"
                     label="기간"
                     sortable
@@ -145,25 +156,30 @@
                     </span>
                   </b-table-column>
 
-                  <b-table-column label="변경" v-slot="props">
-                    <span>
-                      <b-button
-                        type="is-info"
-                        outlined
-                        @click="updatePortfolio(props.row.pfSeq)"
-                        position="is-centered"
-                        size="is-small"
-                        >수정</b-button
-                      >
-                      <b-button
-                        type="is-danger"
-                        outlined
-                        v-on:click="deletePortfolio(props.row.pfSeq)"
-                        position="is-centered"
-                        size="is-small"
-                        >삭제</b-button
-                      >
-                    </span>
+                  <b-table-column
+                    field="pfLang"
+                    label="사용언어"
+                    sortable
+                    centered
+                    v-slot="props"
+                    v-if="pfPosition === '개발자'"
+                  >
+                    <b-tag type="is-info" size="is-medium">{{
+                      props.row.pfLang
+                    }}</b-tag>
+                  </b-table-column>
+
+                  <b-table-column
+                    field="pfDbms"
+                    label="DBMS"
+                    sortable
+                    centered
+                    v-slot="props"
+                    v-if="pfPosition === '개발자'"
+                  >
+                    <b-tag type="is-dark" size="is-medium">{{
+                      props.row.pfDbms
+                    }}</b-tag>
                   </b-table-column>
 
                   <template #detail="props">
@@ -238,7 +254,7 @@
                           <router-link
                             :to="{
                               name: 'details',
-                              params: { pjSeq: props.row.pjSeq }
+                              params: { pjSeq: props.row.pjSeq },
                             }"
                             >{{ props.row.pjTitle }}</router-link
                           >
@@ -288,7 +304,7 @@ import YourTrackingProjects from "@/components/projectTracking/YourTrackingProje
 
 export default {
   components: {
-    YourTrackingProjects
+    YourTrackingProjects,
   },
   data: () => ({
     pjs: [],
@@ -300,8 +316,9 @@ export default {
       email: "",
       phoneNum: "",
       position: "",
-      stack: ""
+      stack: "",
     },
+    yourid: null,
     portfolio: [],
     currentUserId: JSON.parse(sessionStorage.getItem("user")).userId,
     currentUserName: JSON.parse(sessionStorage.getItem("user")).name,
@@ -319,22 +336,22 @@ export default {
     pfCategory: "",
     defaultOpendDetails: [1],
     showDetailcon: true,
-    isHoverable: true
+    isHoverable: true,
   }),
   computed: {
-    ...mapState(["imgURL"])
+    ...mapState(["imgURL"]),
   },
   methods: {
     retrievePortfolios() {
       axios
-        .get("/portfolios?userid=" + this.$route.params.pickedid)
-        .then(response => {
+        .get(
+          "http://localhost:80/portfolio/getlist?userid=" +
+            this.$route.params.pickedid
+        )
+        .then((response) => {
           this.portfolio = response.data;
-          // console.log(this.portfolio[0].pfLang)
-          // this.portfolio[0].pfLang = this.portfolio[0].pfLang.split(",")
-          // console.log(this.portfolio[0].pfLang)
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -343,10 +360,10 @@ export default {
         .get(
           "http://localhost:80/user/get?userid=" + this.$route.params.pickedid
         )
-        .then(response => {
+        .then((response) => {
           this.anotherUser = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
@@ -360,17 +377,17 @@ export default {
         .then(response => {
           this.pjs = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
           this.errors.push(e);
         });
-    }
+    },
   },
   mounted() {
     this.anotherUserInfoCall();
     this.retrievePortfolios();
     this.retrievePjs();
-  }
+  },
 };
 </script>
 <style scoped></style>

@@ -155,6 +155,7 @@ public class ProjectRecruitController {
 
 	@PostMapping("createpj")
 	public ResponseEntity<Project> insertProject(User user, @RequestBody Project project) {
+		
 		if (user.getUserId() == null) {
 			logger.error("{} 미 존재 회원 요청", user.getUserId());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -230,7 +231,6 @@ public class ProjectRecruitController {
 	public ResponseEntity<List<Project>> getPjById(@PathVariable("userId") String userid, Project project) {
 		
 		if (userService.getUser(userid) == null) {
-			System.out.println("실패1");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		try {	
