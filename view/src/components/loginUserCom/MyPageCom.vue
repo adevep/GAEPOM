@@ -92,15 +92,12 @@
             <section>
               <b-tabs :size="medium" :type="boxed" :expanded="expanded">
                 <b-tab-item
-                  label="내가 작성한 프로젝트 모집글"
+                  label="내가 작성한 모집중 프로젝트"
                   icon="account-multiple-plus"
                 >
                   <my-projects></my-projects>
                 </b-tab-item>
-                <b-tab-item
-                  label="내가 작성한 프로젝트 트래킹글"
-                  icon="creation"
-                >
+                <b-tab-item label="내가 작성한 진행중 프로젝트" icon="creation">
                   <my-tracking-projects></my-tracking-projects>
                 </b-tab-item>
                 <b-tab-item label="내 지원서 보기" icon="clipboard-account">
@@ -130,7 +127,7 @@ export default {
     MyProjects,
     PortfolioList,
     MyTrackingProjects
-},
+  },
   data: () => ({
     loginUser: {
       userImage: "default.png",

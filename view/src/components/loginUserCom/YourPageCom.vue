@@ -203,7 +203,7 @@
             <section>
               <b-tabs :size="medium" :type="boxed" :expanded="expanded">
                 <b-tab-item
-                  label="프로젝트 모집글"
+                  label="모집중인 프로젝트"
                   icon="account-multiple-plus"
                 >
                   <div id="app" class="container">
@@ -264,13 +264,11 @@
                       </b-table>
                     </section>
                   </div>
-                  <!-- <user-projects></user-projects> -->
                 </b-tab-item>
-                <b-tab-item
-                  label="내가 작성한 프로젝트 트래킹글"
-                  icon="creation"
-                >
-                <your-tracking-projects v-bind:auser="this.$route.params.pickedid" />
+                <b-tab-item label="진행중인 프로젝트" icon="creation">
+                  <your-tracking-projects
+                    v-bind:auser="this.$route.params.pickedid"
+                  />
                 </b-tab-item>
               </b-tabs>
             </section>
@@ -358,7 +356,7 @@ export default {
     },
     retrievePjs() {
       http
-        .get("/recruit/gethostedpj2/" + this.$route.params.pickedid)
+        .get("/recruit/gethostedpj/" + this.$route.params.pickedid)
         .then(response => {
           this.pjs = response.data;
         })
