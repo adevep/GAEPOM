@@ -149,6 +149,11 @@ const routes = [
     component: () => import("@/views/trackingView/ProjectTrackingUpdate.vue")
   },
   {
+    path: "/appsent",
+    name: "AppSuccess",
+    component: () => import("@/components/applicationCom/AppSuccess.vue")
+  },
+  {
     //라우트에 설정된것들을 제외한 링크로 유저가 들어갔을때 
     //위치는 맨 마지막에 있어야 함
     path: "/:catchAll(.*)",

@@ -10,14 +10,13 @@ import com.gaepom.domain.ProjectRecruit;
 
 public interface ProjectRecruitRepository extends CrudRepository<ProjectRecruit, Long>{
 
-//	@Query("SELECT p FROM ProjectRecruit p WHERE p.userId = :userId")
-//	List<ProjectRecruit> findProjectRecruitByUserId (@Param("userId") String userId);
-//	
+
 	@Query("SELECT a, b FROM ProjectRecruit a INNER JOIN Project b On a.recSeq = b.recSeq")
 	List<Object> findTotalRecruit();
 	
 	@Query("SELECT a, b FROM ProjectRecruit a INNER JOIN Project b On a.recSeq = b.recSeq where b.pjSeq =:pjSeq")
 	List<Object> findTotalRecruitByPjSeq(@Param("pjSeq") Long pjSeq);
+	
 	@Query("SELECT a, b FROM ProjectRecruit a INNER JOIN Project b On a.recSeq = b.recSeq where a.location=:location" )
 	List<Object> findTotalRecruitByLocation(@Param("location") String location);
 

@@ -18,15 +18,15 @@
       href="//cdn.jsdelivr.net/gh/xpressengine/xeicon@2.3.1/xeicon.min.css"
     />
     <div class="container is-max-desktop pt-5">
-      <section class="mt-6 mb-5">
+      <section class="mt-6 mb-5" v-for="pj in allPjs" :key="pj.index">
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img class="is-rounded" :src="imgURL + loginUser.userImage2" />
+              <img class="is-rounded" :src="imgURL + pj.userId.userImage" />
             </p>
           </figure>
           <div class="media-content">
-            <div class="content" v-for="pj in allPjs" :key="pj.index">
+            <div class="content">
               <p>
                 <strong>{{ pj.userId.name }}</strong>
                 <router-link
@@ -280,8 +280,10 @@ export default {
           }
         })
         .then(function() {
-          router.push({ name: "Home" });
-        })
+          router.push({ name: "AppSuccess" });
+          this.success();
+
+})
         .catch(function() {
           //this.danger();
         });
@@ -297,7 +299,6 @@ export default {
             apps2 = entry;
           });
           this.appliedUser = apps2.userId;
-          //alert(this.appliedUser);
         })
         .catch(e => {
           console.log(e);
