@@ -61,7 +61,7 @@
           v-slot="props"
           v-if="pfPosition === '개발자'"
         >
-          <b-tag type="is-dark" size="is-medium">{{ props.row.pfDbms }}</b-tag>
+          <b-tag type="is-success" size="is-medium">{{ props.row.pfDbms }}</b-tag>
         </b-table-column>
 
         <b-table-column
