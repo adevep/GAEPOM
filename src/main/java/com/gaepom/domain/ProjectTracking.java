@@ -32,7 +32,7 @@ public class ProjectTracking {
 	@Id
 	@GeneratedValue
 	@Column(name="track_seq")
-	private Long trackSeq;
+	private long trackSeq;
 	
 	private String stage;
 	

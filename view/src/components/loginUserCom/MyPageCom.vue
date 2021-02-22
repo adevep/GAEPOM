@@ -171,10 +171,9 @@ export default {
         .then(() => {
           sessionStorage.removeItem("user");
           this.loginUserAct(null);
-          this.success();
         })
         .catch(() => {
-          this.danger();
+          this.success();
         });
       router.push({ name: "Home" });
     },

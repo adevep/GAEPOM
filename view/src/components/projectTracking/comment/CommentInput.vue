@@ -2,11 +2,6 @@
   <div class="commInput">
     <br /><br />
     <article class="media">
-      <figure class="media-left">
-        <p class="image is-64x64">
-          <img class="is-rounded" :src="imgURL + userInfo.userImage" />
-        </p>
-      </figure>
       <div class="media-content">
         <div class="field">
           <p class="control">
@@ -21,7 +16,7 @@
         </div>
         <div class="field">
           <p class="control">
-            <span class="addbutton" v-on:click="addcomment">작성</span>
+            <b-button class="addbutton" v-on:click="addcomment">작성</b-button>
           </p>
         </div>
       </div>

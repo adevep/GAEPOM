@@ -280,11 +280,9 @@ export default {
           }
         })
         .then(function() {
-          alert("success");
           router.push({ name: "Home" });
         })
         .catch(function() {
-          alert("FAILURE!!");
           //this.danger();
         });
     },

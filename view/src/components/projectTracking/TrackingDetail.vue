@@ -136,15 +136,27 @@
             <img class="is-rounded" :src="imgURL + trackInfo.trackImage" />
 
             <br />
-            <router-link
-              tag="button"
+            <b-message
+              title="NOTIFICATION"
+              class="mt-6"
+              type="is-success"
+              has-icon
+              aria-close-label="Close message"
               v-if="userdatas.userId == trackInfo.project.userId.userId"
-              :to="{
-                name: 'ProjectTrackingUpdate',
-                params: { trackSeq: trackInfo }
-              }"
-              >수정</router-link
             >
+              당신의 프로젝트 입니다.
+
+              <br />
+              <router-link
+                class="button"
+                :to="{
+                  name: 'ProjectTrackingUpdate',
+                  params: { trackSeq: trackInfo }
+                }"
+                >수정</router-link
+              >
+            </b-message>
+            <b-message v-else></b-message>
             <!-- </center> -->
           </b-tab-item>
           <b-tab-item label="댓글">
