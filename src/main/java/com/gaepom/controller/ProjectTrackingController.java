@@ -29,16 +29,15 @@ import com.gaepom.service.UserService;
 @CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(value = "track")
 @RestController
+
 public class ProjectTrackingController {
+
 	@Autowired
 	private ProjectTrackingService projectTrackingService;
 
 	@Autowired
 	private ProjectService projectService;
-	
-	@Autowired
-	private UserService userService;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@GetMapping("/gettrackinglist")
@@ -46,11 +45,11 @@ public class ProjectTrackingController {
 
 		try {
 			List<ProjectTracking> projectTrackingList = projectTrackingService.getProjectTrackingList();
-			
+
 			logger.info("tracking list 반환 성공");
 			return new ResponseEntity<>(projectTrackingList, HttpStatus.OK);
 		} catch (Exception e) {
-			logger.debug( e +"tracking list 반환 실패");
+			logger.debug(e + "tracking list 반환 실패");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -65,61 +64,61 @@ public class ProjectTrackingController {
 			return new ResponseEntity<ProjectTracking>(tracking, HttpStatus.OK);
 
 		} catch (Exception e) {
-			logger.debug( e +"tracking 반환 실패");
+			logger.debug(e + "tracking 반환 실패");
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	// TODO: return type 등 고치기
 	@PostMapping("/insertprojecttracking")
-	public ResponseEntity<ProjectTracking> insertProjectTracking(ProjectTracking tracking, User user ,Project project, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+	public ResponseEntity<ProjectTracking> insertProjectTracking(ProjectTracking tracking, User user, Project project,
+			@RequestParam(value = "file", required = false) MultipartFile mfile) {
 		ProjectTracking insertTracking = null;
-		
-		if(mfile != null) {
+
+		if (mfile != null) {
 			Project newProject = projectService.updateProject(project.getPjSeq(), project);
 			insertTracking = projectTrackingService.insertProjectTracking(tracking, newProject, user, mfile);
 			projectService.updateProjTracking(insertTracking, user);
 			logger.info("tracking 생성 성공");
 		} else {
-			
+
 			Project newProject = projectService.updateProject(project.getPjSeq(), project);
 			insertTracking = projectTrackingService.insertProjectTrackingNoImg(tracking, newProject, user);
 			projectService.updateProjTracking(insertTracking, user);
 			logger.info("tracking 생성 성공");
 		}
-		
+
 		logger.debug("tracking 생성 실패");
 		return new ResponseEntity<>(insertTracking, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateprojecttracking")
-	public ResponseEntity<ProjectTracking> updateProjectTracking(ProjectTracking tracking, Project project, User user, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+	public ResponseEntity<ProjectTracking> updateProjectTracking(ProjectTracking tracking, Project project, User user,
+			@RequestParam(value = "file", required = false) MultipartFile mfile) {
 		ProjectTracking updateTracking = null;
-			
-			if (mfile != null) {
-				updateTracking= projectTrackingService.updateProjectTrackingImg(tracking, project, user, mfile);
-			} else {
-				updateTracking =projectTrackingService.updateProjectTracking(tracking, project, user);
-			}
-			
-			logger.debug("tracking update 실패");
-			return new ResponseEntity<>(updateTracking, HttpStatus.OK);
+
+		if (mfile != null) {
+			updateTracking = projectTrackingService.updateProjectTrackingImg(tracking, project, user, mfile);
+		} else {
+			updateTracking = projectTrackingService.updateProjectTracking(tracking, project, user);
+		}
+
+		logger.debug("tracking update 실패");
+		return new ResponseEntity<>(updateTracking, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/updatetrackinglike")
-	public ResponseEntity<ProjectTracking> updateTrackingLike(@RequestParam Long trackSeq, @RequestParam int trackLike) {
-		
+	public ResponseEntity<ProjectTracking> updateTrackingLike(@RequestParam Long trackSeq,
+			@RequestParam int trackLike) {
+
 		ProjectTracking updateTrackingLike = null;
 		updateTrackingLike = projectTrackingService.updateTrackingLike(trackSeq, trackLike);
-		
-		
+
 		return new ResponseEntity<>(updateTrackingLike, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteprojecttracking")
 	public ResponseEntity<HttpStatus> deleteProjectTracking(Long trackSeq) {
 
-		
 		projectTrackingService.deleteProjectTracking(trackSeq);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

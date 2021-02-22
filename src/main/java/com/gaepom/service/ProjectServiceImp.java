@@ -16,50 +16,47 @@ import com.gaepom.exception.ProjectException;
 import com.gaepom.exception.ProjectNotFoundException;
 import com.gaepom.domain.ProjectTracking;
 
-
 @Service
 public class ProjectServiceImp implements ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public List<Project> getProjectList(Project project) {
 
-			logger.info("전체 프로젝트 리스트 조회");
-			return (List<Project>) projectRepo.findAll();			
+		logger.info("전체 프로젝트 리스트 조회");
+		return (List<Project>) projectRepo.findAll();
 	}
-	
+
 	public List<Project> getPjByUserId(Project project, User user) {
-		
+
 		Optional<User> usercheck = userRepo.findById(user.getUserId());
-		
-		if(usercheck.isPresent()) {
+
+		if (usercheck.isPresent()) {
 			logger.info("{} 회원 프로젝트 리스트 조회", user.getUserId());
-			return (List<Project>) projectRepo.findPjByUserId(user);		
+			return (List<Project>) projectRepo.findPjByUserId(user);
 		} else {
 			logger.error("{} 회원 프로젝트 리스트 조회 실패", user.getUserId());
 			throw new ProjectNotFoundException("해당 유저의 프로젝트가 존재하지 않습니다.");
 		}
 	}
-	
+
 	public List<Project> getPjByUserId2(Project project, String userid) {
 		return (List<Project>) projectRepo.findPjByUserId2(userid);
 	}
-	
-	
+
 	public Project insertProject(Project project) {
-		
+
 		Optional<Project> projectcheck = projectRepo.findById(project.getPjSeq());
-		System.out.println(project.getPjSeq());
-		
-		if(!projectcheck.isPresent()) {
+
+		if (!projectcheck.isPresent()) {
 			logger.info("{} 프로젝트 등록", project.getPjTitle());
-			return projectRepo.save(project);			
+			return projectRepo.save(project);
 		} else {
 			logger.error("{} 프로젝트 등록 실패", project.getPjTitle());
 			throw new ProjectException("프로젝트 등록 실패");
@@ -67,12 +64,12 @@ public class ProjectServiceImp implements ProjectService {
 	}
 
 	public Project getProject(Long id) {
-		
+
 		Optional<Project> project = projectRepo.findById(id);
-		
-		if(project.isPresent()) {
+
+		if (project.isPresent()) {
 			logger.info("{} 프로젝트 조회", id);
-			return project.get();			
+			return project.get();
 		} else {
 			logger.error("{} 프로젝트 조회 실패", id);
 			throw new ProjectNotFoundException("해당 프로젝트 ID가 존재하지 않습니다.");
@@ -80,10 +77,10 @@ public class ProjectServiceImp implements ProjectService {
 	}
 
 	public Project updateProject(Long id, Project project) {
-		
+
 		Optional<Project> findProject = projectRepo.findById(id);
-		
-		if(findProject.isPresent()) {
+
+		if (findProject.isPresent()) {
 			findProject.get().setPjTitle(project.getPjTitle());
 			findProject.get().setPjDescription(project.getPjDescription());
 			findProject.get().setPjDuration(project.getPjDuration());
@@ -91,7 +88,7 @@ public class ProjectServiceImp implements ProjectService {
 			findProject.get().setPjCategory(project.getPjCategory());
 			findProject.get().setPjLang(project.getPjLang());
 			findProject.get().setPjDbms(project.getPjDbms());
-			
+
 			logger.info("{} 프로젝트 갱신 성공", id);
 			return projectRepo.save(findProject.get());
 		} else {
@@ -101,14 +98,13 @@ public class ProjectServiceImp implements ProjectService {
 
 	}
 
-	
 	public void updateProjTracking(ProjectTracking projectTracking, User user) {
-		
+
 		Optional<Project> findProject = projectRepo.findById(projectTracking.getProject().getPjSeq());
-		
-		if(findProject.isPresent()) {
+
+		if (findProject.isPresent()) {
 			findProject.get().setTrackSeq(projectTracking);
-			
+
 			logger.info("{} 프로젝트 갱신 성공", findProject.get().getPjSeq());
 			projectRepo.save(findProject.get());
 		} else {
@@ -118,16 +114,15 @@ public class ProjectServiceImp implements ProjectService {
 	}
 
 	public void deleteProject(Project project) {
-		
+
 		Optional<Project> projectcheck = projectRepo.findById(project.getPjSeq());
-		
-		if(projectcheck.isPresent()) {
+
+		if (projectcheck.isPresent()) {
 			logger.info("{} 프로젝트 글 삭제", project.getPjSeq());
-			projectRepo.deleteById(project.getPjSeq());		
+			projectRepo.deleteById(project.getPjSeq());
 		} else {
 			logger.error("{} 프로젝트 글 삭제 실패", project.getPjSeq());
 			throw new ProjectNotFoundException("해당하는 프로젝트가 존재하지 않습니다.");
 		}
 	}
-
 }

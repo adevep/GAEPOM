@@ -97,9 +97,6 @@
               <b-tag type="is-link is-light">{{
                 trackInfo.project.pjLang
               }}</b-tag>
-              <!-- <b-tag type="is-link is-light">{{
-                trackInfo.project.pjDuration
-              }}</b-tag> -->
             </b-taglist>
             <img
                 class="is-rounded"
@@ -113,7 +110,6 @@
               {{ trackInfo.project.pjDescription }}
             </h2>
             <br />
-           
             <h2 class="subtitle">
               [ 프로젝트 기간 ] <br />
               {{ trackInfo.project.pjDuration }} <br /><br />
@@ -157,7 +153,6 @@
               >
             </b-message>
             <b-message v-else></b-message>
-            <!-- </center> -->
           </b-tab-item>
           <b-tab-item label="댓글">
             <comment />
@@ -178,7 +173,6 @@ export default {
       likeFlag: 0,
       likeArray: [],
       userdatas: JSON.parse(sessionStorage.getItem("user")),
-      // uId: this.userdatas.userId,
       likeSeq: null
     };
   },
@@ -209,13 +203,9 @@ export default {
     },
     showlike: function() {
       if (this.likeSeq != "") {
-        //4,
         this.likeArray = this.likeSeq.split(",");
-        // if(this.likeArray != null){
         for (let i = 0; i < this.likeArray.length; i++) {
           if (this.likeArray[i] == this.trackInfo.trackSeq.toString()) {
-            //좋아요 표시되있는것 구분 0 or 1
-            console.log(this.likeFlag);
             this.likeFlag = 1;
           }
         }
@@ -249,7 +239,6 @@ export default {
         this.trackInfo.trackLike += 1;
       }
       //서버통신부
-      //
       this.axios
         .put(
           "http://localhost:80/user/updatetliked?userid=" +
@@ -297,7 +286,6 @@ export default {
   mounted() {
     this.trackInfo = this.$route.params.track;
     this.getUser();
-    //this.showlike();
   }
 };
 </script>

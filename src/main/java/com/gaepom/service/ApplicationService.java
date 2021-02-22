@@ -16,7 +16,7 @@ public interface ApplicationService {
 	Application updateApplication(Long id, Application application);
 
 	void deleteApplication(Long id);
-	
+
 	List<Application> findAppByPjSeq(Project pjSeq);
 
 	List<Application> findAppByUserId(String userId);

@@ -5,7 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
+
 public class RequestWrapper {
-	ProjectRecruit recruit; 
+
+	ProjectRecruit recruit;
 	Project project;
+
 }

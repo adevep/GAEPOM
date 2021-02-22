@@ -308,7 +308,6 @@ export default {
   },
   data: () => ({
     pjs: [],
-    // 페이지 생성 오류때문에 빈 변수 가진 객체 사용해줌
     anotherUser: {
       userImage: "default.png",
       userId: "",

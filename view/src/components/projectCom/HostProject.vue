@@ -249,12 +249,6 @@
   </ValidationObserver>
 </template>
 <script>
-/**
- * *  vee-validation 사용
- * ? BSeletWithValidation | Buefy의 <b-select>와 동일 + 유효성 검증 로직 구현
- * ? BInputWithValidation | Buefy의 <b-input>과 동일 + 유효성 검증 로직 구현
- * ? BCheckboxesWithValidation | Buefy의 <b-checkbox>와 동일 + 유효성 검증 로직 구현
- */
 import { ValidationObserver } from "vee-validate";
 import BInputWithValidation from "../veeInputs//BInputWithValidation";
 import BCheckboxesWithValidation from "../veeInputs/BCheckboxesWithValidation";
@@ -365,10 +359,7 @@ export default {
           http
             .post("/recruit/createpj?userId=" + this.loginUser, data)
             .then(response => {
-              console.log("==========add==========");
-              console.warn(response);
               console.warn(response.data);
-              console.log("==========add==========");
               this.success();
               router.push({ name: "mypage" });
             })

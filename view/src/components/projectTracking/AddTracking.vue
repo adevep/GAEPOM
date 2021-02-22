@@ -207,12 +207,11 @@ export default {
     addTracking: function() {
       this.project.pjTools = this.arrTools.join();
       this.project.pjLang = this.arrLang.join();
-      console.log(this.arrLang);
-      console.log(this.project.pjLang);
       this.project.pjDbms = this.arrDbms.join();
-      //dateparsing
+
       let myDate = new Date(Date.parse(this.arrDuration[0]));
       let myDate2 = new Date(Date.parse(this.arrDuration[1]));
+
       let date1 =
         myDate.getFullYear() +
         "." +
@@ -225,11 +224,13 @@ export default {
         ("0" + (myDate2.getMonth() + 1)).slice(-2) +
         "." +
         ("0" + myDate2.getDate()).slice(-2);
+
       let date3 = [];
+
       date3.push(date1);
       date3.push(date2);
+      
       this.arrDuration = date3.join("-");
-
       this.project.pjDuration = this.arrDuration;
 
       let formData = new FormData();
@@ -258,8 +259,6 @@ export default {
       formData.append("position", this.project.userId.position);
       formData.append("stacklist", this.project.userId.stacklist);
 
-      console.log(formData);
-
       this.axios
         .post(
           "/track/insertprojecttracking",
@@ -272,9 +271,7 @@ export default {
           }
         )
         .then(response => {
-          console.log("==========add==========");
           console.warn(response);
-          console.log("==========add==========");
           this.axios
             .get(
               "/recruit/get/" +
@@ -301,17 +298,13 @@ export default {
                   }
                 )
                 .then(response => {
-                  console.log("==========add==========");
-                  console.warn(response);
                   console.warn(response.data);
-                  console.log("==========add==========");
                 });
             })
             .catch(e => {
               console.log(e);
               this.errors.push(e);
             });
-          // 페이지 이동
           this.$router.push(ProjectTracking);
         })
         .catch(ex => {
@@ -333,7 +326,6 @@ export default {
           this.arrDbms = this.project.pjDbms.split(",");
           this.arrDuration[0] = new Date(this.project.pjDuration.split("-")[0]);
           this.arrDuration[1] = new Date(this.project.pjDuration.split("-")[1]);
-          console.log(this.project);
         })
         .catch(error => {
           console.log("에러" + error);

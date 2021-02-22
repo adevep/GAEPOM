@@ -21,8 +21,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
 @ToString(exclude = "project")
+
+@Entity
 @Table(name = "project_recruit")
 public class ProjectRecruit {
 
@@ -48,7 +49,7 @@ public class ProjectRecruit {
 
 	@Column(name = "rec_date", insertable = false, updatable = false, columnDefinition = "date default sysdate")
 	private Date recDate;
-	
+
 	@Column(columnDefinition = "number(10) default 0")
 	private int checkCount;
 

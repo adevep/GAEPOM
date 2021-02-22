@@ -79,9 +79,13 @@ public class PortfolioServiceImpl implements PortfolioService {
 	// ===== UPDATE =====
 	public Portfolio updatePortfolio(Portfolio portfolio, Long pfseq, String[] pftoolslist,
 			String[] pflanglist, String[] pfdbmslist) {
+		
 		Optional<Portfolio> findPortfolio = portfoliorepo.findById(portfolio.getPfSeq());
+		
 		if (findPortfolio.isPresent()) {
-			if (pflanglist != null && pfdbmslist == null) {				
+			
+			if (pflanglist != null && pfdbmslist == null) {		
+				
 				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
 				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
 				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
@@ -91,7 +95,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
 				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
 				findPortfolio.get().setPfLang(String.join(",", pflanglist));
+				
 			} else if (pflanglist == null && pfdbmslist != null) {
+				
 				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
 				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
 				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
@@ -101,7 +107,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
 				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
 				findPortfolio.get().setPfDbms(String.join(",", pfdbmslist));
+				
 			} else if (pflanglist == null && pfdbmslist == null) {
+				
 				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
 				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
 				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
@@ -110,7 +118,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 				findPortfolio.get().setPfCategory(portfolio.getPfCategory());
 				findPortfolio.get().setPfPosition(portfolio.getPfPosition());
 				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
+				
 			} else {
+				
 				findPortfolio.get().setPfSubtitle(portfolio.getPfSubtitle());
 				findPortfolio.get().setPfDuration(portfolio.getPfDuration());
 				findPortfolio.get().setPfDescription(portfolio.getPfDescription());
@@ -121,6 +131,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 				findPortfolio.get().setPfTools(String.join(",", pftoolslist));
 				findPortfolio.get().setPfLang(String.join(",", pflanglist));
 				findPortfolio.get().setPfDbms(String.join(",", pfdbmslist));
+				
 			}
 			portfoliorepo.save(findPortfolio.get());
 			logger.info("수정 완료 | {}번글 포트폴리오 수정됨", pfseq);

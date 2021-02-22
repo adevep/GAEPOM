@@ -66,7 +66,7 @@ export default {
     addcomment: function(cmt) {
 
       if (cmt !== "") {
-        // 입력 값 list에 추가
+        // 입력 값 list 추가
         this.commentlist.push({
           cmt: cmt,
           userId: this.userInfo.userId,
@@ -94,7 +94,7 @@ export default {
       console.log(typeof(user))  //string
       console.log(typeof(this.userInfo.userId))  //string
 
-      //본인 댓글만 지울 수 있게 하는 검증
+      // 본인 댓글만 지울 수 있게 하는 검증
       if(this.userInfo.userId == user){
       var index = this.commentlist.findIndex(function(item) {
         return item.cmtSeq === id;
@@ -108,7 +108,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.commentlist.splice(index, 1); //(start, 삭제하고자 하는 개수)
+          this.commentlist.splice(index, 1); 
         })
         .catch((ex) => {
           console.warn("ERROR!!!!! : ", ex);

@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     addcomment: function() {
-      // commentList로 이동
       eventBus.$emit("add-comment", this.cmt);
       console.log("eventbus 전송 후");
       this.cmt = "";

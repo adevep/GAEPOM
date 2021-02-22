@@ -11,7 +11,7 @@ import com.gaepom.domain.Project;
 
 @Service
 public class ApplicationServiceImp implements ApplicationService {
-	
+
 	@Autowired
 	private ApplicationRepository applicationRepo;
 
@@ -45,7 +45,7 @@ public class ApplicationServiceImp implements ApplicationService {
 	public List<Application> findAppByPjSeq(Project pjSeq) {
 		return (List<Application>) applicationRepo.findApplicationByPjSeq(pjSeq);
 	}
-	
+
 	public Application updateApplication(Long id, Application application) {
 		Application app = applicationRepo.findById(id).get();
 		app.setAplPosi(application.getAplPosi());

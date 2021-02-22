@@ -180,7 +180,6 @@ export default {
     const all = [];
     const allPjs = [];
     return {
-      // loginUser: JSON.parse(sessionStorage.getItem("user")).userId,
       all,
       allPjs,
       selectedLoc: "지역",
@@ -195,7 +194,6 @@ export default {
         .get("/recruit/gettotalpj?userId=user1")
         .then(response => {
           this.all = response.data;
-          //Joined된 데이터 나누기
           var array = [];
           this.all.forEach(function(element) {
             var allPj;

@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
+
+// 라우터 가드
 // 로그인 유저 거절
 const rejectAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") != null) {
@@ -11,7 +13,6 @@ const rejectAuthUser = (to, from, next) => {
     next();
   }
 };
-
 // 비 로그인 유저 거절
 const onlyAuthUser = (to, from, next) => {
   if (sessionStorage.getItem("user") == null) {
@@ -30,7 +31,6 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    // 라우터 들어오기전에 이 함수 실행
     beforeEnter: rejectAuthUser,
     component: () => import("../views/loginUserView/Login.vue")
   },
@@ -154,8 +154,6 @@ const routes = [
     component: () => import("@/components/applicationCom/AppSuccess.vue")
   },
   {
-    //라우트에 설정된것들을 제외한 링크로 유저가 들어갔을때 
-    //위치는 맨 마지막에 있어야 함
     path: "/:catchAll(.*)",
     component: () => import("@/NotFound.vue")
   },

@@ -32,10 +32,6 @@
         </div>
       </div>
     </section>
-    <!-- 웹앱,모바일앱,데이터사이언스,게임개발 -->
-    <!-- <router-link tag="a" to="/projectTrackingInsert"
-      >Tracking Insert</router-link
-    > -->
 
     <section>
       <div class="container">
@@ -96,7 +92,6 @@
                             class="is-rounded"
                             :src="imgURL + value.project.userId.userImage"
                           />
-                          <!-- <img :src="card.avatar" alt="Image"> -->
                         </figure>
                       </div>
                       <div class="media-content">
@@ -154,9 +149,6 @@ export default {
         .then(response => {
           this.trackings = response.data;
           this.tracks = this.trackings;
-          console.log("==========list==========");
-          console.log(response);
-          console.log("==========list==========");
         })
         .catch(error => {
           console.log("에러" + error);
@@ -216,7 +208,6 @@ export default {
         });
         if (this.trackings.length == 0) {
           // 입력값에 해당하는 데이터가 없을 경우
-          alert("해당하는 데이터가 없습니다.");
           this.trackings = this.tracks;
         }
       } else {

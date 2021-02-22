@@ -74,16 +74,9 @@ export default {
         .get("/track/gettrackinglist")
         .then(response => {
           this.pjs = response.data;
-          console.log("==========list==========");
-          console.log(response);
-          console.log("==========list==========");
-          console.log(this.pjs);
-
           this.yourpj = this.pjs.filter(function(item) {
             return item.project.userId.userId == yourid;
           });
-
-          console.log(this.yourpj);
         })
         .catch(error => {
           console.log("에러" + error);

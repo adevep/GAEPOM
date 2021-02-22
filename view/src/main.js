@@ -9,9 +9,6 @@ import "buefy/dist/buefy.css";
 import "./vee-validate";
 
 Vue.use(Buefy);
-//Vue.prototype.$http = axios;np
-//Vue.config.productionTip = false;
-// Vue.prototype.$axios = axios;
 Vue.use(VueAxios, axios);
 
 new Vue({

@@ -43,10 +43,12 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 	@Transactional
 	public ProjectTracking insertProjectTracking(ProjectTracking tracking, Project project, User user,
 			MultipartFile mfile) {
+		
 		String imgname = null;
 		Optional<ProjectTracking> findTracking = trackingRepo.findById(tracking.getTrackSeq());
 
 		if (!findTracking.isPresent()) {
+			
 			try {
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
@@ -58,6 +60,7 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			tracking.setTrackImage(imgname);
 			project.setUserId(user);
 			tracking.setProject(project);
+			
 			projectRepo.save(project);
 			trackingRepo.save(tracking);
 
@@ -73,10 +76,11 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 		if (!findTracking.isPresent()) {
 
+			tracking.setTrackImage("default.png");
 			project.setUserId(user);
 			tracking.setProject(project);
+			
 			projectRepo.save(project);
-			tracking.setTrackImage("default.png");
 			trackingRepo.save(tracking);
 
 			logger.info(project.getPjTitle() + " 트래킹 등록완료");
@@ -126,6 +130,7 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			}
 
 			Project findProject = projectRepo.findById(project.getPjSeq()).get();
+			
 			findProject.setPjTitle(project.getPjTitle());
 			findProject.setPjDescription(project.getPjDescription());
 			findProject.setPjDuration(project.getPjDuration());
@@ -152,11 +157,13 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 	public ProjectTracking updateProjectTrackingImg(ProjectTracking tracking, Project project, User user,
 			MultipartFile mfile) {
+		
 		Optional<ProjectTracking> findProjectTracking = trackingRepo.findById(tracking.getTrackSeq());
 
 		if (findProjectTracking.isPresent()) {
 			String imgname = null;
 			try {
+				
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
 
@@ -176,6 +183,7 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			}
 
 			Project findProject = projectRepo.findById(project.getPjSeq()).get();
+			
 			findProject.setPjTitle(project.getPjTitle());
 			findProject.setPjDescription(project.getPjDescription());
 			findProject.setPjDuration(project.getPjDuration());
