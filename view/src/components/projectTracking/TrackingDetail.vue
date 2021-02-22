@@ -182,7 +182,7 @@ export default {
   methods: {
     tracking: function() {
       this.axios
-        .get("/getprojecttracking", {
+        .get("/track/getprojecttracking", {
           params: {
             trackSeq: this.trackInfo.trackSeq
           }
@@ -269,7 +269,7 @@ export default {
     updateTrackingLike: function() {
       this.axios
         .put(
-          "/updatetrackinglike?trackSeq=" +
+          "/track/updatetrackinglike?trackSeq=" +
             this.trackInfo.trackSeq +
             "&trackLike=" +
             this.trackInfo.trackLike

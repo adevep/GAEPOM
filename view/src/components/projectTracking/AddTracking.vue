@@ -17,7 +17,7 @@
           <nav
             class="breadcrumb has-dot-separator is-centered"
             aria-label="breadcrumbs"
-          >
+          > 
             <ul>
               <li><a href="/">홈페이지</a></li>
               <li><a href="/mypage">마이페이지</a></li>
@@ -262,7 +262,7 @@ export default {
 
       this.axios
         .post(
-          "/insertprojecttracking",
+          "/track/insertprojecttracking",
           formData,
           { project: this.project },
           {
