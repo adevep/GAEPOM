@@ -89,44 +89,6 @@
         </div>
       </div>
     </section>
-
-    <!-- <section class="hero is-white is-fullheight">
-      <div class="hero-body">
-        <div class="container">
-          <div class="columns  is-vcentered">
-            <div
-              class="column
-          is-10-mobile is-offset-1-mobile
-          is-10-tablet is-offset-1-tablet
-          is-4-desktop is-offset-1-desktop
-          is-4-widescreen is-offset-1-widescreen
-          is-4-fullhd is-offset-1-fullhd"
-            >
-              <figure class="image">
-                <img src="../assets/main2.png" />
-              </figure>
-            </div>
-            <div
-              class="column
-          is-10-mobile is-offset-1-mobile
-          is-10-tablet is-offset-1-tablet
-          is-5-desktop is-offset-1-desktop
-          is-5-widescreen is-offset-1-widescreen
-          is-5-fullhd is-offset-1-fullhd"
-            >
-              <h1 class="titled title is-1 mb-6">
-                absurd illustrations that make sense
-              </h1>
-              <h2 class="subtitled subtitle">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Laborum cupiditate dolorum vitae dolores nesciunt totam magni
-                quas.
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
   </div>
 </template>
 

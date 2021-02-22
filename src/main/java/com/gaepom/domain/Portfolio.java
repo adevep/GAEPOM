@@ -21,44 +21,44 @@ import lombok.Setter;
 
 @Entity
 public class Portfolio {
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="pf_seq")
+	@Column(name = "pf_seq")
 	private Long pfSeq;
-	
-	@Column(name="pf_subtitle")
+
+	@Column(name = "pf_subtitle")
 	private String pfSubtitle;
-	
-	@Column(name="pf_duration")
+
+	@Column(name = "pf_duration")
 	private String pfDuration;
-	
-	@Column(name="pf_description", length = 1024)
+
+	@Column(name = "pf_description", length = 1024)
 	private String pfDescription;
-	
+
 	private String participation;
-	
-	@Column(name="pf_position")
+
+	@Column(name = "pf_position")
 	private String pfPosition;
-	
-	@Column(name="pf_lang", nullable = true)
+
+	@Column(name = "pf_lang", nullable = true)
 	private String pfLang;
-	
-	@Column(name="pf_tools")
+
+	@Column(name = "pf_tools")
 	private String pfTools;
-	
-	@Column(name="pf_dbms", nullable = true)
+
+	@Column(name = "pf_dbms", nullable = true)
 	private String pfDbms;
-	
-	@Column(name="pf_link", nullable = true)
+
+	@Column(name = "pf_link", nullable = true)
 	private String pfLink;
-	
-	@Column(name="pf_category")
+
+	@Column(name = "pf_category")
 	private String pfCategory;
-	
+
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User userId;
-	
+
 }

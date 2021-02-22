@@ -27,13 +27,11 @@ public class PortfolioController {
 
 	// ===== 포트폴리오 생성(등록) =====
 	@PostMapping("/insert")
-	public ResponseEntity<Portfolio> insertPortfolio(
-			Portfolio portfolio,
-			@RequestParam String[] pftoolslist,
-			@RequestParam(required = false) String[] pflanglist,
-			@RequestParam(required = false) String[] pfdbmslist,
+	public ResponseEntity<Portfolio> insertPortfolio(Portfolio portfolio, @RequestParam String[] pftoolslist,
+			@RequestParam(required = false) String[] pflanglist, @RequestParam(required = false) String[] pfdbmslist,
 			@RequestParam String userid) {
-		Portfolio insertedportfolio = portfolioservice.insertPortfolio(portfolio, pftoolslist, pflanglist, pfdbmslist, userid);
+		Portfolio insertedportfolio = portfolioservice.insertPortfolio(portfolio, pftoolslist, pflanglist, pfdbmslist,
+				userid);
 		return new ResponseEntity<>(insertedportfolio, HttpStatus.CREATED);
 	}
 
@@ -53,10 +51,10 @@ public class PortfolioController {
 
 	// ===== 특정 시퀀스(@param pfSeq)의 포트폴리오 수정 =====
 	@PutMapping("/update")
-	public ResponseEntity<Portfolio> updatePortfolio(Portfolio portfolio,
-			@RequestParam Long pfSeq, String[] pftoolslist,
-			String[] pflanglist, String[] pfdbmslist) {
-		Portfolio updatedportfolio = portfolioservice.updatePortfolio(portfolio, pfSeq, pftoolslist, pflanglist, pfdbmslist);
+	public ResponseEntity<Portfolio> updatePortfolio(Portfolio portfolio, @RequestParam Long pfSeq,
+			String[] pftoolslist, String[] pflanglist, String[] pfdbmslist) {
+		Portfolio updatedportfolio = portfolioservice.updatePortfolio(portfolio, pfSeq, pftoolslist, pflanglist,
+				pfdbmslist);
 		return new ResponseEntity<>(updatedportfolio, HttpStatus.OK);
 	}
 

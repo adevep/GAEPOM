@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.gaepom.dao.CommentRepository;
 import com.gaepom.dao.ProjectTrackingRepository;
-import com.gaepom.dao.UserRepository;
 import com.gaepom.domain.Comment;
-import com.gaepom.domain.User;
 import com.gaepom.exception.CommentException;
 
 @Service
@@ -47,8 +45,9 @@ public class CommentServiceImpl implements CommentService {
 			throw new CommentException("존재하지 않는 댓글입니다");
 		}
 	}
-
-	public void deleteComment(Comment comment) { // 본인이 작성한 댓글이 아닙니다
+	
+	// 본인이 작성한 댓글이 아닙니다
+	public void deleteComment(Comment comment) { 
 		logger.info(comment.getCmtSeq() + " 댓글 삭제 완료");
 		commentRepo.deleteById(comment.getCmtSeq());
 	}

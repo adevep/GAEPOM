@@ -95,8 +95,6 @@ export default {
             apps2 = entry;
           });
           this.words = apps2.words;
-          console.log(response.data);
-          console.log(apps2);
         })
         .catch(e => {
           console.log(e);

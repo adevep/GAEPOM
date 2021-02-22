@@ -182,127 +182,9 @@
     <div class="container is-max-desktop pt-5"></div>
   </div>
 </template>
-<!--<template>
-  <div class="UpdateTracking">
-    <h2>UpdateTracking</h2>
-    <center>
-      <table border="1">
-        <tr>
-          <td>Title</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjTitle"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Duration</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjDuration"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Tools</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjTools"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Category</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjCategory"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Language</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjLang"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>DBMS</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjDbms"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Description</td>
-          <td>
-            <input
-              type="text"
-              v-model="trackInfo.project.pjDescription"
-              placeholder=""
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Stage</td>
-          <td>
-            <input type="text" v-model="trackInfo.stage" placeholder="" />
-          </td>
-        </tr>
-        <tr>
-          <td>Issue</td>
-          <td>
-            <input type="text" v-model="trackInfo.issue" placeholder="" />
-          </td>
-        </tr>
-        <tr>
-          <td>Output</td>
-          <td>
-            <input type="text" v-model="trackInfo.output" placeholder="" />
-          </td>
-        </tr>
-        <tr>
-          <b-field
-            label="Current UserImage"
-            align="left"
-            message="<주의> 이미지 재등록 없을시 기본 이미지로 변경"
-          >
-            <img :src="imgURL + trackInfo.trackImage" alt="" width="500" />
-          </b-field>
-          <br />
-          <b-field align="left">
-            <input
-              type="file"
-              id="file"
-              ref="file"
-              placeholder="Add tracking picture"
-              v-on:change="handleFileUpload()"
-            />
-          </b-field>
-        </tr>
-      </table>
 
-      <br />
-      <button @click="updateTracking">수정</button>
-      </center>
-  </div>
-</template>-->
 <script>
-// import ProjectTrackingDetail from '../../views/ProjectTrackingDetail.vue';
+
 import { mapState } from "vuex";
 export default {
   name: "TrackingUpdate",
@@ -321,7 +203,7 @@ export default {
       this.project.pjTools = this.arrTools.join();
       this.project.pjLang = this.arrLang.join();
       this.project.pjDbms = this.arrDbms.join();
-      //dateparsing
+ 
       let myDate = new Date(Date.parse(this.arrDuration[0]));
       let myDate2 = new Date(Date.parse(this.arrDuration[1]));
       let date1 =
@@ -336,11 +218,13 @@ export default {
         ("0" + (myDate2.getMonth() + 1)).slice(-2) +
         "." +
         ("0" + myDate2.getDate()).slice(-2);
+
       let date3 = [];
+
       date3.push(date1);
       date3.push(date2);
-      this.arrDuration = date3.join("-");
 
+      this.arrDuration = date3.join("-");
       this.project.pjDuration = this.arrDuration;
 
       let formData = new FormData();
@@ -378,10 +262,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log("==========update==========");
           console.warn(response.data);
-          console.log("==========update==========");
-          // 페이지 이동
           this.trackInfo = response.data;
           this.$router.push({
             name: "ProjectTrackingDetail",
@@ -408,7 +289,6 @@ export default {
           this.arrDbms = this.project.pjDbms.split(",");
           this.arrDuration[0] = new Date(this.project.pjDuration.split("-")[0]);
           this.arrDuration[1] = new Date(this.project.pjDuration.split("-")[1]);
-    console.log(this.trackInfo);
   },
 };
 </script>

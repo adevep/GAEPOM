@@ -206,14 +206,12 @@ export default {
         .get("/app/getpjapp/" + this.pjSeq2 + "?userId=" + this.loginUser)
         .then(response => {
           this.apps = response.data;
-          console.log(response.data);
           http
             .get(
               "/recruit/getbypj/" + this.pjSeq2 + "?userId=" + this.loginUser
             )
             .then(response => {
               this.needNum = response.data;
-              console.log(response.data);
               http
                 .get(
                   "/recruit/getbypjcheckcount/" +
@@ -223,7 +221,6 @@ export default {
                 )
                 .then(response => {
                   this.checkCount = response.data;
-                  console.log(response.data);
                 })
                 .catch(e => {
                   console.log(e);

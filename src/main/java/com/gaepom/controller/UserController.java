@@ -21,13 +21,15 @@ import com.gaepom.service.UserService;
 @CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(value = "user")
 @RestController
+
 public class UserController {
 
 	@Autowired
 	private UserService userservice;
 
 	@PostMapping("/insert")
-	public ResponseEntity<User> insertUser(User user, @RequestParam String[] stacklist, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+	public ResponseEntity<User> insertUser(User user, @RequestParam String[] stacklist,
+			@RequestParam(value = "file", required = false) MultipartFile mfile) {
 		User inserteduser = null;
 		if (mfile != null) {
 			inserteduser = userservice.insertUser(user, stacklist, mfile);
@@ -42,7 +44,7 @@ public class UserController {
 		User geteduser = userservice.getUser(userid);
 		return new ResponseEntity<>(geteduser, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/getlist")
 	public ResponseEntity<List<User>> getUserList() {
 		List<User> users = userservice.getUserList();
@@ -50,7 +52,8 @@ public class UserController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<User> updateUser(User user, @RequestParam String[] stacklist, @RequestParam(value = "file", required = false) MultipartFile mfile) {
+	public ResponseEntity<User> updateUser(User user, @RequestParam String[] stacklist,
+			@RequestParam(value = "file", required = false) MultipartFile mfile) {
 		User updateduser = null;
 		if (mfile != null) {
 			updateduser = userservice.updateUser(user, stacklist, mfile);

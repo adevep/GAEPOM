@@ -25,9 +25,9 @@ public class UserServiceImp implements UserService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public User login(String userid, String password) {
-		
+
 		Optional<User> findUser = userrepo.findById(userid);
-		
+
 		if (findUser.isPresent()) {
 			if (findUser.get().getPassword().equals(password)) {
 				logger.info("{} 회원 로그인 성공", userid);
@@ -43,9 +43,9 @@ public class UserServiceImp implements UserService {
 	}
 
 	public User getUser(String userid) {
-		
+
 		Optional<User> findUser = userrepo.findById(userid);
-		
+
 		if (findUser.isPresent()) {
 			logger.info("{} 회원 조회 요청 성공", userid);
 			return findUser.get();
@@ -56,20 +56,20 @@ public class UserServiceImp implements UserService {
 	}
 
 	public List<User> getUserList() {
-		
+
 		logger.info("전체 회원 조회 요청");
 		return (List<User>) userrepo.findAll();
-		
+
 	}
 
 	public User insertUser(User user, String[] stacklist, MultipartFile mfile) {
 
 		Optional<User> findUser = userrepo.findById(user.getUserId());
-		
+
 		if (!findUser.isPresent()) {
-			
+
 			String imgname = null;
-			
+
 			try {
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
@@ -80,9 +80,9 @@ public class UserServiceImp implements UserService {
 			}
 			user.setUserImage(imgname);
 			user.setStack(String.join(",", stacklist));
-			
+
 			userrepo.save(user);
-			
+
 			logger.info("{} 회원 가입완료", user.getUserId());
 			return user;
 		} else {
@@ -94,12 +94,12 @@ public class UserServiceImp implements UserService {
 	public User insertUserNoimg(User user, String[] stacklist) {
 
 		Optional<User> findUser = userrepo.findById(user.getUserId());
-		
+
 		if (!findUser.isPresent()) {
-			
+
 			user.setUserImage("default.png");
 			user.setStack(String.join(",", stacklist));
-			
+
 			userrepo.save(user);
 			logger.info("{} 회원 가입 완료", user.getUserId());
 			return user;
@@ -121,13 +121,13 @@ public class UserServiceImp implements UserService {
 	}
 
 	public User updateUser(User user, String[] stacklist, MultipartFile mfile) {
-		
+
 		Optional<User> findUser = userrepo.findById(user.getUserId());
-		
+
 		if (findUser.isPresent()) {
-			
+
 			String imgname = null;
-			
+
 			try {
 				imgname = String.valueOf(System.currentTimeMillis()) + mfile.getOriginalFilename();
 				mfile.transferTo(new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + imgname));
@@ -197,14 +197,14 @@ public class UserServiceImp implements UserService {
 			throw new UserNotFoundException("유저가 없습니다.");
 		}
 	}
-	
+
 	public User updateUserTliked(String userid, String tliked) {
-		
+
 		Optional<User> findUser = userrepo.findById(userid);
-		
+
 		if (findUser.isPresent()) {
 			findUser.get().setTLiked(tliked);
-			
+
 			userrepo.save(findUser.get());
 			logger.info("{} 회원 좋아요 수정", findUser.get().getUserId());
 			return findUser.get();
@@ -213,7 +213,7 @@ public class UserServiceImp implements UserService {
 			throw new UserNotFoundException("해당 ID의 유저가 없습니다.");
 		}
 	}
-	
+
 	public void deleteUser(String userid) {
 
 		Optional<User> findUser = userrepo.findById(userid);

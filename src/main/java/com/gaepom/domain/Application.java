@@ -24,29 +24,30 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+
 @Entity
 public class Application {
 	@Id
 	@GeneratedValue
-	@Column(name="apl_seq")
+	@Column(name = "apl_seq")
 	private Long aplSeq;
-	
-	@Column(name="user_id")
+
+	@Column(name = "user_id")
 	private String userId;
-	
+
 	private String words;
 
-	@Column(name="apl_posi")
+	@Column(name = "apl_posi")
 	private String aplPosi;
-	
+
 	private int selected;
-	
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	@Column(name="apl_date", insertable = false, updatable = false, columnDefinition = "date default sysdate")
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "apl_date", insertable = false, updatable = false, columnDefinition = "date default sysdate")
 	private Date aplDate;
-	
-	@JsonIgnoreProperties(value = {"recSeq", "trackSeq", "userId", "applications"})
+
+	@JsonIgnoreProperties(value = { "recSeq", "trackSeq", "userId", "applications" })
 	@ManyToOne
-	@JoinColumn(name="pj_seq", nullable= false)
+	@JoinColumn(name = "pj_seq", nullable = false)
 	private Project pjSeq;
 }

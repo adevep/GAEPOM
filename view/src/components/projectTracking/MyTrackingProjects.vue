@@ -80,9 +80,6 @@ export default {
         .get("/track/gettrackinglist")
         .then(response => {
           this.pjs = response.data;
-          console.log("==========list==========");
-          console.log(this.pjs);
-          console.log("==========list==========");
           this.proj = this.pjs.filter(function(item) {
             return (
               item.project.userId.userId ==

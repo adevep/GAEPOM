@@ -27,13 +27,13 @@ import lombok.ToString;
 @Builder
 
 @Entity
-@Table(name="g_user")
+@Table(name = "g_user")
 public class User {
-	
+
 	@Id
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private String userId;
-	
+
 	@JsonIgnore
 	private String password;
 
@@ -43,27 +43,27 @@ public class User {
 
 	private String email;
 
-	@Column(name="phone_num")
-	private String phoneNum; 
+	@Column(name = "phone_num")
+	private String phoneNum;
 
 	private String address;
 
 	private String stack;
 
-	@Column(name="user_image", nullable=true)
+	@Column(name = "user_image", nullable = true)
 	private String userImage;
 
 	private String position;
-	
-	@Column(name="t_liked")
+
+	@Column(name = "t_liked")
 	private String tLiked;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="userId", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
 	private List<Portfolio> portfolios;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="userId", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
 	private List<Project> projects;
 
 }

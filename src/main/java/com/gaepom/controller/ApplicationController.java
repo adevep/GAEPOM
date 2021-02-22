@@ -29,7 +29,7 @@ public class ApplicationController {
 
 	@Autowired
 	private ApplicationService applicationService;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@PostMapping("/create")
