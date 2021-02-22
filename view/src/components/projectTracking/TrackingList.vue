@@ -150,7 +150,7 @@ export default {
   methods: {
     trackList: function() {
       this.axios
-        .get("/gettrackinglistaxios")
+        .get("/track/gettrackinglist")
         .then(response => {
           this.trackings = response.data;
           this.tracks = this.trackings;

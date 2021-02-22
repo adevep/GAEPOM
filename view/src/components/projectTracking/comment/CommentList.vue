@@ -55,7 +55,7 @@ export default {
   methods: {
     showComment: function() {
       this.axios
-        .get("/getcommentlist", {
+        .get("/comment/getcommentlist", {
           params: {
             trackSeq: this.$route.params.track.trackSeq,
           },
@@ -84,7 +84,7 @@ export default {
 
         // server 통신부
         this.axios
-          .post("/insertcomment", this.commentlist[this.commentlist.length - 1])
+          .post("/comment/insertcomment", this.commentlist[this.commentlist.length - 1])
           .then((response) => {
             console.warn(response.data);
             this.showComment();
@@ -107,7 +107,7 @@ export default {
       });
 
       this.axios
-        .delete("/deletecomment", {
+        .delete("/comment/deletecomment", {
           params: {
             cmtSeq: id,
           },
