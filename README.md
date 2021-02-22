@@ -15,7 +15,7 @@
 
 ---
 
-### :star: GEAPOM의 탄생 과정
+### :star: GAEPOM의 탄생 과정
 <br><br>
 :question: 그런적 있나요?<br><br>
 :sweat: 취업 전, 이직 전, 혹은 방학 때 사이드 프로젝트로 내 스펙을 완성하고 싶은데 같이할 팀원을 구하지 못해 난감했던 적 
@@ -182,7 +182,7 @@
 #### 1. 사용한 Spring Boot 2.3.8.RELEASE Dependencies 
 
 ---
-[참조] Spring Boot + Vue CLI 3.0 프로젝트 구성하기 | Mr.spock (https://mr-spock.tistory.com/3)
+[참조] Spring Boot + Vue CLI 3.0 프로젝트 구성하기 | Mr.spock(https://mr-spock.tistory.com/3)
 <br>
 * Lombok
 * Oracle Driver
@@ -310,8 +310,7 @@ model attribute를 이용해 session에 저장하는 방법으로는 브라우�
 
 <br><br>
 :satisfied: 민재
-1. 매번 'npm run build 혹은 serve'를 시행할 때마다 Error가 발생했었다.
-이는 각자의 작업 폴더가 다른 관계로 "package.json" 파일의 "build": "vue-cli-service build --desc... 경로를 수정함으로써 해결할 수 있었다.
+처음으로 진행한 대규모(?) 단위의 이번 프로젝트를 마무리 지으면서 느낀 점은 팀원간의 소통도 중요하지만, 무엇보다 중요한 점은 "개개인의 기본기"가 얼마나 잘 갖춰져 있나 하는 부분이었습니다. 다음에 있을 최종 프로젝트에는 이번 프로젝트보다 소규모(?) 단위로 진행될 것으로 예상되는데, 보다 좋은 결과를 얻기 위해서 기본기를 더욱 연마할 수 있도록 하는 마음가짐을 가지게 되었습니다.
 
 
 <br><br>
