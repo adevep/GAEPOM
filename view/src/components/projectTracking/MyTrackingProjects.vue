@@ -78,7 +78,7 @@ export default {
     trackList: function() {
       this.axios
         .get("/track/gettrackinglist")
-        .then((response) => {
+        .then(response => {
           this.pjs = response.data;
           console.log("==========list==========");
           console.log(this.pjs);
@@ -104,10 +104,18 @@ export default {
         .then(response => {
           console.log(response);
           this.trackList();
+          this.success();
         })
         .catch(ex => {
           console.warn("ERROR!!!!! : ", ex);
         });
+    },
+    success() {
+      this.$buefy.notification.open({
+        message: "글이 삭제되었습니다.",
+        type: "is-success",
+        position: "is-bottom-right"
+      });
     }
   }
 };
