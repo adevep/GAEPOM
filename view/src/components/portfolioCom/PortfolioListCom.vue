@@ -6,11 +6,11 @@
         ref="table"
         detailed
         detail-key="pfSeq"
-        @details-open="row => $buefy.toast.open()"
+        @details-open="(row) => $buefy.toast.open()"
       >
         <b-table-column
           field="pfSeq"
-          label="글"
+          label="번호"
           width="80"
           sortable
           centered
@@ -30,6 +30,26 @@
           <a @click="props.toggleDetails(props.row)">
             {{ props.row.pfSubtitle }}
           </a>
+        </b-table-column>
+
+        <b-table-column
+          field="pfPosition"
+          label="포지션"
+          sortable
+          v-slot="props"
+        >
+          {{ props.row.pfPosition }}
+        </b-table-column>
+
+          <b-table-column
+          field="pfCategory"
+          label="카테고리"
+          centered
+          v-slot="props"
+        >
+          <b-tag type="is-primary" size="is-medium">{{
+            props.row.pfCategory
+          }}</b-tag>
         </b-table-column>
 
         <b-table-column
@@ -64,17 +84,7 @@
           <b-tag type="is-dark" size="is-medium">{{ props.row.pfDbms }}</b-tag>
         </b-table-column>
 
-        <b-table-column
-          field="pfCategory"
-          label="카테고리"
-          centered
-          v-slot="props"
-        >
-          <b-tag type="is-primary" size="is-medium">{{
-            props.row.pfCategory
-          }}</b-tag>
-        </b-table-column>
-
+      
         <b-table-column label="수정 및 삭제" v-slot="props" centered>
           <b-button
             type="is-primary is-light"
@@ -146,7 +156,7 @@ export default {
     return {
       portfolio,
       isHoverable: true,
-      cc: 4
+      cc: 4,
     };
   },
   methods: {
@@ -156,17 +166,17 @@ export default {
           "http://localhost:80/portfolio/getlist?userid=" +
             JSON.parse(sessionStorage.getItem("user")).userId
         )
-        .then(response => {
+        .then((response) => {
           this.portfolio = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
     updatePortfolio(pfseq) {
       return this.$router.push({
         name: "updatePortfolio",
-        params: { pfSeq: pfseq }
+        params: { pfSeq: pfseq },
       });
     },
     deletePortfolio(pfSeq) {
@@ -185,19 +195,19 @@ export default {
       this.$buefy.notification.open({
         message: "포트폴리오가 삭제되었습니다.",
         type: "is-success",
-        position: "is-bottom-right"
+        position: "is-bottom-right",
       });
     },
     danger() {
       this.$buefy.notification.open({
         message: "포트폴리오 삭제에 실패했습니다.",
         type: "is-danger",
-        position: "is-bottom-right"
+        position: "is-bottom-right",
       });
-    }
+    },
   },
   mounted() {
     this.portfolioInfoCall();
-  }
+  },
 };
 </script>
