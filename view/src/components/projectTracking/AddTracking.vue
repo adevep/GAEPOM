@@ -119,17 +119,17 @@
           <b-checkbox v-model="arrLang" native-value="Python">
             Python
           </b-checkbox>
-          <b-checkbox v-model="arrLang" native-value="C++">
-            C++
+          <b-checkbox v-model="arrLang" native-value="C">
+            C
           </b-checkbox>
           <b-checkbox v-model="arrLang" native-value="JavaScript">
             JavaScript
           </b-checkbox>
-          <b-checkbox v-model="arrLang" native-value="Vue">
-            Vue
+          <b-checkbox v-model="arrLang" native-value="R">
+            R
           </b-checkbox>
-          <b-checkbox v-model="arrLang" native-value="React">
-            React
+          <b-checkbox v-model="arrLang" native-value="SQL">
+            SQL
           </b-checkbox>
         </b-field>
         <b-field label="프로젝트 DBMS" align="left">
@@ -170,6 +170,7 @@
           <b-input v-model="trackLink" maxlength="20" required></b-input>
         </b-field>
       </section>
+      <center>
       <b-button
         type="is-primary"
         outlined
@@ -177,7 +178,7 @@
         position="is-centered"
         size="is-large"
         >프로젝트 트레킹 생성</b-button
-      >
+      ></center>
     </div>
     <div class="container is-max-desktop pt-5"></div>
   </div>

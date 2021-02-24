@@ -95,7 +95,6 @@ public class ProjectTrackingController {
 	public ResponseEntity<ProjectTracking> updateProjectTracking(ProjectTracking tracking, Project project, User user,
 			@RequestParam(value = "file", required = false) MultipartFile mfile) {
 		ProjectTracking updateTracking = null;
-
 		if (mfile != null) {
 			updateTracking = projectTrackingService.updateProjectTrackingImg(tracking, project, user, mfile);
 		} else {
