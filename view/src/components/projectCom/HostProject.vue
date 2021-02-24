@@ -155,17 +155,17 @@
               <b-checkbox v-model="pjLang" native-value="Python">
                 Python
               </b-checkbox>
-              <b-checkbox v-model="pjLang" native-value="C++">
-                C++
+              <b-checkbox v-model="pjLang" native-value="C">
+                C
               </b-checkbox>
               <b-checkbox v-model="pjLang" native-value="JavaScript">
                 JavaScript
               </b-checkbox>
-              <b-checkbox v-model="pjLang" native-value="Vue">
-                Vue
+              <b-checkbox v-model="pjLang" native-value="R">
+                R
               </b-checkbox>
-              <b-checkbox v-model="pjLang" native-value="React">
-                React
+              <b-checkbox v-model="pjLang" native-value="SQL">
+                SQL
               </b-checkbox>
             </b-field>
           </BCheckboxesWithValidation>
@@ -234,7 +234,7 @@
             </b-datepicker>
           </b-field>
         </section>
-        <b-button
+       <center> <b-button
           type="is-primary"
           outlined
           @click="handleSubmit(addProjectRec)"
@@ -242,7 +242,7 @@
           size="is-medium"
           class="mt-6"
           >주최하기</b-button
-        >
+        ></center>
       </div>
       <div class="container is-max-desktop pt-5"></div>
     </div>

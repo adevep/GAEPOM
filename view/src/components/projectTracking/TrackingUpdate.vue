@@ -249,12 +249,11 @@ export default {
       formData.append("name", this.project.userId.name);
       formData.append("age", this.project.userId.age);
       formData.append("email", this.project.userId.email);
-      formData.append("phoneNum", this.project.userId.phonenum);
+      formData.append("phoneNum", this.project.userId.phoneNum);
       formData.append("address", this.project.userId.address);
       formData.append("position", this.project.userId.position);
-      formData.append("stacklist", this.project.userId.stacklist);
-
-      console.log(formData);
+      formData.append("userImage", this.project.userId.userImage)
+      formData.append("stack", this.project.userId.stack);
       this.axios
         .put("/track/updateprojecttracking", formData, {
           headers: {
@@ -262,7 +261,6 @@ export default {
           },
         })
         .then((response) => {
-          console.warn(response.data);
           this.trackInfo = response.data;
           this.$router.push({
             name: "ProjectTrackingDetail",

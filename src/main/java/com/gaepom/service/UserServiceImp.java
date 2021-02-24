@@ -169,16 +169,6 @@ public class UserServiceImp implements UserService {
 		Optional<User> findUser = userrepo.findById(user.getUserId());
 		if (findUser.isPresent()) {
 
-			String filename = findUser.get().getUserImage();
-			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
-
-			if (file.exists() && !filename.equals("default.png")) {
-				if (file.delete()) {
-					logger.info("{} 회원 기존 이미지 삭제 완료", user.getUserId());
-				} else {
-					logger.debug("{} 회원 기존 이미지 삭제 실패", user.getUserId());
-				}
-			}
 			findUser.get().setPassword(user.getPassword());
 			findUser.get().setName(user.getName());
 			findUser.get().setAge(user.getAge());
@@ -186,7 +176,6 @@ public class UserServiceImp implements UserService {
 			findUser.get().setPhoneNum(user.getPhoneNum());
 			findUser.get().setAddress(user.getAddress());
 			findUser.get().setStack(String.join(",", stacklist));
-			findUser.get().setUserImage("default.png");
 			findUser.get().setPosition(user.getPosition());
 
 			userrepo.save(findUser.get());

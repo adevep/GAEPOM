@@ -141,7 +141,7 @@
                 class="button"
                 :to="{
                   name: 'ProjectTrackingUpdate',
-                  params: { trackSeq: trackInfo }
+                  params: { trackSeq: this.trackInfo }
                 }"
                 >수정</router-link
               >
@@ -253,7 +253,6 @@ export default {
       this.axios
         .get("http://localhost:80/user/get?userid=" + this.userdatas.userId)
         .then(response => {
-          console.warn(response.data);
           this.likeSeq = response.data.tliked;
           this.showlike(this.likeSeq);
         })

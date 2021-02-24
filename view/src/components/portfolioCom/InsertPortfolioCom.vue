@@ -185,9 +185,9 @@
             <b-checkbox v-model="pfLang" native-value="JavaScript"
               >JavaScript</b-checkbox
             >
-            <b-checkbox v-model="pfLang" native-value="C++">C++</b-checkbox>
-            <b-checkbox v-model="pfLang" native-value="Vue">Vue</b-checkbox>
-            <b-checkbox v-model="pfLang" native-value="React">React</b-checkbox>
+            <b-checkbox v-model="pfLang" native-value="C">C</b-checkbox>
+            <b-checkbox v-model="pfLang" native-value="R">R</b-checkbox>
+            <b-checkbox v-model="pfLang" native-value="SQL">SQL</b-checkbox>
           </b-field>
         </BCheckboxesWithValidation>
         <br />

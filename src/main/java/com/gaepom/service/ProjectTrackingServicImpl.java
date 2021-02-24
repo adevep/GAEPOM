@@ -76,7 +76,7 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 		if (!findTracking.isPresent()) {
 
-			tracking.setTrackImage("default.png");
+			tracking.setTrackImage("pj.jpg");
 			project.setUserId(user);
 			tracking.setProject(project);
 			
@@ -118,17 +118,6 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 
 		if (findProjectTracking.isPresent()) {
 
-			String filename = findProjectTracking.get().getTrackImage();
-			File file = new File(System.getProperty("user.dir") + "\\src\\main\\webapp\\upload\\" + filename);
-
-			if (file.exists() && !filename.equals("default.png")) {
-				if (file.delete()) {
-					logger.debug("사진 파일 삭제 완료");
-				} else {
-					logger.debug("사진 파일 삭제 실패");
-				}
-			}
-
 			Project findProject = projectRepo.findById(project.getPjSeq()).get();
 			
 			findProject.setPjTitle(project.getPjTitle());
@@ -142,7 +131,6 @@ public class ProjectTrackingServicImpl implements ProjectTrackingService {
 			findProjectTracking.get().setStage(tracking.getStage());
 			findProjectTracking.get().setIssue(tracking.getIssue());
 			findProjectTracking.get().setOutput(tracking.getOutput());
-			findProjectTracking.get().setTrackImage("default.png");
 			findProjectTracking.get().setTrackLink(tracking.getTrackLink());
 
 			projectRepo.save(findProject);
