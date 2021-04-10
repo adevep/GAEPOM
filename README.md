@@ -313,7 +313,7 @@ model attribute를 이용해 session에 저장하는 방법으로는 브라우�
 
 
 <br><br>
-:octocat: 희성
+🤩: 희성
 1. 처음으로 긴 프로젝트를 참여했는데  배운 점과 느낀 점이 정말 많았습니다. 힘든 순간들이 많았지만 멋진 조원들이 있어서 웃으면서 씩씩하게 이겨냈던 것 같습니다. 매번 프로젝트를 할 때마다 뿌듯함보다 아쉬움이 더 크게 느껴졌지만 이번 프로젝트는 아쉬움보다는 뿌듯함이 더 컸던 프로젝트였습니다. 고마워요 모두들^^
 
 
@@ -342,9 +342,9 @@ model attribute를 이용해 session에 저장하는 방법으로는 브라우�
  Team GAEPOM
   - 염아정 [(AJngYeom)](https://github.com/ajdeve)
   - 이민재 [(MinJaeLee)](https://github.com/Dowonna)
-  - 권희성 [(HeeSeongKwon )](https://github.com/shiningcastle)  
+  - 권희성 [(HeeSeongKwon)](https://github.com/shiningcastle)  
   - 김연식 [(YeonSikKim)](https://github.com/yeonsikkim317)
-  - 박다영 [(DaYoungPark )](https://github.com/Da-0)
+  - 박다영 [(DaYoungPark)](https://github.com/Da-0)
   - 장문희 [(MoonheeJang)](https://github.com/JANGMOONHEE)
   
  
